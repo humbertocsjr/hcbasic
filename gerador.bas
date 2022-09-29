@@ -1,3 +1,10 @@
+function NomeVarLocal$(nome as string)
+    if gNivel = 0 then
+        NomeVarLocal$ = "V0" + nome$
+    else
+        NomeVarLocal$ = "V" + ltrim$(str$(gFuncaoAtual)) + nome$
+    end if
+end function
 
 sub EmiteFmt(nasm as string, osasm as string)
     select case gFormato
@@ -28,12 +35,20 @@ sub EmiteMovB16Valor(valor as integer)
     end if
 end sub
 
+sub EmiteMovA16SegCodigo()
+    EmiteFmt "mov ax, cs", "mov ax, cs"
+end sub
+
+sub EmiteMovA16SegPilha()
+    EmiteFmt "mov ax, ss", "mov ax, ss"
+end sub
+
 sub EmiteMovA16VarLocal(var as string)
-    EmiteFmt "mov ax, [bp+." + var$ + "]", "mov ax, V" + ltrim$(str$(gFuncaoAtual)) + var$ + "[bp]"
+    EmiteFmt "mov ax, [bp+" + NomeVarLocal$(var$) + "]", "mov ax, " + NomeVarLocal$(var$) + "[bp]"
 end sub
 
 sub EmiteMovA16VarGlobal(var as string)
-    EmiteFmt "cs", "segcs"
+    EmiteFmt "cs", "seg cs"
     EmiteFmt "mov ax, [" + var$ + "]", "mov ax, "+ var$ 
 end sub
 
@@ -79,26 +94,26 @@ end sub
 
 sub EmiteDivA16Valor(valor as integer)
     EmiteMovB16Valor valor
-    EmiteFmt "xor dx, dx", "xor dx, dx"
+    EmiteFmt "cwd", "cwd"
     EmiteFmt "idiv bx", "idiv bx"
 end sub
 
 sub EmiteDivA16Pop
     EmitePopB16
-    EmiteFmt "xor dx, dx", "xor dx, dx"
+    EmiteFmt "cwd", "cwd"
     EmiteFmt "idiv bx", "idiv bx"
 end sub
 
 sub EmiteModA16Valor(valor as integer)
     EmiteMovB16Valor valor
-    EmiteFmt "xor dx, dx", "xor dx, dx"
+    EmiteFmt "cwd", "cwd"
     EmiteFmt "idiv bx", "idiv bx"
     EmiteFmt "mov ax, dx", "mov ax, dx"
 end sub
 
 sub EmiteModA16Pop
     EmitePopB16
-    EmiteFmt "xor dx, dx", "xor dx, dx"
+    EmiteFmt "cwd", "cwd"
     EmiteFmt "idiv bx", "idiv bx"
     EmiteFmt "mov ax, dx", "mov ax, dx"
 end sub
@@ -115,87 +130,111 @@ sub EmiteFuncaoFim
 end sub
 
 sub EmiteDeclaraVarLocal(nome as string, posicao as integer)
-    EmiteFmt "." + nome + ": equ " + str$(posicao), "V" + ltrim$(str$(gFuncaoAtual)) +  nome$ + " = "+ str$(posicao)
+    EmiteFmt NomeVarLocal$(nome$)+ ": equ " + str$(posicao), NomeVarLocal$(nome$)+ " = "+ str$(posicao)
 end sub
 
 sub EmiteDeclaraVarGlobal(nome as string, tam as integer)
-    EmiteFmt nome + ": times " + str$(tam) + " db 0",  nome$ + ": .zerow "+ str$(posicao/2+1)
+    EmiteFmt nome + ": times " + str$(tam) + " db 0",  nome$ + ": " 
+    EmiteFmt "",  ".zerob "+ str$(tam)
 end sub
 
 sub EmiteMovVarLocalA16(var as string)
-    EmiteFmt "mov [bp+." + var$ + "], ax", "mov V" + ltrim$(str$(gFuncaoAtual)) + var$ + "[bp], ax"
+    EmiteFmt "mov [bp+" + NomeVarLocal$(var$)+ "], ax", "mov " + NomeVarLocal$(var$) + "[bp], ax"
 end sub
 
 sub EmiteMovVarLocalValor(var as string, valor as integer)
-    EmiteFmt "mov word [bp+." + var$ + "], " + str$(valor), "mov V" + ltrim$(str$(gFuncaoAtual)) + var$ + "[bp], #" + str$(valor)
+    EmiteFmt "mov word [bp+" + NomeVarLocal$(var$) + "], " + str$(valor), "mov " + NomeVarLocal$(var$) + "[bp], #" + str$(valor)
+end sub
+
+sub EmiteMovVarLocalStringPrep(var as string, posicao as integer)
+    EmiteFmt "lea ax, [bp+ " + ltrim$(str$(posicao)) + "]" , "lea ax, " + ltrim$(str$(posicao)) + "[bp]"
+    EmiteFmt "mov word [bp+" + NomeVarLocal$(var$) + "], ax" , "mov " + NomeVarLocal$(var$) + "[bp], ax"
+    EmiteFmt "mov ax, ss" , "mov ax, ss"
+    EmiteFmt "mov word [bp+" + NomeVarLocal$(var$) + "+2], ax" , "mov " + NomeVarLocal$(var$) + "+2[bp], ax"
 end sub
 
 sub EmiteMovVarGlobalA16(var as string)
-    EmiteFmt "cs", "segcs"
+    EmiteFmt "cs", "seg cs"
     EmiteFmt "mov [" + var$ + "], ax", "mov " + var$ + ", ax"
 end sub
 
 sub EmiteMovVarGlobalValor(var as string, valor as integer)
-    EmiteFmt "cs", "segcs"
+    EmiteFmt "cs", "seg cs"
     EmiteFmt "mov word [" + var$ + "], " + str$(valor), "mov " + var$ + ", #" + str$(valor)
+end sub
+
+sub EmiteMovVarGlobalStringPrep(var as string, rotulo as integer)
+    EmiteFmt "cs", "seg cs"
+    EmiteFmt "mov word [" + var$ + "], RO" + ltrim$(str$(rotulo)) , "mov " + var$ + ", #RO" + ltrim$(str$(rotulo))
+    EmiteFmt "mov ax, cs" , "mov ax, cs"
+    EmiteFmt "cs", "seg cs"
+    EmiteFmt "mov [" + var$ + "+2], ax" , "mov " + var$ + "+2, ax"
 end sub
 
 sub EmitePreparaStringGlobal(tam as integer)
     EmiteFmt "db "+str$(tam), ".byte " + str$(tam)
-    EmiteFmt "times "+str$(tam+1) + " db 0", ".zerow " + str$(tam / 2 + 1)
+    EmiteFmt "times "+str$(tam+1) + " db 0", ".zerob " + str$(tam + 1)
 end sub
 
 sub EmitePreparaStringLocal(tam as integer, var as string, posicao as integer)
-    EmiteMovVarLocalValor var$, tam
-    EmiteFmt "mov word [bp+" + str$(posicao) + " + ], 0", "mov " + str$(posicao)  + "[bp], #0"
-end sub
-
-sub EmiteOrg0x100
-    EmiteFmt "org 0x100", ""
+    EmiteFmt "mov byte [bp+" + str$(posicao) + "], " + str$(tam), "movb " + str$(posicao + 1)  + "[bp], #" + str$(tam)
+    EmiteFmt "mov byte [bp+" + str$(posicao + 1) + "], 0", "movb " + str$(posicao + 1)  + "[bp], #0"
 end sub
 
 sub EmiteSubPilhaValor(valor as integer)
     EmiteFmt "sub sp, " + str$(valor), "sub sp, #" + str$(valor)
 end sub
 
+sub EmiteAddPilhaValor(valor as integer)
+    EmiteFmt "add sp, " + str$(valor), "add sp, #" + str$(valor)
+end sub
+
 sub EmitePuloRotuloNro(rotulo as integer)
-    EmiteFmt "jmp R" + ltrim$(str$(rotulo)) , "jmp R" + ltrim$(str$(rotulo))
+    EmiteFmt "jmp RO" + ltrim$(str$(rotulo)) , "jmp RO" + ltrim$(str$(rotulo))
 end sub
 
 sub EmitePuloCurtoRotuloNro(rotulo as integer)
-    EmiteFmt "jmp R" + ltrim$(str$(rotulo)) , "jmps R" + ltrim$(str$(rotulo))
+    EmiteFmt "jmp RO" + ltrim$(str$(rotulo)) , "jmps RO" + ltrim$(str$(rotulo))
 end sub
 
 sub EmitePuloSeIgualRotuloNro(rotulo as integer)
-    EmiteFmt "je R" + ltrim$(str$(rotulo)) , "je R" + ltrim$(str$(rotulo))
+    EmiteFmt "je RO" + ltrim$(str$(rotulo)) , "je RO" + ltrim$(str$(rotulo))
 end sub
 
 sub EmitePuloSeDifRotuloNro(rotulo as integer)
-    EmiteFmt "jne R" + ltrim$(str$(rotulo)) , "jne R" + ltrim$(str$(rotulo))
+    EmiteFmt "jne RO" + ltrim$(str$(rotulo)) , "jne RO" + ltrim$(str$(rotulo))
 end sub
 
 sub EmitePuloSeMaiorQueRotuloNro(rotulo as integer)
-    EmiteFmt "jg R" + ltrim$(str$(rotulo)) , "jg R" + ltrim$(str$(rotulo))
+    EmiteFmt "jg RO" + ltrim$(str$(rotulo)) , "jg RO" + ltrim$(str$(rotulo))
 end sub
 
 sub EmitePuloSeMenorQueRotuloNro(rotulo as integer)
-    EmiteFmt "jl R" + ltrim$(str$(rotulo)) , "jl R" + ltrim$(str$(rotulo))
+    EmiteFmt "jl RO" + ltrim$(str$(rotulo)) , "jl RO" + ltrim$(str$(rotulo))
 end sub
 
 sub EmitePuloSeMaiorIgualRotuloNro(rotulo as integer)
-    EmiteFmt "jge R" + ltrim$(str$(rotulo)) , "jge R" + ltrim$(str$(rotulo))
+    EmiteFmt "jge RO" + ltrim$(str$(rotulo)) , "jge RO" + ltrim$(str$(rotulo))
 end sub
 
 sub EmitePuloSeMenorIgualRotuloNro(rotulo as integer)
-    EmiteFmt "jle R" + ltrim$(str$(rotulo)) , "jle R" + ltrim$(str$(rotulo))
+    EmiteFmt "jle RO" + ltrim$(str$(rotulo)) , "jle RO" + ltrim$(str$(rotulo))
 end sub
 
 sub EmiteRotuloNro(rotulo as integer)
-    EmiteFmt "R" + ltrim$(str$(rotulo)) + ":", "R" + ltrim$(str$(rotulo)) + ":"
+    EmiteFmt "RO" + ltrim$(str$(rotulo)) + ":", "RO" + ltrim$(str$(rotulo)) + ":"
+end sub
+
+sub EmiteRotuloTexto(rotulo as string)
+    EmiteFmt ltrim$(rotulo$) + ":", ltrim$(rotulo$) + ":"
+end sub
+
+sub EmitePuloRotuloTexto(rotulo as string)
+    EmiteFmt "jmp " + ltrim$(rotulo$), "jmp " + ltrim$(rotulo$)
 end sub
 
 sub EmiteMovA16RotuloNro(rotulo as integer)
-    EmiteFmt "mov ax, R" + ltrim$(str$(rotulo)) , "mov ax, #R" + ltrim$(str$(rotulo))
+    EmiteFmt "mov ax, RO" + ltrim$(str$(rotulo)) , "mov ax, #RO" + ltrim$(str$(rotulo))
 end sub
 
 sub EmiteConstString(conteudo as string)
@@ -382,4 +421,8 @@ sub EmiteMenorIgualA16Pop
     EmiteRotuloNro sim
         EmiteMovA16Valor -1
     EmiteRotuloNro fim
+end sub
+
+sub EmiteChamaFuncao(rotina as string)
+    Emite "call " + rotina$
 end sub

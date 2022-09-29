@@ -32,7 +32,7 @@ dim shared gSaida as integer
 dim shared gExt as string
 dim shared gArgs(cArgsCapacidade) as string
 dim shared gArgsQtd as integer
-dim shared gComando as string * 256
+dim shared gComando as string * 255
 dim shared gTrecho(cTrechoCapacidade) as string
 dim shared gTipo(cTrechoCapacidade) as integer
 dim shared gColuna(cTrechoCapacidade) as integer
@@ -41,7 +41,7 @@ dim shared gTrechoQtd as integer
 dim shared gFuncaoAtual as integer
 dim shared gFuncao(cFuncaoCapacidade) as string
 dim shared gFuncaoArgs(cFuncaoCapacidade) as string
-dim shared gFuncaoArgsQtd as integer
+dim shared gFuncaoArgsQtd(cFuncaoCapacidade) as integer
 dim shared gLocal(cLocalCapacidade) as string
 dim shared gLocalTipo(cLocalCapacidade) as string
 dim shared gLocalRaiz(cLocalCapacidade) as string
@@ -51,6 +51,22 @@ dim shared gGlobalTipo(cGlobalCapacidade) as string
 dim shared gLocalPos as integer
 dim shared gEtapa as integer
 dim shared gRotulo as integer
+dim shared gRotina as string
+dim shared gRotinaRotuloFim as integer
+dim shared gRotinaRotuloPula as integer
+dim shared gRotinaTipo as string
+dim shared gImportaEndereco as string
+dim shared gImportaPrint as integer
+dim shared gImportaPrintStr as integer
+dim shared gImportaPrintInt as integer
+dim shared gImportaStrConcat as integer
+dim shared gImportaStrCopy as integer
+
+gImportaPrint = 0
+gImportaPrintStr = 0
+gImportaPrintInt = 0
+gImportaStrConcat = 0
+gImportaStrCopy = 0
 
 gEtapa = 0
 gLocalPos = 0
@@ -321,8 +337,14 @@ sub Expr()
     loop
 end sub
 
+sub StrExpr(global as integer, destino as string)
+
+end sub
+
 sub Declara()
     dim global as integer
+    dim rotuloPulo as integer
+    dim rotulo as integer
     dim nome as string
     dim tipo as string
     global = 0
@@ -338,43 +360,279 @@ sub Declara()
     ExigeTipoBasic "Esperado um tipo valido de variavel", "dim nome as tipo"
     if global = 1 then
         GlobalCadastra nome$, tipo$
-        global = NovoRotulo
-        EmitePuloRotuloNro global
-        EmiteDeclaraVarGlobal nome$, 2
-        EmitePreparaStringGlobal cTamStringPadrao
-        EmiteRotuloNro global
+        rotuloPulo = NovoRotulo
+        EmitePuloRotuloNro rotuloPulo
+        if tipo$ = "string" then
+            EmiteDeclaraVarGlobal nome$, 4
+            rotulo = NovoRotulo
+            EmiteRotuloNro rotulo
+            if Valida(cTipoOpMatematica, "*") then
+                Exige cTipoOpMatematica, "*", "Esperado '*' ou fim da linha", "dim variavel as string * 123"
+                EmitePreparaStringGlobal TInteger
+                ExigeTipo cTipoInteger, "Esperado o tamanho da string", "dim variavel as string * 123"
+            else
+                EmitePreparaStringGlobal cTamStringPadrao
+            end if
+            EmiteRotuloNro rotuloPulo
+            EmiteMovVarGlobalStringPrep nome$, rotulo
+        else 
+            EmiteDeclaraVarGlobal nome$, 2
+            EmiteRotuloNro rotuloPulo
+        end if
     else
         LocalCadastra nome$, tipo$
-        gLocalPos = gLocalPos - 2
-        EmiteDeclaraVarLocal nome$, gLocalPos
-        EmiteSubPilhaValor 2
-        gLocalPos = gLocalPos - 1 - cTamStringPadrao
-        EmitePreparaStringLocal cTamStringPadrao, nome$, gLocalPos
+        if tipo$ = "string" then
+            gLocalPos = gLocalPos - 4
+            EmiteDeclaraVarLocal nome$, gLocalPos
+            gLocalPos = gLocalPos - 2 - cTamStringPadrao
+            EmitePreparaStringLocal cTamStringPadrao, nome$, gLocalPos
+            EmiteMovVarLocalStringPrep nome$, gLocalPos
+            EmiteSubPilhaValor 4 + cTamStringPadrao + 2
+        else 
+            gLocalPos = gLocalPos - 2
+            EmiteDeclaraVarLocal nome$, gLocalPos
+            EmiteSubPilhaValor 2
+        end if
     end if
     if Valida(cTipoOpLogica, "=") then
         Prox
-        Expr
-        EmiteMovVarLocalA16 nome$
+        if tipo$ = "string" then
+            StrExpr global, nome$
+        else
+            Expr
+        end if
+        if global = 1 then
+            EmiteMovVarGlobalA16 nome$
+        else
+            EmiteMovVarLocalA16 nome$
+        end if
     end if
     ExigeFimDaLinha "Esperado fim da linha", "dim nome as tipo"
 end sub
 
+sub Assembly()
+    dim emiteAsm as integer
+    emiteAsm = 0
+    Exige cTipoId, "asm", "Esperado o comando 'asm'", "asm nasm ""xor ax, ax"""
+    select case T$
+    case "nasm"
+        if gFormato = cFormatoNasm then
+            emiteAsm = 1
+        end if
+    case "osasm"
+        if gFormato = cFormatoOsasm then
+            emiteAsm = 1
+        end if
+    case "tinyasm"
+        Erro "Usar 'nasm' ao inves de 'tinyasm'"
+        if gFormato = cFormatoNasm then
+            emiteAsm = 1
+        end if
+    end select
+
+    do while TentaProxIgnora <> 0
+        if emiteAsm = 1 then Emite T$ 
+    loop
+
+end sub
+
+sub SubRotina()
+    dim varPos as integer
+    dim varNome as string
+    varPos = 2
+    gEtapa = 0
+    gLocalPos = 0
+    gFuncaoAtual = gFuncaoAtual + 1
+    gRotinaRotuloPula = NovoRotulo
+    gRotinaRotuloFim = NovoRotulo
+    ExigeId "sub", "Esperado 'sub'", "sub Rotina(arg as integer, arg as string)"
+    gRotina$ = T$
+    gFuncao$(gFuncaoAtual) = T$
+    gFuncaoArgs$(gFuncaoAtual) = ""
+    gFuncaoArgsQtd(gFuncaoAtual) = 0
+    gRotinaTipo$ = "sub"
+    EmitePuloRotuloNro gRotinaRotuloPula
+    EmiteRotuloTexto T$
+    EmiteFuncaoInicio
+    ExigeTipo cTipoId, "Esperado nome da rotina", "sub Rotina(arg as integer, arg as string)"
+    gNivel = gNivel + 1
+    LocalLimpa
+    if Valida(cTipoOutro, "(") then
+        Exige cTipoOutro, "(", "Esperado '('", "sub Rotina(arg as integer, arg as string)"
+        do while not Valida(cTipoOutro, ")")
+            varPos = varPos + 2
+            EmiteDeclaraVarLocal T$, varPos
+            varNome$ = T$
+            ExigeTipo cTipoId, "Esperado nome do argumento", "arg as integer"
+            ExigeId "as", "Esperado 'as' depois do nome da variavel", "arg as integer"
+            select case T$
+            case "integer"
+                LocalCadastra varNome$, T$
+            case "string"
+                LocalCadastra varNome$, T$
+            case else
+                Erro "Tipo nao suportado"
+            end select
+            gFuncaoArgs$(gFuncaoAtual) = gFuncaoArgs$(gFuncaoAtual) + "," + T$
+            gFuncaoArgsQtd(gFuncaoAtual) = gFuncaoArgsQtd(gFuncaoAtual) + 1
+            ExigeTipo cTipoId, "Esperado tipo da variavel depois de 'as'", "arg as integer"
+            if Valida(cTipoOutro, ",") then ExigeTipo cTipoOutro, "Esperado virgula entre argumentos", "arg1 as integer, arg2 as integer"
+        loop
+        Exige cTipoOutro, ")", "Esperado ')'", "sub Rotina(arg as integer, arg as string)"
+    end if
+    ExigeFimDaLinha "Esperado fim da linha", "sub Rotina(arg as integer, arg as string)"
+end sub
+
+sub FimSubRotina()
+    EmiteRotuloNro gRotinaRotuloFim
+    EmiteFuncaoFim
+    EmiteRotuloNro gRotinaRotuloPula
+    ExigeId "sub", "Esperado 'sub'", "end sub"
+    ExigeFimDaLinha "Esperado fim da linha", "end sub"
+    gRotina$ = ""
+    gRotinaTipo$ = ""
+    gNivel = 0
+end sub
+
+sub AtribuiLocal()
+    dim dest as string
+    dest$ = T$
+    ExigeTipo cTipoId, "Esperado variavel", "variavel = 0"
+    Exige cTipoOpLogica, "=", "Esperado variavel", "variavel = 0"
+    if LocalTipo$(dest$) = "string" then
+        StrExpr 0, T$
+    else
+        Expr
+        EmiteMovVarLocalA16 dest$
+    end if
+    ExigeFimDaLinha "Esperado fim da linha", "variavel = 0"
+end sub
+
+sub AtribuiGlobal()
+    dim dest as string
+    dest$ = T$
+    ExigeTipo cTipoId, "Esperado variavel", "variavel = 0"
+    Exige cTipoOpLogica, "=", "Esperado variavel", "variavel = 0"
+    if GlobalTipo$(dest$) = "string" then
+        StrExpr 1, T$
+    else
+        Expr
+        EmiteMovVarGlobalA16 dest$
+    end if
+    ExigeFimDaLinha "Esperado fim da linha", "variavel = 0"
+end sub
+
+sub ChamaFuncao()
+    dim nome as string
+    nome$ = T$
+    ExigeTipo cTipoId, "Esperado o nome da rotina", "Rotina arg1, arg2"
+    ExigeFimDaLinha "Esperado fim da linha", "Rotina arg1, arg2"
+end sub
+
+sub ProcessaPrint()
+    dim enter as integer
+    dim pula as integer
+    dim conteudo as integer
+    enter = 1
+    ExigeId "print", "Esperado 'print'", "print ""texto"""
+    gImportaPrint = gImportaPrint + 1
+    if ValidaFimDaLinha() then
+        EmiteChamaFuncao "__print_enter"
+        exit sub
+    end if
+    do while not ValidaFimDaLinha()
+        if ValidaTipo(cTipoString) then
+            gImportaPrintStr = gImportaPrintStr + 1
+            conteudo = NovoRotulo
+            pula = NovoRotulo
+            EmitePuloRotuloNro pula
+            EmiteRotuloNro conteudo
+            EmiteConstString T$
+            EmiteRotuloNro pula
+            EmiteMovA16SegCodigo
+            EmitePushA16
+            EmiteMovA16RotuloNro conteudo
+            EmitePushA16
+            EmiteChamaFuncao "__print_str"
+            EmiteAddPilhaValor 4
+            ExigeTipo cTipoString, "Esperado uma string", "print ""Texto"""
+        elseif ValidaTipo(cTipoInteger) then
+            gImportaPrintInt = gImportaPrintInt + 1
+            EmiteMovA16Valor TInteger
+            EmitePushA16
+            EmiteChamaFuncao "__print_int"
+            EmiteAddPilhaValor 2
+            ExigeTipo cTipoInteger, "Esperado um integer", "print 123"
+        else
+            ErroExemplo "Esperado conteudo do print", "print ""Texto"""
+        end if
+        enter = 1
+        if Valida(cTipoOutro, ";") then
+            enter = 0
+            Prox
+        elseif not ValidaFimDaLinha() then
+            Exige cTipoOpMatematica, "+", "Esperado concatenacao de texto ou separador de campos (';')", "print ""Texto"" + teste$"
+            exit do
+        end if
+    loop
+    if enter = 1 then EmiteChamaFuncao "__print_enter"
+    ExigeFimDaLinha "Esperado o fim da linha", "print ""Texto"""
+end sub
+
 sub Processa()
+    if ValidaTipo(cTipoComentario) or ValidaTipo(cTipoFimDaLinha) then
+        exit sub
+    end if
     if Valida(cTipoId, "dim") then
         if gEtapa <> 0 then
             Erro "Todas as declaracoes de variaveis devem ficar no topo"
         end if
         Declara
         exit sub
+    elseif Valida(cTipoId, "asm") then
+        Assembly
+        exit sub
+    elseif Valida(cTipoId, "sub") then
+        SubRotina
+        exit sub
+    elseif Valida(cTipoId, "end") then
+        ExigeId "end", "Esperado 'end'", "end"
+        if Valida(cTipoId, "sub") then
+            FimSubRotina
+        end if
+        exit sub
     end if
     gEtapa = 1
-    Expr
+    if Valida(cTipoId, "print") then
+        ProcessaPrint
+    elseif LocalExiste(T$) > 0 then
+        AtribuiLocal
+    elseif GlobalExiste(T$) > 0 then
+        AtribuiGlobal
+    elseif FuncaoExiste(T$) > 0 then
+        ChamaFuncao
+    else
+        Erro "Comando nao suportado ou nao reconhecido"
+    end if
 end sub
 
 sub ProcessaArq(arq as string)
+    dim antNivel as integer
+    dim antArq as integer
+    dim antArqNome as string
+    dim antLinha as integer
+
+    antArq = gArq
+    antArqNome = gArqNome
+    antLinha = gLinha
+    antNivel = gNivel
+
     gArq = freefile
+    gArqNome$ = arq$
     
-    open arq for input as #gArq
+    EmiteComentario "BAS: " + arq$
+
+    open arq$ for input as #gArq
     
     gLinha = 1
 
@@ -385,6 +643,11 @@ sub ProcessaArq(arq as string)
     loop
     
     close #gArq
+
+    gLinha = antLinha
+    gArqNome = antArqNome
+    gArq = antArq
+    gNivel = antNivel
 end sub
 
 print "HCBasic Compilador para 8086 v0.1"
@@ -393,15 +656,18 @@ print
 
 Argumentos
 
-if gArgsQtd <> 3 then
+if gArgsQtd <> 4 then
 ajuda:
-    print "Modo de uso: hcb [entrada .bas] [saida sem extensao] [nasm|osasm]"
+    print "Modo de uso: hcb [entrada .bas] [saida sem extensao] [nasm|tinyasm|osasm] [endereco biblioteca]"
     print gArgsQtd
     system
 end if
 
 select case gArgs$(3)
 case "nasm"
+    gExt = ".asm"
+    gFormato = cFormatoNasm
+case "tinyasm"
     gExt = ".asm"
     gFormato = cFormatoNasm
 case "osasm"
@@ -411,14 +677,20 @@ case else
     goto ajuda
 end select
 
+gImportaEndereco$ = gArgs$(4)
+
 gSaida = freefile
+
+gNivel = 0
 
 print "Processando "+ gArgs$(2) + gExt$;
 open (gArgs$(2) + gExt$) for output as #gSaida
 
 EmiteComentario "Gerado com o HCBasic"
 
-EmiteOrg0x100
+ProcessaArq gImportaEndereco$ + "header.bas"
+
+EmiteComentario "Inicio"
 
 EmiteFuncaoInicio
 
@@ -426,12 +698,36 @@ ProcessaArq gArgs$(1)
 
 EmiteFuncaoFim
 
+if gImportaPrint > 0 then
+    gEtapa = 0
+    ProcessaArq gImportaEndereco$ + "print.bas"
+end if
+if gImportaPrintStr > 0 then
+    gEtapa = 0
+    ProcessaArq gImportaEndereco$ + "prints.bas"
+end if
+if gImportaPrintInt > 0 then
+    gEtapa = 0
+    ProcessaArq gImportaEndereco$ + "printi.bas"
+end if
+if gImportaStrConcat > 0 then
+    gEtapa = 0
+    ProcessaArq gImportaEndereco$ + "concat.bas"
+end if
+if gImportaStrCopy > 0 then
+    gEtapa = 0
+    ProcessaArq gImportaEndereco$ + "copy.bas"
+end if
+
+ProcessaArq gImportaEndereco$ + "footer.bas"
+
 close #gSaida
 if gErros = 0 then
     print "[ OK ]"
 else 
     print
     print "[ Foram encontrados" +str$(gErros) + " erros ]"
+    system 1
 end if
 
 

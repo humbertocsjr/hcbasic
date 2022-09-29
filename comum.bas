@@ -41,6 +41,17 @@ sub GlobalCadastra(nome as string, tipo as string)
     Erro "Estouro da capacidade de variaveis globais simultaneas"
 end sub
 
+function GlobalTipo$(nome as string)
+    dim i as integer
+    for i = 1 to cLocalCapacidade
+        if gGlobal$(i) = nome$ then
+            GlobalTipo$ = gGlobalTipo$(i)
+            exit function
+        end if
+    next
+    GlobalTipo$ = ""
+end function
+
 function GlobalExiste(nome as string)
     dim i as integer
     for i = 1 to cGlobalCapacidade
@@ -90,6 +101,24 @@ function LocalExiste(nome as string)
     LocalExiste = 0
 end function
 
+function LocalTipo$(nome as string)
+    dim i as integer
+    for i = 1 to cLocalCapacidade
+        if gNivel = 0 then
+            if gLocalRaiz$(i) = nome$ then
+                LocalTipo$ = gLocalRaizTipo$(i)
+                exit function
+            end if
+        else
+            if gLocal$(i) = nome$ then
+                LocalTipo$ = gLocalTipo$(i)
+                exit function
+            end if
+        end if
+    next
+    LocalTipo$ = ""
+end function
+
 sub GlobalLimpa()
     dim i as integer
     for i = 1 to cGlobalCapacidade
@@ -113,6 +142,17 @@ sub LocalRaizLimpa()
         gLocalRaizTipo$(i) = ""
     next
 end sub
+
+function FuncaoExiste(nome as string)
+    dim i as integer
+    for i = 1 to cFuncaoCapacidade
+        if gFuncao$(i) = nome$ then
+            FuncaoExiste = i
+            exit function
+        end if
+    next
+    FuncaoExiste = 0
+end function
 
 function TentaProx
     gTrechoAtual = gTrechoAtual + 1
@@ -314,7 +354,7 @@ sub Leia()
         end if
         select case etapa
         case 0
-            if EhLetra(c$) then
+            if (EhLetra(c$) or (c$ = "_")) then
                 etapa = 1
                 gTrechoAtual = gTrechoAtual + 1
                 gTrecho$(gTrechoAtual) = lcase$(c$)
@@ -366,7 +406,7 @@ sub Leia()
                 gColuna(gTrechoAtual) = i
             end if
         case 1
-            if EhAlfanum(c$) then
+            if (EhAlfanum(c$) or (c$ = "_")) then
                 gTrecho$(gTrechoAtual) = gTrecho$(gTrechoAtual) + lcase$(c$)
             else
                 if(gTrecho$(gTrechoAtual) = "mod") then

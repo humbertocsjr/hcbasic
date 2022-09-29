@@ -1,1 +1,6 @@
-dim a as integer = 1<>1==1>1<1<=1>=1
+print "Oiee";123
+
+
+print 456
+
+print "oi"
