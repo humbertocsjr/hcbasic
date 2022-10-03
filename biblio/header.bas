@@ -39,6 +39,21 @@ asm osasm "mov __SP__, sp"
 asm nasm  "mov sp, 0xffff"
 asm osasm "mov sp, #0xffff"
 
+asm nasm  "xor di, di"
+asm osasm "xor di, di"
+
+asm nasm  "mov cx, 128"
+asm osasm "mov cx, #128"
+
+asm nasm  "xor ax, ax"
+asm osasm "xor ax, ax"
+
+asm nasm  "rep"
+asm osasm "rep"
+
+asm nasm  "stosw"
+asm osasm "stosw"
+
 ' Chama o codigo principal
 
 asm nasm  "call __INICIO__"

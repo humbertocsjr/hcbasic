@@ -35,6 +35,10 @@ sub EmiteMovB16Valor(valor as integer)
     end if
 end sub
 
+sub EmiteMovB16A16()
+    EmiteFmt "mov bx, ax", "mov bx, ax"
+end sub
+
 sub EmiteMovA16SegCodigo()
     EmiteFmt "mov ax, cs", "mov ax, cs"
 end sub
@@ -52,8 +56,21 @@ sub EmiteMovA16VarGlobal(var as string)
     EmiteFmt "mov ax, [" + var$ + "]", "mov ax, "+ var$ 
 end sub
 
+sub EmiteMovB16VarLocal(var as string)
+    EmiteFmt "mov bx, [bp+" + NomeVarLocal$(var$) + "]", "mov bx, " + NomeVarLocal$(var$) + "[bp]"
+end sub
+
+sub EmiteMovB16VarGlobal(var as string)
+    EmiteFmt "cs", "seg cs"
+    EmiteFmt "mov bx, [" + var$ + "]", "mov bx, "+ var$ 
+end sub
+
 sub EmitePushA16
     EmiteFmt "push ax", "push ax"
+end sub
+
+sub EmitePushB16
+    EmiteFmt "push bx", "push bx"
 end sub
 
 sub EmitePopA16
@@ -138,6 +155,14 @@ sub EmiteDeclaraVarGlobal(nome as string, tam as integer)
     EmiteFmt "",  ".zerob "+ str$(tam)
 end sub
 
+sub EmiteIncVarLocal(var as string)
+    EmiteFmt "inc word [bp+" + NomeVarLocal$(var$)+ "]", "inc " + NomeVarLocal$(var$) + "[bp]"
+end sub
+
+sub EmiteAddVarLocalA16(var as string)
+    EmiteFmt "add [bp+" + NomeVarLocal$(var$)+ "], ax", "add " + NomeVarLocal$(var$) + "[bp], ax"
+end sub
+
 sub EmiteMovVarLocalA16(var as string)
     EmiteFmt "mov [bp+" + NomeVarLocal$(var$)+ "], ax", "mov " + NomeVarLocal$(var$) + "[bp], ax"
 end sub
@@ -151,6 +176,16 @@ sub EmiteMovVarLocalStringPrep(var as string, posicao as integer)
     EmiteFmt "mov word [bp+" + NomeVarLocal$(var$) + "], ax" , "mov " + NomeVarLocal$(var$) + "[bp], ax"
     EmiteFmt "mov ax, ss" , "mov ax, ss"
     EmiteFmt "mov word [bp+" + NomeVarLocal$(var$) + "+2], ax" , "mov " + NomeVarLocal$(var$) + "+2[bp], ax"
+end sub
+
+sub EmiteIncVarGlobal(var as string)
+    EmiteFmt "cs", "seg cs"
+    EmiteFmt "inc word [" + var$ + "]", "inc " + var$
+end sub
+
+sub EmiteAddVarGlobalA16(var as string)
+    EmiteFmt "cs", "seg cs"
+    EmiteFmt "add [" + var$ + "], ax", "add " + var$ + ", ax"
 end sub
 
 sub EmiteMovVarGlobalA16(var as string)
@@ -248,6 +283,14 @@ end sub
 
 sub EmiteCmpA16Valor(valor as integer)
     EmiteFmt "cmp ax, " + str$(valor), "cmp ax, #" + str$(valor)
+end sub
+
+sub EmiteCmpA16B16()
+    EmiteFmt "cmp ax, bx", "cmp ax, bx"
+end sub
+
+sub EmiteCmpB16A16()
+    EmiteFmt "cmp bx, ax", "cmp bx, ax"
 end sub
 
 sub EmiteCmpA16Pop
@@ -425,4 +468,31 @@ end sub
 
 sub EmiteChamaFuncao(rotina as string)
     Emite "call " + rotina$
+end sub
+
+sub EmiteMovPtrDestinoValor(valor as integer)
+    EmiteFmt "mov di, " + str$(valor), "mov di, #" + str$(valor)
+end sub
+
+sub EmiteMovPtrDestinoA16(valor as integer)
+    EmiteFmt "mov di, ax", "mov di, ax"
+end sub
+
+sub EmiteMovSegDestinoA16()
+    EmiteFmt "mov es, ax", "mov es, ax"
+end sub
+
+sub EmiteMovDestinoByte(valor as integer)
+    EmiteFmt "es", "seg es"
+    EmiteFmt "mov byte [di], " + str$(valor), "movb [di], #" + str$(valor)
+end sub
+
+sub EmiteMovDestinoA16()
+    EmiteFmt "es", "seg es"
+    EmiteFmt "mov [di], ax", "mov [di], ax"
+end sub
+
+sub EmiteMovDestinoA16Byte()
+    EmiteFmt "es", "seg es"
+    EmiteFmt "mov [di], al", "movb [di], al"
 end sub

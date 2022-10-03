@@ -1,3 +1,4 @@
+declare sub Processa()
 
 const cArgsCapacidade = 10
 const cTrechoCapacidade = 32
@@ -5,6 +6,7 @@ const cFuncaoCapacidade = 128
 const cLocalCapacidade = 64
 const cGlobalCapacidade = 64
 const cTamStringPadrao = 64
+const cNiveisSaida = 32
 
 'Tipos de trecho
 const cTipoVazio = 0
@@ -48,6 +50,11 @@ dim shared gLocalRaiz(cLocalCapacidade) as string
 dim shared gLocalRaizTipo(cLocalCapacidade) as string
 dim shared gGlobal(cGlobalCapacidade) as string
 dim shared gGlobalTipo(cGlobalCapacidade) as string
+dim shared gSeNivel(cNiveisSaida) as integer
+dim shared gSeNivelAtual as integer
+dim shared gRepeticaoNivelInicio(cNiveisSaida) as integer
+dim shared gRepeticaoNivelFim(cNiveisSaida) as integer
+dim shared gRepeticaoNivelAtual as integer
 dim shared gLocalPos as integer
 dim shared gEtapa as integer
 dim shared gRotulo as integer
@@ -68,6 +75,8 @@ gImportaPrintInt = 0
 gImportaStrConcat = 0
 gImportaStrCopy = 0
 
+gSeNivelAtual = 0
+gRepeticaoNivelAtual = 0
 gEtapa = 0
 gLocalPos = 0
 gFuncaoAtual = 0
@@ -337,8 +346,25 @@ sub Expr()
     loop
 end sub
 
-sub StrExpr(global as integer, destino as string)
+sub StrExpr2(global as integer, destino as string)
+    dim pulo as integer
+    if ValidaTipo(cTipoString) then
+        ExprString
+        EmiteMovB16A16
+        EmiteMovA16SegCodigo
+        EmitePushA16
+        EmitePushB16
+        EmiteChamaFuncao "__str_concat"
+        EmiteAddPilhaValor 4
+    end if
+end sub
 
+sub StrExpr(global as integer, destino as string)
+    StrExpr2 global, destino
+end sub
+
+sub PtrExpr()
+    
 end sub
 
 sub Declara()
@@ -375,6 +401,12 @@ sub Declara()
             end if
             EmiteRotuloNro rotuloPulo
             EmiteMovVarGlobalStringPrep nome$, rotulo
+        elseif tipo$ = "ptrbyte" then
+            EmiteDeclaraVarGlobal nome$, 4
+            EmiteRotuloNro rotuloPulo
+        elseif tipo$ = "ptrword" then
+            EmiteDeclaraVarGlobal nome$, 4
+            EmiteRotuloNro rotuloPulo
         else 
             EmiteDeclaraVarGlobal nome$, 2
             EmiteRotuloNro rotuloPulo
@@ -388,6 +420,14 @@ sub Declara()
             EmitePreparaStringLocal cTamStringPadrao, nome$, gLocalPos
             EmiteMovVarLocalStringPrep nome$, gLocalPos
             EmiteSubPilhaValor 4 + cTamStringPadrao + 2
+        elseif tipo$ = "ptrbyte"
+            gLocalPos = gLocalPos - 4
+            EmiteDeclaraVarLocal nome$, gLocalPos
+            EmiteSubPilhaValor 4
+        elseif tipo$ = "ptrword"
+            gLocalPos = gLocalPos - 4
+            EmiteDeclaraVarLocal nome$, gLocalPos
+            EmiteSubPilhaValor 4
         else 
             gLocalPos = gLocalPos - 2
             EmiteDeclaraVarLocal nome$, gLocalPos
@@ -397,7 +437,11 @@ sub Declara()
     if Valida(cTipoOpLogica, "=") then
         Prox
         if tipo$ = "string" then
-            StrExpr global, nome$
+            Erro "Expressao nao suportada na declaracao"
+        elseif tipo$ = "ptrbyte" then
+            Erro "Expressao nao suportada na declaracao"
+        elseif tipo$ = "ptrword" then
+            Erro "Expressao nao suportada na declaracao"
         else
             Expr
         end if
@@ -524,8 +568,41 @@ end sub
 
 sub ChamaFuncao()
     dim nome as string
+    dim args as integer
+    dim func as integer
+    dim argPos as integer
+    dim argTipo as string
     nome$ = T$
+    EmiteChamaFuncao "__mem_aloca"
+    func = FuncaoExiste(nome$)
     ExigeTipo cTipoId, "Esperado o nome da rotina", "Rotina arg1, arg2"
+    if func == 0 then 
+        ErroExemplo "Esperado o nome da rotina", "Rotina arg1, arg2"
+    end if
+    args = 0
+    do while not ValidaFimDaLinha()
+        argTipo$ = ""
+        for argPos = argPos to len(gFuncaoArgs$(func))
+            if mid$(gFuncaoArgs$(func), argPos, 1) = "," then
+                argPos = argPos + 1
+                exit for
+            end if
+            argTipo$ = argTipo$ + mid$(gFuncaoArgs$(func), argPos, 1)
+        next
+        select case argTipo$
+        case "string"
+            EmiteChamaFuncao "__mem_str"
+            StrExpr 2, ""
+        case "integer"
+            Expr
+        case ""
+            ExigeFimDaLinha "Esperado fim da linha", "Rotina arg1, arg2"
+        case else
+            Erro "Tipo de argumento nao suportado: " + argTipo$
+        end select
+    loop
+    EmiteChamaFuncao "__mem_libera"
+    EmiteChamaFuncao nome$
     ExigeFimDaLinha "Esperado fim da linha", "Rotina arg1, arg2"
 end sub
 
@@ -579,6 +656,163 @@ sub ProcessaPrint()
     ExigeFimDaLinha "Esperado o fim da linha", "print ""Texto"""
 end sub
 
+sub ProcessaIf()
+    dim inicio as integer
+    inicio = NovoRotulo
+    gSeNivelAtual = gSeNivelAtual + 1
+    gSeNivel(gSeNivelAtual) = NovoRotulo
+    Prox
+    Expr
+    ExigeId("then", "Esperado 'then' apos a comparacao", "if a > b then")
+    EmiteCmpA16Valor 0
+    EmitePuloSeDifRotuloNro inicio
+    EmitePuloRotuloNro gSeNivel(gSeNivelAtual)
+    EmiteRotuloNro inicio
+    if ValidaFimDaLinha() then
+        ExigeFimDaLinha "Esperado fim da linha", "if a > 0 then"
+    else
+        Processa
+        EmiteRotuloNro gSeNivel(gSeNivelAtual)
+        gSeNivel(gSeNivelAtual) = 0
+        gSeNivelAtual = gSeNivelAtual - 1
+        ExigeFimDaLinha "Esperado fim da linha apos o comando", "if a > 0 then comando"
+    end if
+end sub
+
+sub ProcessaFimIf()
+    EmiteRotuloNro gSeNivel(gSeNivelAtual)
+    gSeNivel(gSeNivelAtual) = 0
+    gSeNivelAtual = gSeNivelAtual - 1
+    Prox
+    ExigeFimDaLinha "Esperado fim da linha", "end if"
+end sub
+
+sub ProcessaDo()
+    dim ok as integer
+    dim tipo as string
+    gRepeticaoNivelAtual = gRepeticaoNivelAtual + 1
+    ok = NovoRotulo
+    gRepeticaoNivelInicio(gRepeticaoNivelAtual) = NovoRotulo
+    gRepeticaoNivelFim(gRepeticaoNivelAtual) = NovoRotulo
+    Prox
+    EmiteRotuloNro gRepeticaoNivelInicio(gRepeticaoNivelAtual)
+    if not ValidaFimDaLinha() then
+        tipo$ = T$
+        Prox
+        Expr
+        EmiteCmpA16Valor 0
+        if tipo$ = "while" then
+            EmitePuloSeDifRotuloNro ok
+        elseif tipo$ = "until" then
+            EmitePuloSeIgualRotuloNro ok
+        else
+            ErroExemplo "Esperado fim da linha ou 'while' ou 'until'", "do while a < 2"
+        end if
+        EmitePuloRotuloNro gRepeticaoNivelFim(gRepeticaoNivelAtual)
+    end if
+    EmiteRotuloNro ok
+    ExigeFimDaLinha "Esperado fim da linha", "loop"
+end sub
+
+sub ProcessaLoop()
+    dim tipo as string
+    Prox
+    if not ValidaFimDaLinha() then
+        tipo$ = T$
+        Prox
+        Expr
+        EmiteCmpA16Valor 0
+        if tipo$ = "while" then
+            EmitePuloSeDifRotuloNro gRepeticaoNivelInicio(gRepeticaoNivelAtual)
+        elseif tipo$ = "until" then
+            EmitePuloSeIgualRotuloNro gRepeticaoNivelInicio(gRepeticaoNivelAtual)
+        else
+            ErroExemplo "Esperado fim da linha ou 'while' ou 'until'", "loop while a < 2"
+        end if
+        EmitePuloRotuloNro gRepeticaoNivelFim(gRepeticaoNivelAtual)
+    end if
+    EmitePuloRotuloNro gRepeticaoNivelInicio(gRepeticaoNivelAtual)
+    EmiteRotuloNro gRepeticaoNivelFim(gRepeticaoNivelAtual)
+    gRepeticaoNivelInicio(gRepeticaoNivelAtual) = 0
+    gRepeticaoNivelFim(gRepeticaoNivelAtual) = 0
+    gRepeticaoNivelAtual = gRepeticaoNivelAtual - 1
+end sub
+
+sub ProcessaBreak()
+    if gRepeticaoNivelAtual = 0 then 
+        Erro "Este comando apenas pode ser executado de dentro de uma repeticao/loop"
+    end if
+    EmitePuloRotuloNro gRepeticaoNivelFim(gRepeticaoNivelAtual)
+end sub
+
+sub ProcessaContinue()
+    if gRepeticaoNivelAtual = 0 then 
+        Erro "Este comando apenas pode ser executado de dentro de uma repeticao/loop"
+    end if
+    EmitePuloRotuloNro gRepeticaoNivelInicio(gRepeticaoNivelAtual)
+end sub
+
+sub ProcessaFor()
+    dim ok as integer
+    dim inicio as integer
+    dim variavel as string
+    gRepeticaoNivelAtual = gRepeticaoNivelAtual + 1
+    ok = NovoRotulo
+    inicio = NovoRotulo
+    gRepeticaoNivelInicio(gRepeticaoNivelAtual) = NovoRotulo
+    gRepeticaoNivelFim(gRepeticaoNivelAtual) = NovoRotulo
+    Prox
+    variavel$ = T$
+    ExigeTipo cTipoId, "Esperado variavel depois do 'for'", "for i = 1 to 10 step 2"
+    Exige cTipoOpLogica, "=", "Esperado '=' depois da variavel", "for i = 1 to 10 step 2"
+    Expr
+    if LocalExiste(variavel$) then
+        EmiteMovVarLocalA16 variavel$
+    elseif GlobalExiste(variavel$) then
+        EmiteMovVarGlobalA16 variavel$
+    else
+        ErroExemplo "Variavel nao existe", "for i = 1 to 10 step 2"
+    end if
+    ExigeId "to","Esperado um 'to' apos o valor inicial", "for i = 1 to 10 step 2"
+    EmiteRotuloNro inicio
+    Expr
+    if LocalExiste(variavel$) then
+        EmiteMovB16VarLocal variavel$
+    elseif GlobalExiste(variavel$) then
+        EmiteMovB16VarGlobal variavel$
+    end if
+    EmiteCmpB16A16
+    EmitePuloSeMenorIgualRotuloNro ok
+    EmitePuloRotuloNro gRepeticaoNivelFim(gRepeticaoNivelAtual)
+    EmiteRotuloNro gRepeticaoNivelInicio(gRepeticaoNivelAtual)
+    if Valida(cTipoId, "step") then
+        Expr
+        if LocalExiste(variavel$) then
+            EmiteAddVarLocalA16 variavel$
+        elseif GlobalExiste(variavel$) then
+            EmiteAddVarGlobalA16 variavel$
+        end if
+    else
+        if LocalExiste(variavel$) then
+            EmiteIncVarLocal variavel$
+        elseif GlobalExiste(variavel$) then
+            EmiteIncVarGlobal variavel$
+        end if
+    end if
+    EmitePuloRotuloNro inicio
+    EmiteRotuloNro ok
+    ExigeFimDaLinha "Esperado fim da linha", "for i = 1 to 10 step 2"
+end sub
+
+sub ProcessaNext()
+    Prox
+    EmitePuloRotuloNro gRepeticaoNivelInicio(gRepeticaoNivelAtual)
+    EmiteRotuloNro gRepeticaoNivelFim(gRepeticaoNivelAtual)
+    gRepeticaoNivelInicio(gRepeticaoNivelAtual) = 0
+    gRepeticaoNivelFim(gRepeticaoNivelAtual) = 0
+    gRepeticaoNivelAtual = gRepeticaoNivelAtual - 1
+end sub
+
 sub Processa()
     if ValidaTipo(cTipoComentario) or ValidaTipo(cTipoFimDaLinha) then
         exit sub
@@ -599,12 +833,28 @@ sub Processa()
         ExigeId "end", "Esperado 'end'", "end"
         if Valida(cTipoId, "sub") then
             FimSubRotina
+        elseif Valida(cTipoId, "if") then
+            ProcessaFimIf
         end if
         exit sub
     end if
     gEtapa = 1
     if Valida(cTipoId, "print") then
         ProcessaPrint
+    elseif Valida(cTipoId, "if") then
+        ProcessaIf
+    elseif Valida(cTipoId, "loop") then
+        ProcessaLoop
+    elseif Valida(cTipoId, "do") then
+        ProcessaDo
+    elseif Valida(cTipoId, "break") then
+        ProcessaBreak
+    elseif Valida(cTipoId, "continue") then
+        ProcessaContinue
+    elseif Valida(cTipoId, "for") then
+        ProcessaFor
+    elseif Valida(cTipoId, "next") then
+        ProcessaNext
     elseif LocalExiste(T$) > 0 then
         AtribuiLocal
     elseif GlobalExiste(T$) > 0 then

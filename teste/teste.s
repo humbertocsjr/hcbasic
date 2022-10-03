@@ -46,6 +46,10 @@ __INICIO__:
 push bp
 mov bp, sp
 | BAS: teste.bas
+V0a = -2
+sub sp, # 2
+xor ax, ax
+mov V0a[bp], ax
 jmp RO1
 RO0:
 .byte  4
@@ -65,22 +69,60 @@ mov ax, # 123
 push ax
 call __print_int
 add sp, # 2
-call __print_enter
+mov ax, # 1
+mov V0a[bp], ax
+RO3:
+mov ax, # 3
+mov bx, V0a[bp]
+cmp bx, ax
+jle RO2
+jmp RO5
+RO4:
+inc V0a[bp]
+jmp RO3
+RO2:
+jmp RO7
+RO6:
+.byte  1
+.byte  46
+.byte  0
+RO7:
+mov ax, cs
+push ax
+mov ax, #RO6
+push ax
+call __print_str
+add sp, # 4
+jmp RO4
+RO5:
+mov ax, V0a[bp]
+cmp ax, # 0
+je RO10
+xor ax, ax
+jmps RO11
+RO10:
+mov ax, #-1
+RO11:
+cmp ax, # 0
+jne RO8
+jmp RO9
+RO8:
 mov ax, # 456
 push ax
 call __print_int
 add sp, # 2
 call __print_enter
-jmp RO3
-RO2:
+RO9:
+jmp RO13
+RO12:
 .byte  2
 .byte  111
 .byte  105
 .byte  0
-RO3:
+RO13:
 mov ax, cs
 push ax
-mov ax, #RO2
+mov ax, #RO12
 push ax
 call __print_str
 add sp, # 4
@@ -89,19 +131,19 @@ mov sp, bp
 pop bp
 ret
 | BAS: ..\biblio\print.bas
-jmp RO4
+jmp RO14
 __print_string_var__: 
 .zerob  4
-RO5:
+RO15:
 .byte  255
 .zerob  256
-RO4:
+RO14:
 seg cs
-mov __print_string_var__, #RO5
+mov __print_string_var__, #RO15
 mov ax, cs
 seg cs
 mov __print_string_var__+2, ax
-jmp RO6
+jmp RO16
 __print_char:
 push bp
 mov bp, sp
@@ -112,12 +154,12 @@ movb ah, #0xe
 
 int #0x10
 
-RO7:
+RO17:
 mov sp, bp
 pop bp
 ret
-RO6:
-jmp RO8
+RO16:
+jmp RO18
 __print_enter:
 push bp
 mov bp, sp
@@ -131,13 +173,13 @@ movb al, #10
 
 int #0x10
 
-RO9:
+RO19:
 mov sp, bp
 pop bp
 ret
-RO8:
+RO18:
 | BAS: ..\biblio\prints.bas
-jmp RO10
+jmp RO20
 __print_str:
 push bp
 mov bp, sp
@@ -170,13 +212,13 @@ loop __print_str_loop
 
 __print_str_end:
 
-RO11:
+RO21:
 mov sp, bp
 pop bp
 ret
-RO10:
+RO20:
 | BAS: ..\biblio\printi.bas
-jmp RO12
+jmp RO22
 __print_int:
 push bp
 mov bp, sp
@@ -217,11 +259,11 @@ movb ah, #0xe
 
 int #0x10
 
-RO13:
+RO23:
 mov sp, bp
 pop bp
 ret
-RO12:
+RO22:
 | BAS: ..\biblio\footer.bas
 .align 16
 
