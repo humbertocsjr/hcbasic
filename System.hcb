@@ -1,0 +1,122 @@
+module OS
+    public sub Start
+        asm "cpu 8086"
+        asm "bits 16"
+        Program.Main
+        asm "int 0x20"
+    end
+end
+
+module String
+end
+
+module Console
+    public sub WriteChar(c as int8)
+        asm "mov ax, [bp+6]"
+        asm "mov ah, 0xe"
+        asm "int 0x10"
+    end
+end
+
+module UInt32
+    public sub Add(ptrDest as uint16, ptrOrig as uint16)
+        asm "push bp"
+        asm "mov bp, sp"
+        asm "mov di, [bp+4]"
+        asm "mov si, [bp+6]"
+        asm "mov ax, [si]"
+        asm "mov bx, [si+2]"
+        asm "add [di], ax"
+        asm "adc [di+2], bx"
+        asm "pop bp"
+    end
+
+    public sub Subtract(ptrDest as uint16, ptrOrig as uint16)
+        asm "push bp"
+        asm "mov bp, sp"
+        asm "mov di, [bp+4]"
+        asm "mov si, [bp+6]"
+        asm "mov ax, [si]"
+        asm "mov bx, [si+2]"
+        asm "sub [di], ax"
+        asm "sbb [di+2], bx"
+        asm "pop bp"
+    end
+
+    public sub Multiply(ptrDest as uint16, ptrOrig as uint16)
+        dim temp1 as uint16
+        dim temp2 as uint16
+        asm "mov byte [bp-2], 32\n"
+        asm "mov si, [bp+4]\n"
+        asm "mov ax, [si]\n"
+        asm "mov bx, [si+2]\n"
+        asm "mov si, [bp+6]\n"
+        asm "mov di, [si]\n"
+        asm "mov si, [si+2]\n"
+        asm "mov [bp-4], ax\n"
+        asm "mov [bp-6], bx\n"
+        asm "xor ax, ax\n"
+        asm "xor bx, bx\n"
+        asm "xor cx, cx\n"
+        asm "xor dx, dx\n"
+        asm ".calcula:\n"
+        asm "test di, 1\n"
+        asm "jz .ignora\n"
+        asm "add cx, [bp-4]\n"
+        asm "adc dx, [bp-6]\n"
+        asm ".ignora:\n"
+        asm "rcr dx, 1\n"
+        asm "rcr cx, 1\n"
+        asm "rcr bx, 1\n"
+        asm "rcr ax, 1\n"
+        asm "rcr si, 1\n"
+        asm "rcr di, 1\n"
+        asm "dec byte [bp-2]\n"
+        asm "jnz .calcula\n"
+        asm "mov si, [bp+4]\n"
+        asm "mov [si], ax\n"
+        asm "mov [si+2], bx\n"
+    end
+
+    public sub Divide(ptrModule as uint16, ptrDest as uint16, ptrOrig as uint16)
+        dim temp1 as uint16
+        dim temp2 as uint16
+        dim temp3 as uint16
+        asm "mov di, [bp+6]
+        asm "mov word [di], 0"
+        asm "mov word [di+2], 0"
+        asm "; bx:ax Resto"
+        asm "; dx:cx Divisor"
+        asm "; di:si Resultado"
+        asm "mov byte [bp-2], 32\n"
+        asm "mov si, [bp+8]\n"
+        asm "mov ax, [si]\n"
+        asm "mov bx, [si+2]\n"
+        asm "mov si, [bp+10]\n"
+        asm "mov di, [si]\n"
+        asm "mov si, [si+2]\n"
+        asm "mov [bp-4], ax\n"
+        asm "mov [bp-6], bx\n"
+        asm "xor ax, ax\n"
+        asm "xor bx, bx\n"
+        asm "xor cx, cx\n"
+        asm "xor dx, dx\n"
+        asm ".calcula:\n"
+        asm "test di, 1\n"
+        asm "jz .ignora\n"
+        asm "add cx, [bp-4]\n"
+        asm "adc dx, [bp-6]\n"
+        asm ".ignora:\n"
+        asm "rcr dx, 1\n"
+        asm "rcr cx, 1\n"
+        asm "rcr bx, 1\n"
+        asm "rcr ax, 1\n"
+        asm "rcr si, 1\n"
+        asm "rcr di, 1\n"
+        asm "dec byte [bp-2]\n"
+        asm "jnz .calcula\n"
+        asm "mov si, [bp+6]\n"
+        asm "mov [si], ax\n"
+        asm "mov [si+2], bx\n"
+    end
+end
