@@ -6,7 +6,7 @@ Esta linguagem não tem como objetivo ser orientada a objetos, sendo próximo de
 
 ## Requisitos Mínimos
 
-- DotNET 7.0 para Windows, Linux ou macOS
+- DotNET SDK 7.0 para Windows, Linux ou macOS
 - DOSBox para testes dos arquivos gerados
 - NASM para montagem do código assembly gerado
 
