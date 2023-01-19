@@ -193,6 +193,15 @@ Private Dim NomeDoCampoPrivado as UInt16
 Dim NomeDoCampoPrivadoAlternativo as UInt16
 ```
 
+### Números e Formatos
+
+Inicialmente aceita os formatos de número abaixo:
+
+| Formato | Descrição | Exemplo |
+|---------|-----------|---------|
+| 00000 | Número decimal de 16 bits | 12345 |
+| 0x0000 | Número hexadecimal de 16 bits | 0x1234 |
+
 ### Tipos de dados
 
 As variáveis e campos usam tipos rigidamente especificados, não havendo tipos genéricos. Abaixo segue a lista de tipos aceitos:
@@ -273,6 +282,8 @@ Com excessão do AND, OR e XOR, as demais comparações lógicas retornam valore
 
 | Operação | Descrição |
 |----------|-----------|
+| ++ | Incrementa um valor |
+| -- | Decrementa um valor |
 | + | Soma dois valores |
 | - | Subtrai dois valores |
 | * | Multiplica dois valores |
