@@ -17,6 +17,34 @@ module OS
 end
 
 module String
+    public function Length(text as ptrbytearray)
+        dim i as uint16
+        let i = 0
+        while text > 0
+            let i ++
+            let @text++
+        end
+        return i
+    end
+end
+
+module StreamWriter
+    public function Write(stream as uint16, text as ptrbytearray) as uint16
+    end
+
+    public function WriteLine(stream as uint16, text as ptrbytearray) as uint16
+    end
+end
+
+module Stream
+    public function Write(stream as uint16, data as ptrbytearray, len as uint16)
+    end
+end
+
+module File
+    public function Open(filename) as uint16
+
+    end
 end
 
 module Console
@@ -33,6 +61,12 @@ module Console
         end
     end
 
+    public sub WriteLine(txt as ptrbytearray)
+        Write txt
+        WriteChar 13
+        WriteChar 10
+    end
+
     public sub WriteUInt16(nro as uint16)
         dim tmp as uint16
         dim prox as uint16
@@ -40,6 +74,21 @@ module Console
         let prox = nro / 10
         if prox > 0 then WriteUInt16 prox
         WriteChar 48 + tmp
+    end
+
+    public sub WriteInt16(nro as int16)
+        if nro < 0 then
+            let nro = -nro
+        end
+        WriteUInt16 nro
+    end
+
+    public sub WriteUInt8(nro as uint8)
+        WriteUInt16 nro
+    end
+
+    public sub WriteInt8(nro as int8)
+        WriteInt16 nro
     end
 end
 

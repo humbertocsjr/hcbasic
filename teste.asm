@@ -72,6 +72,34 @@ mov sp, bp
 pop bp
 FIM_console_write:
 retf
+_console_writeline:
+push bp
+mov bp, sp
+push word [bp+6+2]
+pop es
+mov di, [bp+6]
+xor ax, ax
+es mov al, [di]
+push es
+push di
+push cs
+call _console_write
+add sp, 4
+mov ax, 13
+push ax
+push cs
+call _console_writechar
+add sp, 2
+mov ax, 10
+push ax
+push cs
+call _console_writechar
+add sp, 2
+ROTULO11:
+mov sp, bp
+pop bp
+FIM_console_writeline:
+retf
 _console_writeuint16:
 push bp
 mov bp, sp
@@ -99,24 +127,24 @@ xor ax, ax
 mov bx, ax
 pop ax
 cmp ax, bx
-ja ROTULO14
-jmp ROTULO15
-ROTULO14:
-mov ax, 65535
+ja ROTULO15
 jmp ROTULO16
 ROTULO15:
-xor ax, ax
+mov ax, 65535
+jmp ROTULO17
 ROTULO16:
+xor ax, ax
+ROTULO17:
 cmp ax, 0
-jne ROTULO12
-jmp ROTULO13
-ROTULO12:
+jne ROTULO13
+jmp ROTULO14
+ROTULO13:
 mov ax, [bp+-4]
 push ax
 push cs
 call _console_writeuint16
 add sp, 2
-ROTULO13:
+ROTULO14:
 mov ax, 48
 push ax
 mov ax, [bp+-2]
@@ -126,10 +154,48 @@ push ax
 push cs
 call _console_writechar
 add sp, 2
-ROTULO11:
+ROTULO12:
 mov sp, bp
 pop bp
 FIM_console_writeuint16:
+retf
+_console_writeint16:
+push bp
+mov bp, sp
+mov ax, [bp+6]
+push ax
+xor ax, ax
+mov bx, ax
+pop ax
+cmp ax, bx
+jb ROTULO21
+jmp ROTULO22
+ROTULO21:
+mov ax, 65535
+jmp ROTULO23
+ROTULO22:
+xor ax, ax
+ROTULO23:
+cmp ax, 0
+jne ROTULO19
+jmp ROTULO20
+ROTULO19:
+xor ax, ax
+push ax
+mov ax, [bp+6]
+pop bx
+sub ax, bx
+mov [bp+6], ax
+ROTULO20:
+mov ax, [bp+6]
+push ax
+push cs
+call _console_writeuint16
+add sp, 2
+ROTULO18:
+mov sp, bp
+pop bp
+FIM_console_writeint16:
 retf
 ; MODULO FIM: console
 ; MODULO: program
@@ -137,14 +203,14 @@ _program_main:
 push bp
 mov bp, sp
 sub sp, 4
-jmp ROTULO18
-ROTULO19:
+jmp ROTULO25
+ROTULO26:
 db 65,105,101,101,101,101,101
 times 1 db 0
-ROTULO18:
+ROTULO25:
 mov ax, cs
 mov word [bp+-4+2], ax
-mov ax, ROTULO19
+mov ax, ROTULO26
 mov [bp+-4], ax
 push word [bp+-4+2]
 pop es
@@ -156,7 +222,7 @@ push di
 push cs
 call _console_write
 add sp, 4
-ROTULO17:
+ROTULO24:
 mov sp, bp
 pop bp
 FIM_program_main:

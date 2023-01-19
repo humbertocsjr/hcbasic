@@ -26,6 +26,7 @@ Esta linguagem não tem como objetivo ser orientada a objetos, sendo próximo de
 - [ ] Suporte a números 32 bits na linguagem
 - [x] Inclui apenas módulos usados no projeto, deixando o executável mais compacto
 - [ ] Permitir conversão dos ponteiros PtrByteArray em PtrWordArray de forma simples
+- [ ] Implementar um tipo de Try Catch Finally / Throw Exception
 
 ## Exemplo de código
 
