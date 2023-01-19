@@ -18,7 +18,8 @@ Esta linguagem não tem como objetivo ser orientada a objetos, sendo próximo de
 - [x] Suporte a números 8 e 16 bits
 - [ ] Correto tratamento e diferenciação do public e private
 - [ ] Comando FOR
-- [ ] Suporte a rotinas externas (Implementar comando INVOKE)
+- [ ] Suporte a rotinas externas usando ponteiro (Implementar comando INVOKE)
+- [ ] Implementar tipos personalizados usando uma dinâmica próxima ao TYPE do QuickBASIC, por trás usar comandos do PtrByteArray e PtrWordArray, mas permitindo declarar Rotinas, para ser uma proto orientação a objetos para poder implementar as bibliotecas System de forma mais próxima ao .NET
 - [x] Ponteiros
 - [ ] String (Concatenar, substring, etc)
 - [ ] Adicionar ao inicio das constantes de texto, o seu tamanho para evitar o estouro de variável pelas rotinas de manipulação de Strings
@@ -27,6 +28,7 @@ Esta linguagem não tem como objetivo ser orientada a objetos, sendo próximo de
 - [x] Inclui apenas módulos usados no projeto, deixando o executável mais compacto
 - [ ] Permitir conversão dos ponteiros PtrByteArray em PtrWordArray de forma simples
 - [ ] Implementar um tipo de Try Catch Finally / Throw Exception
+- [ ] Implementar forma de definir os diretórios de pesquisa do Imports
 
 ## Exemplo de código
 
