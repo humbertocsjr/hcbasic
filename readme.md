@@ -429,7 +429,7 @@ Após portar o compilador deve-se implementar a Biblioteca System que contém os
 
 Pode e se recomenda se basear na implementação principal para processador 8086 (Saida8086.cs), pois tem várias dicas de como implementar de forma fácil e rápida.
 
-**Exemplo do código do Saida8086.cs para um suposto Saida386.cs:**
+**Exemplo do código do Saida8086.cs para um suposto Saida386.cs e Saida68k:**
 
 Trecho do Saida8086.cs:
 ```csharp
