@@ -197,20 +197,50 @@ mov sp, bp
 pop bp
 FIM_console_writeint16:
 retf
+_console_writeuint8:
+push bp
+mov bp, sp
+mov ax, [bp+6]
+push ax
+push cs
+call _console_writeuint16
+add sp, 2
+ROTULO24:
+mov sp, bp
+pop bp
+FIM_console_writeuint8:
+retf
+_console_writeint8:
+push bp
+mov bp, sp
+mov ax, [bp+6]
+push ax
+push cs
+call _console_writeint16
+add sp, 2
+ROTULO25:
+mov sp, bp
+pop bp
+FIM_console_writeint8:
+retf
 ; MODULO FIM: console
 ; MODULO: program
+jmp ROTULO26
+_program_testeglobal:
+times 2 db 0
+ROTULO26:
 _program_main:
 push bp
 mov bp, sp
 sub sp, 4
-jmp ROTULO25
-ROTULO26:
-db 65,105,101,101,101,101,101
+jmp ROTULO28
+ROTULO29:
+db 79,105,101,101,101,101,101
 times 1 db 0
-ROTULO25:
+ROTULO28:
 mov ax, cs
 mov word [bp+-4+2], ax
-mov ax, ROTULO26
+mov ax, ROTULO29
 mov [bp+-4], ax
 push word [bp+-4+2]
 pop es
@@ -222,7 +252,13 @@ push di
 push cs
 call _console_write
 add sp, 4
-ROTULO24:
+cs mov word [_program_testeglobal], 123
+cs mov ax, [_program_testeglobal]
+push ax
+push cs
+call _console_writeuint16
+add sp, 2
+ROTULO27:
 mov sp, bp
 pop bp
 FIM_program_main:

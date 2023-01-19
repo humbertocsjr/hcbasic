@@ -146,7 +146,124 @@ class Atribuicao : No
                 amb.Tipo = null;
             }
         }
-        else throw Erro("Variavel global nao suportada");
+        else // GLOBAL
+        {
+            if(OperacaoEspecial != TipoOperacaoEspecial.Atribuicao)
+            {
+                if(Tipo == TipoAtribuicao.Segmento)
+                {
+                    if(OperacaoEspecial == TipoOperacaoEspecial.Incrementa)
+                        amb.Saida.EmiteIncrementaSegDaVariavelGlobal(Variavel.NomeGlobal);
+                    else if(OperacaoEspecial == TipoOperacaoEspecial.Decrementa)
+                        amb.Saida.EmiteDecrementaSegDaVariavelGlobal(Variavel.NomeGlobal);
+                    else  throw Erro("Operação não suportada na atribuição");
+                }
+                else if(Tipo == TipoAtribuicao.Desvio)
+                {
+                    if(OperacaoEspecial == TipoOperacaoEspecial.Incrementa)
+                        amb.Saida.EmiteIncrementaVariavelGlobal(Variavel.NomeGlobal);
+                    else if(OperacaoEspecial == TipoOperacaoEspecial.Decrementa)
+                        amb.Saida.EmiteDecrementaVariavelGlobal(Variavel.NomeGlobal);
+                    else  throw Erro("Operação não suportada na atribuição");
+                }
+                else if(Tipo == TipoAtribuicao.Comum)
+                {
+                    if(Variavel.EhPonteiro())
+                    {
+                        if(Variavel.Tipo == TipoVariavel.PtrByteArray)
+                            if(OperacaoEspecial == TipoOperacaoEspecial.Incrementa)
+                                amb.Saida.EmiteIncrementaByteArrayNaVariavelGlobal(Variavel.NomeGlobal);
+                            else if(OperacaoEspecial == TipoOperacaoEspecial.Decrementa)
+                                amb.Saida.EmiteDecrementaByteArrayNaVariavelGlobal(Variavel.NomeGlobal);
+                            else  throw Erro("Operação não suportada na atribuição");
+                        else if(Variavel.Tipo == TipoVariavel.PtrWordArray)
+                            if(OperacaoEspecial == TipoOperacaoEspecial.Incrementa)
+                                amb.Saida.EmiteIncrementaWordArrayNaVariavelGlobal(Variavel.NomeGlobal);
+                            else if(OperacaoEspecial == TipoOperacaoEspecial.Decrementa)
+                                amb.Saida.EmiteDecrementaWordArrayNaVariavelGlobal(Variavel.NomeGlobal);
+                            else  throw Erro("Operação não suportada na atribuição");
+                        else throw Erro("Tipo não suportado na atribuição");
+                    }
+                    else
+                    {
+                        if(OperacaoEspecial == TipoOperacaoEspecial.Incrementa)
+                            amb.Saida.EmiteIncrementaVariavelGlobal(Variavel.NomeGlobal);
+                        else if(OperacaoEspecial == TipoOperacaoEspecial.Decrementa)
+                            amb.Saida.EmiteDecrementaVariavelGlobal(Variavel.NomeGlobal);
+                        else  throw Erro("Operação não suportada na atribuição");
+                    }
+                }
+                else throw Erro("Tipo não suportado na atribuição");
+            }
+            else if(Variavel.EhNumerica() & Valor is Numero)
+            {
+                amb.Saida.EmiteGravaNumeroNaVariavelGlobal(Variavel.NomeGlobal, ((Numero)Valor).Valor);
+            }
+            else if(Variavel.EhPonteiro() & Valor is Texto)
+            {
+                string txt_pula = amb.Saida.GeraRotulo();
+                string txt_ptr = amb.Saida.GeraRotulo();
+                amb.Saida.EmitePulaPara(txt_pula);
+                amb.Saida.EmiteRotulo(txt_ptr);
+                amb.Saida.EmiteBinario(System.Text.Encoding.UTF8.GetBytes(((Texto)Valor).Conteudo));
+                amb.Saida.EmiteGerarEspaco(1);
+                amb.Saida.EmiteRotulo(txt_pula);
+                amb.Saida.EmiteCopiaSegCodigoParaAcumulador();
+                amb.Saida.EmiteCopiaAcumuladorParaSegDaVariavelGlobal(Variavel.NomeGlobal);
+                amb.Saida.EmiteGravaRotuloEmAcumulador(txt_ptr);
+                amb.Saida.EmiteCopiaAcumuladorParaVariavelGlobal(Variavel.NomeGlobal);
+            }
+            else if(Variavel.EhPonteiro() & Valor is Numero)
+            {
+                if(Tipo == TipoAtribuicao.Segmento)
+                {
+                    amb.Saida.EmiteGravaNumeroNoSegDaVariavelGlobal(Variavel.NomeGlobal, ((Numero)Valor).Valor);
+                }
+                else if(Tipo == TipoAtribuicao.Desvio)
+                {
+                    amb.Saida.EmiteGravaNumeroNaVariavelGlobal(Variavel.NomeGlobal, ((Numero)Valor).Valor);
+                }
+                else if(Tipo == TipoAtribuicao.Comum)
+                {
+                    if(Variavel.Tipo == TipoVariavel.PtrByteArray)
+                        amb.Saida.EmiteGravaNumeroNoByteArrayDaVariavelGlobal(Variavel.NomeGlobal, ((Numero)Valor).Valor);
+                    else if(Variavel.Tipo == TipoVariavel.PtrWordArray)
+                        amb.Saida.EmiteGravaNumeroNoWordArrayDaVariavelGlobal(Variavel.NomeGlobal, ((Numero)Valor).Valor);
+                    else throw Erro("Tipo não suportado na atribuição");
+                }
+                else throw Erro("Tipo não suportado na atribuição");
+            }
+            else
+            {
+                amb.Tipo = Variavel.Tipo;
+                Valor.Compila(amb);
+                if(Variavel.EhPonteiro())
+                {
+                    if(Tipo == TipoAtribuicao.Comum)
+                    {
+                        if(Variavel.Tipo == TipoVariavel.PtrByteArray)
+                            amb.Saida.EmiteCopiaAcumuladorParaByteArrayDaVariavelGlobal(Variavel.NomeGlobal);
+                        else if(Variavel.Tipo == TipoVariavel.PtrWordArray)
+                            amb.Saida.EmiteCopiaAcumuladorParaWordArrayDaVariavelGlobal(Variavel.NomeGlobal);
+                        else throw Erro("Tipo não suportado na atribuição");
+                    }
+                    else if(Tipo == TipoAtribuicao.Desvio)
+                    {
+                        amb.Saida.EmiteCopiaAcumuladorParaVariavelGlobal(Variavel.NomeGlobal);
+                    }
+                    else if(Tipo == TipoAtribuicao.Segmento)
+                    {
+                        amb.Saida.EmiteCopiaAcumuladorParaSegDaVariavelGlobal(Variavel.NomeGlobal);
+                    }
+                    else throw Erro("Tipo não suportado na atribuição");
+                }
+                else if(Variavel.EhNumerica())
+                {
+                    amb.Saida.EmiteCopiaAcumuladorParaVariavelGlobal(Variavel.NomeGlobal);
+                }
+                amb.Tipo = null;
+            }
+        }
     }
 
     protected override void InicializaInterno(Ambiente amb)

@@ -326,7 +326,7 @@ class Analise
             else if(trechos.EhIdentificador("return"))
             {
                 trechos.Proximo();
-                cmds.Add(new Retorna(trechos.Anterior, processaAtribuicao(mod, rot, ref trechos)));
+                cmds.Add(new Retorna(trechos.Anterior, processaExpressao(mod, rot, ref trechos)));
             }
             else if(trechos.EhIdentificador("goto"))
             {

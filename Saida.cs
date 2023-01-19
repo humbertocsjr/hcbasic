@@ -103,4 +103,29 @@ abstract class Saida
     public abstract void EmiteAplicaAndEntreAcumuladorEAuxiliar();
     public abstract void EmiteAplicaOrEntreAcumuladorEAuxiliar();
     public abstract void EmiteAplicaXorEntreAcumuladorEAuxiliar();
+    public abstract void EmiteIncrementaSegDaVariavelGlobal(string rotulo);
+    public abstract void EmiteDecrementaSegDaVariavelGlobal(string rotulo);
+    public abstract void EmiteIncrementaVariavelGlobal(string rotulo);
+    public abstract void EmiteDecrementaVariavelGlobal(string rotulo);
+    public abstract void EmiteIncrementaByteArrayNaVariavelGlobal(string rotulo);
+    public abstract void EmiteDecrementaByteArrayNaVariavelGlobal(string rotulo);
+    public abstract void EmiteIncrementaWordArrayNaVariavelGlobal(string rotulo);
+    public abstract void EmiteDecrementaWordArrayNaVariavelGlobal(string rotulo);
+    public abstract void EmiteGravaNumeroNaVariavelGlobal(string rotulo, decimal valor);
+    public abstract void EmiteCopiaAcumuladorParaSegDaVariavelGlobal(string rotulo);
+    public abstract void EmiteCopiaAcumuladorParaVariavelGlobal(string rotulo);
+    public abstract void EmiteGravaNumeroNoSegDaVariavelGlobal(string rotulo, decimal valor);
+    public abstract void EmiteGravaNumeroNoByteArrayDaVariavelGlobal(string rotulo, decimal valor);
+    public abstract void EmiteGravaNumeroNoWordArrayDaVariavelGlobal(string rotulo, decimal valor);
+    public abstract void EmiteCopiaAcumuladorParaByteArrayDaVariavelGlobal(string rotulo);
+    public abstract void EmiteCopiaAcumuladorParaWordArrayDaVariavelGlobal(string rotulo);
+    public abstract void EmiteCopiaVariavelGlobalParaAcumulador(string rotulo);
+    public abstract void EmiteCopiaByteArrayDaVariavelGlobalParaAcumulador(string rotulo);
+    public abstract void EmiteCopiaSegDaVariavelGlobalParaAcumulador(string rotulo);
+    public abstract void EmiteCopiaWordArrayDaVariavelGlobalParaAcumulador(string rotulo);
+
+
+
+
+
 }

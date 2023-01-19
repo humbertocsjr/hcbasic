@@ -63,7 +63,48 @@ class LeiaVariavel : No
                     break;
             }
         }
-        else throw Erro("Variavel global nao suportada");
+        else // GLOBAL
+        {
+            switch(Variavel.Tipo)
+            {
+                case TipoVariavel.Int8:
+                case TipoVariavel.UInt8:
+                case TipoVariavel.Int16:
+                case TipoVariavel.UInt16:
+                    amb.Saida.EmiteCopiaVariavelGlobalParaAcumulador(Variavel.NomeGlobal);
+                    break;
+                case TipoVariavel.PtrByteArray:
+                    switch(Tipo)
+                    {
+                        case TipoLeitura.Comum:
+                            amb.Saida.EmiteCopiaByteArrayDaVariavelGlobalParaAcumulador(Variavel.NomeGlobal);
+                            break;
+                        case TipoLeitura.Segmento:
+                            amb.Saida.EmiteCopiaSegDaVariavelGlobalParaAcumulador(Variavel.NomeGlobal);
+                            break;
+                        case TipoLeitura.Desvio:
+                            amb.Saida.EmiteCopiaVariavelGlobalParaAcumulador(Variavel.NomeGlobal);
+                            break;
+                        default: throw Erro("Não suportado");
+                    }
+                    break;
+                case TipoVariavel.PtrWordArray:
+                    switch(Tipo)
+                    {
+                        case TipoLeitura.Comum:
+                            amb.Saida.EmiteCopiaWordArrayDaVariavelGlobalParaAcumulador(Variavel.NomeGlobal);
+                            break;
+                        case TipoLeitura.Segmento:
+                            amb.Saida.EmiteCopiaSegDaVariavelGlobalParaAcumulador(Variavel.NomeGlobal);
+                            break;
+                        case TipoLeitura.Desvio:
+                            amb.Saida.EmiteCopiaVariavelGlobalParaAcumulador(Variavel.NomeGlobal);
+                            break;
+                        default: throw Erro("Não suportado");
+                    }
+                    break;
+            }
+        }
     }
 
     protected override void InicializaInterno(Ambiente amb)

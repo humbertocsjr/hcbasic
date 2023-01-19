@@ -383,4 +383,119 @@ class Saida8086 : Saida
     {
         EmiteL($"xor ax, bx");
     }
+    public override void EmiteCopiaAcumuladorParaByteArrayDaVariavelGlobal(string rotulo)
+    {
+        EmiteL($"cs mov ax, [{rotulo}+2]");
+        EmiteL($"mov es, ax");
+        EmiteL($"cs mov di, [{rotulo}]");
+        EmiteL($"es mov [di], al");
+    }
+    public override void EmiteCopiaAcumuladorParaSegDaVariavelGlobal(string rotulo)
+    {
+        EmiteL($"cs mov [{rotulo}+2], ax");
+    }
+    public override void EmiteCopiaAcumuladorParaVariavelGlobal(string rotulo)
+    {
+        EmiteL($"cs mov [{rotulo}], ax");
+    }
+    public override void EmiteCopiaAcumuladorParaWordArrayDaVariavelGlobal(string rotulo)
+    {
+        EmiteL($"cs mov ax, [{rotulo}+2]");
+        EmiteL($"mov es, ax");
+        EmiteL($"cs mov di, [{rotulo}]");
+        EmiteL($"es mov [di], ax");
+    }
+    public override void EmiteDecrementaVariavelGlobal(string rotulo)
+    {
+        EmiteL($"cs dec word [{rotulo}]");
+    }
+    public override void EmiteDecrementaByteArrayNaVariavelGlobal(string rotulo)
+    {
+        EmiteL($"cs mov ax, [{rotulo}+2]");
+        EmiteL($"mov es, ax");
+        EmiteL($"cs mov di, [{rotulo}]");
+        EmiteL($"es dec byte [di]");
+    }
+    public override void EmiteDecrementaSegDaVariavelGlobal(string rotulo)
+    {
+        EmiteL($"cs dec word [{rotulo}+2]");
+    }
+    public override void EmiteDecrementaWordArrayNaVariavelGlobal(string rotulo)
+    {
+        EmiteL($"cs mov ax, [{rotulo}+2]");
+        EmiteL($"mov es, ax");
+        EmiteL($"cs mov di, [{rotulo}]");
+        EmiteL($"es dec word [di]");
+    }
+    public override void EmiteGravaNumeroNaVariavelGlobal(string rotulo, decimal valor)
+    {
+        EmiteL($"cs mov word [{rotulo}], {valor}");
+    }
+    public override void EmiteGravaNumeroNoByteArrayDaVariavelGlobal(string rotulo, decimal valor)
+    {
+        EmiteL($"cs mov ax, [{rotulo}+2]");
+        EmiteL($"mov es, ax");
+        EmiteL($"cs mov di, [{rotulo}]");
+        EmiteL($"es mov byte [di], {valor}");
+    }
+    public override void EmiteIncrementaVariavelGlobal(string rotulo)
+    {
+        EmiteL($"cs inc word [{rotulo}]");
+    }
+    public override void EmiteGravaNumeroNoSegDaVariavelGlobal(string rotulo, decimal valor)
+    {
+        EmiteL($"cs mov word [{rotulo}+2], {valor}");
+    }
+    public override void EmiteIncrementaSegDaVariavelGlobal(string rotulo)
+    {
+        EmiteL($"cs inc word [{rotulo}+2]");
+    }
+    public override void EmiteIncrementaByteArrayNaVariavelGlobal(string rotulo)
+    {
+        EmiteL($"cs mov ax, [{rotulo}+2]");
+        EmiteL($"mov es, ax");
+        EmiteL($"cs mov di, [{rotulo}]");
+        EmiteL($"es inc byte [di]");
+    }
+    public override void EmiteGravaNumeroNoWordArrayDaVariavelGlobal(string rotulo, decimal valor)
+    {
+        EmiteL($"cs mov ax, [{rotulo}+2]");
+        EmiteL($"mov es, ax");
+        EmiteL($"cs mov di, [{rotulo}]");
+        EmiteL($"es mov word [di], {valor}");
+    }
+    public override void EmiteIncrementaWordArrayNaVariavelGlobal(string rotulo)
+    {
+        EmiteL($"cs mov ax, [{rotulo}+2]");
+        EmiteL($"mov es, ax");
+        EmiteL($"cs mov di, [{rotulo}]");
+        EmiteL($"es inc word [di]");
+    }
+    public override void EmiteCopiaByteArrayDaVariavelGlobalParaAcumulador(string rotulo)
+    {
+        EmiteL($"cs mov ax, [{rotulo}+2]");
+        EmiteL($"mov es, ax");
+        EmiteL($"cs mov di, [{rotulo}]");
+        EmiteL($"xor ax, ax");
+        EmiteL($"es mov al, [di]");
+    }
+    public override void EmiteCopiaSegDaVariavelGlobalParaAcumulador(string rotulo)
+    {
+        EmiteL($"cs mov ax, [{rotulo}+2]");
+    }
+    public override void EmiteCopiaVariavelGlobalParaAcumulador(string rotulo)
+    {
+        EmiteL($"cs mov ax, [{rotulo}]");
+    }
+    public override void EmiteCopiaWordArrayDaVariavelGlobalParaAcumulador(string rotulo)
+    {
+        EmiteL($"cs mov ax, [{rotulo}+2]");
+        EmiteL($"mov es, ax");
+        EmiteL($"cs mov di, [{rotulo}]");
+        EmiteL($"es mov ax, [di]");
+    }
+
+
+
+
 }

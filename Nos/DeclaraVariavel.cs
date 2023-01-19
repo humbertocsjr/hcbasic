@@ -1,5 +1,6 @@
 class DeclaraVariavel : No
 {
+    public string NomeGlobal => $"_{Modulo.Nome}_{Nome}";
     public bool EhNumerica() => Tipo == TipoVariavel.Int16 | Tipo == TipoVariavel.UInt16 | Tipo == TipoVariavel.Int8 | Tipo == TipoVariavel.UInt8;
     public bool EhPonteiro() => Tipo == TipoVariavel.PtrByteArray | Tipo == TipoVariavel.PtrWordArray;
     public bool Argumento { get; set; } = false;
@@ -35,7 +36,7 @@ class DeclaraVariavel : No
             case NivelPublicidade.Privado:
                 rotulo = amb.Saida.GeraRotulo();
                 amb.Saida.EmitePulaPara(rotulo);
-                amb.Saida.EmiteRotulo(Nome);
+                amb.Saida.EmiteRotulo(NomeGlobal);
                 amb.Saida.EmiteGerarEspaco(amb.Saida.CalculaTamanho(Tipo));
                 amb.Saida.EmiteRotulo(rotulo);
                 break;
