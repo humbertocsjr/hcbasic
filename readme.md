@@ -28,7 +28,7 @@ Esta linguagem não tem como objetivo ser orientada a objetos, sendo próximo de
 - [x] Inclui apenas módulos usados no projeto, deixando o executável mais compacto
 - [ ] Permitir conversão dos ponteiros PtrByteArray em PtrWordArray de forma simples
 - [ ] Implementar um tipo de Try Catch Finally / Throw Exception
-- [ ] Implementar forma de definir os diretórios de pesquisa do Imports
+- [x] Implementar forma de definir os diretórios de pesquisa do Imports
 
 ## Exemplo de código
 

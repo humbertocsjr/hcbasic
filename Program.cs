@@ -4,14 +4,20 @@ if(args.Count() < 2)
 {
     Console.WriteLine("HCBasic v0.1");
     Console.WriteLine("Copyright (c) 2023, Humberto Costa dos Santos Junior");
-    Console.WriteLine("Uso: hcbasic [arquivo.hcb] [arquivo.asm]");
+    Console.WriteLine("Uso: hcbasic [arquivo.hcb] [arquivo.asm] [lista de diretorios include] ...");
     return 0;
+}
+
+List<DirectoryInfo> listaDir = new List<DirectoryInfo>();
+for(int i = 2; i < args.Count(); i++)
+{
+    listaDir.Add(new DirectoryInfo(args[i]));
 }
 
 try
 {
     Fonte fonte = new Fonte(args[0]);
-    Analise anal = new Analise();
+    Analise anal = new Analise(listaDir);
     anal.Processar(fonte);
     Saida saida = new Saida8086(args[1]);
     anal.Compila(saida);

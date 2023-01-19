@@ -2,7 +2,12 @@ class Analise
 {
     public List<Fonte> Fontes { get; set; } = new List<Fonte>();
     public List<Modulo> Modulos { get; set; } = new List<Modulo>();
+    public List<DirectoryInfo> DiretoriosImportacao = new List<DirectoryInfo>();
 
+    public Analise(List<DirectoryInfo> dirs)
+    {
+        DiretoriosImportacao = dirs;
+    }
     private TipoVariavel processaTipo(ref Trechos trechos)
     {
         switch(trechos.Atual.Conteudo.ToLower())
@@ -489,8 +494,30 @@ class Analise
                 {
                     trechos.Proximo();
                     trechos.ExigeId("Esperado o nome do módulo a ser importado");
-                    Fonte fonte = new Fonte(trechos.Atual.ConteudoOriginal + ".hcb");
-                    Processar(fonte);
+                    string nomeImport = trechos.Atual.ConteudoOriginal + ".hcb";
+                    if(File.Exists(nomeImport))
+                    {
+                        Processar(new Fonte(nomeImport));
+                    }
+                    else
+                    {
+                        bool encontradoArq = false;
+                        foreach (var dir in DiretoriosImportacao)
+                        {
+                            var arqCons = dir.GetFiles(nomeImport);
+                            if(arqCons.Any())
+                            {
+                                encontradoArq = true;
+                                nomeImport = arqCons.First().FullName;
+                                Processar(new Fonte(nomeImport));
+                                break;
+                            }
+                        }
+                        if(!encontradoArq)
+                        {
+                            trechos.Erro("Arquivo {nomeImport} não encontrado.");
+                        }
+                    }
                 }
                 else if(!trechos.FimDaLinha)
                 {
@@ -521,17 +548,17 @@ class Analise
         Ambiente? amb = null;
         foreach(var mod in Modulos)
         {
-            amb = amb ?? new Ambiente(saida, Modulos, mod.Trecho, mod);
+            amb = amb ?? new Ambiente(saida, DiretoriosImportacao, Modulos, mod.Trecho, mod);
             mod.Inicializa(amb);
         }
         foreach(var mod in Modulos)
         {
-            amb = amb ?? new Ambiente(saida, Modulos, mod.Trecho, mod);
+            amb = amb ?? new Ambiente(saida, DiretoriosImportacao, Modulos, mod.Trecho, mod);
             mod.Otimiza(amb);
         }
         foreach(var mod in Modulos.Where(m => m.Nome.ToLower() == "os"))
         {
-            amb = amb ?? new Ambiente(saida, Modulos, mod.Trecho, mod);
+            amb = amb ?? new Ambiente(saida, DiretoriosImportacao, Modulos, mod.Trecho, mod);
             var cons = mod.Rotinas.Where(r => r.Nome.ToLower() == "start");
             if(!cons.Any()) throw new Erro(mod.Trecho, "Esperado uma rotina 'OS.Start'");
             cons.First().IgnorarCabecalhoRodape = true;

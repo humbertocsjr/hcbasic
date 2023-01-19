@@ -1,5 +1,6 @@
 class Ambiente
 {
+    public List<DirectoryInfo> DiretoriosImportacao ;
     public List<Modulo> Modulos { get; set; }
     public Modulo? Modulo { get; set; } = null;
     public Rotina? Rotina { get; set; } = null;
@@ -16,8 +17,9 @@ class Ambiente
         if(Modulo != null) Modulo.CadastraReferencia(mod);
     }
 
-    public Ambiente(Saida saida, List<Modulo> modulos, Trecho trecho, No no)
+    public Ambiente(Saida saida, List<DirectoryInfo> importacao, List<Modulo> modulos, Trecho trecho, No no)
     {
+        DiretoriosImportacao = importacao;
         Modulos = modulos;
         Trecho = trecho;
         No = no;

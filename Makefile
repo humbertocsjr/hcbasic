@@ -3,7 +3,7 @@ all:
 install:
 	install Distro/* /usr/bin/
 teste: all
-	Distro/hcbasic teste.hcb teste.asm
+	Distro/hcbasic teste.hcb teste.asm Plataformas/8086-DOS
 	nasm -f bin -o teste.com teste.asm
 	dosbox -C "mount c: ." -C "c:" -C "teste.com"
 clean:
