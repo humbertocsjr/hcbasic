@@ -318,7 +318,7 @@ Qual a diferença do Shl com o Rol e do Shr com o Ror?
     Enquanto
 
     Formula: 131 ROL 1 => 7
-    Em binarios: 10000011 ROL 1 => 00000111 (1 é movido
+    Em binarios: 10000011 ROL 1 => 00000111 (1 é movido)
 
 
 ## Comandos da linguagem
@@ -336,6 +336,9 @@ Else
     ' Executa apenas se o conteúdo de A for menor ou igual a 0
     ' Lembrando que o ELSE é opcional, podendo não ser colocado, ai o código apenas ignorará o IF caso a comparação seja falsa
 End
+
+' Variação de uma linha
+If A > 0 Then Return 0 Else Return 1
 ```
 
 ### While
@@ -349,6 +352,9 @@ While A < 10
     ' Adiciona 1 ao A, sem este comando ou alguma alteração em A, esta repetição seria infinita
     Let A ++
 End
+
+' Variação de uma linha
+While A < 10 Let A ++
 ```
 
 ### Return
@@ -380,7 +386,7 @@ Atribui um valor a uma variável.
 ```vb
 
 Dim a as UInt16
-Let a  = 10 
+Let a  = 10
 
 ```
 
