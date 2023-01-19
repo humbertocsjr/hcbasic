@@ -100,4 +100,7 @@ abstract class Saida
     public abstract void EmiteComparaAcumuladorComAuxiliar();
     public abstract void EmiteGravaRotuloEmAcumulador(string rotulo);
     public abstract void EmiteCopiaSegCodigoParaAcumulador();
+    public abstract void EmiteAplicaAndEntreAcumuladorEAuxiliar();
+    public abstract void EmiteAplicaOrEntreAcumuladorEAuxiliar();
+    public abstract void EmiteAplicaXorEntreAcumuladorEAuxiliar();
 }

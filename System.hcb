@@ -107,7 +107,7 @@ module UInt32
         dim temp1 as uint16
         dim temp2 as uint16
         dim temp3 as uint16
-        asm "mov di, [bp+6]
+        asm "mov di, [bp+6]"
         asm "mov word [di], 0"
         asm "mov word [di+2], 0"
         asm "; bx:ax Resto"
