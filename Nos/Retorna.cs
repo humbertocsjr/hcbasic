@@ -9,7 +9,9 @@ class Retorna : No
     protected override void CompilaInterno(Ambiente amb)
     {
         if(amb.Rotina == null) throw Erro("Rotina não declarada");
+        amb.Tipo = amb.Rotina.TipoRetorno;
         if(Valor != null) Valor.Compila(amb);
+        amb.Tipo = null;
         amb.Saida.EmitePulaPara(amb.Rotina.RotuloFim);
     }
 

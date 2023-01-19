@@ -130,7 +130,29 @@ class Analise
                 varNome = trechos.Atual.Conteudo;
                 trechos.Proximo();
             }
-            ret = new LeiaVariavel(varTrecho, varTipo, varModulo, varNome);
+            if(trechos.EhTipo(TipoTrecho.AbreParenteses))
+            {
+                ChamaRotina chamaRotina = new ChamaRotina(varTrecho, varModulo, varNome);
+                ret = chamaRotina;
+                trechos.Proximo();
+                while(!trechos.EhTipo(TipoTrecho.FechaParenteses))
+                {
+                    chamaRotina.Argumentos.Add(processaExpressao(mod, rot, ref trechos));
+                    if(trechos.EhTipo(TipoTrecho.Virgula)) 
+                    {
+                        trechos.Proximo();
+                    }
+                    else if(!trechos.EhTipo(TipoTrecho.FechaParenteses))
+                    {
+                        trechos.ExigeTipo(TipoTrecho.FechaParenteses, "Esperado ',' ou ')' após o último argumento");
+                    }
+                }
+                trechos.Proximo();
+            }
+            else
+            {
+                ret = new LeiaVariavel(varTrecho, varTipo, varModulo, varNome);
+            }
         }
         return ret;
     }
@@ -340,6 +362,37 @@ class Analise
         return ret;
     }
 
+    
+    // Processa comando FOR
+    // Exemplo:
+    // For a = 1 to 5 let ++
+    private Para processaPara(Modulo mod, Rotina rot, ref Trechos trechos)
+    {
+        trechos.ExigeProximo("Esperado a comparação depois do 'for'");
+        trechos.ExigeId("Esperado nome da variável após o 'for'");
+        DeclaraVariavel variavel = new DeclaraVariavel(trechos.Atual, mod, false, NivelPublicidade.Local, TipoVariavel.UInt16, false, 0);
+        trechos.Proximo();
+        trechos.ExigeTipo(TipoTrecho.Atribuicao, "Esperado '=' após o nome da variável");
+        trechos.Proximo();
+        No inicial = processaExpressao(mod, rot, ref trechos);
+        trechos.ExigeId("to", "Esperado 'to' após o valor inicial");
+        trechos.Proximo();
+        No final = processaExpressao(mod, rot, ref trechos);
+        Para ret = new Para(trechos.Anterior, variavel, inicial, final);
+        if(trechos.FimDaLinha)
+        {
+            trechos.ProximaLinha();
+            nivelRotina(mod, rot, ret.Repete, false, ref trechos);
+            trechos.ExigeId("end", "Esperado 'end' após o fim dos comandos do 'for'");
+            trechos.Proximo();
+        }
+        else
+        {
+            nivelRotina(mod, rot, ret.Repete, true, ref trechos);
+        }
+        return ret;
+    }
+
     // Processa comandos no nivel da rotina (que estão dentro de uma rotina)
     // Exemplo:
     // sub rotina
@@ -376,6 +429,10 @@ class Analise
             else if(trechos.EhIdentificador("while"))
             {
                 cmds.Add(processaEnquanto(mod, rot, ref trechos));
+            }
+            else if(trechos.EhIdentificador("for"))
+            {
+                cmds.Add(processaPara(mod, rot, ref trechos));
             }
             else if(trechos.EhIdentificador("return"))
             {

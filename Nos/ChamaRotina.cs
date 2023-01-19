@@ -15,6 +15,7 @@ class ChamaRotina : No
     protected override void CompilaInterno(Ambiente amb)
     {
         if(RotinaLocalizada == null) throw Erro("Rotina não declarada");
+        var tipoAnterior = amb.Tipo;
         List<No> args = new List<No>();
         args.AddRange(Argumentos);
         args.Reverse();
@@ -47,6 +48,7 @@ class ChamaRotina : No
         amb.Saida.EmiteChamaRotina(RotinaLocalizada.Modulo.Nome, RotinaLocalizada.Nome);
         if(RotinaLocalizada.PosicaoArg != 6)
             amb.Saida.EmiteAdicionaNoPtrPilha(RotinaLocalizada.PosicaoArg - 6);
+        amb.Tipo = tipoAnterior;
     }
 
     protected override void InicializaInterno(Ambiente amb)

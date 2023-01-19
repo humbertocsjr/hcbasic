@@ -4,10 +4,28 @@ module Program
     dim testeGlobal as uint16
     public sub Main(args as ptrbytearray)
         dim teste as ptrbytearray
+        dim tmp as uint16
+        dim i as uint16
         let teste = "Oieeeee"
         Console.Write teste
+        Console.WriteUInt16 Soma(1,2)
         let testeGlobal = 123
         Console.WriteUInt16 testeGlobal
+        Console.WriteUInt16 Teste()
         Console.Write args
+        let tmp = Soma(15, 15)
+        Console.WriteUInt16 tmp
+        for i = 1 to 5
+            Console.WriteUInt16 i
+        end
     end
+
+    function Soma(a as uint16, b as uint16) as uint16
+        return a + b
+    end
+
+    function Teste() as uint16
+        return 456
+    end
+
 end

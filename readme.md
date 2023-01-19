@@ -24,10 +24,10 @@ O uso do Makefile é opcional e voltado para Linux e macOS, existindo apenas par
 - [x] Suporte a sub-rotinas e funções
 - [x] Comandos IF e WHILE
 - [x] Suporte a números 8 e 16 bits
-- [ ] **Falta possibilidade de chamar uma função dentro de uma atribuição de variável** Este é o próximo tópico a ser implementado, devendo ficar pronto no final do dia **19/01/2023**
+- [x] Implementar chamada de funções dentro de expressões/atribuições
 - [ ] Implementar na biblioteca System, comandos de manipular arquivos
 - [ ] Correto tratamento e diferenciação do public e private
-- [ ] Comando FOR
+- [x] Comando FOR
 - [ ] Suporte a rotinas externas usando ponteiro (Implementar comando INVOKE)
 - [ ] Implementar tipos personalizados usando uma dinâmica próxima ao TYPE do QuickBASIC, por trás usar comandos do PtrByteArray e PtrWordArray, mas permitindo declarar Rotinas, para ser uma proto orientação a objetos para poder implementar as bibliotecas System de forma mais próxima ao .NET
 - [x] Ponteiros
@@ -61,6 +61,9 @@ Module Program
         End
         While a < 10
             Let a = a - 1
+        End
+        For a = 1 To 5
+            Console.WriteUInt16 a
         End
 
         Console.WriteLine "Hello World!!"
@@ -380,6 +383,21 @@ End
 While A < 10 Let A ++
 ```
 
+### For
+
+Repete seu conteúdo enquanto o resultado de uma comparação for verdadeiro.
+
+```vb
+Dim i as UInt16
+
+For i = 1 To 5
+    ' Executa 5 vezes incrementando o valor em i, iniciando em 1
+End
+
+' Variação de uma linha
+For i = 1 To 5 RotinaQueFazAlgo
+```
+
 ### Return
 
 Interrompe a execução da **Rotina** atual, e retorna um valor caso seja uma Function.
@@ -538,10 +556,33 @@ End
 Código gerado:
 
 ```nasm
+push bp
+mov bp, sp
+sub sp, 4
 cpu 8086
 bits 16
 org 0x100
+mov ax, cs
+mov [bp-2], ax
+mov word [bp-4], 0x80
+mov al, [0x80]
+xor ah, ah
+mov si, ax
+add si, 0x80
+mov byte [si+1], 0
+push word [bp+-4+2]
+pop es
+mov di, [bp+-4]
+xor ax, ax
+es mov al, [di]
+push es
+push di
 push cs
-call _Program_Main
+call _program_main
+add sp, 4
 int 0x20
+ROTULO0:
+mov sp, bp
+pop bp
+
 ```

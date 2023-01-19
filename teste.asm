@@ -254,7 +254,7 @@ ROTULO26:
 _program_main:
 push bp
 mov bp, sp
-sub sp, 4
+sub sp, 8
 jmp ROTULO28
 ROTULO29:
 db 7
@@ -275,8 +275,25 @@ push di
 push cs
 call _console_write
 add sp, 4
+mov ax, 2
+push ax
+mov ax, 1
+push ax
+push cs
+call _program_soma
+add sp, 4
+push ax
+push cs
+call _console_writeuint16
+add sp, 2
 cs mov word [_program_testeglobal], 123
 cs mov ax, [_program_testeglobal]
+push ax
+push cs
+call _console_writeuint16
+add sp, 2
+push cs
+call _program_teste
 push ax
 push cs
 call _console_writeuint16
@@ -291,9 +308,70 @@ push di
 push cs
 call _console_write
 add sp, 4
+mov ax, 15
+push ax
+mov ax, 15
+push ax
+push cs
+call _program_soma
+add sp, 4
+mov [bp+-6], ax
+mov ax, [bp+-6]
+push ax
+push cs
+call _console_writeuint16
+add sp, 2
+mov word [bp+-8], 1
+ROTULO30:
+mov ax, [bp+-8]
+push ax
+mov ax, 5
+mov bx, ax
+pop ax
+cmp ax, bx
+jbe ROTULO33
+jmp ROTULO34
+ROTULO33:
+mov ax, 65535
+jmp ROTULO35
+ROTULO34:
+xor ax, ax
+ROTULO35:
+cmp ax, 0
+jne ROTULO31
+jmp ROTULO32
+ROTULO31:
+mov ax, [bp+-8]
+push ax
+push cs
+call _console_writeuint16
+add sp, 2
+inc word [bp+-8]
+jmp ROTULO30
+ROTULO32:
 ROTULO27:
 mov sp, bp
 pop bp
 FIM_program_main:
+retf
+_program_soma:
+push bp
+mov bp, sp
+mov ax, [bp+6]
+push ax
+mov ax, [bp+8]
+pop bx
+add ax, bx
+jmp ROTULO36
+ROTULO36:
+mov sp, bp
+pop bp
+FIM_program_soma:
+retf
+_program_teste:
+mov ax, 456
+jmp ROTULO37
+ROTULO37:
+FIM_program_teste:
 retf
 ; MODULO FIM: program
