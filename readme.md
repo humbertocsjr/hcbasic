@@ -50,7 +50,7 @@ Module Program
 
     Public Dim Teste as UInt16
 
-    Sub Main
+    Public Sub Main (args as ptrbytearray)
         Dim a as Int16
         Let a = 1 + 2;
         If a == 3 Then
@@ -149,7 +149,7 @@ As rotinas podem ser marcadas como acessível publicamente ou privadamente, onde
 
 ```vb
 Module Program
-    Public Sub Main
+    Public Sub Main (args as ptrbytearray)
         ' Esta rotina pode ser chamada de fora do Módulo
     End
 
@@ -248,7 +248,7 @@ Para manipular e definir valores de variáveis, é usado sempre o comando 'Let',
 Imports System
 
 Module Program
-    Sub Main
+    Public Sub Main (args as ptrbytearray)
         ' Declara as variáveis
         Dim varUI8 as UInt8
         Dim varUI16 as UInt16
@@ -509,11 +509,26 @@ Esta rotina é tratada diferentemente das demais, ela é ligada ao Módulo OS po
 ```vb
 Module OS
     Sub Start
-        Asm "cpu 8086"
-        Asm "bits 16"
-        Asm "org 0x100"
-        Program.Main
-        Asm "int 0x20"
+        ' Inicializa o compilador
+        asm "cpu 8086"
+        asm "bits 16"
+        asm "org 0x100"
+        ' Declara ponteiro para os argumentos
+        dim args as ptrbytearray
+        ' Define ponteiro
+        asm "mov ax, cs"
+        asm "mov [bp-2], ax"
+        asm "mov word [bp-4], 0x80"
+        ' Adiciona um zero ao final da variavel para ser ASCIZ
+        asm "mov al, [0x80]"
+        asm "xor ah, ah"
+        asm "mov si, ax"
+        asm "add si, 0x80"
+        asm "mov byte [si], 0"
+        ' Chama o Main
+        Program.Main args
+        ' Encerra programa quando retornar do main
+        asm "int 0x20"
     End
 End
 ```

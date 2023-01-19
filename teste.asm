@@ -1,10 +1,26 @@
+push bp
+mov bp, sp
+sub sp, 4
 cpu 8086
 bits 16
 org 0x100
+mov ax, cs
+mov [bp-2], ax
+mov word [bp-4], 0x80
+push word [bp+-4+2]
+pop es
+mov di, [bp+-4]
+xor ax, ax
+es mov al, [di]
+push es
+push di
 push cs
 call _program_main
+add sp, 4
 int 0x20
 ROTULO0:
+mov sp, bp
+pop bp
 ; MODULO: os
 _os_codesegment:
 mov ax, cs
@@ -260,6 +276,16 @@ push ax
 push cs
 call _console_writeuint16
 add sp, 2
+push word [bp+6+2]
+pop es
+mov di, [bp+6]
+xor ax, ax
+es mov al, [di]
+push es
+push di
+push cs
+call _console_write
+add sp, 4
 ROTULO27:
 mov sp, bp
 pop bp

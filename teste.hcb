@@ -2,11 +2,12 @@ imports System
 
 module Program
     dim testeGlobal as uint16
-    public sub Main
+    public sub Main(args as ptrbytearray)
         dim teste as ptrbytearray
         let teste = "Oieeeee"
         Console.Write teste
         let testeGlobal = 123
         Console.WriteUInt16 testeGlobal
+        Console.Write args
     end
 end

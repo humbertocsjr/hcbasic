@@ -1,9 +1,24 @@
 module OS
     public sub Start
+        ' Inicializa o compilador
         asm "cpu 8086"
         asm "bits 16"
         asm "org 0x100"
-        Program.Main
+        ' Declara ponteiro para os argumentos
+        dim args as ptrbytearray
+        ' Define ponteiro
+        asm "mov ax, cs"
+        asm "mov [bp-2], ax"
+        asm "mov word [bp-4], 0x80"
+        ' Adiciona um zero ao final da variavel para ser ASCIZ
+        asm "mov al, [0x80]"
+        asm "xor ah, ah"
+        asm "mov si, ax"
+        asm "add si, 0x80"
+        asm "mov byte [si], 0"
+        ' Chama o Main
+        Program.Main args
+        ' Encerra programa quando retornar do main
         asm "int 0x20"
     end
 
