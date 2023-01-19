@@ -24,6 +24,7 @@ O uso do Makefile é opcional e voltado para Linux e macOS, existindo apenas par
 - [x] Suporte a sub-rotinas e funções
 - [x] Comandos IF e WHILE
 - [x] Suporte a números 8 e 16 bits
+- [ ] **Falta possibilidade de chamar uma função dentro de uma atribuição de variável** Este é o próximo tópico a ser implementado, devendo ficar pronto no final do dia **19/01/2023**
 - [ ] Correto tratamento e diferenciação do public e private
 - [ ] Comando FOR
 - [ ] Suporte a rotinas externas usando ponteiro (Implementar comando INVOKE)
