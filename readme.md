@@ -32,7 +32,7 @@ O uso do Makefile é opcional e voltado para Linux e macOS, existindo apenas par
 - [ ] Implementar tipos personalizados usando uma dinâmica próxima ao TYPE do QuickBASIC, por trás usar comandos do PtrByteArray e PtrWordArray, mas permitindo declarar Rotinas, para ser uma proto orientação a objetos para poder implementar as bibliotecas System de forma mais próxima ao .NET
 - [x] Ponteiros
 - [ ] String (Concatenar, substring, etc)
-- [ ] Adicionar ao inicio das constantes de texto, o seu tamanho para evitar o estouro de variável pelas rotinas de manipulação de Strings
+- [x] Adicionar ao inicio das constantes de texto, o seu tamanho para evitar o estouro de variável pelas rotinas de manipulação de Strings
 - [x] Suporte a números 32 bits na biblioteca
 - [ ] Suporte a números 32 bits na linguagem
 - [x] Inclui apenas módulos usados no projeto, deixando o executável mais compacto
