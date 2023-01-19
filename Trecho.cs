@@ -22,11 +22,16 @@ enum TipoTrecho
 
 class Trecho
 {
+    // Aqui armazena um trecho de código fonte
+    // Usado pelo Analisador para criar os nós da arvore de compilação
+
     public Fonte Fonte { get; set; }
     public TipoTrecho Tipo { get; set; }
     public int Linha { get; set; } = 0;
     public int Coluna { get; set; } = 0;
+    // No caso de identificador sempre armazenado em minusculas
     public string Conteudo { get; set; } = "";
+    // Sempre armazena a forma original de como esta no codigo fonte
     public string ConteudoOriginal { get; set; } = "";
 
     public Trecho(Fonte fonte, TipoTrecho tipo, int linha, int coluna, string conteudo)

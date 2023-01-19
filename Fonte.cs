@@ -12,7 +12,8 @@ class Fonte
         _leitor = new StreamReader(_arq);
     }
 
-    /// Le uma linha, caso chegue no fim do arquivo retorna nulo
+    // Le uma linha, caso chegue no fim do arquivo retorna nulo
+    // Processa cada caractere de uma linha de código retornando Trechos de código
     public Trechos LeiaLinha()
     {
         List<Trecho> ret = new List<Trecho>();

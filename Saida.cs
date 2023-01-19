@@ -24,16 +24,18 @@ abstract class Saida
         _gravador.Close();
     }
 
+    // ==========================================================================
+    // Rotinas que devem ser implementadas pelo arquivo especifico do processador
+    // ==========================================================================
+    //
+    // Os nomes são o mais explicativos possíveis, mas em caso de dúvida busque nos arquivos já implantados
+
     public abstract void EmiteComentario(string comentario);
     public abstract void EmiteModulo(string nome);
     public abstract void EmiteModuloFim(string nome);
-    /// Cria rotulo inicial da rotina
     public abstract void EmiteRotina(string nome);
-    /// Cria rotulo final da rotina
     public abstract void EmiteRotinaFim(string nome);
-    /// Prepara ponteiro para variaveis
     public abstract void EmiteEntraNaRotina();
-    /// Restaura ponteiro de variaveis anterior
     public abstract void EmiteSaiDaRotina();
     public abstract string GeraRotulo();
     public abstract void EmitePulaPara(string rotulo);

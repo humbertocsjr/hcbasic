@@ -1,6 +1,8 @@
 abstract class No
 {
+    // Informa se esse nó já foi compilado para que não se repita
     public bool Compilado { get; private set; } = false;
+    // Trecho de código fonte a qual esse nó pertence
     public Trecho Trecho { get; set; }
     public No(Trecho trecho)
     {
@@ -12,10 +14,13 @@ abstract class No
         return new Erro(Trecho, msg);
     }
 
+    // Rotinas implementadas pelos Nos
+
     protected abstract void CompilaInterno(Ambiente amb);
     protected abstract No OtimizaInterno(Ambiente amb);
     protected abstract void InicializaInterno(Ambiente amb);
 
+    // Comandos para facilitar a programação dos Nos
     public void Inicializa(Ambiente amb)
     {
         amb.Trecho = Trecho;

@@ -1,13 +1,30 @@
 class Analise
 {
+    // Variaveis de uso comum do analisador
+
+    // Armazena os códigos fontes analisados
     public List<Fonte> Fontes { get; set; } = new List<Fonte>();
+    // Armazena os módulos carregados, usado para compilação
     public List<Modulo> Modulos { get; set; } = new List<Modulo>();
+    // Armazena os diretorios para uso do comando Imports
     public List<DirectoryInfo> DiretoriosImportacao = new List<DirectoryInfo>();
 
+    // Inicia o analisador com a lista de diretorios de pesquisa para o comando Imports
     public Analise(List<DirectoryInfo> dirs)
     {
         DiretoriosImportacao = dirs;
     }
+
+    // ========================================
+    // Rotinas de processamento de código fonte
+    // ========================================
+    // 
+    // Usadas para conveter trechos de texto em Nós da arvore de compilação
+
+
+    // Processa tipo de uma variável
+    // Usado quando se declara o tipo da variável, por exemplo:
+    // Dim variavel as TIPO
     private TipoVariavel processaTipo(ref Trechos trechos)
     {
         switch(trechos.Atual.Conteudo.ToLower())
@@ -29,6 +46,10 @@ class Analise
                 return TipoVariavel.Int16;
         }
     }
+
+    // Processa declaração de variável ou campo do modulo
+    // Exemplo:
+    // dim variavel as tipo
     private DeclaraVariavel processaDim(NivelPublicidade publi, Modulo mod, bool varDoModulo, ref Trechos trechos)
     {
         trechos.ExigeProximo("Esperado o nome da variável após o 'dim'");
@@ -47,6 +68,16 @@ class Analise
         DeclaraVariavel dim = new DeclaraVariavel(dimTrecho, mod, varDoModulo, publi, dimTipo, dimColecao, dimColecaoTam);
         return dim;
     }
+
+    // ===============================================
+    // Processador de Expressões matemáticas e lógicas
+    // ===============================================
+    //
+    // Usado para converter uma sequencia de trechos em uma hierarquia de Nós para execução
+    // Quanto maior o nível (indo de 1 a 7), mais localizado dentro da expressão está
+    // Sendo o nivel 7 onde se interpreta os números e variáveis da expressão e os niveis baixos onde se interpreta as operações matemáticas
+    // Por exemplo a multiplicação tem prioridade comparada a soma, logo ela esta em um nivel mais baixo
+
     private No? processaExpressao7(Modulo mod, Rotina rot, ref Trechos trechos)
     {
         No? ret = null;
@@ -179,7 +210,7 @@ class Analise
     private No? processaExpressao2(Modulo mod, Rotina rot, ref Trechos trechos)
     {
         No? ret = processaExpressao3(mod, rot, ref trechos);
-        while(trechos.EhOpLogica("or"))
+        while(trechos.EhOpLogica("or") | trechos.EhOpLogica("orelse"))
         {
             trechos.Proximo();
             ret = new OpLogica(trechos.Anterior, ret, processaExpressao3(mod, rot, ref trechos));
@@ -187,10 +218,11 @@ class Analise
         return ret;
     }
 
+    // Processa expressões lógicas e matemáticas
     private No processaExpressao(Modulo mod, Rotina rot, ref Trechos trechos)
     {
         No? ret = processaExpressao2(mod, rot, ref trechos);
-        while(trechos.EhOpLogica("and"))
+        while(trechos.EhOpLogica("and") | trechos.EhOpLogica("andalso"))
         {
             trechos.Proximo();
             ret = new OpLogica(trechos.Anterior, ret, processaExpressao2(mod, rot, ref trechos));
@@ -198,6 +230,11 @@ class Analise
         return ret ?? new Nulo(trechos.Atual);
     }
 
+    // Processa uma atribuição
+    // Exemplo:
+    // let variavel = 123
+    // let @variavel = 123
+    // let #variavel = 123
     private Atribuicao processaAtribuicao(Modulo mod, Rotina rot, ref Trechos trechos)
     {
         if(trechos.EhProximoTipo(TipoTrecho.Arroba) | trechos.EhProximoTipo(TipoTrecho.Cerquilha))
@@ -241,6 +278,9 @@ class Analise
         return atrib;
     }
 
+    // Processa comando IF
+    // Exemplo:
+    // if a > 0 then return else let a ++
     private Se processaSe(Modulo mod, Rotina rot, ref Trechos trechos)
     {
         bool ignoraElse = false;
@@ -278,7 +318,10 @@ class Analise
         }
         return ret;
     }
-
+    
+    // Processa comando WHILE
+    // Exemplo:
+    // While a < 1 let a ++
     private Enquanto processaEnquanto(Modulo mod, Rotina rot, ref Trechos trechos)
     {
         trechos.ExigeProximo("Esperado a comparação depois do 'while'");
@@ -296,6 +339,12 @@ class Analise
         }
         return ret;
     }
+
+    // Processa comandos no nivel da rotina (que estão dentro de uma rotina)
+    // Exemplo:
+    // sub rotina
+    // ' PROCESSA COMANDOS DAQUI
+    // end
 
     private void nivelRotina(Modulo mod, Rotina rot, List<No> cmds, bool apenasUmComando, ref Trechos trechos)
     {
@@ -392,6 +441,11 @@ class Analise
         } while(trechos.ProximaLinha());
     }
 
+    // Processa rotinas
+    // Exemplo:
+    // sub rotina
+    // end
+
     private Rotina processaSubFunction(Modulo mod, NivelPublicidade publi, bool retornaValor, ref Trechos trechos)
     {
         trechos.ExigeProximo("Esperado o nome da rotina após o 'sub'/'function'");
@@ -436,6 +490,12 @@ class Analise
         trechos.ExigeProximoFimDaLinha("Esperado apenas o 'end', sem nenhum complemento posterior");
         return rot;
     }
+
+    // Processa comandos do nivel módulo (comandos que estão dentro de um módulo)
+    // Exemplo:
+    // module nomeDoModulo
+    // ' PROCESSA COMANDOS DAQUI
+    // end
     private void nivelModulo(Modulo mod, ref Trechos trechos)
     {
         NivelPublicidade publi = NivelPublicidade.Privado;
@@ -472,6 +532,8 @@ class Analise
             }
         } while(trechos.ProximaLinha());
     }
+
+    // Processa comandos do nivel raiz do codigo fonte
     private void nivelRaiz(ref Trechos trechos)
     {
         do
@@ -527,6 +589,7 @@ class Analise
         }while (trechos.ProximaLinha());
     }
 
+    // Processa um arquivo de código fonte
     public void Processar(Fonte fonte)
     {
         Trechos atual = fonte.LeiaLinha();
@@ -535,6 +598,7 @@ class Analise
         nivelRaiz(ref atual);
     }
 
+    // Pesquisa e compila apenas modulos referenciados pelos anteriores
     private void CompilaReferencias(Modulo mod, Ambiente amb)
     {
         foreach (var modref in mod.Referencias)
@@ -543,6 +607,8 @@ class Analise
             modref.Compila(amb);
         }
     }
+
+    // Compila codigo fonte
     public void Compila(Saida saida)
     {
         Ambiente? amb = null;
@@ -556,6 +622,9 @@ class Analise
             amb = amb ?? new Ambiente(saida, DiretoriosImportacao, Modulos, mod.Trecho, mod);
             mod.Otimiza(amb);
         }
+
+        // Busca e compila o módulo OS da biblioteca System, e todas suas referencias
+        // Como o modulo OS chama o Program.Main, acaba compilando tudo que o Program usa direta ou indiretamente
         foreach(var mod in Modulos.Where(m => m.Nome.ToLower() == "os"))
         {
             amb = amb ?? new Ambiente(saida, DiretoriosImportacao, Modulos, mod.Trecho, mod);
