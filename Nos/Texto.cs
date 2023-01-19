@@ -15,8 +15,11 @@ class Texto : No
         {
             amb.Saida.EmiteGravaRotuloEmAcumulador(rotulo_ptr);
         }
+        int tam = System.Text.Encoding.UTF8.GetByteCount(Conteudo);
+        if(tam > 255) throw Erro("Texto ultrapassa limite de 255 bytes");
         amb.Saida.EmitePulaPara(rotulo_pulo);
         amb.Saida.EmiteRotulo(rotulo_ptr);
+        amb.Saida.EmiteBinario(new byte[1]{(byte)tam});
         amb.Saida.EmiteBinario(System.Text.Encoding.UTF8.GetBytes(Conteudo));
         amb.Saida.EmiteGerarEspaco(1);
         amb.Saida.EmiteRotulo(rotulo_pulo);

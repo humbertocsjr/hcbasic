@@ -34,6 +34,11 @@ class Fonte
                     atual = new Trecho(this, TipoTrecho.Texto, _linha, coluna, "");
                     ret.Add(atual);
                 }
+                else if(c == '\'')
+                {
+                    // Ignora comentarios
+                    break;
+                }
                 else if(char.IsAsciiLetter(c) | c == '_')
                 {
                     atual = new Trecho(this, TipoTrecho.Id, _linha, coluna, char.ToLower(c), c);

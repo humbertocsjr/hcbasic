@@ -32,6 +32,7 @@ retf
 _console_write:
 push bp
 mov bp, sp
+inc word [bp+6]
 ROTULO5:
 push word [bp+6+2]
 pop es
@@ -235,6 +236,7 @@ mov bp, sp
 sub sp, 4
 jmp ROTULO28
 ROTULO29:
+db 7
 db 79,105,101,101,101,101,101
 times 1 db 0
 ROTULO28:

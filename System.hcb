@@ -20,6 +20,8 @@ module String
     public function Length(text as ptrbytearray) as uint16
         dim i as uint16
         let i = 0
+        ' Ignora o byte inicial com a capacidade da variavel
+        let @text++
         while text > 0
             let i ++
             let @text++
@@ -55,6 +57,8 @@ module Console
     end
 
     public sub Write(txt as ptrbytearray)
+        ' Ignora o byte inicial com a capacidade da variavel
+        Let @txt ++
         while txt > 0
             WriteChar txt
             let @txt ++

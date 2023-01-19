@@ -85,8 +85,11 @@ class Atribuicao : No
             {
                 string txt_pula = amb.Saida.GeraRotulo();
                 string txt_ptr = amb.Saida.GeraRotulo();
+                int tam = System.Text.Encoding.UTF8.GetByteCount(((Texto)Valor).Conteudo);
+                if(tam > 255) throw Erro("Texto ultrapassa limite de 255 bytes");
                 amb.Saida.EmitePulaPara(txt_pula);
                 amb.Saida.EmiteRotulo(txt_ptr);
+                amb.Saida.EmiteBinario(new byte[1]{(byte)tam});
                 amb.Saida.EmiteBinario(System.Text.Encoding.UTF8.GetBytes(((Texto)Valor).Conteudo));
                 amb.Saida.EmiteGerarEspaco(1);
                 amb.Saida.EmiteRotulo(txt_pula);
@@ -203,8 +206,11 @@ class Atribuicao : No
             {
                 string txt_pula = amb.Saida.GeraRotulo();
                 string txt_ptr = amb.Saida.GeraRotulo();
+                int tam = System.Text.Encoding.UTF8.GetByteCount(((Texto)Valor).Conteudo);
+                if(tam > 255) throw Erro("Texto ultrapassa limite de 255 bytes");
                 amb.Saida.EmitePulaPara(txt_pula);
                 amb.Saida.EmiteRotulo(txt_ptr);
+                amb.Saida.EmiteBinario(new byte[1]{(byte)tam});
                 amb.Saida.EmiteBinario(System.Text.Encoding.UTF8.GetBytes(((Texto)Valor).Conteudo));
                 amb.Saida.EmiteGerarEspaco(1);
                 amb.Saida.EmiteRotulo(txt_pula);
