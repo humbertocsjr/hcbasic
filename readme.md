@@ -78,6 +78,7 @@ sudo make install
 ## Compilando no Windows
 
 No PowerShell execute
+
 ```powershell
 dotnet publish -c Release -o Distro
 ```
@@ -173,6 +174,7 @@ Este comando recebe como parâmetro o nome do arquivo sem sua Extensão, este no
 **Exemplo:**
 
 Nome do arquivo: System.hcb
+
 Comando para inclusão:
 
 ```vb
@@ -180,6 +182,7 @@ Imports System
 ```
 
 Nome do arquivo: System.Text.hcb
+
 Comando para inclusão:
 
 ```vb
