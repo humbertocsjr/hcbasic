@@ -291,8 +291,8 @@ Com excessão do AND, OR e XOR, as demais comparações lógicas retornam valore
 | Mod | Divide dois valores, retornando o resto da divisão |
 | Shl | Move os bits do primeiro valor a esqueda pela quantidade no segundo valor, adicionando zero na lacuna, usando normalmente para multiplicações binárias |
 | Shr | Move os bits do primeiro valor a direita pela quantidade no segundo valor, adicionando zero na lacuna, usando normalmente para divisões binárias |
-| Rol | Rotaciona os bits do primeiro valor a esquerda pela quantidade no segundo valor, usando normalmente para divisões binárias |
-| Ror | Rotaciona os bits do primeiro valor a direita pela quantidade no segundo valor, usando normalmente para divisões binárias |
+| Rol | Rotaciona os bits do primeiro valor a esquerda pela quantidade no segundo valor |
+| Ror | Rotaciona os bits do primeiro valor a direita pela quantidade no segundo valor |
 
 **Dúvidas comuns:**
 
