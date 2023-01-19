@@ -38,6 +38,7 @@ O uso do Makefile é opcional e voltado para Linux e macOS, existindo apenas par
 - [ ] Permitir conversão dos ponteiros PtrByteArray em PtrWordArray de forma simples
 - [ ] Implementar um tipo de Try Catch Finally / Throw Exception
 - [x] Implementar forma de definir os diretórios de pesquisa do Imports
+- [ ] Quanto tudo estiver pronto, criar um protótipo do compilador feito diretamente em HCBasic para que seja executável localmente, para isso usar assemblers já existente para a plataforma, por exemplo o Old-School Assembler para DOS
 
 ## Exemplo de código
 
