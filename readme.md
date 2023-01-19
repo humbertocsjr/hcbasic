@@ -4,6 +4,14 @@ Esta linguagem de programação tem como objetivo criar uma derivação de baixo
 
 Esta linguagem não tem como objetivo ser orientada a objetos, sendo próximo de uma versão 16Bits procedural do VisualBasic.NET, onde os comandos são agrupados em módulos, com uma dinâmica de nomes próxima as bibliotecas do .NET Framework.
 
+## Requisitos Mínimos
+
+- DotNET 7.0 para Windows, Linux ou macOS
+- DOSBox para testes dos arquivos gerados
+- NASM para montagem do código assembly gerado
+
+O uso do Makefile é opcional e voltado para Linux e macOS, existindo apenas para facilitar
+
 ## Bugs/Problemas conhecidos
 
 - Comandos ROL, ROR, SHL e SHR aplicam sempre em 16 bits, mesmo quando a variável é de 8 bits, onde os comando ROL e ROR ficam inutilizados para sua função, por enquanto usar esses comandos apenas com variáveis 16 bits
@@ -59,7 +67,7 @@ End
 
 ```
 
-## Compilando e instalando
+## Compilando e instalando no Linux ou macOS
 
 ```sh
 make
@@ -67,11 +75,20 @@ make
 sudo make install
 ```
 
+## Compilando no Windows
+
+No PowerShell execute
+```powershell
+dotnet publish -c Release -o Distro
+```
+
+Os executaveis devem se encontrar em Distro\
+
 ## Uso
 
 ```sh
 
-hcbasic teste.hcb teste.asm
+hcbasic teste.hcb teste.asm Plataformas/8086-DOS
 
 nasm -f bin -o teste.com teste.asm
 
