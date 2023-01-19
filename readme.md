@@ -81,7 +81,7 @@ nasm -f bin -o teste.com teste.asm
 
 *Este texto será expandido conforme a evolução do projeto*
 
-Esta linguagem de programação tem fortes inspirações no VisualBasic.NET e na plataforma .NET Framework, porém sem recursos de orientação a objetos, por se tratar de uma linguagem procedural, com acessos de baixo nível, onde se encaixa próximo a liguagens como o C e Pascal clássico.
+Esta linguagem de programação tem fortes inspirações no VisualBasic.NET e na plataforma .NET Framework, porém sem recursos de orientação a objetos, por se tratar de uma linguagem procedural, com acessos de baixo nível, onde se encaixa próximo a linguagens como o C e Pascal clássico.
 
 Por ser uma linguagem da família BASIC, ela herda algumas de suas características, como a indistinção entre maiúsculas e minúsculas para comandos e nomes de variáveis, onde por exemplo: teste, TESTE e TEste são tratados como o mesmo item.
 
