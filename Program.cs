@@ -5,7 +5,7 @@ if(args.Count() < 2)
     Console.WriteLine("HCBasic v0.1");
     Console.WriteLine("Copyright (c) 2023, Humberto Costa dos Santos Junior");
     Console.WriteLine("Uso: hcbasic [arquivo.hcb] [arquivo.asm]");
-    return;
+    return 0;
 }
 
 try
@@ -19,7 +19,9 @@ try
 }
 catch (Erro erro)
 {
-    Console.WriteLine($"Erro: {erro.Trecho.Fonte.NomeCompleto}:{erro.Trecho.Linha}:{erro.Trecho.Coluna}:");
-    Console.WriteLine($"      {erro.Message}");
+    Console.Error.WriteLine($"Erro: {erro.Trecho.Fonte.NomeCompleto}:{erro.Trecho.Linha}:{erro.Trecho.Coluna}:");
+    Console.Error.WriteLine($"      {erro.Message}");
+    return -1;
 }
+return 0;
 

@@ -3,9 +3,21 @@ class Modulo : No
     public string Nome { get; set; }
     public List<DeclaraVariavel> Variaveis { get; set; } = new List<DeclaraVariavel>();
     public List<Rotina> Rotinas { get; set; } = new List<Rotina>();
+    public List<Modulo> Referencias { get; set; } = new List<Modulo>();
     public Modulo(Trecho trecho) : base(trecho)
     {
         Nome = trecho.Conteudo;
+    }
+
+    public void CadastraReferencia(Modulo mod)
+    {
+        if(mod != this)
+        {
+            if(!Referencias.Contains(mod))
+            {
+                Referencias.Add(mod);
+            }
+        }
     }
     protected override void CompilaInterno(Ambiente amb)
     {

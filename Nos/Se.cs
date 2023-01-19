@@ -12,7 +12,9 @@ class Se : No
     {
         string sim = amb.Saida.GeraRotulo();
         string nao = amb.Saida.GeraRotulo();
+        amb.Tipo = TipoVariavel.UInt16;
         Comparacao.Compila(amb);
+        amb.Tipo = null;
         amb.Saida.EmiteComparaAcumuladorComZero();
         amb.Saida.EmitePulaSeDiferente(sim);
         amb.Saida.EmitePulaPara(nao);

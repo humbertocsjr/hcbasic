@@ -14,7 +14,10 @@ enum TipoTrecho
     OperacaoLogica,
     Atribuicao,
     Ponto,
-    DoisPontos
+    DoisPontos,
+    Arroba,
+    Cerquilha,
+    Desconhecido
 }
 
 class Trecho

@@ -2,8 +2,17 @@ module OS
     public sub Start
         asm "cpu 8086"
         asm "bits 16"
+        asm "org 0x100"
         Program.Main
         asm "int 0x20"
+    end
+
+    public function CodeSegment() as uint16
+        asm "mov ax, cs"
+    end
+
+    public function StackSegment() as uint16
+        asm "mov ax, ss"
     end
 end
 
@@ -15,6 +24,22 @@ module Console
         asm "mov ax, [bp+6]"
         asm "mov ah, 0xe"
         asm "int 0x10"
+    end
+
+    public sub Write(txt as ptrbytearray)
+        while txt > 0
+            WriteChar txt
+            let @txt ++
+        end
+    end
+
+    public sub WriteUInt16(nro as uint16)
+        dim tmp as uint16
+        dim prox as uint16
+        let tmp = nro mod 10
+        let prox = nro / 10
+        if prox > 0 then WriteUInt16 prox
+        WriteChar 48 + tmp
     end
 end
 

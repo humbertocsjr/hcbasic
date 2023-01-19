@@ -74,11 +74,22 @@ class Fonte
                     ret.Add(atual);
                     atual = null;
                 }
+                else if(c == '@')
+                {
+                    atual = new Trecho(this, TipoTrecho.Arroba, _linha, coluna, "");
+                    ret.Add(atual);
+                    atual = null;
+                }
+                else if(c == '#')
+                {
+                    atual = new Trecho(this, TipoTrecho.Cerquilha, _linha, coluna, "");
+                    ret.Add(atual);
+                    atual = null;
+                }
                 else if(c == '+' | c == '-' | c == '/' | c == '*')
                 {
                     atual = new Trecho(this, TipoTrecho.OperacaoMatematica, _linha, coluna, c, c);
                     ret.Add(atual);
-                    atual = null;
                 }
                 else if(c == '=' | c == '>' | c == '<' | c == '~')
                 {
@@ -99,7 +110,7 @@ class Fonte
                 }
                 else if(c != ' ' & c != '\t')
                 {
-                    throw new ArgumentOutOfRangeException("Caractere não reconhecido: " + c);
+                    throw new Erro(new Trecho(this, TipoTrecho.Desconhecido, _linha, coluna, c, c), "Caractere não reconhecido: " + c);
                 }
             }
             else if(atual.Tipo == TipoTrecho.Id)
@@ -115,6 +126,9 @@ class Fonte
                     {
                         case "or":
                         case "and":
+                        case "orelse":
+                        case "andalso":
+                        case "xor":
                             atual.Tipo = TipoTrecho.OperacaoLogica;
                             break;
                         case "mod":
@@ -131,7 +145,7 @@ class Fonte
             }
             else if(atual.Tipo == TipoTrecho.OperacaoLogica)
             {
-                if(c == atual.Conteudo[0] | c == '=')
+                if(c == atual.Conteudo[0] | c == '=' | (atual.Conteudo[0] == '<' & c == '>'))
                 {
                     atual.Conteudo += char.ToLower(c);
                     atual.ConteudoOriginal += c;
@@ -144,6 +158,19 @@ class Fonte
                             atual.Tipo = TipoTrecho.Atribuicao;
                             break;
                     }
+                    atual = null;
+                    goto reavalia;
+                }
+            }
+            else if(atual.Tipo == TipoTrecho.OperacaoMatematica)
+            {
+                if(c == atual.Conteudo[0])
+                {
+                    atual.Conteudo += char.ToLower(c);
+                    atual.ConteudoOriginal += c;
+                }
+                else
+                {
                     atual = null;
                     goto reavalia;
                 }

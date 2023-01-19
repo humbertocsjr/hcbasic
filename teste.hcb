@@ -2,6 +2,8 @@ imports System
 
 module Program
     public sub Main
-        Console.WriteChar(65)
+        dim teste as ptrbytearray
+        let teste = "Aieeeee"
+        Console.Write teste
     end
 end

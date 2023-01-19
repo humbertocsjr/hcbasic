@@ -15,12 +15,16 @@ class Analise
                 return TipoVariavel.Int16;
             case "uint16":
                 return TipoVariavel.UInt16;
+            case "ptrbytearray":
+                return TipoVariavel.PtrByteArray;
+            case "ptrwordarray":
+                return TipoVariavel.PtrWordArray;
             default:
                 trechos.Erro("Esperado um tipo válido");
                 return TipoVariavel.Int16;
         }
     }
-    private DeclaraVariavel processaDim(NivelPublicidade publi, bool varDoModulo, ref Trechos trechos)
+    private DeclaraVariavel processaDim(NivelPublicidade publi, Modulo mod, bool varDoModulo, ref Trechos trechos)
     {
         trechos.ExigeProximo("Esperado o nome da variável após o 'dim'");
         trechos.ExigeId("Esperado o nome da variável");
@@ -35,7 +39,7 @@ class Analise
             dimTipo = processaTipo(ref trechos);
         }
         trechos.Proximo();
-        DeclaraVariavel dim = new DeclaraVariavel(dimTrecho, varDoModulo, publi, dimTipo, dimColecao, dimColecaoTam);
+        DeclaraVariavel dim = new DeclaraVariavel(dimTrecho, mod, varDoModulo, publi, dimTipo, dimColecao, dimColecaoTam);
         return dim;
     }
     private No? processaExpressao7(Modulo mod, Rotina rot, ref Trechos trechos)
@@ -44,6 +48,11 @@ class Analise
         if(trechos.EhTipo(TipoTrecho.Numero))
         {
             ret = new Numero(trechos.Atual, decimal.Parse(trechos.Atual.Conteudo));
+            trechos.Proximo();
+        }
+        else if(trechos.EhTipo(TipoTrecho.NumeroHex))
+        {
+            ret = new Numero(trechos.Atual, (decimal)ulong.Parse(trechos.Atual.Conteudo, System.Globalization.NumberStyles.HexNumber));
             trechos.Proximo();
         }
         else if(trechos.EhTipo(TipoTrecho.Texto))
@@ -57,6 +66,35 @@ class Analise
             ret = processaExpressao(mod, rot, ref trechos);
             trechos.ExigeTipo(TipoTrecho.FechaParenteses, "Esperado ')' após esta expressão");
             trechos.Proximo();
+        }
+        else if(trechos.EhIdentificador() | trechos.EhTipo(TipoTrecho.Arroba) | trechos.EhTipo(TipoTrecho.Cerquilha))
+        {
+            LeiaVariavel.TipoLeitura varTipo = LeiaVariavel.TipoLeitura.Comum;
+            if(trechos.EhTipo(TipoTrecho.Arroba))
+            {
+                trechos.Proximo();
+                trechos.ExigeId("Esperado o nome da variável");
+                varTipo = LeiaVariavel.TipoLeitura.Desvio;
+            }
+            if(trechos.EhTipo(TipoTrecho.Cerquilha))
+            {
+                trechos.Proximo();
+                trechos.ExigeId("Esperado o nome da variável");
+                varTipo = LeiaVariavel.TipoLeitura.Segmento;
+            }
+            var varModulo = mod.Nome;
+            var varNome = trechos.Atual.Conteudo;
+            var varTrecho = trechos.Atual;
+            trechos.Proximo();
+            if(trechos.EhTipo(TipoTrecho.Ponto))
+            {
+                trechos.Proximo();
+                trechos.ExigeId("Esperado o nome da variável");
+                varModulo = varNome;
+                varNome = trechos.Atual.Conteudo;
+                trechos.Proximo();
+            }
+            ret = new LeiaVariavel(varTrecho, varTipo, varModulo, varNome);
         }
         return ret;
     }
@@ -157,6 +195,12 @@ class Analise
 
     private Atribuicao processaAtribuicao(Modulo mod, Rotina rot, ref Trechos trechos)
     {
+        if(trechos.EhProximoTipo(TipoTrecho.Arroba) | trechos.EhProximoTipo(TipoTrecho.Cerquilha))
+        {
+            trechos.Proximo();
+        }
+        bool segmento = trechos.EhTipo(TipoTrecho.Cerquilha);
+        bool desvio = trechos.EhTipo(TipoTrecho.Arroba);
         trechos.ExigeProximo("Esperado nome da variavel");
         Trecho varTrecho = trechos.Atual;
         List<string> nomeVar = new List<string>();
@@ -170,9 +214,25 @@ class Analise
         }
         while(trechos.EhTipo(TipoTrecho.Ponto));
         Atribuicao atrib = new Atribuicao(varTrecho, nomeVar);
-        trechos.ExigeTipo(TipoTrecho.Atribuicao, "Esperado '=' após o nome da variável");
-        trechos.ExigeProximo("Esperado um valor após o '='");
-        atrib.Valor = processaExpressao(mod, rot, ref trechos);
+        if(segmento) atrib.Tipo = Atribuicao.TipoAtribuicao.Segmento;
+        if(desvio) atrib.Tipo = Atribuicao.TipoAtribuicao.Desvio;
+        if(trechos.EhTipo(TipoTrecho.Atribuicao))
+        {
+            trechos.ExigeTipo(TipoTrecho.Atribuicao, "Esperado '=' após o nome da variável");
+            trechos.ExigeProximo("Esperado um valor após o '='");
+            atrib.Valor = processaExpressao(mod, rot, ref trechos);
+        }
+        else if(trechos.EhOpMatematica("++"))
+        {
+            trechos.Proximo();
+            atrib.OperacaoEspecial = Atribuicao.TipoOperacaoEspecial.Incrementa;
+        }
+        else if(trechos.EhOpMatematica("--"))
+        {
+            trechos.Proximo();
+            atrib.OperacaoEspecial = Atribuicao.TipoOperacaoEspecial.Decrementa;
+        }
+        else trechos.ExigeTipo(TipoTrecho.Atribuicao, "Esperado '=' ou '++' or '--' após o nome da variável");
         return atrib;
     }
 
@@ -242,7 +302,7 @@ class Analise
 
             if(trechos.EhIdentificador("dim"))
             {
-                rot.Variaveis.Add(processaDim(NivelPublicidade.Local, false, ref trechos));
+                rot.Variaveis.Add(processaDim(NivelPublicidade.Local, mod, false, ref trechos));
             }
             else if(trechos.EhIdentificador("let"))
             {
@@ -346,7 +406,7 @@ class Analise
                     trechos.ExigeId("as", "Esperado 'as' após o nome do argumento");
                     trechos.Proximo();
                     trechos.ExigeId("Esperado o tipo de argumento");
-                    rot.Argumentos.Add(new DeclaraVariavel(argNome, false, NivelPublicidade.Local, processaTipo(ref trechos), false, 0){Argumento = true});
+                    rot.Argumentos.Add(new DeclaraVariavel(argNome, mod, false, NivelPublicidade.Local, processaTipo(ref trechos), false, 0){Argumento = true});
                     trechos.Proximo();
                 }
                 if(trechos.EhTipo(TipoTrecho.FechaParenteses)) break;
@@ -391,7 +451,7 @@ class Analise
 
             if(trechos.EhIdentificador("dim"))
             {
-                mod.Variaveis.Add(processaDim(publi, true, ref trechos));
+                mod.Variaveis.Add(processaDim(publi, mod, true, ref trechos));
             }
             else if(trechos.EhIdentificador("sub"))
             {
@@ -448,6 +508,14 @@ class Analise
         nivelRaiz(ref atual);
     }
 
+    private void CompilaReferencias(Modulo mod, Ambiente amb)
+    {
+        foreach (var modref in mod.Referencias)
+        {
+            CompilaReferencias(modref, amb);
+            modref.Compila(amb);
+        }
+    }
     public void Compila(Saida saida)
     {
         Ambiente? amb = null;
@@ -469,11 +537,7 @@ class Analise
             cons.First().IgnorarCabecalhoRodape = true;
             cons.First().Compila(amb);
             mod.Compila(amb);
-        }
-        foreach(var mod in Modulos.Where(m => m.Nome.ToLower() != "os"))
-        {
-            amb = amb ?? new Ambiente(saida, Modulos, mod.Trecho, mod);
-            mod.Compila(amb);
+            CompilaReferencias(mod, amb);
         }
     }
 }

@@ -1,5 +1,0 @@
-/home/humberto/Nextcloud/hcbasic/Distro/hcbasic
-/home/humberto/Nextcloud/hcbasic/Distro/hcbasic.dll
-/home/humberto/Nextcloud/hcbasic/Distro/hcbasic.deps.json
-/home/humberto/Nextcloud/hcbasic/Distro/hcbasic.runtimeconfig.json
-/home/humberto/Nextcloud/hcbasic/Distro/hcbasic.pdb

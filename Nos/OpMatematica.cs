@@ -14,6 +14,7 @@ class OpMatematica : No
     {
         No esq = Esquerda ?? new Nulo(Trecho);
         No dir = Direita ?? new Nulo(Trecho);
+        if(esq is Texto | dir is Texto) throw Erro("Não há suporte a concatenar textos");
         if(amb.Tipo == TipoVariavel.Int16 | amb.Tipo == TipoVariavel.Int8)
         {
             switch(Operacao)
@@ -22,24 +23,21 @@ class OpMatematica : No
                     esq.Compila(amb);
                     amb.Saida.EmiteEmpilhaAcumulador();
                     dir.Compila(amb);
-                    amb.Saida.EmiteCopiaAcumuladorParaAuxiliar();
-                    amb.Saida.EmiteDesempilhaAcumulador();
+                    amb.Saida.EmiteDesempilhaAuxiliar();
                     amb.Saida.EmiteAdicionaAuxNoAcumulador();
                     break;
                 case "-":
                     esq.Compila(amb);
                     amb.Saida.EmiteEmpilhaAcumulador();
                     dir.Compila(amb);
-                    amb.Saida.EmiteCopiaAcumuladorParaAuxiliar();
-                    amb.Saida.EmiteDesempilhaAcumulador();
+                    amb.Saida.EmiteDesempilhaAuxiliar();
                     amb.Saida.EmiteSubtraiAuxNoAcumulador();
                     break;
                 case "*":
                     esq.Compila(amb);
                     amb.Saida.EmiteEmpilhaAcumulador();
                     dir.Compila(amb);
-                    amb.Saida.EmiteCopiaAcumuladorParaAuxiliar();
-                    amb.Saida.EmiteDesempilhaAcumulador();
+                    amb.Saida.EmiteDesempilhaAuxiliar();
                     amb.Saida.EmiteMultiplicaSinalAuxNoAcumulador();
                     break;
                 case "/":
@@ -93,7 +91,7 @@ class OpMatematica : No
                 default: throw Erro($"Operação {Operacao} não suportada pelo tipo {amb.Tipo}");
             }
         }
-        else if(amb.Tipo == TipoVariavel.UInt16 | amb.Tipo == TipoVariavel.UInt8)
+        else if(amb.Tipo == TipoVariavel.UInt16 | amb.Tipo == TipoVariavel.UInt8 | amb.Tipo == TipoVariavel.PtrByteArray | amb.Tipo == TipoVariavel.PtrWordArray)
         {
             switch(Operacao)
             {
@@ -101,24 +99,21 @@ class OpMatematica : No
                     esq.Compila(amb);
                     amb.Saida.EmiteEmpilhaAcumulador();
                     dir.Compila(amb);
-                    amb.Saida.EmiteCopiaAcumuladorParaAuxiliar();
-                    amb.Saida.EmiteDesempilhaAcumulador();
+                    amb.Saida.EmiteDesempilhaAuxiliar();
                     amb.Saida.EmiteAdicionaAuxNoAcumulador();
                     break;
                 case "-":
                     esq.Compila(amb);
                     amb.Saida.EmiteEmpilhaAcumulador();
                     dir.Compila(amb);
-                    amb.Saida.EmiteCopiaAcumuladorParaAuxiliar();
-                    amb.Saida.EmiteDesempilhaAcumulador();
+                    amb.Saida.EmiteDesempilhaAuxiliar();
                     amb.Saida.EmiteSubtraiAuxNoAcumulador();
                     break;
                 case "*":
                     esq.Compila(amb);
                     amb.Saida.EmiteEmpilhaAcumulador();
                     dir.Compila(amb);
-                    amb.Saida.EmiteCopiaAcumuladorParaAuxiliar();
-                    amb.Saida.EmiteDesempilhaAcumulador();
+                    amb.Saida.EmiteDesempilhaAuxiliar();
                     amb.Saida.EmiteMultiplicaSemSinalAuxNoAcumulador();
                     break;
                 case "/":
@@ -177,6 +172,8 @@ class OpMatematica : No
 
     protected override void InicializaInterno(Ambiente amb)
     {
+        if(Esquerda != null)Esquerda.Inicializa(amb);
+        if(Direita != null)Direita.Inicializa(amb);
     }
 
     protected override No OtimizaInterno(Ambiente amb)

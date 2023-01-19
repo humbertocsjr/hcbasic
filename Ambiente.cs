@@ -8,6 +8,14 @@ class Ambiente
     public No No { get; set; }
     public Saida Saida { get; set; }
 
+    public bool TipoSemSinal => Tipo == TipoVariavel.UInt8 | Tipo == TipoVariavel.UInt16 | Tipo == TipoVariavel.PtrByteArray | Tipo == TipoVariavel.PtrWordArray;
+    public bool TipoComSinal => Tipo == TipoVariavel.Int8 | Tipo == TipoVariavel.Int16;
+
+    public void CadastraReferencia(Modulo mod)
+    {
+        if(Modulo != null) Modulo.CadastraReferencia(mod);
+    }
+
     public Ambiente(Saida saida, List<Modulo> modulos, Trecho trecho, No no)
     {
         Modulos = modulos;

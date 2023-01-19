@@ -36,6 +36,10 @@ class ChamaRotina : No
                 case TipoVariavel.UInt16:
                     amb.Saida.EmiteEmpilhaAcumulador();
                     break;
+                case TipoVariavel.PtrByteArray:
+                case TipoVariavel.PtrWordArray:
+                    amb.Saida.EmiteEmpilhaPonteiroRemoto();
+                    break;
                 default: throw Erro("Tipo não suportado");
             }
             amb.Tipo = null;
@@ -53,6 +57,7 @@ class ChamaRotina : No
         Rotina? rot = mod.Rotinas.Where(r => r.Nome.ToLower() == Rotina.ToLower()).FirstOrDefault();
         if(rot == null) throw Erro($"Rotina '{Modulo}.{Rotina}' não encontrada");
         if(rot.Argumentos.Count() != Argumentos.Count()) throw Erro($"Quantidade de argumentos não é igual ao exigido pela função");
+        amb.CadastraReferencia(mod);
         RotinaLocalizada = rot;
     }
 

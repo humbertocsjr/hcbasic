@@ -13,12 +13,15 @@ class Enquanto : No
         string inicio = amb.Saida.GeraRotulo();
         string fim = amb.Saida.GeraRotulo();
         amb.Saida.EmiteRotulo(repete);
+        amb.Tipo = TipoVariavel.UInt16;
         Comparacao.Compila(amb);
+        amb.Tipo = null;
         amb.Saida.EmiteComparaAcumuladorComZero();
         amb.Saida.EmitePulaSeDiferente(inicio);
         amb.Saida.EmitePulaPara(fim);
         amb.Saida.EmiteRotulo(inicio);
         CompilaLista(Repete, amb);
+        amb.Saida.EmitePulaPara(repete);
         amb.Saida.EmiteRotulo(fim);
     }
 

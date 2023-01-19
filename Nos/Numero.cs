@@ -8,7 +8,19 @@ class Numero : No
 
     protected override void CompilaInterno(Ambiente amb)
     {
-        amb.Saida.EmiteGravaNumeroEmAcumulador(Valor);
+        switch(amb.Tipo)
+        {
+            case TipoVariavel.Int8:
+            case TipoVariavel.UInt8:
+            case TipoVariavel.Int16:
+            case TipoVariavel.UInt16:
+            case TipoVariavel.PtrByteArray:
+            case TipoVariavel.PtrWordArray:
+                amb.Saida.EmiteGravaNumeroEmAcumulador(Valor);
+                break;
+            default:
+                throw Erro("Tipo não suportado");
+        }
     }
 
     protected override void InicializaInterno(Ambiente amb)

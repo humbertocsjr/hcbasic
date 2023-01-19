@@ -49,7 +49,7 @@ class Saida8086 : Saida
 
     public override string GeraRotulo()
     {
-        return $"R{Contador++}";
+        return $"ROTULO{Contador++}";
     }
 
     public override void EmitePulaPara(string rotulo)
@@ -69,7 +69,14 @@ class Saida8086 : Saida
 
     public override void EmiteGravaNumeroEmAcumulador(decimal valor)
     {
-        EmiteL($"mov ax, {valor}");
+        if(valor == 0)
+        {
+            EmiteL($"xor ax, ax");
+        }
+        else
+        {
+            EmiteL($"mov ax, {valor}");
+        }
     }
 
     public override void EmiteCopiaAcumuladorParaVariavelLocal(int posicao)
@@ -81,8 +88,12 @@ class Saida8086 : Saida
     {
         switch(tipo)
         {
+            case TipoVariavel.Int8: return 2;
+            case TipoVariavel.UInt8: return 2;
             case TipoVariavel.Int16: return 2;
             case TipoVariavel.UInt16: return 2;
+            case TipoVariavel.PtrByteArray: return 4;
+            case TipoVariavel.PtrWordArray: return 4;
             default: throw new Exception("Tipo não suportado por essa arquitetura");
         }
     }
@@ -133,11 +144,13 @@ class Saida8086 : Saida
     {
         EmiteL($"xor dx, dx");
         EmiteL($"div bx");
+        EmiteL($"mov ax, dx");
     }
     public override void EmiteModSinalAuxNoAcumulador()
     {
         EmiteL($"xor dx, dx");
         EmiteL($"idiv bx");
+        EmiteL($"mov ax, dx");
     }
     public override void EmiteMultiplicaSemSinalAuxNoAcumulador()
     {
@@ -186,5 +199,188 @@ class Saida8086 : Saida
     public override void EmiteConverteAcumuladorEmByte()
     {
         EmiteL($"xor ah, ah");
+    }
+    public override void EmiteDefinePonteiroRemotoParaRotuloDoCodigo(string rotulo)
+    {
+        EmiteL($"push cs");
+        EmiteL($"pop es");
+        EmiteL($"mov di, {rotulo}");
+    }
+    public override void EmiteBinario(byte[] dados)
+    {
+        EmiteL($"db {String.Join(',', dados)}");
+    }
+    public override void EmiteEmpilhaPonteiroRemoto()
+    {
+        EmiteL($"push es");
+        EmiteL($"push di");
+    }
+
+    public override void EmiteGravaNumeroNoSegDaVariavelLocal(int posicao, decimal valor)
+    {
+        EmiteL($"mov word [bp+{posicao}+2], {valor}");
+    }
+    public override void EmiteCopiaPonteiroRemotoParaVariavel(int posicao)
+    {
+        EmiteL($"mov [bp+{posicao}], di");
+    }
+    public override void EmiteCopiaSegDoPonteiroRemotoParaVariavel(int posicao)
+    {
+        EmiteL($"push es");
+        EmiteL($"pop word [bp+{posicao}+2]");
+    }
+    public override void EmiteGravaNumeroNoPonteiroRemoto(decimal valor)
+    {
+        EmiteL($"mov di, {valor}");
+    }
+    public override void EmiteGravaNumeroNoSegDoPonteiroRemoto(decimal valor)
+    {
+        EmiteL($"push ax");
+        EmiteL($"mov ax, {valor}");
+        EmiteL($"mov es, ax");
+        EmiteL($"pop ax");
+    }
+    public override void EmiteCopiaAcumuladorParaSegDaVariavelLocal(int posicao)
+    {
+        EmiteL($"mov word [bp+{posicao}+2], ax");
+    }
+    public override void EmiteCopiaAcumuladorParaByteArrayDaVariavelLocal(int posicao)
+    {
+        EmiteL($"push word [bp+{posicao}+2]");
+        EmiteL($"pop es");
+        EmiteL($"mov di, [bp+{posicao}]");
+        EmiteL($"es mov [di], al");
+    }
+    public override void EmiteCopiaAcumuladorParaWordArrayDaVariavelLocal(int posicao)
+    {
+        EmiteL($"push word [bp+{posicao}+2]");
+        EmiteL($"pop es");
+        EmiteL($"mov di, [bp+{posicao}]");
+        EmiteL($"es mov [di], ax");
+    }
+    public override void EmiteGravaNumeroNoByteArrayDaVariavelLocal(int posicao, decimal valor)
+    {
+        EmiteL($"mov ax, [bp+{posicao}+2]");
+        EmiteL($"mov es, ax");
+        EmiteL($"mov di, [bp+{posicao}]");
+        EmiteL($"es mov byte [di], {valor}");
+    }
+    public override void EmiteGravaNumeroNoWordArrayDaVariavelLocal(int posicao, decimal valor)
+    {
+        EmiteL($"mov ax, [bp+{posicao}+2]");
+        EmiteL($"mov es, ax");
+        EmiteL($"mov di, [bp+{posicao}]");
+        EmiteL($"es mov word [di], {valor}");
+    }
+    public override void EmiteCopiaVariavelLocalParaAcumulador(int posicao)
+    {
+        EmiteL($"mov ax, [bp+{posicao}]");
+    }
+    public override void EmiteCopiaByteArrayDaVariavelLocalParaAcumulador(int posicao)
+    {
+        EmiteL($"push word [bp+{posicao}+2]");
+        EmiteL($"pop es");
+        EmiteL($"mov di, [bp+{posicao}]");
+        EmiteL($"xor ax, ax");
+        EmiteL($"es mov al, [di]");
+    }
+    public override void EmiteCopiaSegDaVariavelLocalParaAcumulador(int posicao)
+    {
+        EmiteL($"mov ax, [bp+{posicao}+2]");
+    }
+    public override void EmiteCopiaWordArrayDaVariavelLocalParaAcumulador(int posicao)
+    {
+        EmiteL($"push word [bp+{posicao}+2]");
+        EmiteL($"pop es");
+        EmiteL($"mov di, [bp+{posicao}]");
+        EmiteL($"es mov ax, [di]");
+    }
+    public override void EmiteDesempilhaAuxiliar()
+    {
+        EmiteL($"pop bx");
+    }
+    public override void EmiteIncrementaSegDaVariavelLocal(int posicao)
+    {
+        EmiteL($"inc word [bp+{posicao}+2]");
+    }
+    public override void EmiteIncrementaVariavelLocal(int posicao)
+    {
+        EmiteL($"inc word [bp+{posicao}]");
+    }
+    public override void EmiteDecrementaByteArrayNaVariavelLocal(int posicao)
+    {
+        EmiteL($"push word [bp+{posicao}+2]");
+        EmiteL($"pop es");
+        EmiteL($"mov di, [bp+{posicao}]");
+        EmiteL($"es dec byte [di]");
+    }
+    public override void EmiteDecrementaSegDaVariavelLocal(int posicao)
+    {
+        EmiteL($"dec word [bp+{posicao}+2]");
+    }
+    public override void EmiteDecrementaVariavelLocal(int posicao)
+    {
+        EmiteL($"dec word [bp+{posicao}]");
+    }
+    public override void EmiteDecrementaWordArrayNaVariavelLocal(int posicao)
+    {
+        EmiteL($"push word [bp+{posicao}+2]");
+        EmiteL($"pop es");
+        EmiteL($"mov di, [bp+{posicao}]");
+        EmiteL($"es dec word [di]");
+    }
+    public override void EmiteIncrementaByteArrayNaVariavelLocal(int posicao)
+    {
+        EmiteL($"push word [bp+{posicao}+2]");
+        EmiteL($"pop es");
+        EmiteL($"mov di, [bp+{posicao}]");
+        EmiteL($"es inc byte [di]");
+    }
+    public override void EmiteIncrementaWordArrayNaVariavelLocal(int posicao)
+    {
+        EmiteL($"push word [bp+{posicao}+2]");
+        EmiteL($"pop es");
+        EmiteL($"mov di, [bp+{posicao}]");
+        EmiteL($"es inc word [di]");
+    }
+    public override void EmiteComparaAcumuladorComAuxiliar()
+    {
+        EmiteL($"cmp ax, bx");
+    }
+    public override void EmitePulaSeMaiorOuIgual(string rotulo, bool sem_sinal)
+    {
+        EmiteL((sem_sinal ? "jae " : "jge ") + rotulo);
+    }
+    public override void EmitePulaSeMaiorQue(string rotulo, bool sem_sinal)
+    {
+        EmiteL((sem_sinal ? "ja " : "jg ") + rotulo);
+    }
+    public override void EmitePulaSeMenorOuIgual(string rotulo, bool sem_sinal)
+    {
+        EmiteL((sem_sinal ? "jbe " : "jle ") + rotulo);
+    }
+    public override void EmitePulaSeMenorQue(string rotulo, bool sem_sinal)
+    {
+        EmiteL((sem_sinal ? "jb " : "jl ") + rotulo);
+    }
+    public override void EmiteGravaRotuloEmAcumulador(string rotulo)
+    {
+        EmiteL($"mov ax, {rotulo}");
+    }
+    public override void EmiteCopiaSegCodigoParaAcumulador()
+    {
+        EmiteL($"mov ax, cs");
+    }
+    public override void EmiteAplicaAndEntreAcumuladorEAuxiliar()
+    {
+        EmiteL($"and ax, bx");
+    }
+    public override void EmiteAplicaOrEntreAcumuladorEAuxiliar()
+    {
+        EmiteL($"or ax, bx");
+    }
+    public override void EmiteAplicaXorEntreAcumuladorEAuxiliar()
+    {
+        EmiteL($"xor ax, bx");
     }
 }

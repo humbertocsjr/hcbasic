@@ -17,9 +17,10 @@ class OpLogica : No
         string pulo_sim = amb.Saida.GeraRotulo();
         string pulo_nao = amb.Saida.GeraRotulo();
         string pulo_fim = amb.Saida.GeraRotulo();
+        bool ignora_comparacao = false;
         switch(Operacao)
         {
-            case "and":
+            case "andalso":
                 esq.Compila(amb);
                 amb.Saida.EmiteComparaAcumuladorComZero();
                 amb.Saida.EmitePulaSeIgual(pulo_nao);
@@ -27,7 +28,7 @@ class OpLogica : No
                 amb.Saida.EmiteComparaAcumuladorComZero();
                 amb.Saida.EmitePulaSeIgual(pulo_nao);
                 break;
-            case "or":
+            case "orelse":
                 esq.Compila(amb);
                 amb.Saida.EmiteComparaAcumuladorComZero();
                 amb.Saida.EmitePulaSeDiferente(pulo_sim);
@@ -35,17 +36,110 @@ class OpLogica : No
                 amb.Saida.EmiteComparaAcumuladorComZero();
                 amb.Saida.EmitePulaSeIgual(pulo_nao);
                 break;
+            case "and":
+                esq.Compila(amb);
+                amb.Saida.EmiteEmpilhaAcumulador();
+                dir.Compila(amb);
+                amb.Saida.EmiteCopiaAcumuladorParaAuxiliar();
+                amb.Saida.EmiteDesempilhaAcumulador();
+                amb.Saida.EmiteAplicaAndEntreAcumuladorEAuxiliar();
+                ignora_comparacao = true;
+                break;
+            case "or":
+                esq.Compila(amb);
+                amb.Saida.EmiteEmpilhaAcumulador();
+                dir.Compila(amb);
+                amb.Saida.EmiteCopiaAcumuladorParaAuxiliar();
+                amb.Saida.EmiteDesempilhaAcumulador();
+                amb.Saida.EmiteAplicaOrEntreAcumuladorEAuxiliar();
+                ignora_comparacao = true;
+                break;
+            case "xor":
+                esq.Compila(amb);
+                amb.Saida.EmiteEmpilhaAcumulador();
+                dir.Compila(amb);
+                amb.Saida.EmiteCopiaAcumuladorParaAuxiliar();
+                amb.Saida.EmiteDesempilhaAcumulador();
+                amb.Saida.EmiteAplicaXorEntreAcumuladorEAuxiliar();
+                ignora_comparacao = true;
+                break;
+            case ">":
+                esq.Compila(amb);
+                amb.Saida.EmiteEmpilhaAcumulador();
+                dir.Compila(amb);
+                amb.Saida.EmiteCopiaAcumuladorParaAuxiliar();
+                amb.Saida.EmiteDesempilhaAcumulador();
+                amb.Saida.EmiteComparaAcumuladorComAuxiliar();
+                amb.Saida.EmitePulaSeMaiorQue(pulo_sim, amb.TipoSemSinal);
+                amb.Saida.EmitePulaPara(pulo_nao);
+                break;
+            case ">=":
+                esq.Compila(amb);
+                amb.Saida.EmiteEmpilhaAcumulador();
+                dir.Compila(amb);
+                amb.Saida.EmiteCopiaAcumuladorParaAuxiliar();
+                amb.Saida.EmiteDesempilhaAcumulador();
+                amb.Saida.EmiteComparaAcumuladorComAuxiliar();
+                amb.Saida.EmitePulaSeMaiorOuIgual(pulo_sim, amb.TipoSemSinal);
+                amb.Saida.EmitePulaPara(pulo_nao);
+                break;
+            case "<":
+                esq.Compila(amb);
+                amb.Saida.EmiteEmpilhaAcumulador();
+                dir.Compila(amb);
+                amb.Saida.EmiteCopiaAcumuladorParaAuxiliar();
+                amb.Saida.EmiteDesempilhaAcumulador();
+                amb.Saida.EmiteComparaAcumuladorComAuxiliar();
+                amb.Saida.EmitePulaSeMenorQue(pulo_sim, amb.TipoSemSinal);
+                amb.Saida.EmitePulaPara(pulo_nao);
+                break;
+            case "<=":
+                esq.Compila(amb);
+                amb.Saida.EmiteEmpilhaAcumulador();
+                dir.Compila(amb);
+                amb.Saida.EmiteCopiaAcumuladorParaAuxiliar();
+                amb.Saida.EmiteDesempilhaAcumulador();
+                amb.Saida.EmiteComparaAcumuladorComAuxiliar();
+                amb.Saida.EmitePulaSeMenorOuIgual(pulo_sim, amb.TipoSemSinal);
+                amb.Saida.EmitePulaPara(pulo_nao);
+                break;
+            case "==":
+                esq.Compila(amb);
+                amb.Saida.EmiteEmpilhaAcumulador();
+                dir.Compila(amb);
+                amb.Saida.EmiteCopiaAcumuladorParaAuxiliar();
+                amb.Saida.EmiteDesempilhaAcumulador();
+                amb.Saida.EmiteComparaAcumuladorComAuxiliar();
+                amb.Saida.EmitePulaSeIgual(pulo_sim);
+                amb.Saida.EmitePulaPara(pulo_nao);
+                break;
+            case "<>":
+                esq.Compila(amb);
+                amb.Saida.EmiteEmpilhaAcumulador();
+                dir.Compila(amb);
+                amb.Saida.EmiteCopiaAcumuladorParaAuxiliar();
+                amb.Saida.EmiteDesempilhaAcumulador();
+                amb.Saida.EmiteComparaAcumuladorComAuxiliar();
+                amb.Saida.EmitePulaSeDiferente(pulo_sim);
+                amb.Saida.EmitePulaPara(pulo_nao);
+                break;
+            default: throw Erro("Operação lógica não suportada");
         }
-        amb.Saida.EmiteRotulo(pulo_sim);
-        amb.Saida.EmiteGravaNumeroEmAcumulador(0xffff);
-        amb.Saida.EmitePulaPara(pulo_fim);
-        amb.Saida.EmiteRotulo(pulo_nao);
-        amb.Saida.EmiteGravaNumeroEmAcumulador(0);
-        amb.Saida.EmiteRotulo(pulo_fim);
+        if(!ignora_comparacao)
+        {
+            amb.Saida.EmiteRotulo(pulo_sim);
+            amb.Saida.EmiteGravaNumeroEmAcumulador(0xffff);
+            amb.Saida.EmitePulaPara(pulo_fim);
+            amb.Saida.EmiteRotulo(pulo_nao);
+            amb.Saida.EmiteGravaNumeroEmAcumulador(0);
+            amb.Saida.EmiteRotulo(pulo_fim);
+        }
     }
 
     protected override void InicializaInterno(Ambiente amb)
     {
+        if(Esquerda != null)Esquerda.Inicializa(amb);
+        if(Direita != null)Direita.Inicializa(amb);
     }
 
     protected override No OtimizaInterno(Ambiente amb)

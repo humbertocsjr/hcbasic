@@ -1,5 +1,0 @@
-/home/humberto/Nextcloud/hcbasic/bin/Debug/net7.0/publish/hcbasic
-/home/humberto/Nextcloud/hcbasic/bin/Debug/net7.0/publish/hcbasic.dll
-/home/humberto/Nextcloud/hcbasic/bin/Debug/net7.0/publish/hcbasic.deps.json
-/home/humberto/Nextcloud/hcbasic/bin/Debug/net7.0/publish/hcbasic.runtimeconfig.json
-/home/humberto/Nextcloud/hcbasic/bin/Debug/net7.0/publish/hcbasic.pdb
