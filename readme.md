@@ -385,7 +385,7 @@ While A < 10 Let A ++
 
 ### For
 
-Repete seu conteúdo enquanto o resultado de uma comparação for verdadeiro.
+Repete seu conteudo o numero de vezes definido pelo intervalo declarado, incrementando o valor da variavel a cada passagem.
 
 ```vb
 Dim i as UInt16
