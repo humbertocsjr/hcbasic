@@ -524,7 +524,7 @@ Module OS
         asm "xor ah, ah"
         asm "mov si, ax"
         asm "add si, 0x80"
-        asm "mov byte [si], 0"
+        asm "mov byte [si+1], 0"
         ' Chama o Main
         Program.Main args
         ' Encerra programa quando retornar do main

@@ -7,6 +7,11 @@ org 0x100
 mov ax, cs
 mov [bp-2], ax
 mov word [bp-4], 0x80
+mov al, [0x80]
+xor ah, ah
+mov si, ax
+add si, 0x80
+mov byte [si+1], 0
 push word [bp+-4+2]
 pop es
 mov di, [bp+-4]
