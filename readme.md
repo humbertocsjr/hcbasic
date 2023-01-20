@@ -4,18 +4,44 @@ Esta linguagem de programação tem como objetivo criar uma derivação de baixo
 
 Esta linguagem não tem como objetivo ser orientada a objetos, sendo próximo de uma versão 16Bits procedural do VisualBasic.NET, onde os comandos são agrupados em módulos, com uma dinâmica de nomes próxima as bibliotecas do .NET Framework.
 
-## Requisitos Mínimos
+## Novidades
+
+- Implementação da atribuição sem o comando Let
+- Criada um mecanismo de gerar as distribuições, será usado a partir do momento compilador e a Biblioteca System estiver utilizável para subir os Releases no GitHub
+- **Neste fim de semana por eu ter mais tempo para dedicar a este projeto devo terminar as Structures e a biblioteca System e gerar a primeira versão oficial completamente funcional**
+
+## Requisitos Mínimos para Utilização
+
+Todas as versões de distribuição vem embutidas os arquivos necessários para funcionamento não precisando instalar o .NET 7.0
+
+Na distribuição vem um exemplo chamado helloworld.hcb que pode ser compilado pelo script compilar.sh ou compilar.bat dependendo da plataforma.
+
+- Sistema Operacional:
+    - macOS Sierra ou Superior - Intel
+    - macOS Big Sur ou Superior - Apple M1
+    - Windows 7 SP1 ESU ou Superior
+    - Linux (Intel 64 bits/Intel 64 bits usando MUSL/ARM 32 bits/ARM 64 bits)
+- NASM para montagem do código assembly gerado
+
+## Requisitos Mínimos para Desenvolvimento
 
 - DotNET SDK 7.0 para Windows, Linux ou macOS
 - DOSBox para testes dos arquivos gerados
 - NASM para montagem do código assembly gerado
+- Recomendado uso de um editor próprio como Visual Code/Visual Studio/JetBeans Rider
 
-O uso do Makefile é opcional e voltado para Linux e macOS, existindo apenas para facilitar
+O uso do Makefile é opcional e voltado para Linux e macOS, existindo apenas para facilitar e gerar as distribuições
 
 ## Bugs/Problemas conhecidos
 
 - Comandos ROL, ROR, SHL e SHR aplicam sempre em 16 bits, mesmo quando a variável é de 8 bits, onde os comando ROL e ROR ficam inutilizados para sua função, por enquanto usar esses comandos apenas com variáveis 16 bits
-- Algumas operações matemáticas e lógicas gera um código extremamente mal otimizado, principalmente para ponteiros, deve-se colocar uma camada de otimização no gerador do 8086 para evita definir o segmento ES a cada manipulação de ponteiros.
+- **Está no meio da implementação da estrutura, os códigos necessários foram implementados, a implementação LeiaVariavel, Atribuicao e ChamaRotina foram substituidas pelo Acao assim que estiver pronto, pois esse novo metodo unifica a busca por variavel/rotina em modulos, e simplifica muito código, com essa alteração o Saida foi melhorado e otimizado para evitar definições redundantes do ponteiro ES:DI**
+
+## Objetivos Atuais e Prioritários
+
+- Terminar a implementação de Structures/Tipos Personalizados
+- Limpeza de itens não utilizados na implementação do Saida
+- Começar a implementar a Biblioteca System que esta aguardando o Structure
 
 ## Objetivos
 
@@ -26,7 +52,7 @@ O uso do Makefile é opcional e voltado para Linux e macOS, existindo apenas par
 - [x] Suporte a números 8 e 16 bits
 - [x] Implementar chamada de funções dentro de expressões/atribuições
 - [ ] Implementar na biblioteca System, comandos de manipular arquivos
-- [ ] Correto tratamento e diferenciação do public e private
+- [x] Correto tratamento e diferenciação do public e private
 - [x] Comando FOR
 - [ ] Suporte a rotinas externas usando ponteiro (Implementar comando INVOKE)
 - [ ] Implementar tipos personalizados usando uma dinâmica próxima ao TYPE do QuickBASIC, por trás usar comandos do PtrByteArray e PtrWordArray, mas permitindo declarar Rotinas, para ser uma proto orientação a objetos para poder implementar as bibliotecas System de forma mais próxima ao .NET
@@ -59,6 +85,7 @@ Module Program
         If a == 3 Then
             Let a = a - 2
         End
+        a = 0
         While a < 10
             Let a = a - 1
         End
@@ -73,6 +100,16 @@ End
 
 ```
 
+## Gerando Distribuição (no Linux ou macOS)
+
+Para gerar os arquivos de distribuição para várias plataformas basta executar o comando abaixo:
+
+```sh
+make distro
+```
+
+Serão atualizados os arquivos na pasta Distro, onde cada subpasta pertence a uma plataforma suportada
+
 ## Compilando e instalando no Linux ou macOS
 
 ```sh
@@ -86,12 +123,14 @@ sudo make install
 No PowerShell execute
 
 ```powershell
-dotnet publish -c Release -o Distro
+dotnet publish -c Release -o Distro\Atual
 ```
 
-Os executaveis devem se encontrar em Distro\
+Os executaveis devem se encontrar em Distro/Atual
 
 ## Uso
+
+O Compilador HCBasic gera arquivos em Assembly, para executar a compilação basta chamar o compilador com o nome do arquivo basic, o arquivo assembly destino, e a lista de diretorios onde irá buscar as bibliotecas de modulos.
 
 ```sh
 
@@ -243,10 +282,9 @@ As variáveis e campos usam tipos rigidamente especificados, não havendo tipos 
 
 * Os tipos PtrByteArray e PtrWordArray tem uma propriedade especial de definir seu destino/origem de dados usando caracteres especiais como '@' para definir o desvio(Offset) e '#' para definir o segmento(Seg) da memória, para acesso a qualquer ponto da memória RAM mesmo em arquiteturas que não permitem acesso facilitado a trechos externos ao aplicativo.
 * O Tipo PtrByteArray pode receber um texto como valor diretamente, alterando o ponteiro para o texto informado, não precisando alterar o Segmento e Desvio do ponteiro manualmente.
+* Ao incrementar o desvio do PtrWordArray, está movendo o ponteiro apenas um byte, pois a resolução de posicionamento dos ponteiros são em bytes.
 
 ## Manipulação de variáveis e campos
-
-Para manipular e definir valores de variáveis, é usado sempre o comando 'Let', não havendo manipulação direta de variáveis.
 
 **Exemplo de uso:**
 
@@ -261,24 +299,24 @@ Module Program
         Dim ptrTexto as PtrByteArray
         Dim ptrVideo as PtrByteArray
         ' Define os valores das variáveis
-        Let varUI8 = 1+35
-        Let varUI16 = varUI8 + 55
+        varUI8 = 1+35
+        varUI16 = varUI8 + 55
         ' Define um ponteiro para uma string
-        Let ptrTexto = "Teste"
+        ptrTexto = "Teste"
         ' Define um ponteiro manualmente
         '   Formato usada para HEXADECIMAL 0x0000
         '   Define o segmento
-        Let #ptrVideo = 0xB800 
+        #ptrVideo = 0xB800 
         '   Define o desvio
-        Let @ptrVideo = 0
+        @ptrVideo = 0
         ' Altera o conteudo do ponteiro
         ' Escreve um A (65 em UInt8) na tela
-        Let ptrVideo = 65
+        ptrVideo = 65
         ' Pula para a próxima posicao da memoria de video (+2)
-        Let @ptrVideo ++
-        Let @ptrVideo ++
+        @ptrVideo ++
+        @ptrVideo ++
         ' Escreve um B (66) na tela ao lado do A
-        Let ptrVideo = 66
+        ptrVideo = 66
         ' Escreve o conteúdo da variável ptrTexto
         Console.Write ptrTexto
     End
@@ -376,7 +414,7 @@ While A < 10
     ' Executa apenas se o valor inicial de A for menor que 10, e continua executando enquanto A for menor que 10
 
     ' Adiciona 1 ao A, sem este comando ou alguma alteração em A, esta repetição seria infinita
-    Let A ++
+    A ++
 End
 
 ' Variação de uma linha
@@ -420,14 +458,15 @@ End
 
 ```
 
-### Let
+### Let / Atribuição
 
 Atribui um valor a uma variável.
 
 ```vb
 
 Dim a as UInt16
-Let a  = 10
+Let a  = 10   ' Atribuição com o comando LET
+a = 10        ' Atribuição sem o comando LET
 
 ```
 

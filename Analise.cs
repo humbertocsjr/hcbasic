@@ -6,6 +6,8 @@ class Analise
     public List<Fonte> Fontes { get; set; } = new List<Fonte>();
     // Armazena os módulos carregados, usado para compilação
     public List<Modulo> Modulos { get; set; } = new List<Modulo>();
+    // Armazena as estruturas carregadas, usado para compilação
+    public List<Estrutura> Estruturas { get; set; } = new List<Estrutura>();
     // Armazena os diretorios para uso do comando Imports
     public List<DirectoryInfo> DiretoriosImportacao = new List<DirectoryInfo>();
 
@@ -50,7 +52,7 @@ class Analise
     // Processa declaração de variável ou campo do modulo
     // Exemplo:
     // dim variavel as tipo
-    private DeclaraVariavel processaDim(NivelPublicidade publi, Modulo mod, bool varDoModulo, ref Trechos trechos)
+    private DeclaraVariavel processaDim(NivelPublicidade publi, Estrutura mod, bool varDoModulo, ref Trechos trechos)
     {
         trechos.ExigeProximo("Esperado o nome da variável após o 'dim'");
         trechos.ExigeId("Esperado o nome da variável");
@@ -105,39 +107,40 @@ class Analise
         }
         else if(trechos.EhIdentificador() | trechos.EhTipo(TipoTrecho.Arroba) | trechos.EhTipo(TipoTrecho.Cerquilha))
         {
-            LeiaVariavel.TipoLeitura varTipo = LeiaVariavel.TipoLeitura.Comum;
+            Acao.TipoDeAcao varTipo = Acao.TipoDeAcao.Leitura;
             if(trechos.EhTipo(TipoTrecho.Arroba))
             {
                 trechos.Proximo();
                 trechos.ExigeId("Esperado o nome da variável");
-                varTipo = LeiaVariavel.TipoLeitura.Desvio;
+                varTipo = Acao.TipoDeAcao.LeituraDesvio;
             }
             if(trechos.EhTipo(TipoTrecho.Cerquilha))
             {
                 trechos.Proximo();
                 trechos.ExigeId("Esperado o nome da variável");
-                varTipo = LeiaVariavel.TipoLeitura.Segmento;
+                varTipo = Acao.TipoDeAcao.LeituraSegmento;
             }
             var varModulo = mod.Nome;
-            var varNome = trechos.Atual.Conteudo;
+            var varNome = new List<string>();
+            varNome.Add(trechos.Atual.Conteudo);
             var varTrecho = trechos.Atual;
             trechos.Proximo();
-            if(trechos.EhTipo(TipoTrecho.Ponto))
+            while(trechos.EhTipo(TipoTrecho.Ponto))
             {
                 trechos.Proximo();
                 trechos.ExigeId("Esperado o nome da variável");
-                varModulo = varNome;
-                varNome = trechos.Atual.Conteudo;
+                varNome.Add(trechos.Atual.Conteudo);
                 trechos.Proximo();
             }
+            Acao acao = new Acao(varTrecho, varNome, varTipo);
+            ret = acao;
             if(trechos.EhTipo(TipoTrecho.AbreParenteses))
             {
-                ChamaRotina chamaRotina = new ChamaRotina(varTrecho, varModulo, varNome);
-                ret = chamaRotina;
+                acao.Tipo = Acao.TipoDeAcao.Chamada;
                 trechos.Proximo();
                 while(!trechos.EhTipo(TipoTrecho.FechaParenteses))
                 {
-                    chamaRotina.Argumentos.Add(processaExpressao(mod, rot, ref trechos));
+                    acao.ArgumentosChamada.Add(processaExpressao(mod, rot, ref trechos));
                     if(trechos.EhTipo(TipoTrecho.Virgula)) 
                     {
                         trechos.Proximo();
@@ -148,10 +151,6 @@ class Analise
                     }
                 }
                 trechos.Proximo();
-            }
-            else
-            {
-                ret = new LeiaVariavel(varTrecho, varTipo, varModulo, varNome);
             }
         }
         return ret;
@@ -257,7 +256,7 @@ class Analise
     // let variavel = 123
     // let @variavel = 123
     // let #variavel = 123
-    private Atribuicao processaAtribuicao(Modulo mod, Rotina rot, ref Trechos trechos)
+    private Acao processaAtribuicao(Modulo mod, Rotina rot, ref Trechos trechos)
     {
         if(trechos.EhProximoTipo(TipoTrecho.Arroba) | trechos.EhProximoTipo(TipoTrecho.Cerquilha))
         {
@@ -277,24 +276,28 @@ class Analise
             trechos.ExigeProximo("Esperado continuação do nome da variável");
         }
         while(trechos.EhTipo(TipoTrecho.Ponto));
-        Atribuicao atrib = new Atribuicao(varTrecho, nomeVar);
-        if(segmento) atrib.Tipo = Atribuicao.TipoAtribuicao.Segmento;
-        if(desvio) atrib.Tipo = Atribuicao.TipoAtribuicao.Desvio;
+        Acao atrib = new Acao(varTrecho, nomeVar, Acao.TipoDeAcao.Gravacao);
+        if(segmento) atrib.Tipo = Acao.TipoDeAcao.GravacaoSegmento;
+        if(desvio) atrib.Tipo = Acao.TipoDeAcao.GravacaoDesvio;
         if(trechos.EhTipo(TipoTrecho.Atribuicao))
         {
             trechos.ExigeTipo(TipoTrecho.Atribuicao, "Esperado '=' após o nome da variável");
             trechos.ExigeProximo("Esperado um valor após o '='");
-            atrib.Valor = processaExpressao(mod, rot, ref trechos);
+            atrib.ValorGravacao = processaExpressao(mod, rot, ref trechos);
         }
         else if(trechos.EhOpMatematica("++"))
         {
             trechos.Proximo();
-            atrib.OperacaoEspecial = Atribuicao.TipoOperacaoEspecial.Incrementa;
+            atrib.Tipo = Acao.TipoDeAcao.Incremento;
+            if(segmento) atrib.Tipo = Acao.TipoDeAcao.IncrementoSegmento;
+            if(desvio) atrib.Tipo = Acao.TipoDeAcao.IncrementoDesvio;
         }
         else if(trechos.EhOpMatematica("--"))
         {
             trechos.Proximo();
-            atrib.OperacaoEspecial = Atribuicao.TipoOperacaoEspecial.Decrementa;
+            atrib.Tipo = Acao.TipoDeAcao.Incremento;
+            if(segmento) atrib.Tipo = Acao.TipoDeAcao.IncrementoSegmento;
+            if(desvio) atrib.Tipo = Acao.TipoDeAcao.IncrementoDesvio;
         }
         else trechos.ExigeTipo(TipoTrecho.Atribuicao, "Esperado '=' ou '++' or '--' após o nome da variável");
         return atrib;
@@ -455,35 +458,75 @@ class Analise
                 trechos.Proximo();
                 goto reverifica;
             }
-            else if(trechos.EhIdentificador())
+            else if(trechos.EhIdentificador() | trechos.EhTipo(TipoTrecho.Arroba) | trechos.EhTipo(TipoTrecho.Cerquilha))
             {
-                Trecho chamaTrecho = trechos.Atual;
-                string chamaModulo = mod.Nome;
-                string chamaRotina = trechos.Atual.Conteudo;
-                if(trechos.EhProximoTipo(TipoTrecho.Ponto))
+                bool cerquilha = false;
+                bool arroba = false;
+                if(trechos.EhTipo(TipoTrecho.Arroba))
+                {
+                    arroba = true;
+                    trechos.Proximo();
+                    trechos.ExigeId("Esperado o nome da variável");
+                }
+                if(trechos.EhTipo(TipoTrecho.Cerquilha))
+                {
+                    cerquilha = true;
+                    trechos.Proximo();
+                    trechos.ExigeId("Esperado o nome da variável");
+                }
+                Trecho acaoTrecho = trechos.Atual;
+                List<string> acaoNome = new List<string>();
+                acaoNome.Add(acaoTrecho.Conteudo);
+                while(trechos.EhProximoTipo(TipoTrecho.Ponto))
                 {
                     trechos.Proximo();
                     trechos.ExigeProximo("Esperado continuação do nome da rotina");
                     trechos.ExigeId("Esperado continuação do nome da rotina");
-                    chamaModulo = chamaRotina;
-                    chamaRotina = trechos.Atual.Conteudo;
+                    acaoNome.Add(trechos.Atual.Conteudo);
                 }
-                ChamaRotina chama = new ChamaRotina(chamaTrecho, chamaModulo, chamaRotina);
-                cmds.Add(chama);
-                if(trechos.Proximo())
+                Acao acao = new Acao(acaoTrecho, acaoNome, Acao.TipoDeAcao.Desconhecida);
+                cmds.Add(acao);
+                trechos.Proximo();
+                if(trechos.EhTipo(TipoTrecho.Atribuicao))
                 {
-                    do
+                    trechos.Proximo();
+                    acao.Tipo = Acao.TipoDeAcao.Gravacao;
+                    if(arroba) acao.Tipo = Acao.TipoDeAcao.GravacaoDesvio;
+                    if(cerquilha) acao.Tipo = Acao.TipoDeAcao.GravacaoSegmento;
+                    acao.ValorGravacao = processaExpressao(mod, rot, ref trechos);
+                }
+                else if(trechos.EhOpMatematica("++"))
+                {
+                    trechos.Proximo();
+                    acao.Tipo = Acao.TipoDeAcao.Incremento;
+                    if(arroba) acao.Tipo = Acao.TipoDeAcao.IncrementoDesvio;
+                    if(cerquilha) acao.Tipo = Acao.TipoDeAcao.IncrementoSegmento;
+                }
+                else if(trechos.EhOpMatematica("--"))
+                {
+                    trechos.Proximo();
+                    acao.Tipo = Acao.TipoDeAcao.Decremento;
+                    if(arroba) acao.Tipo = Acao.TipoDeAcao.DecrementoDesvio;
+                    if(cerquilha) acao.Tipo = Acao.TipoDeAcao.DecrementoSegmento;
+                }
+                else
+                {
+                    acao.Tipo = Acao.TipoDeAcao.Chamada;
+                    if(!trechos.FimDaLinha)
                     {
-                        chama.Argumentos.Add(processaExpressao(mod, rot, ref trechos));
-                        if(trechos.EhTipo(TipoTrecho.Virgula)) 
+                        do
                         {
-                            trechos.Proximo();
-                        }
-                        else if(!trechos.FimDaLinha)
-                        {
-                            break;
-                        }
-                    } while(!trechos.FimDaLinha);
+                            acao.ArgumentosChamada.Add(processaExpressao(mod, rot, ref trechos));
+                            if(trechos.EhTipo(TipoTrecho.Virgula)) 
+                            {
+                                trechos.Proximo();
+                            }
+                            else if(!trechos.FimDaLinha)
+                            {
+                                break;
+                            }
+                        } while(!trechos.FimDaLinha);
+                    }
                 }
 
             }
@@ -573,7 +616,7 @@ class Analise
 
             if(trechos.EhIdentificador("dim"))
             {
-                mod.Variaveis.Add(processaDim(publi, mod, true, ref trechos));
+                mod.Campos.Add(processaDim(publi, mod, true, ref trechos));
             }
             else if(trechos.EhIdentificador("sub"))
             {
@@ -582,6 +625,28 @@ class Analise
             else if(trechos.EhIdentificador("function"))
             {
                 mod.Rotinas.Add(processaSubFunction(mod, publi, true, ref trechos));
+            }
+            else if(!trechos.FimDaLinha)
+            {
+                trechos.Erro("Comando desconhecido");
+            }
+        } while(trechos.ProximaLinha());
+    }
+
+    // Processa comandos do nivel estrutura (comandos que estão dentro de uma estrutura)
+    // Exemplo:
+    // structure nome
+    // ' PROCESSA COMANDOS DAQUI
+    // end
+    private void nivelEstrutura(Estrutura estrutura, ref Trechos trechos)
+    {
+        do 
+        {
+            if(trechos.EhIdentificador("end")) break;
+
+            if(trechos.EhIdentificador("dim"))
+            {
+                estrutura.Campos.Add(processaDim(NivelPublicidade.Publico, estrutura, true, ref trechos));
             }
             else if(!trechos.FimDaLinha)
             {
@@ -608,6 +673,19 @@ class Analise
                     nivelModulo(mod, ref trechos);
                     trechos.ExigeId("end");
                     trechos.ExigeProximoFimDaLinha("Esperado apenas o 'end', sem nenhum complemento posterior");
+                }
+                else if(trechos.EhIdentificador("structure"))
+                {
+                    trechos.Proximo();
+                    trechos.ExigeId("Esperado o nome da estrutura após o 'structure'");
+                    Estrutura estrutura = new Estrutura(trechos.Atual);
+                    Estruturas.Add(estrutura);
+                    trechos.ExigeProximoFimDaLinha("Esperado fim da linha depois da declaração da estrutura.");
+                    trechos.ExigeProximaLinha(estrutura.Trecho, "Encontrado fim do arquivo com um 'structure' aberto");
+                    nivelEstrutura(estrutura, ref trechos);
+                    trechos.ExigeId("end");
+                    trechos.ExigeProximoFimDaLinha("Esperado apenas o 'end', sem nenhum complemento posterior");
+
                 }
                 else if(trechos.EhIdentificador("imports"))
                 {
@@ -671,12 +749,12 @@ class Analise
         Ambiente? amb = null;
         foreach(var mod in Modulos)
         {
-            amb = amb ?? new Ambiente(saida, DiretoriosImportacao, Modulos, mod.Trecho, mod);
+            amb = amb ?? new Ambiente(saida, DiretoriosImportacao, Modulos, Estruturas, mod.Trecho, mod);
             mod.Inicializa(amb);
         }
         foreach(var mod in Modulos)
         {
-            amb = amb ?? new Ambiente(saida, DiretoriosImportacao, Modulos, mod.Trecho, mod);
+            amb = amb ?? new Ambiente(saida, DiretoriosImportacao, Modulos, Estruturas, mod.Trecho, mod);
             mod.Otimiza(amb);
         }
 
@@ -684,11 +762,15 @@ class Analise
         // Como o modulo OS chama o Program.Main, acaba compilando tudo que o Program usa direta ou indiretamente
         foreach(var mod in Modulos.Where(m => m.Nome.ToLower() == "os"))
         {
-            amb = amb ?? new Ambiente(saida, DiretoriosImportacao, Modulos, mod.Trecho, mod);
+            amb = amb ?? new Ambiente(saida, DiretoriosImportacao, Modulos, Estruturas, mod.Trecho, mod);
             var cons = mod.Rotinas.Where(r => r.Nome.ToLower() == "start");
             if(!cons.Any()) throw new Erro(mod.Trecho, "Esperado uma rotina 'OS.Start'");
             cons.First().IgnorarCabecalhoRodape = true;
+            amb.Modulo = mod;
+            amb.Rotina = cons.First();
             cons.First().Compila(amb);
+            amb.Modulo = null;
+            amb.Rotina = null;
             mod.Compila(amb);
             CompilaReferencias(mod, amb);
         }

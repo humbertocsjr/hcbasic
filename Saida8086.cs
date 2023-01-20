@@ -3,6 +3,14 @@ class Saida8086 : Saida
     public long Contador { get; set; } = 0;
     public string Modulo { get; set; } = "";
     public string Rotina { get; set; } = "";
+
+    public bool PonteiroDefinido {get;set;} = false;
+    public bool PonteiroLocal {get;set;} = false;
+    public int PonteiroLocalPosicao{get;set;} = 0;
+    public string PonteiroGlobalNome{get;set;} = "";
+
+
+
     public Saida8086(string endereco) : base(endereco)
     {
     }
@@ -107,6 +115,7 @@ class Saida8086 : Saida
     }
     public override void EmiteChamaRotina(string modulo, string rotina)
     {
+        PonteiroDefinido = false;
         EmiteL($"push cs");
         EmiteL($"call _{modulo}_{rotina}");
     }
@@ -205,6 +214,9 @@ class Saida8086 : Saida
         EmiteL($"push cs");
         EmiteL($"pop es");
         EmiteL($"mov di, {rotulo}");
+        PonteiroDefinido = true;
+        PonteiroLocal = false;
+        PonteiroGlobalNome = rotulo;
     }
     public override void EmiteBinario(byte[] dados)
     {
@@ -220,18 +232,16 @@ class Saida8086 : Saida
     {
         EmiteL($"mov word [bp+{posicao}+2], {valor}");
     }
-    public override void EmiteCopiaPonteiroRemotoParaVariavel(int posicao)
-    {
-        EmiteL($"mov [bp+{posicao}], di");
-    }
-    public override void EmiteCopiaSegDoPonteiroRemotoParaVariavel(int posicao)
+    public override void EmiteCopiaPonteiroRemotoParaVariavelLocal(int posicao)
     {
         EmiteL($"push es");
         EmiteL($"pop word [bp+{posicao}+2]");
+        EmiteL($"mov [bp+{posicao}], di");
     }
     public override void EmiteGravaNumeroNoPonteiroRemoto(decimal valor)
     {
         EmiteL($"mov di, {valor}");
+        PonteiroDefinido = false; // Não rastreavel
     }
     public override void EmiteGravaNumeroNoSegDoPonteiroRemoto(decimal valor)
     {
@@ -239,61 +249,98 @@ class Saida8086 : Saida
         EmiteL($"mov ax, {valor}");
         EmiteL($"mov es, ax");
         EmiteL($"pop ax");
+        PonteiroDefinido = false; // Não é possível rastrear
     }
     public override void EmiteCopiaAcumuladorParaSegDaVariavelLocal(int posicao)
     {
         EmiteL($"mov word [bp+{posicao}+2], ax");
     }
-    public override void EmiteCopiaAcumuladorParaByteArrayDaVariavelLocal(int posicao)
+    public override void EmiteCopiaAcumuladorParaByteArrayDaVariavelLocal(int posicao, int desvio)
     {
-        EmiteL($"push word [bp+{posicao}+2]");
-        EmiteL($"pop es");
-        EmiteL($"mov di, [bp+{posicao}]");
-        EmiteL($"es mov [di], al");
+        if(!(PonteiroDefinido & PonteiroLocal & PonteiroLocalPosicao == posicao))
+        {
+            PonteiroDefinido = true;
+            PonteiroLocal = true;
+            PonteiroLocalPosicao = posicao;
+            EmiteL($"push word [bp+{posicao}+2]");
+            EmiteL($"pop es");
+            EmiteL($"mov di, [bp+{posicao}]");
+        }
+        EmiteL($"es mov [di+{desvio}], al");
     }
-    public override void EmiteCopiaAcumuladorParaWordArrayDaVariavelLocal(int posicao)
+    public override void EmiteCopiaAcumuladorParaWordArrayDaVariavelLocal(int posicao, int desvio)
     {
-        EmiteL($"push word [bp+{posicao}+2]");
-        EmiteL($"pop es");
-        EmiteL($"mov di, [bp+{posicao}]");
-        EmiteL($"es mov [di], ax");
+        if(!(PonteiroDefinido & PonteiroLocal & PonteiroLocalPosicao == posicao))
+        {
+            PonteiroDefinido = true;
+            PonteiroLocal = true;
+            PonteiroLocalPosicao = posicao;
+            EmiteL($"push word [bp+{posicao}+2]");
+            EmiteL($"pop es");
+            EmiteL($"mov di, [bp+{posicao}]");
+        }
+        EmiteL($"es mov [di+{desvio}], ax");
     }
-    public override void EmiteGravaNumeroNoByteArrayDaVariavelLocal(int posicao, decimal valor)
+    public override void EmiteGravaNumeroNoByteArrayDaVariavelLocal(int posicao, decimal valor, int desvio)
     {
-        EmiteL($"mov ax, [bp+{posicao}+2]");
-        EmiteL($"mov es, ax");
-        EmiteL($"mov di, [bp+{posicao}]");
-        EmiteL($"es mov byte [di], {valor}");
+        if(!(PonteiroDefinido & PonteiroLocal & PonteiroLocalPosicao == posicao))
+        {
+            PonteiroDefinido = true;
+            PonteiroLocal = true;
+            PonteiroLocalPosicao = posicao;
+            EmiteL($"mov ax, [bp+{posicao}+2]");
+            EmiteL($"mov es, ax");
+            EmiteL($"mov di, [bp+{posicao}]");
+        }
+        EmiteL($"es mov byte [di+{desvio}], {valor}");
     }
-    public override void EmiteGravaNumeroNoWordArrayDaVariavelLocal(int posicao, decimal valor)
+    public override void EmiteGravaNumeroNoWordArrayDaVariavelLocal(int posicao, decimal valor, int desvio)
     {
-        EmiteL($"mov ax, [bp+{posicao}+2]");
-        EmiteL($"mov es, ax");
-        EmiteL($"mov di, [bp+{posicao}]");
-        EmiteL($"es mov word [di], {valor}");
+        if(!(PonteiroDefinido & PonteiroLocal & PonteiroLocalPosicao == posicao))
+        {
+            PonteiroDefinido = true;
+            PonteiroLocal = true;
+            PonteiroLocalPosicao = posicao;
+            EmiteL($"mov ax, [bp+{posicao}+2]");
+            EmiteL($"mov es, ax");
+            EmiteL($"mov di, [bp+{posicao}]");
+        }
+        EmiteL($"es mov word [di+{desvio}], {valor}");
     }
     public override void EmiteCopiaVariavelLocalParaAcumulador(int posicao)
     {
         EmiteL($"mov ax, [bp+{posicao}]");
     }
-    public override void EmiteCopiaByteArrayDaVariavelLocalParaAcumulador(int posicao)
+    public override void EmiteCopiaByteArrayDaVariavelLocalParaAcumulador(int posicao, int desvio)
     {
-        EmiteL($"push word [bp+{posicao}+2]");
-        EmiteL($"pop es");
-        EmiteL($"mov di, [bp+{posicao}]");
+        if(!(PonteiroDefinido & PonteiroLocal & PonteiroLocalPosicao == posicao))
+        {
+            PonteiroDefinido = true;
+            PonteiroLocal = true;
+            PonteiroLocalPosicao = posicao;
+            EmiteL($"push word [bp+{posicao}+2]");
+            EmiteL($"pop es");
+            EmiteL($"mov di, [bp+{posicao}]");
+        }
         EmiteL($"xor ax, ax");
-        EmiteL($"es mov al, [di]");
+        EmiteL($"es mov al, [di+{desvio}]");
     }
     public override void EmiteCopiaSegDaVariavelLocalParaAcumulador(int posicao)
     {
         EmiteL($"mov ax, [bp+{posicao}+2]");
     }
-    public override void EmiteCopiaWordArrayDaVariavelLocalParaAcumulador(int posicao)
+    public override void EmiteCopiaWordArrayDaVariavelLocalParaAcumulador(int posicao, int desvio)
     {
-        EmiteL($"push word [bp+{posicao}+2]");
-        EmiteL($"pop es");
-        EmiteL($"mov di, [bp+{posicao}]");
-        EmiteL($"es mov ax, [di]");
+        if(!(PonteiroDefinido & PonteiroLocal & PonteiroLocalPosicao == posicao))
+        {
+            PonteiroDefinido = true;
+            PonteiroLocal = true;
+            PonteiroLocalPosicao = posicao;
+            EmiteL($"push word [bp+{posicao}+2]");
+            EmiteL($"pop es");
+            EmiteL($"mov di, [bp+{posicao}]");
+        }
+        EmiteL($"es mov ax, [di+{desvio}]");
     }
     public override void EmiteDesempilhaAuxiliar()
     {
@@ -307,12 +354,18 @@ class Saida8086 : Saida
     {
         EmiteL($"inc word [bp+{posicao}]");
     }
-    public override void EmiteDecrementaByteArrayNaVariavelLocal(int posicao)
+    public override void EmiteDecrementaByteArrayNaVariavelLocal(int posicao, int desvio)
     {
-        EmiteL($"push word [bp+{posicao}+2]");
-        EmiteL($"pop es");
-        EmiteL($"mov di, [bp+{posicao}]");
-        EmiteL($"es dec byte [di]");
+        if(!(PonteiroDefinido & PonteiroLocal & PonteiroLocalPosicao == posicao))
+        {
+            PonteiroDefinido = true;
+            PonteiroLocal = true;
+            PonteiroLocalPosicao = posicao;
+            EmiteL($"push word [bp+{posicao}+2]");
+            EmiteL($"pop es");
+            EmiteL($"mov di, [bp+{posicao}]");
+        }
+        EmiteL($"es dec byte [di+{desvio}]");
     }
     public override void EmiteDecrementaSegDaVariavelLocal(int posicao)
     {
@@ -322,26 +375,44 @@ class Saida8086 : Saida
     {
         EmiteL($"dec word [bp+{posicao}]");
     }
-    public override void EmiteDecrementaWordArrayNaVariavelLocal(int posicao)
+    public override void EmiteDecrementaWordArrayNaVariavelLocal(int posicao, int desvio)
     {
-        EmiteL($"push word [bp+{posicao}+2]");
-        EmiteL($"pop es");
-        EmiteL($"mov di, [bp+{posicao}]");
-        EmiteL($"es dec word [di]");
+        if(!(PonteiroDefinido & PonteiroLocal & PonteiroLocalPosicao == posicao))
+        {
+            PonteiroDefinido = true;
+            PonteiroLocal = true;
+            PonteiroLocalPosicao = posicao;
+            EmiteL($"push word [bp+{posicao}+2]");
+            EmiteL($"pop es");
+            EmiteL($"mov di, [bp+{posicao}]");
+        }
+        EmiteL($"es dec word [di+{desvio}]");
     }
-    public override void EmiteIncrementaByteArrayNaVariavelLocal(int posicao)
+    public override void EmiteIncrementaByteArrayNaVariavelLocal(int posicao, int desvio)
     {
-        EmiteL($"push word [bp+{posicao}+2]");
-        EmiteL($"pop es");
-        EmiteL($"mov di, [bp+{posicao}]");
-        EmiteL($"es inc byte [di]");
+        if(!(PonteiroDefinido & PonteiroLocal & PonteiroLocalPosicao == posicao))
+        {
+            PonteiroDefinido = true;
+            PonteiroLocal = true;
+            PonteiroLocalPosicao = posicao;
+            EmiteL($"push word [bp+{posicao}+2]");
+            EmiteL($"pop es");
+            EmiteL($"mov di, [bp+{posicao}]");
+        }
+        EmiteL($"es inc byte [di+{desvio}]");
     }
-    public override void EmiteIncrementaWordArrayNaVariavelLocal(int posicao)
+    public override void EmiteIncrementaWordArrayNaVariavelLocal(int posicao, int desvio)
     {
-        EmiteL($"push word [bp+{posicao}+2]");
-        EmiteL($"pop es");
-        EmiteL($"mov di, [bp+{posicao}]");
-        EmiteL($"es inc word [di]");
+        if(!(PonteiroDefinido & PonteiroLocal & PonteiroLocalPosicao == posicao))
+        {
+            PonteiroDefinido = true;
+            PonteiroLocal = true;
+            PonteiroLocalPosicao = posicao;
+            EmiteL($"push word [bp+{posicao}+2]");
+            EmiteL($"pop es");
+            EmiteL($"mov di, [bp+{posicao}]");
+        }
+        EmiteL($"es inc word [di+{desvio}]");
     }
     public override void EmiteComparaAcumuladorComAuxiliar()
     {
@@ -383,12 +454,18 @@ class Saida8086 : Saida
     {
         EmiteL($"xor ax, bx");
     }
-    public override void EmiteCopiaAcumuladorParaByteArrayDaVariavelGlobal(string rotulo)
+    public override void EmiteCopiaAcumuladorParaByteArrayDaVariavelGlobal(string rotulo, int desvio)
     {
-        EmiteL($"cs mov ax, [{rotulo}+2]");
-        EmiteL($"mov es, ax");
-        EmiteL($"cs mov di, [{rotulo}]");
-        EmiteL($"es mov [di], al");
+        if(!(PonteiroDefinido & !PonteiroLocal & PonteiroGlobalNome == rotulo))
+        {
+            PonteiroDefinido = true;
+            PonteiroLocal = false;
+            PonteiroGlobalNome = rotulo;
+            EmiteL($"cs mov ax, [{rotulo}+2]");
+            EmiteL($"mov es, ax");
+            EmiteL($"cs mov di, [{rotulo}]");
+        }
+        EmiteL($"es mov [di+{desvio}], al");
     }
     public override void EmiteCopiaAcumuladorParaSegDaVariavelGlobal(string rotulo)
     {
@@ -398,45 +475,69 @@ class Saida8086 : Saida
     {
         EmiteL($"cs mov [{rotulo}], ax");
     }
-    public override void EmiteCopiaAcumuladorParaWordArrayDaVariavelGlobal(string rotulo)
+    public override void EmiteCopiaAcumuladorParaWordArrayDaVariavelGlobal(string rotulo, int desvio)
     {
-        EmiteL($"cs mov ax, [{rotulo}+2]");
-        EmiteL($"mov es, ax");
-        EmiteL($"cs mov di, [{rotulo}]");
-        EmiteL($"es mov [di], ax");
+        if(!(PonteiroDefinido & !PonteiroLocal & PonteiroGlobalNome == rotulo))
+        {
+            PonteiroDefinido = true;
+            PonteiroLocal = false;
+            PonteiroGlobalNome = rotulo;
+            EmiteL($"cs mov ax, [{rotulo}+2]");
+            EmiteL($"mov es, ax");
+            EmiteL($"cs mov di, [{rotulo}]");
+        }
+        EmiteL($"es mov [di+{desvio}], ax");
     }
     public override void EmiteDecrementaVariavelGlobal(string rotulo)
     {
         EmiteL($"cs dec word [{rotulo}]");
     }
-    public override void EmiteDecrementaByteArrayNaVariavelGlobal(string rotulo)
+    public override void EmiteDecrementaByteArrayNaVariavelGlobal(string rotulo, int desvio)
     {
-        EmiteL($"cs mov ax, [{rotulo}+2]");
-        EmiteL($"mov es, ax");
-        EmiteL($"cs mov di, [{rotulo}]");
-        EmiteL($"es dec byte [di]");
+        if(!(PonteiroDefinido & !PonteiroLocal & PonteiroGlobalNome == rotulo))
+        {
+            PonteiroDefinido = true;
+            PonteiroLocal = false;
+            PonteiroGlobalNome = rotulo;
+            EmiteL($"cs mov ax, [{rotulo}+2]");
+            EmiteL($"mov es, ax");
+            EmiteL($"cs mov di, [{rotulo}]");
+        }
+        EmiteL($"es dec byte [di+{desvio}]");
     }
     public override void EmiteDecrementaSegDaVariavelGlobal(string rotulo)
     {
         EmiteL($"cs dec word [{rotulo}+2]");
     }
-    public override void EmiteDecrementaWordArrayNaVariavelGlobal(string rotulo)
+    public override void EmiteDecrementaWordArrayNaVariavelGlobal(string rotulo, int desvio)
     {
-        EmiteL($"cs mov ax, [{rotulo}+2]");
-        EmiteL($"mov es, ax");
-        EmiteL($"cs mov di, [{rotulo}]");
-        EmiteL($"es dec word [di]");
+        if(!(PonteiroDefinido & !PonteiroLocal & PonteiroGlobalNome == rotulo))
+        {
+            PonteiroDefinido = true;
+            PonteiroLocal = false;
+            PonteiroGlobalNome = rotulo;
+            EmiteL($"cs mov ax, [{rotulo}+2]");
+            EmiteL($"mov es, ax");
+            EmiteL($"cs mov di, [{rotulo}]");
+        }
+        EmiteL($"es dec word [di+{desvio}]");
     }
     public override void EmiteGravaNumeroNaVariavelGlobal(string rotulo, decimal valor)
     {
         EmiteL($"cs mov word [{rotulo}], {valor}");
     }
-    public override void EmiteGravaNumeroNoByteArrayDaVariavelGlobal(string rotulo, decimal valor)
+    public override void EmiteGravaNumeroNoByteArrayDaVariavelGlobal(string rotulo, decimal valor, int desvio)
     {
-        EmiteL($"cs mov ax, [{rotulo}+2]");
-        EmiteL($"mov es, ax");
-        EmiteL($"cs mov di, [{rotulo}]");
-        EmiteL($"es mov byte [di], {valor}");
+        if(!(PonteiroDefinido & !PonteiroLocal & PonteiroGlobalNome == rotulo))
+        {
+            PonteiroDefinido = true;
+            PonteiroLocal = false;
+            PonteiroGlobalNome = rotulo;
+            EmiteL($"cs mov ax, [{rotulo}+2]");
+            EmiteL($"mov es, ax");
+            EmiteL($"cs mov di, [{rotulo}]");
+        }
+        EmiteL($"es mov byte [di+{desvio}], {valor}");
     }
     public override void EmiteIncrementaVariavelGlobal(string rotulo)
     {
@@ -450,34 +551,58 @@ class Saida8086 : Saida
     {
         EmiteL($"cs inc word [{rotulo}+2]");
     }
-    public override void EmiteIncrementaByteArrayNaVariavelGlobal(string rotulo)
+    public override void EmiteIncrementaByteArrayNaVariavelGlobal(string rotulo, int desvio)
     {
-        EmiteL($"cs mov ax, [{rotulo}+2]");
-        EmiteL($"mov es, ax");
-        EmiteL($"cs mov di, [{rotulo}]");
-        EmiteL($"es inc byte [di]");
+        if(!(PonteiroDefinido & !PonteiroLocal & PonteiroGlobalNome == rotulo))
+        {
+            PonteiroDefinido = true;
+            PonteiroLocal = false;
+            PonteiroGlobalNome = rotulo;
+            EmiteL($"cs mov ax, [{rotulo}+2]");
+            EmiteL($"mov es, ax");
+            EmiteL($"cs mov di, [{rotulo}]");
+        }
+        EmiteL($"es inc byte [di+{desvio}]");
     }
-    public override void EmiteGravaNumeroNoWordArrayDaVariavelGlobal(string rotulo, decimal valor)
+    public override void EmiteGravaNumeroNoWordArrayDaVariavelGlobal(string rotulo, decimal valor, int desvio)
     {
-        EmiteL($"cs mov ax, [{rotulo}+2]");
-        EmiteL($"mov es, ax");
-        EmiteL($"cs mov di, [{rotulo}]");
-        EmiteL($"es mov word [di], {valor}");
+        if(!(PonteiroDefinido & !PonteiroLocal & PonteiroGlobalNome == rotulo))
+        {
+            PonteiroDefinido = true;
+            PonteiroLocal = false;
+            PonteiroGlobalNome = rotulo;
+            EmiteL($"cs mov ax, [{rotulo}+2]");
+            EmiteL($"mov es, ax");
+            EmiteL($"cs mov di, [{rotulo}]");
+        }
+        EmiteL($"es mov word [di+{desvio}], {valor}");
     }
-    public override void EmiteIncrementaWordArrayNaVariavelGlobal(string rotulo)
+    public override void EmiteIncrementaWordArrayNaVariavelGlobal(string rotulo, int desvio)
     {
-        EmiteL($"cs mov ax, [{rotulo}+2]");
-        EmiteL($"mov es, ax");
-        EmiteL($"cs mov di, [{rotulo}]");
-        EmiteL($"es inc word [di]");
+        if(!(PonteiroDefinido & !PonteiroLocal & PonteiroGlobalNome == rotulo))
+        {
+            PonteiroDefinido = true;
+            PonteiroLocal = false;
+            PonteiroGlobalNome = rotulo;
+            EmiteL($"cs mov ax, [{rotulo}+2]");
+            EmiteL($"mov es, ax");
+            EmiteL($"cs mov di, [{rotulo}]");
+        }
+        EmiteL($"es inc word [di+{desvio}]");
     }
-    public override void EmiteCopiaByteArrayDaVariavelGlobalParaAcumulador(string rotulo)
+    public override void EmiteCopiaByteArrayDaVariavelGlobalParaAcumulador(string rotulo, int desvio)
     {
-        EmiteL($"cs mov ax, [{rotulo}+2]");
-        EmiteL($"mov es, ax");
-        EmiteL($"cs mov di, [{rotulo}]");
+        if(!(PonteiroDefinido & !PonteiroLocal & PonteiroGlobalNome == rotulo))
+        {
+            PonteiroDefinido = true;
+            PonteiroLocal = false;
+            PonteiroGlobalNome = rotulo;
+            EmiteL($"cs mov ax, [{rotulo}+2]");
+            EmiteL($"mov es, ax");
+            EmiteL($"cs mov di, [{rotulo}]");
+        }
         EmiteL($"xor ax, ax");
-        EmiteL($"es mov al, [di]");
+        EmiteL($"es mov al, [di+{desvio}]");
     }
     public override void EmiteCopiaSegDaVariavelGlobalParaAcumulador(string rotulo)
     {
@@ -487,14 +612,73 @@ class Saida8086 : Saida
     {
         EmiteL($"cs mov ax, [{rotulo}]");
     }
-    public override void EmiteCopiaWordArrayDaVariavelGlobalParaAcumulador(string rotulo)
+    public override void EmiteCopiaWordArrayDaVariavelGlobalParaAcumulador(string rotulo, int desvio)
     {
-        EmiteL($"cs mov ax, [{rotulo}+2]");
-        EmiteL($"mov es, ax");
-        EmiteL($"cs mov di, [{rotulo}]");
-        EmiteL($"es mov ax, [di]");
+        if(!(PonteiroDefinido & !PonteiroLocal & PonteiroGlobalNome == rotulo))
+        {
+            PonteiroDefinido = true;
+            PonteiroLocal = false;
+            PonteiroGlobalNome = rotulo;
+            EmiteL($"cs mov ax, [{rotulo}+2]");
+            EmiteL($"mov es, ax");
+            EmiteL($"cs mov di, [{rotulo}]");
+        }
+        EmiteL($"es mov ax, [di+{desvio}]");
     }
-
+    public override void EmiteDefineByteArrayDaVariavelGlobalComoPonteiro(string rotulo)
+    {
+        if(!(PonteiroDefinido & !PonteiroLocal & PonteiroGlobalNome == rotulo))
+        {
+            PonteiroDefinido = true;
+            PonteiroLocal = false;
+            PonteiroGlobalNome = rotulo;
+            EmiteL($"cs mov ax, [{rotulo}+2]");
+            EmiteL($"mov es, ax");
+            EmiteL($"cs mov di, [{rotulo}]");
+        }
+    }
+    public override void EmiteDefineByteArrayDaVariavelLocalComoPonteiro(int posicao)
+    {
+        if(!(PonteiroDefinido & PonteiroLocal & PonteiroLocalPosicao == posicao))
+        {
+            PonteiroDefinido = true;
+            PonteiroLocal = true;
+            PonteiroLocalPosicao = posicao;
+            EmiteL($"push word [bp+{posicao}+2]");
+            EmiteL($"pop es");
+            EmiteL($"mov di, [bp+{posicao}]");
+        }
+    }
+    public override void EmiteDefineWordArrayDaVariavelGlobalComoPonteiro(string rotulo)
+    {
+        if(!(PonteiroDefinido & !PonteiroLocal & PonteiroGlobalNome == rotulo))
+        {
+            PonteiroDefinido = true;
+            PonteiroLocal = false;
+            PonteiroGlobalNome = rotulo;
+            EmiteL($"cs mov ax, [{rotulo}+2]");
+            EmiteL($"mov es, ax");
+            EmiteL($"cs mov di, [{rotulo}]");
+        }
+    }
+    public override void EmiteDefineWordArrayDaVariavelLocalComoPonteiro(int posicao)
+    {
+        if(!(PonteiroDefinido & PonteiroLocal & PonteiroLocalPosicao == posicao))
+        {
+            PonteiroDefinido = true;
+            PonteiroLocal = true;
+            PonteiroLocalPosicao = posicao;
+            EmiteL($"push word [bp+{posicao}+2]");
+            EmiteL($"pop es");
+            EmiteL($"mov di, [bp+{posicao}]");
+        }
+    }
+    public override void EmiteCopiaPonteiroRemotoParaVariavelGlobal(string rotulo)
+    {
+        EmiteL($"push es");
+        EmiteL($"cs pop word [{rotulo}]");
+        EmiteL($"cs mov [{rotulo}], di");
+    }
 
 
 

@@ -6,14 +6,15 @@ module Program
         dim teste as ptrbytearray
         dim tmp as uint16
         dim i as uint16
-        let teste = "Oieeeee"
+        teste = "Oieeeee"
+        Console.Write teste
         Console.Write teste
         Console.WriteUInt16 Soma(1,2)
-        let testeGlobal = 123
+        testeGlobal = 123
         Console.WriteUInt16 testeGlobal
         Console.WriteUInt16 Teste()
         Console.Write args
-        let tmp = Soma(15, 15)
+        tmp = Soma(15, 15)
         Console.WriteUInt16 tmp
         for i = 1 to 5
             Console.WriteUInt16 i

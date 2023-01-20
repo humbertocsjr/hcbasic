@@ -1,13 +1,20 @@
-class Modulo : No
+class Modulo : Estrutura
 {
-    public string Nome { get; set; }
-    public List<DeclaraVariavel> Variaveis { get; set; } = new List<DeclaraVariavel>();
     public List<Rotina> Rotinas { get; set; } = new List<Rotina>();
     public List<Modulo> Referencias { get; set; } = new List<Modulo>();
     public Modulo(Trecho trecho) : base(trecho)
     {
         Nome = trecho.Conteudo;
     }
+
+    public Rotina? PesquisaRotina(string nome)
+    {
+        var consRot = Rotinas.Where(v => v.Nome.ToLower() == nome.ToLower());
+        if(consRot.Any()) return consRot.First();
+        return null;
+    }
+    
+
 
     public void CadastraReferencia(Modulo mod)
     {
@@ -23,7 +30,7 @@ class Modulo : No
     {
         amb.Modulo = this;
         amb.Saida.EmiteModulo(Nome);
-        foreach (var campo in Variaveis)
+        foreach (var campo in Campos)
         {
             campo.Compila(amb);
         }
@@ -43,6 +50,10 @@ class Modulo : No
             rot.Inicializa(amb);
         }
         amb.Modulo = null;
+        Estrutura? cons = amb.PesquisaModulo(Nome);
+        if(cons != null && cons != this) throw Erro("Módulo {Nome} já existe.");
+        cons = amb.PesquisaEstrutura(Nome);
+        if(cons != null) throw Erro("Já existe uma estrutura com o nome {Nome}.");
     }
 
     protected override No OtimizaInterno(Ambiente amb)

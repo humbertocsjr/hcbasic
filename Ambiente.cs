@@ -5,6 +5,8 @@ class Ambiente
     public List<DirectoryInfo> DiretoriosImportacao ;
     // Todos os modulos carregados
     public List<Modulo> Modulos { get; set; }
+    // Todos as Estruturas carregados
+    public List<Estrutura> Estruturas { get; set; }
     // Modulo atual durante o processamento
     public Modulo? Modulo { get; set; } = null;
     // Rotina atual durante o processamento
@@ -23,6 +25,7 @@ class Ambiente
 
     public bool TipoSemSinal => Tipo == TipoVariavel.UInt8 | Tipo == TipoVariavel.UInt16 | Tipo == TipoVariavel.PtrByteArray | Tipo == TipoVariavel.PtrWordArray;
     public bool TipoComSinal => Tipo == TipoVariavel.Int8 | Tipo == TipoVariavel.Int16;
+    public bool TipoPonteiro => Tipo == TipoVariavel.PtrByteArray | Tipo == TipoVariavel.PtrWordArray | Tipo == TipoVariavel.Structure;
 
 
     // Usado pelos nós que fazem chamada ou manipulam campos de modulos, registrando quais modulos eles referenciaram, para uso da compilação mais tarde
@@ -31,8 +34,23 @@ class Ambiente
         if(Modulo != null) Modulo.CadastraReferencia(mod);
     }
 
-    public Ambiente(Saida saida, List<DirectoryInfo> importacao, List<Modulo> modulos, Trecho trecho, No no)
+    public Modulo? PesquisaModulo(string nome)
     {
+        var consMod = Modulos.Where(v => v.Nome.ToLower() == nome.ToLower());
+        if(consMod.Any()) return consMod.First();
+        return null;
+    }
+
+    public Estrutura? PesquisaEstrutura(string nome)
+    {
+        var consEstr = Estruturas.Where(v => v.Nome.ToLower() == nome.ToLower());
+        if(consEstr.Any()) return consEstr.First();
+        return null;
+    }
+
+    public Ambiente(Saida saida, List<DirectoryInfo> importacao, List<Modulo> modulos, List<Estrutura> estruturas, Trecho trecho, No no)
+    {
+        Estruturas = estruturas;
         DiretoriosImportacao = importacao;
         Modulos = modulos;
         Trecho = trecho;

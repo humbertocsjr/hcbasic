@@ -75,26 +75,25 @@ abstract class Saida
     public abstract void EmiteGravaNumeroNoSegDaVariavelLocal(int posicao, decimal valor);
     public abstract void EmiteGravaNumeroNoPonteiroRemoto(decimal valor);
     public abstract void EmiteGravaNumeroNoSegDoPonteiroRemoto(decimal valor);
-    public abstract void EmiteCopiaSegDoPonteiroRemotoParaVariavel(int posicao);
-    public abstract void EmiteCopiaPonteiroRemotoParaVariavel(int posicao);
+    public abstract void EmiteCopiaPonteiroRemotoParaVariavelLocal(int posicao);
     public abstract void EmiteCopiaAcumuladorParaSegDaVariavelLocal(int posicao);
-    public abstract void EmiteCopiaAcumuladorParaByteArrayDaVariavelLocal(int posicao);
-    public abstract void EmiteCopiaAcumuladorParaWordArrayDaVariavelLocal(int posicao);
-    public abstract void EmiteGravaNumeroNoByteArrayDaVariavelLocal(int posicao, decimal valor);
-    public abstract void EmiteGravaNumeroNoWordArrayDaVariavelLocal(int posicao, decimal valor);
+    public abstract void EmiteCopiaAcumuladorParaByteArrayDaVariavelLocal(int posicao, int desvio);
+    public abstract void EmiteCopiaAcumuladorParaWordArrayDaVariavelLocal(int posicao, int desvio);
+    public abstract void EmiteGravaNumeroNoByteArrayDaVariavelLocal(int posicao, decimal valor, int desvio);
+    public abstract void EmiteGravaNumeroNoWordArrayDaVariavelLocal(int posicao, decimal valor, int desvio);
     public abstract void EmiteCopiaVariavelLocalParaAcumulador(int posicao);
     public abstract void EmiteCopiaSegDaVariavelLocalParaAcumulador(int posicao);
-    public abstract void EmiteCopiaByteArrayDaVariavelLocalParaAcumulador(int posicao);
-    public abstract void EmiteCopiaWordArrayDaVariavelLocalParaAcumulador(int posicao);
+    public abstract void EmiteCopiaByteArrayDaVariavelLocalParaAcumulador(int posicao, int desvio);
+    public abstract void EmiteCopiaWordArrayDaVariavelLocalParaAcumulador(int posicao, int desvio);
     public abstract void EmiteDesempilhaAuxiliar();
     public abstract void EmiteIncrementaVariavelLocal(int posicao);
     public abstract void EmiteIncrementaSegDaVariavelLocal(int posicao);
     public abstract void EmiteDecrementaVariavelLocal(int posicao);
     public abstract void EmiteDecrementaSegDaVariavelLocal(int posicao);
-    public abstract void EmiteIncrementaByteArrayNaVariavelLocal(int posicao);
-    public abstract void EmiteDecrementaByteArrayNaVariavelLocal(int posicao);
-    public abstract void EmiteIncrementaWordArrayNaVariavelLocal(int posicao);
-    public abstract void EmiteDecrementaWordArrayNaVariavelLocal(int posicao);
+    public abstract void EmiteIncrementaByteArrayNaVariavelLocal(int posicao, int desvio);
+    public abstract void EmiteDecrementaByteArrayNaVariavelLocal(int posicao, int desvio);
+    public abstract void EmiteIncrementaWordArrayNaVariavelLocal(int posicao, int desvio);
+    public abstract void EmiteDecrementaWordArrayNaVariavelLocal(int posicao, int desvio);
     public abstract void EmitePulaSeMaiorQue(string rotulo, bool sem_sinal);
     public abstract void EmitePulaSeMaiorOuIgual(string rotulo, bool sem_sinal);
     public abstract void EmitePulaSeMenorQue(string rotulo, bool sem_sinal);
@@ -109,24 +108,27 @@ abstract class Saida
     public abstract void EmiteDecrementaSegDaVariavelGlobal(string rotulo);
     public abstract void EmiteIncrementaVariavelGlobal(string rotulo);
     public abstract void EmiteDecrementaVariavelGlobal(string rotulo);
-    public abstract void EmiteIncrementaByteArrayNaVariavelGlobal(string rotulo);
-    public abstract void EmiteDecrementaByteArrayNaVariavelGlobal(string rotulo);
-    public abstract void EmiteIncrementaWordArrayNaVariavelGlobal(string rotulo);
-    public abstract void EmiteDecrementaWordArrayNaVariavelGlobal(string rotulo);
+    public abstract void EmiteIncrementaByteArrayNaVariavelGlobal(string rotulo, int desvio);
+    public abstract void EmiteDecrementaByteArrayNaVariavelGlobal(string rotulo, int desvio);
+    public abstract void EmiteIncrementaWordArrayNaVariavelGlobal(string rotulo, int desvio);
+    public abstract void EmiteDecrementaWordArrayNaVariavelGlobal(string rotulo, int desvio);
     public abstract void EmiteGravaNumeroNaVariavelGlobal(string rotulo, decimal valor);
     public abstract void EmiteCopiaAcumuladorParaSegDaVariavelGlobal(string rotulo);
     public abstract void EmiteCopiaAcumuladorParaVariavelGlobal(string rotulo);
     public abstract void EmiteGravaNumeroNoSegDaVariavelGlobal(string rotulo, decimal valor);
-    public abstract void EmiteGravaNumeroNoByteArrayDaVariavelGlobal(string rotulo, decimal valor);
-    public abstract void EmiteGravaNumeroNoWordArrayDaVariavelGlobal(string rotulo, decimal valor);
-    public abstract void EmiteCopiaAcumuladorParaByteArrayDaVariavelGlobal(string rotulo);
-    public abstract void EmiteCopiaAcumuladorParaWordArrayDaVariavelGlobal(string rotulo);
+    public abstract void EmiteGravaNumeroNoByteArrayDaVariavelGlobal(string rotulo, decimal valor, int desvio);
+    public abstract void EmiteGravaNumeroNoWordArrayDaVariavelGlobal(string rotulo, decimal valor, int desvio);
+    public abstract void EmiteCopiaAcumuladorParaByteArrayDaVariavelGlobal(string rotulo, int desvio);
+    public abstract void EmiteCopiaAcumuladorParaWordArrayDaVariavelGlobal(string rotulo, int desvio);
     public abstract void EmiteCopiaVariavelGlobalParaAcumulador(string rotulo);
-    public abstract void EmiteCopiaByteArrayDaVariavelGlobalParaAcumulador(string rotulo);
+    public abstract void EmiteCopiaByteArrayDaVariavelGlobalParaAcumulador(string rotulo, int desvio);
     public abstract void EmiteCopiaSegDaVariavelGlobalParaAcumulador(string rotulo);
-    public abstract void EmiteCopiaWordArrayDaVariavelGlobalParaAcumulador(string rotulo);
-
-
+    public abstract void EmiteCopiaWordArrayDaVariavelGlobalParaAcumulador(string rotulo, int desvio);
+    public abstract void EmiteDefineWordArrayDaVariavelLocalComoPonteiro(int posicao);
+    public abstract void EmiteDefineByteArrayDaVariavelLocalComoPonteiro(int posicao);
+    public abstract void EmiteDefineWordArrayDaVariavelGlobalComoPonteiro(string rotulo);
+    public abstract void EmiteDefineByteArrayDaVariavelGlobalComoPonteiro(string rotulo);
+    public abstract void EmiteCopiaPonteiroRemotoParaVariavelGlobal(string rotulo);
 
 
 

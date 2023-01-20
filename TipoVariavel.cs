@@ -5,5 +5,8 @@ enum TipoVariavel
     Int16,
     UInt16,
     PtrByteArray,
-    PtrWordArray
+    PtrWordArray,
+    Structure,
+    Func,
+    Action
 }

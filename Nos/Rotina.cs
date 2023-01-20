@@ -14,6 +14,13 @@ class Rotina : No
     public string RotuloFim { get; set; } = "";
     public int PosicaoArg { get; set; } = 6;
     public int PosicaoVar { get; set; } = 0;
+
+    public DeclaraVariavel? PesquisaVariavel(string nome)
+    {
+        var consVar = Variaveis.Union(Argumentos).Where(v => v.Nome.ToLower() == nome.ToLower());
+        if(consVar.Any()) return consVar.First();
+        return null;
+    }
     public Rotina(Trecho trecho, Modulo modulo, NivelPublicidade publi, bool retornaValor, TipoVariavel tipoRetorno) : base(trecho)
     {
         Modulo = modulo;

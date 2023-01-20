@@ -12,8 +12,8 @@ class DeclaraVariavel : No
     public bool VariavelDoModulo { get; set; }
     public int Posicao { get; set; }
 
-    public Modulo Modulo { get; set; }
-    public DeclaraVariavel(Trecho trecho, Modulo modulo, bool varDoModulo, NivelPublicidade publicidade, TipoVariavel tipo, bool colecao, int colecaoTam, int posicao = 0) : base(trecho)
+    public Estrutura Modulo { get; set; }
+    public DeclaraVariavel(Trecho trecho, Estrutura modulo, bool varDoModulo, NivelPublicidade publicidade, TipoVariavel tipo, bool colecao, int colecaoTam, int posicao = 0) : base(trecho)
     {
         Modulo = modulo;
         VariavelDoModulo = varDoModulo;
