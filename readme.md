@@ -87,7 +87,7 @@ Module Program
         End
         a = 0
         While a < 10
-            Let a = a - 1
+            Let a = a + 1
         End
         For a = 1 To 5
             Console.WriteUInt16 a

@@ -19,7 +19,7 @@ distro-win:
 	dotnet publish -c Release -r win-arm64 -o Distro/WinARM64
 	cp -Rf Plataformas Distro/WinARM64/
 	cp -f Distro/Exemplos/* Distro/WinARM64/
-	cd Distro && zip -r ../../HCBasicWin64.zip Win64/
+	cd Distro && zip -r ../../HCBasicWinARM64.zip WinARM64/
 
 distro-mac:
 	dotnet publish -c Release -r osx.10.12-x64 -o Distro/macOS
