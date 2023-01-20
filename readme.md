@@ -35,7 +35,7 @@ O uso do Makefile é opcional e voltado para Linux e macOS, existindo apenas par
 ## Bugs/Problemas conhecidos
 
 - Comandos ROL, ROR, SHL e SHR aplicam sempre em 16 bits, mesmo quando a variável é de 8 bits, onde os comando ROL e ROR ficam inutilizados para sua função, por enquanto usar esses comandos apenas com variáveis 16 bits
-- **Está no meio da implementação da estrutura, os códigos necessários foram implementados, a implementação LeiaVariavel, Atribuicao e ChamaRotina foram substituidas pelo Acao assim que estiver pronto, pois esse novo metodo unifica a busca por variavel/rotina em modulos, e simplifica muito código, com essa alteração o Saida foi melhorado e otimizado para evitar definições redundantes do ponteiro ES:DI**
+- **Está no meio da implementação da estrutura, os códigos necessários foram implementados, a implementação LeiaVariavel, Atribuicao e ChamaRotina foram substituidas pelo Acao, com esse novo metodo se unifica a busca por variavel/rotina em modulos, e simplifica muito o código, com essa alteração o Saida foi melhorado e otimizado para evitar definições redundantes do ponteiro ES:DI**
 
 ## Objetivos Atuais e Prioritários
 
