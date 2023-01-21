@@ -672,7 +672,9 @@ Todo código gerado por este compilador considera que o CS (Ponteiro do Código 
 **Logo:**
 
 CS <> DS (Pode ser)
+
 DS == SS (Sempre é)
+
 ES <> DS <> CS (Pode ser)
 
 Todas as chamadas são do tipo FAR, ou seja ao chamar é incluido o segmento de retorno e usado o RETF para retornar, possibilitanto o código ser chamado de qualquer local da memoria RAM.
