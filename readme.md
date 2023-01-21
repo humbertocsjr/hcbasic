@@ -274,7 +274,7 @@ As variáveis e campos usam tipos rigidamente especificados, não havendo tipos 
 | Int16 | Inteiro com sinal de 16 bits | -32768...32767 |
 | PtrByteArray | Ponteiro para Array de UInt8 | 0...255 |
 | PtrWordArray | Ponteiro Array de UInt16 | 0...65535 |
-| String | Esta é uma estrutura da especial da Biblioteca, pois é inicializada de forma única com o comando New, inicialmente ela tem capacidade de 128 bytes de texto |  
+| String | Esta é uma estrutura da especial da Biblioteca gerenciada pelo Compilador de forma especial | 128 bytes de texto se inicializado com New |
 
 * Os tipos PtrByteArray e PtrWordArray tem uma propriedade especial de definir seu destino/origem de dados usando caracteres especiais como '@' para definir o desvio(Offset) e '#' para definir o segmento(Seg) da memória, para acesso a qualquer ponto da memória RAM mesmo em arquiteturas que não permitem acesso facilitado a trechos externos ao aplicativo.
 * O Tipo PtrByteArray pode receber um texto como valor diretamente, alterando o ponteiro para o texto informado, não precisando alterar o Segmento e Desvio do ponteiro manualmente.
