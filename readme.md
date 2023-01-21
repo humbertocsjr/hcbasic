@@ -389,7 +389,7 @@ Pelas estruturas ocuparem um espaço maior na memória local, a alocação é ma
 
 Apenas podem ser inicializadas estruturas com o comando "New" se elas se restringirem a rotina atual e as rotinas que esta chamar, então com isto, na implementação atual, não se pode retornar uma Structure para a função chamadora, pois a alocação da memória é temporária e existe apenas dentro da execução da rotina atual.
 
-**IMPORTANTE:** O compilador não verifica se o ponteiro da Structure foi inicializado usando New ou usando a definição de segmento e desvio como os demais ponteiros, portanto o valor inicial dele é inválido e sua manipulação pode gerar corrupção de dados, isto deve ser alterado no futuro, mas por enquanto lembre-se de **SEMPRE** inicializar suaa variáveis
+**IMPORTANTE:** O compilador não verifica se o ponteiro da Structure foi inicializado usando New ou usando a definição de segmento e desvio como os demais ponteiros, portanto o valor inicial dele é inválido e sua manipulação pode gerar corrupção de dados, isto deve ser alterado no futuro, mas por enquanto lembre-se de **SEMPRE** inicializar suas variáveis
 
 **Exemplo:**
 
