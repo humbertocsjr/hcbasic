@@ -732,6 +732,8 @@ Esta rotina é tratada diferentemente das demais, ela é ligada ao Módulo OS po
 
 **Exemplo de OS.Start cru para Sistema Operacional DOS**
 
+Caso se adicione uma variável neste rotina ele irá gerar parte do cabeçalho da sub-rotina, o que não é recomendável conforme exemplo abaixo:
+
 ```vb
 Module OS
     Sub Start
