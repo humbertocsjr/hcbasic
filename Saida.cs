@@ -129,6 +129,9 @@ abstract class Saida
     public abstract void EmiteDefineWordArrayDaVariavelGlobalComoPonteiro(string rotulo);
     public abstract void EmiteDefineByteArrayDaVariavelGlobalComoPonteiro(string rotulo);
     public abstract void EmiteCopiaPonteiroRemotoParaVariavelGlobal(string rotulo);
+    public abstract void EmiteCopiaPonteiroPilhaParaPonteiroRemoto();
+    public abstract void MarcaInicioDeRepeticao();
+    public abstract void MarcaFimDeRepeticao();
 
 
 

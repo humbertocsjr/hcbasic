@@ -1,6 +1,7 @@
 class Estrutura : No
 {
     public string Nome { get; set; }
+    public int TamanhoCampos { get; set; } = 0;
 
     public List<DeclaraVariavel> Campos { get; set; } = new List<DeclaraVariavel>();
     public Estrutura(Trecho trecho) : base(trecho)
@@ -24,9 +25,9 @@ class Estrutura : No
     {
         InicializaLista(new List<No>(Campos), amb);
         Estrutura? cons = amb.PesquisaEstrutura(Nome);
-        if(cons != null && cons != this) throw Erro("Estrutura {Nome} já existe.");
+        if(cons != null && cons != this) throw Erro($"Estrutura {Nome} já existe.");
         cons = amb.PesquisaModulo(Nome);
-        if(cons != null) throw Erro("Já existe um módulo com o nome {Nome}.");
+        //if(cons != null) throw Erro($"Já existe um módulo com o nome {Nome}.");
         int posicao = 0;
         foreach (var item in Campos)
         {
@@ -34,6 +35,7 @@ class Estrutura : No
             if(item.Tipo == TipoVariavel.Structure) throw Erro("Estrutura dentro de outra não é suportada");
             posicao += amb.Saida.CalculaTamanho(item.Tipo);
         }
+        TamanhoCampos = posicao;
     }
 
     protected override No OtimizaInterno(Ambiente amb)

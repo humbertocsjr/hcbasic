@@ -15,7 +15,8 @@ class Acao : No
         IncrementoSegmento,
         Decremento,
         DecrementoDesvio,
-        DecrementoSegmento
+        DecrementoSegmento,
+        NovaEstrutura
     }
     public TipoDeAcao Tipo { get; set; } = TipoDeAcao.Desconhecida;
     public bool TipoSegmento => Tipo == TipoDeAcao.GravacaoSegmento | Tipo == TipoDeAcao.LeituraSegmento | Tipo == TipoDeAcao.IncrementoSegmento | Tipo == TipoDeAcao.DecrementoSegmento;
@@ -338,6 +339,10 @@ class Acao : No
             case TipoDeAcao.Incremento:
             case TipoDeAcao.IncrementoDesvio:
             case TipoDeAcao.IncrementoSegmento:
+            case TipoDeAcao.Decremento:
+            case TipoDeAcao.DecrementoDesvio:
+            case TipoDeAcao.DecrementoSegmento:
+            case TipoDeAcao.NovaEstrutura:
                 {
                     DeclaraVariavel? variavel = amb.Rotina.PesquisaVariavel(referencia.Peek());
                     if(variavel == null) variavel = amb.Modulo.PesquisaCampo(referencia.Peek());
@@ -390,25 +395,51 @@ class Acao : No
                                 {
                                     acaoVariavel(amb, variavel);
                                 }
+                                else if(Tipo == TipoDeAcao.Gravacao & ValorGravacao is Texto)
+                                {
+                                    acaoPonteiro(amb, variavel, TipoAcaoPonteiro.Byte, 0);
+                                }
+                                else if(Tipo == TipoDeAcao.NovaEstrutura)
+                                {
+                                    Estrutura? estru = amb.PesquisaEstrutura(variavel.TipoNome);
+                                    if(variavel.Publicidade != NivelPublicidade.Local) throw Erro("Este tipo de ação só é suportada em variáveis locais internas");
+                                    if(amb.Rotina.Argumentos.Any(a => a.Nome.ToLower() == variavel.Nome.ToLower()))  throw Erro("Este tipo de ação só é suportada em variáveis locais internas");
+                                    if(estru == null) throw Erro("Estrutura não encontrada");
+                                    if(estru.Nome.ToLower() == "string")
+                                        amb.Saida.EmiteSubtraiDoPtrPilha(129);
+                                    else 
+                                        amb.Saida.EmiteSubtraiDoPtrPilha(estru.TamanhoCampos);
+                                    amb.Saida.EmiteCopiaPonteiroPilhaParaPonteiroRemoto();
+                                    amb.Saida.EmiteCopiaPonteiroRemotoParaVariavelLocal(variavel.Posicao);
+                                    if(estru.Nome.ToLower() == "string")
+                                    {
+                                        amb.Saida.EmiteGravaNumeroNoByteArrayDaVariavelLocal(variavel.Posicao, 128, 0);
+                                        amb.Saida.EmiteGravaNumeroNoByteArrayDaVariavelLocal(variavel.Posicao, 0, 1);
+                                    }
+                                }
+                                else if(amb.TipoPonteiro)
+                                {
+                                    acaoPonteiro(amb, variavel, TipoAcaoPonteiro.Byte, 0);
+                                }
                                 else throw Erro("Operação não suportada");
                             }
                             else
                             {
-                                Estrutura? estru = amb.PesquisaEstrutura(variavel.Nome);
+                                Estrutura? estru = amb.PesquisaEstrutura(variavel.TipoNome);
                                 if(estru == null) throw Erro("Estrutura não encontrada");
                                 DeclaraVariavel? campo = estru.PesquisaCampo(referencia.Peek());
                                 if(campo == null) throw Erro($"Campo '{referencia.Peek()}' não encontrado");
                                 switch(Tipo)
                                 {
                                     case TipoDeAcao.Leitura:
-                                        if(variavel.Tipo == TipoVariavel.Int8 | variavel.Tipo == TipoVariavel.UInt8)
+                                        if(campo.Tipo == TipoVariavel.Int8 | campo.Tipo == TipoVariavel.UInt8)
                                         {
                                             if(variavel.Publicidade == NivelPublicidade.Local)
                                                 amb.Saida.EmiteCopiaByteArrayDaVariavelLocalParaAcumulador(variavel.Posicao, campo.Posicao);
                                             else
                                                 amb.Saida.EmiteCopiaByteArrayDaVariavelGlobalParaAcumulador(variavel.NomeGlobal, campo.Posicao);
                                         }
-                                        else if(variavel.Tipo == TipoVariavel.Int16 | variavel.Tipo == TipoVariavel.UInt16)
+                                        else if(campo.Tipo == TipoVariavel.Int16 | campo.Tipo == TipoVariavel.UInt16)
                                         {
                                             if(variavel.Publicidade == NivelPublicidade.Local)
                                                 amb.Saida.EmiteCopiaWordArrayDaVariavelLocalParaAcumulador(variavel.Posicao, campo.Posicao);
@@ -418,14 +449,14 @@ class Acao : No
                                         else throw Erro("Tipo dentro da estrutura não suportado para esta operação");
                                         break;
                                     case TipoDeAcao.Incremento:
-                                        if(variavel.Tipo == TipoVariavel.Int8 | variavel.Tipo == TipoVariavel.UInt8)
+                                        if(campo.Tipo == TipoVariavel.Int8 | campo.Tipo == TipoVariavel.UInt8)
                                         {
                                             if(variavel.Publicidade == NivelPublicidade.Local)
                                                 amb.Saida.EmiteIncrementaByteArrayNaVariavelLocal(variavel.Posicao, campo.Posicao);
                                             else
                                                 amb.Saida.EmiteIncrementaByteArrayNaVariavelGlobal(variavel.NomeGlobal, campo.Posicao);
                                         }
-                                        else if(variavel.Tipo == TipoVariavel.Int16 | variavel.Tipo == TipoVariavel.UInt16)
+                                        else if(campo.Tipo == TipoVariavel.Int16 | campo.Tipo == TipoVariavel.UInt16)
                                         {
                                             if(variavel.Publicidade == NivelPublicidade.Local)
                                                 amb.Saida.EmiteIncrementaWordArrayNaVariavelLocal(variavel.Posicao, campo.Posicao);
@@ -435,14 +466,14 @@ class Acao : No
                                         else throw Erro("Tipo dentro da estrutura não suportado para esta operação");
                                         break;
                                     case TipoDeAcao.Decremento:
-                                        if(variavel.Tipo == TipoVariavel.Int8 | variavel.Tipo == TipoVariavel.UInt8)
+                                        if(campo.Tipo == TipoVariavel.Int8 | campo.Tipo == TipoVariavel.UInt8)
                                         {
                                             if(variavel.Publicidade == NivelPublicidade.Local)
                                                 amb.Saida.EmiteDecrementaByteArrayNaVariavelLocal(variavel.Posicao, campo.Posicao);
                                             else
                                                 amb.Saida.EmiteDecrementaByteArrayNaVariavelGlobal(variavel.NomeGlobal, campo.Posicao);
                                         }
-                                        else if(variavel.Tipo == TipoVariavel.Int16 | variavel.Tipo == TipoVariavel.UInt16)
+                                        else if(campo.Tipo == TipoVariavel.Int16 | campo.Tipo == TipoVariavel.UInt16)
                                         {
                                             if(variavel.Publicidade == NivelPublicidade.Local)
                                                 amb.Saida.EmiteDecrementaWordArrayNaVariavelLocal(variavel.Posicao, campo.Posicao);
@@ -452,17 +483,17 @@ class Acao : No
                                         else throw Erro("Tipo dentro da estrutura não suportado para esta operação");
                                         break;
                                     case TipoDeAcao.Gravacao:
-                                        if(variavel.Tipo == TipoVariavel.Int8 | variavel.Tipo == TipoVariavel.UInt8)
+                                        amb.Tipo = campo.Tipo;
+                                        ValorGravacao.Compila(amb);
+                                        amb.Tipo = null;
+                                        if(campo.Tipo == TipoVariavel.Int8 | campo.Tipo == TipoVariavel.UInt8)
                                         {
-                                            amb.Tipo = campo.Tipo;
-                                            ValorGravacao.Compila(amb);
-                                            amb.Tipo = null;
                                             if(variavel.Publicidade == NivelPublicidade.Local)
                                                 amb.Saida.EmiteCopiaAcumuladorParaByteArrayDaVariavelLocal(variavel.Posicao, campo.Posicao);
                                             else
                                                 amb.Saida.EmiteCopiaAcumuladorParaByteArrayDaVariavelGlobal(variavel.NomeGlobal, campo.Posicao);
                                         }
-                                        else if(variavel.Tipo == TipoVariavel.Int16 | variavel.Tipo == TipoVariavel.UInt16)
+                                        else if(campo.Tipo == TipoVariavel.Int16 | campo.Tipo == TipoVariavel.UInt16)
                                         {
                                             if(variavel.Publicidade == NivelPublicidade.Local)
                                                 amb.Saida.EmiteCopiaAcumuladorParaWordArrayDaVariavelLocal(variavel.Posicao, campo.Posicao);
@@ -516,6 +547,7 @@ class Acao : No
                                 break;
                             case TipoVariavel.PtrByteArray:
                             case TipoVariavel.PtrWordArray:
+                            case TipoVariavel.Structure:
                                 amb.Saida.EmiteEmpilhaPonteiroRemoto();
                                 break;
                             default: throw Erro("Tipo não suportado");

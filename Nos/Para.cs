@@ -21,6 +21,7 @@ class Para : No
         atrib.Inicializa(amb);
         atrib = (Acao)atrib.Otimiza(amb);
         atrib.Compila(amb);
+        amb.Saida.MarcaInicioDeRepeticao();
         amb.Saida.EmiteRotulo(repete);
         amb.Tipo = TipoVariavel.UInt16;
         OpLogica op =new OpLogica(Trecho, new Acao(Trecho, new List<string>(new string[]{Variavel.Nome}), Acao.TipoDeAcao.Leitura), ValorFinal);
@@ -41,6 +42,7 @@ class Para : No
         atrib.Compila(amb);
         amb.Saida.EmitePulaPara(repete);
         amb.Saida.EmiteRotulo(fim);
+        amb.Saida.MarcaFimDeRepeticao();
     }
 
     protected override void InicializaInterno(Ambiente amb)

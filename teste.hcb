@@ -1,32 +1,24 @@
 imports System
 
 module Program
-    dim testeGlobal as uint16
     public sub Main(args as ptrbytearray)
-        dim teste as ptrbytearray
-        dim tmp as uint16
-        dim i as uint16
-        teste = "Oieeeee"
-        Console.Write teste
-        Console.Write teste
-        Console.WriteUInt16 Soma(1,2)
-        testeGlobal = 123
-        Console.WriteUInt16 testeGlobal
-        Console.WriteUInt16 Teste()
-        Console.Write args
-        tmp = Soma(15, 15)
-        Console.WriteUInt16 tmp
-        for i = 1 to 5
-            Console.WriteUInt16 i
+        dim arq as stream
+        dim txt as string
+        arq = new
+        txt = new
+        Console.Write "Teste Criacao de arquivo: "
+        if File.Create(arq, "teste.txt") Then
+            Console.WriteUInt16 File.Write(arq, "Texto teste no arquivo escrito pelo teste.hcb")
+            File.Close arq
+            Console.WriteLine " Bytes escritos"
+        else
+            Console.WriteLine " FALHA"
         end
-    end
-
-    function Soma(a as uint16, b as uint16) as uint16
-        return a + b
-    end
-
-    function Teste() as uint16
-        return 456
+        Console.Write "Escreva seu nome: "
+        Console.ReadLine txt
+        Console.Write "Oie "
+        Console.Write txt
+        Console.WriteLine "!"
     end
 
 end

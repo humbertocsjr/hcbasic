@@ -8,7 +8,9 @@ Esta linguagem não tem como objetivo ser orientada a objetos, sendo próximo de
 
 - Implementação da atribuição sem o comando Let
 - Criada um mecanismo de gerar as distribuições, será usado a partir do momento compilador e a Biblioteca System estiver utilizável para subir os Releases no GitHub
-- **Neste fim de semana por eu ter mais tempo para dedicar a este projeto devo terminar as Structures e a biblioteca System e gerar a primeira versão oficial completamente funcional**
+- Implementado Estruturas (Falta suporte a ponteiros para rotinas)
+- Implementado a Biblioteca System, com os recursos de Console e Arquivos basico
+- **Neste fim de semana por eu ter mais tempo para dedicar a este projeto devo terminar as Structures (Suporte a Ponteiros de Funcoes) e gerar a primeira versão oficial completamente funcional**
 
 ## Requisitos Mínimos para Utilização
 
@@ -35,13 +37,11 @@ O uso do Makefile é opcional e voltado para Linux e macOS, existindo apenas par
 ## Bugs/Problemas conhecidos
 
 - Comandos ROL, ROR, SHL e SHR aplicam sempre em 16 bits, mesmo quando a variável é de 8 bits, onde os comando ROL e ROR ficam inutilizados para sua função, por enquanto usar esses comandos apenas com variáveis 16 bits
-- **Está no meio da implementação da estrutura, os códigos necessários foram implementados, a implementação LeiaVariavel, Atribuicao e ChamaRotina foram substituidas pelo Acao, com esse novo metodo se unifica a busca por variavel/rotina em modulos, e simplifica muito o código, com essa alteração o Saida foi melhorado e otimizado para evitar definições redundantes do ponteiro ES:DI**
 
 ## Objetivos Atuais e Prioritários
 
 - Terminar a implementação de Structures/Tipos Personalizados
 - Limpeza de itens não utilizados na implementação do Saida
-- Começar a implementar a Biblioteca System que esta aguardando o Structure
 
 ## Objetivos
 
@@ -51,7 +51,7 @@ O uso do Makefile é opcional e voltado para Linux e macOS, existindo apenas par
 - [x] Comandos IF e WHILE
 - [x] Suporte a números 8 e 16 bits
 - [x] Implementar chamada de funções dentro de expressões/atribuições
-- [ ] Implementar na biblioteca System, comandos de manipular arquivos
+- [x] Implementar na biblioteca System, comandos de manipular arquivos
 - [x] Correto tratamento e diferenciação do public e private
 - [x] Comando FOR
 - [ ] Suporte a rotinas externas usando ponteiro (Implementar comando INVOKE)
@@ -62,7 +62,7 @@ O uso do Makefile é opcional e voltado para Linux e macOS, existindo apenas par
 - [x] Suporte a números 32 bits na biblioteca
 - [ ] Suporte a números 32 bits na linguagem
 - [x] Inclui apenas módulos usados no projeto, deixando o executável mais compacto
-- [ ] Permitir conversão dos ponteiros PtrByteArray em PtrWordArray de forma simples
+- [x] Permitir conversão dos ponteiros PtrByteArray em PtrWordArray de forma simples
 - [ ] Implementar um tipo de Try Catch Finally / Throw Exception
 - [x] Implementar forma de definir os diretórios de pesquisa do Imports
 - [ ] Quanto tudo estiver pronto, criar um protótipo do compilador feito diretamente em HCBasic para que seja executável localmente, para isso usar assemblers já existente para a plataforma, por exemplo o Old-School Assembler para DOS
@@ -77,23 +77,17 @@ Imports System
 
 Module Program
 
-    Public Dim Teste as UInt16
-
     Public Sub Main (args as ptrbytearray)
-        Dim a as Int16
-        Let a = 1 + 2;
-        If a == 3 Then
-            Let a = a - 2
-        End
-        a = 0
-        While a < 10
-            Let a = a + 1
-        End
-        For a = 1 To 5
-            Console.WriteUInt16 a
-        End
+        Dim texto as String
+        Dim texto2 as String
+        texto = new
+        texto2 = "Exemplo"
 
         Console.WriteLine "Hello World!!"
+        Console.ReadLine texto
+        Console.WriteLine texto
+        Console.WriteLine texto2
+
     End
 
 End
@@ -385,6 +379,46 @@ Qual a diferença do Shl com o Rol e do Shr com o Ror?
     Em binarios: 10000011 ROL 1 => 00000111 (1 é movido)
 
 
+## Estruturas de Dados
+
+Para facilitar a manipulação de estruturas complexas de dados é possível usar o tipo Structure para manipulação de objetos planos de dados.
+
+Pelas estruturas ocuparem um espaço maior na memória local, a alocação é manual, usando uma atribuição que recebe o comando "New".
+
+Apenas podem ser inicializadas estruturas com o comando "New" se elas se restringirem a rotina atual e as rotinas que esta chamar, então com isto, na implementação atual, não se pode retornar uma Structure para a função chamadora, pois a alocação da memória é temporária e existe apenas dentro da execução da rotina atual.
+
+**Exemplo:**
+
+```vb
+
+Imports System
+
+Structure EstruturaTeste
+    Dim Campo0 as UInt16
+    Dim Campo1 as UInt16
+End
+
+Module Program
+    Public Sub Main(args as PtrByteArray)
+        Dim teste as EstruturaTeste
+        teste = New
+        teste.Campo0 = 1
+        teste.Campo1 = teste.Campo0 + 1
+        ' Pode chamar rotinas usando a estrutura
+        IniciaTeste teste
+    End
+
+    Public Sub IniciaTeste(teste as EstruturaTeste)
+        ' Porem as rotinas apenas podem manipular a estrutura
+        ' Nao podendo criar uma nova e retornar para a rotina anterior
+        teste.Campo0 = 1
+        teste.Campo1 = 2
+    End
+End
+
+
+```
+
 ## Comandos da linguagem
 
 Lembrando que a linguagem HCBasic não diferencia maiúsculas com minúsculas, os comandos estão escritos com a primeira letra maiúscula apenas por questão estética.
@@ -495,6 +529,129 @@ Este comando é aceito apenas dentro de rotinas.
 Asm "mov al, 'A'"
 Asm "mov ah, 0xe"
 Asm "int 0x10"
+```
+
+## Biblioteca de Módulos System
+
+### Módulo Console
+
+- Console.Write TEXTO
+    - Escreve um texto na tela
+    - TEXTO = String contendo texto
+
+- Console.WriteLine TEXTO
+    - Escreve uma linha de texto na tela
+    - TEXTO = String contendo texto
+
+- Console.ReadLine TEXTO
+    - Le uma linha de texto
+    - TEXTO = String inicializada
+
+- Console.WriteUInt8 VALOR
+    - Escreve um numero na tela
+    - VALOR = Valor numérico
+
+- Console.WriteInt8 VALOR
+    - Escreve um numero na tela
+    - VALOR = Valor numérico
+
+- Console.WriteUInt16 VALOR
+    - Escreve um numero na tela
+    - VALOR = Valor numérico
+
+- Console.WriteInt16 VALOR
+    - Escreve um numero na tela
+    - VALOR = Valor numérico
+
+- Console.WriteUInt8 VALOR
+    - Escreve um numero na tela
+    - VALOR = Valor numérico
+
+- Console.WriteChar CARACTERE
+    - Escreve um caractere na tela
+    - CARACTERE = Um caractere (UInt8)
+
+- Console.ReadChar as UInt8
+    - Le um caractere
+    - Retorna um caractere digitado
+
+**Exemplo de uso simples**
+
+```vb
+Dim texto as string
+texto = new 
+Console.ReadLine texto
+Console.WriteLine texto
+```
+
+## Módulo File
+
+- File.Open STREAM, FILENAME
+    - Abre um arquivo em um Stream 
+    - STREAM = Deve usar um stream alocado com o comando 'New'
+    - FILENAME = Nome do arquivo
+    - Retorna Verdadeiro ou Falso se conseguiu abrir
+
+- File.Close STREAM
+    - Fecha um arquivo em um Stream 
+    - STREAM = Deve usar um stream aberto com o comando File.Open
+    - Retorna Verdadeiro ou Falso se conseguiu fechar
+
+- File.Read STREAM, TEXTO
+    - Leia um arquivo em um Stream 
+    - STREAM = Deve usar um stream aberto com o comando File.Open
+    - TEXTO = String alocada com o comando 'New'
+    - Retorna qtd. de bytes lidos
+
+- File.ReadRaw STREAM, PONTEIRO, TAMANHO
+    - Leia um arquivo em um Stream 
+    - STREAM = Deve usar um stream aberto com o comando File.Open
+    - PONTEIRO = PtrByteArray que esteja inicializado
+    - TAMANHO = Tamanho do array
+    - Retorna qtd. de bytes lidos
+
+- File.Write STREAM, TEXTO
+    - Escreve um arquivo de um Stream 
+    - STREAM = Deve usar um stream aberto com o comando File.Open
+    - TEXTO = String iniciada com um texto
+    - Retorna qtd. de bytes gravados
+
+- File.WriteRaw STREAM, PONTEIRO, TAMANHO
+    - Escreve em um arquivo de um Stream 
+    - STREAM = Deve usar um stream aberto com o comando File.Open
+    - PONTEIRO = PtrByteArray que esteja inicializado
+    - TAMANHO = Tamanho do array
+    - Retorna qtd. de bytes gravados
+
+- File.SeekStart STREAM, POSICAO
+    - Movimenta no arquivo a partir do inicio
+    - STREAM = Deve usar um stream aberto com o comando File.Open
+    - POSICAO = Posicao que deve se mover
+    - Retorna Verdadeiro ou Falso se conseguiu mover
+
+- File.SeekCurrent STREAM, POSICAO
+    - Movimenta no arquivo a partir da posicao atual
+    - STREAM = Deve usar um stream aberto com o comando File.Open
+    - POSICAO = Posicao que deve se mover
+    - Retorna Verdadeiro ou Falso se conseguiu mover
+
+- File.SeekEnd STREAM, POSICAO
+    - Movimenta no arquivo a partir do fim
+    - STREAM = Deve usar um stream aberto com o comando File.Open
+    - POSICAO = Posicao que deve se mover
+    - Retorna Verdadeiro ou Falso se conseguiu mover
+
+**Exemplo de uso simples**
+
+```vb
+dim arquivo as Stream
+if File.Open(arquivo, "arquivo.txt") Then
+    File.Write arquivo, "Teste"
+    File.Close arquivo
+    Console.WriteLine "Sucesso"
+Else
+    Console.WriteLine "Falha"
+End
 ```
 
 # Como portar para outro processador

@@ -35,10 +35,12 @@ class Saida8086 : Saida
     public override void EmiteRotina(string nome)
     {
         EmiteL($"_{Modulo}_{nome}:");
+        PonteiroDefinido = false;
     }
 
     public override void EmiteRotinaFim(string nome)
     {
+        PonteiroDefinido = false;
         EmiteL($"FIM_{Modulo}_{nome}:");
         EmiteL("retf");
     }
@@ -102,6 +104,9 @@ class Saida8086 : Saida
             case TipoVariavel.UInt16: return 2;
             case TipoVariavel.PtrByteArray: return 4;
             case TipoVariavel.PtrWordArray: return 4;
+            case TipoVariavel.Structure: return 4;
+            case TipoVariavel.Func: return 4;
+            case TipoVariavel.Action: return 4;
             default: throw new Exception("Tipo não suportado por essa arquitetura");
         }
     }
@@ -237,6 +242,9 @@ class Saida8086 : Saida
         EmiteL($"push es");
         EmiteL($"pop word [bp+{posicao}+2]");
         EmiteL($"mov [bp+{posicao}], di");
+        PonteiroDefinido = true;
+        PonteiroLocal = true;
+        PonteiroLocalPosicao = posicao;
     }
     public override void EmiteGravaNumeroNoPonteiroRemoto(decimal valor)
     {
@@ -678,8 +686,27 @@ class Saida8086 : Saida
         EmiteL($"push es");
         EmiteL($"cs pop word [{rotulo}]");
         EmiteL($"cs mov [{rotulo}], di");
+        PonteiroDefinido = true;
+        PonteiroLocal = false;
+        PonteiroGlobalNome = rotulo;
     }
 
+    public override void EmiteCopiaPonteiroPilhaParaPonteiroRemoto()
+    {
+        EmiteL($"push ss");
+        EmiteL($"pop es");
+        EmiteL($"mov di, sp");
+        PonteiroDefinido = false;
+    }
+
+    public override void MarcaFimDeRepeticao()
+    {
+        PonteiroDefinido = false;
+    }
+    public override void MarcaInicioDeRepeticao()
+    {
+        PonteiroDefinido = false;
+    }
 
 
 }

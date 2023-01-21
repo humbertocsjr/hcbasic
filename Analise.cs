@@ -43,9 +43,12 @@ class Analise
                 return TipoVariavel.PtrByteArray;
             case "ptrwordarray":
                 return TipoVariavel.PtrWordArray;
+            case "function":
+                return TipoVariavel.Func;
+            case "sub":
+                return TipoVariavel.Action;
             default:
-                trechos.Erro("Esperado um tipo válido");
-                return TipoVariavel.Int16;
+                return TipoVariavel.Structure;
         }
     }
 
@@ -60,14 +63,16 @@ class Analise
         TipoVariavel dimTipo = TipoVariavel.Int16;
         bool dimColecao = false;
         int dimColecaoTam = 0;
+        string dimTipoNome = "";
         if(trechos.Proximo())
         {
             trechos.ExigeId("as", "Esperado 'as' após o nome da variável");
             trechos.ExigeProximo("Esperado o tipo após o 'as'");
             dimTipo = processaTipo(ref trechos);
+            dimTipoNome = trechos.Atual.Conteudo.ToLower();
         }
         trechos.Proximo();
-        DeclaraVariavel dim = new DeclaraVariavel(dimTrecho, mod, varDoModulo, publi, dimTipo, dimColecao, dimColecaoTam);
+        DeclaraVariavel dim = new DeclaraVariavel(dimTrecho, mod, varDoModulo, publi, dimTipo, dimTipoNome, dimColecao, dimColecaoTam);
         return dim;
     }
 
@@ -295,9 +300,9 @@ class Analise
         else if(trechos.EhOpMatematica("--"))
         {
             trechos.Proximo();
-            atrib.Tipo = Acao.TipoDeAcao.Incremento;
-            if(segmento) atrib.Tipo = Acao.TipoDeAcao.IncrementoSegmento;
-            if(desvio) atrib.Tipo = Acao.TipoDeAcao.IncrementoDesvio;
+            atrib.Tipo = Acao.TipoDeAcao.Decremento;
+            if(segmento) atrib.Tipo = Acao.TipoDeAcao.DecrementoSegmento;
+            if(desvio) atrib.Tipo = Acao.TipoDeAcao.DecrementoDesvio;
         }
         else trechos.ExigeTipo(TipoTrecho.Atribuicao, "Esperado '=' ou '++' or '--' após o nome da variável");
         return atrib;
@@ -373,7 +378,7 @@ class Analise
     {
         trechos.ExigeProximo("Esperado a comparação depois do 'for'");
         trechos.ExigeId("Esperado nome da variável após o 'for'");
-        DeclaraVariavel variavel = new DeclaraVariavel(trechos.Atual, mod, false, NivelPublicidade.Local, TipoVariavel.UInt16, false, 0);
+        DeclaraVariavel variavel = new DeclaraVariavel(trechos.Atual, mod, false, NivelPublicidade.Local, TipoVariavel.UInt16, "uint16", false, 0);
         trechos.Proximo();
         trechos.ExigeTipo(TipoTrecho.Atribuicao, "Esperado '=' após o nome da variável");
         trechos.Proximo();
@@ -490,10 +495,18 @@ class Analise
                 if(trechos.EhTipo(TipoTrecho.Atribuicao))
                 {
                     trechos.Proximo();
-                    acao.Tipo = Acao.TipoDeAcao.Gravacao;
-                    if(arroba) acao.Tipo = Acao.TipoDeAcao.GravacaoDesvio;
-                    if(cerquilha) acao.Tipo = Acao.TipoDeAcao.GravacaoSegmento;
-                    acao.ValorGravacao = processaExpressao(mod, rot, ref trechos);
+                    if(trechos.EhIdentificador("new"))
+                    {
+                        acao.Tipo = Acao.TipoDeAcao.NovaEstrutura;
+                        trechos.Proximo();
+                    }
+                    else
+                    {
+                        acao.Tipo = Acao.TipoDeAcao.Gravacao;
+                        if(arroba) acao.Tipo = Acao.TipoDeAcao.GravacaoDesvio;
+                        if(cerquilha) acao.Tipo = Acao.TipoDeAcao.GravacaoSegmento;
+                        acao.ValorGravacao = processaExpressao(mod, rot, ref trechos);
+                    }
                 }
                 else if(trechos.EhOpMatematica("++"))
                 {
@@ -565,7 +578,7 @@ class Analise
                     trechos.ExigeId("as", "Esperado 'as' após o nome do argumento");
                     trechos.Proximo();
                     trechos.ExigeId("Esperado o tipo de argumento");
-                    rot.Argumentos.Add(new DeclaraVariavel(argNome, mod, false, NivelPublicidade.Local, processaTipo(ref trechos), false, 0){Argumento = true});
+                    rot.Argumentos.Add(new DeclaraVariavel(argNome, mod, false, NivelPublicidade.Local, processaTipo(ref trechos), trechos.Atual.Conteudo.ToLower(), false, 0){Argumento = true});
                     trechos.Proximo();
                 }
                 if(trechos.EhTipo(TipoTrecho.FechaParenteses)) break;
@@ -746,15 +759,22 @@ class Analise
     // Compila codigo fonte
     public void Compila(Saida saida)
     {
-        Ambiente? amb = null;
+        Ambiente amb = new Ambiente(saida, DiretoriosImportacao, Modulos, Estruturas, Modulos.First().Trecho, Modulos.First());;
+
+
+        foreach (var estru in Estruturas)
+        {
+            estru.Inicializa(amb);
+            estru.Otimiza(amb);
+        }
+
+
         foreach(var mod in Modulos)
         {
-            amb = amb ?? new Ambiente(saida, DiretoriosImportacao, Modulos, Estruturas, mod.Trecho, mod);
             mod.Inicializa(amb);
         }
         foreach(var mod in Modulos)
         {
-            amb = amb ?? new Ambiente(saida, DiretoriosImportacao, Modulos, Estruturas, mod.Trecho, mod);
             mod.Otimiza(amb);
         }
 
@@ -762,7 +782,6 @@ class Analise
         // Como o modulo OS chama o Program.Main, acaba compilando tudo que o Program usa direta ou indiretamente
         foreach(var mod in Modulos.Where(m => m.Nome.ToLower() == "os"))
         {
-            amb = amb ?? new Ambiente(saida, DiretoriosImportacao, Modulos, Estruturas, mod.Trecho, mod);
             var cons = mod.Rotinas.Where(r => r.Nome.ToLower() == "start");
             if(!cons.Any()) throw new Erro(mod.Trecho, "Esperado uma rotina 'OS.Start'");
             cons.First().IgnorarCabecalhoRodape = true;

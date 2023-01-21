@@ -12,6 +12,7 @@ class Enquanto : No
         string repete = amb.Saida.GeraRotulo();
         string inicio = amb.Saida.GeraRotulo();
         string fim = amb.Saida.GeraRotulo();
+        amb.Saida.MarcaInicioDeRepeticao();
         amb.Saida.EmiteRotulo(repete);
         amb.Tipo = TipoVariavel.UInt16;
         Comparacao.Compila(amb);
@@ -23,6 +24,7 @@ class Enquanto : No
         CompilaLista(Repete, amb);
         amb.Saida.EmitePulaPara(repete);
         amb.Saida.EmiteRotulo(fim);
+        amb.Saida.MarcaFimDeRepeticao();
     }
 
     protected override void InicializaInterno(Ambiente amb)
