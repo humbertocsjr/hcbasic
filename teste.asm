@@ -708,25 +708,24 @@ mov di, sp
 push es
 pop word [bp+-4+2]
 mov [bp+-4], di
-jmp ROTULO65
-ROTULO66:
-db 7
-db 32,32,32,32,32,32,32
-times 1 db 0
-ROTULO65:
-mov ax, cs
-mov word [bp+-8+2], ax
-mov ax, ROTULO66
-mov [bp+-8], ax
+sub sp, 129
+push ss
+pop es
+mov di, sp
+push es
+pop word [bp+-8+2]
+mov [bp+-8], di
+es mov byte [di+0], 128
+es mov byte [di+1], 0
 push cs
 pop es
-mov di, ROTULO68
-jmp ROTULO67
-ROTULO68:
+mov di, ROTULO66
+jmp ROTULO65
+ROTULO66:
 db 26
 db 84,101,115,116,101,32,67,114,105,97,99,97,111,32,100,101,32,97,114,113,117,105,118,111,58,32
 times 1 db 0
-ROTULO67:
+ROTULO65:
 push es
 push di
 push cs
@@ -734,13 +733,13 @@ call _console_write
 add sp, 4
 push cs
 pop es
-mov di, ROTULO72
-jmp ROTULO71
-ROTULO72:
+mov di, ROTULO70
+jmp ROTULO69
+ROTULO70:
 db 9
 db 116,101,115,116,101,46,116,120,116
 times 1 db 0
-ROTULO71:
+ROTULO69:
 push es
 push di
 push word [bp+-4+2]
@@ -752,18 +751,18 @@ push cs
 call _file_create
 add sp, 8
 cmp ax, 0
-jne ROTULO69
-jmp ROTULO70
-ROTULO69:
+jne ROTULO67
+jmp ROTULO68
+ROTULO67:
 push cs
 pop es
-mov di, ROTULO74
-jmp ROTULO73
-ROTULO74:
+mov di, ROTULO72
+jmp ROTULO71
+ROTULO72:
 db 45
 db 84,101,120,116,111,32,116,101,115,116,101,32,110,111,32,97,114,113,117,105,118,111,32,101,115,99,114,105,116,111,32,112,101,108,111,32,116,101,115,116,101,46,104,99,98
 times 1 db 0
-ROTULO73:
+ROTULO71:
 push es
 push di
 push word [bp+-4+2]
@@ -788,44 +787,44 @@ call _file_close
 add sp, 4
 push cs
 pop es
-mov di, ROTULO76
-jmp ROTULO75
-ROTULO76:
+mov di, ROTULO74
+jmp ROTULO73
+ROTULO74:
 db 15
 db 32,66,121,116,101,115,32,101,115,99,114,105,116,111,115
 times 1 db 0
-ROTULO75:
+ROTULO73:
 push es
 push di
 push cs
 call _console_writeline
 add sp, 4
-jmp ROTULO77
-ROTULO70:
+jmp ROTULO75
+ROTULO68:
+push cs
+pop es
+mov di, ROTULO77
+jmp ROTULO76
+ROTULO77:
+db 6
+db 32,70,65,76,72,65
+times 1 db 0
+ROTULO76:
+push es
+push di
+push cs
+call _console_writeline
+add sp, 4
+ROTULO75:
 push cs
 pop es
 mov di, ROTULO79
 jmp ROTULO78
 ROTULO79:
-db 6
-db 32,70,65,76,72,65
-times 1 db 0
-ROTULO78:
-push es
-push di
-push cs
-call _console_writeline
-add sp, 4
-ROTULO77:
-push cs
-pop es
-mov di, ROTULO81
-jmp ROTULO80
-ROTULO81:
 db 18
 db 69,115,99,114,101,118,97,32,115,101,117,32,110,111,109,101,58,32
 times 1 db 0
-ROTULO80:
+ROTULO78:
 push es
 push di
 push cs
@@ -841,13 +840,13 @@ call _console_readline
 add sp, 4
 push cs
 pop es
-mov di, ROTULO83
-jmp ROTULO82
-ROTULO83:
+mov di, ROTULO81
+jmp ROTULO80
+ROTULO81:
 db 4
 db 79,105,101,32
 times 1 db 0
-ROTULO82:
+ROTULO80:
 push es
 push di
 push cs
@@ -863,13 +862,13 @@ call _console_write
 add sp, 4
 push cs
 pop es
-mov di, ROTULO85
-jmp ROTULO84
-ROTULO85:
+mov di, ROTULO83
+jmp ROTULO82
+ROTULO83:
 db 1
 db 33
 times 1 db 0
-ROTULO84:
+ROTULO82:
 push es
 push di
 push cs

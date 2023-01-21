@@ -49,38 +49,201 @@ module String
     end
 end
 
-module StreamWriter
-    public function Write(stream as uint16, text as ptrbytearray) as uint16
-    end
-
-    public function WriteLine(stream as uint16, text as ptrbytearray) as uint16
-    end
-end
-
-
 structure Stream
     Dim Id as uint16
 end
 
 module File
-    public function Open(filename as ptrbytearray) as uint16
+    public function Open(stream as Stream, filename as ptrbytearray) as uint16
+        dim id as uint16
+        asm "mov ax, 0x3d02"
+        asm "push ds"
+        asm "push word [bp+12]"
+        asm "pop ds"
+        asm "mov dx, [bp+10]"
+        asm "inc dx"
+        asm "int 0x21"
+        asm "pushf"
+        asm "mov [bp-2], ax"
+        asm "popf"
+        asm "pop ds"
+        asm "jnc .fim"
+        return 0
+        asm ".fim:"
+        stream.Id = id
+        return 1
+    end
 
+    public function Create(stream as Stream, filename as ptrbytearray) as uint16
+        dim id as uint16
+        asm "mov ax, 0x3c00"
+        asm "push ds"
+        asm "push word [bp+12]"
+        asm "pop ds"
+        asm "xor cx, cx"
+        asm "mov dx, [bp+10]"
+        asm "inc dx"
+        asm "int 0x21"
+        asm "pushf"
+        asm "mov [bp-2], ax"
+        asm "popf"
+        asm "pop ds"
+        asm "jnc .fim"
+        return 0
+        asm ".fim:"
+        stream.Id = id
+        return 1
+    end
+
+    public function Read(stream as Stream, text as ptrbytearray) as uint16
+        dim len as uint16
+        len = text
+        @text++
+        len = ReadRaw(stream, text, len)
+        return len
+    end
+
+    public function ReadRaw(stream as Stream, data as ptrbytearray, len as uint16) as uint16
+        dim id as uint16
+        id = stream.Id
+        asm "mov ax, 0x3f00"
+        asm "push ds"
+        asm "push word [bp+12]"
+        asm "pop ds"
+        asm "mov dx, [bp+10]"
+        asm "mov cx, [bp+14]"
+        asm "mov bx, [bp-2]"
+        asm "int 0x21"
+        asm "pushf"
+        asm "mov [bp-2], ax"
+        asm "popf"
+        asm "pop ds"
+        asm "jnc .fim"
+        return 0
+        asm ".fim:"
+        return id
+    end
+
+    public function Write(stream as Stream, text as ptrbytearray) as uint16
+        dim len as uint16
+        len = String.Length(text)
+        @text++
+        return WriteRaw(stream, text, len)
+    end
+
+    public function WriteRaw(stream as Stream, data as ptrbytearray, len as uint16) as uint16
+        dim id as uint16
+        id = stream.Id
+        asm "mov ax, 0x4000"
+        asm "push ds"
+        asm "push word [bp+12]"
+        asm "pop ds"
+        asm "mov dx, [bp+10]"
+        asm "mov cx, [bp+14]"
+        asm "mov bx, [bp-2]"
+        asm "int 0x21"
+        asm "pushf"
+        asm "mov [bp-2], ax"
+        asm "popf"
+        asm "pop ds"
+        asm "jnc .fim"
+        return 0
+        asm ".fim:"
+        return id
+    end
+
+    public function Close(stream as Stream) as uint16
+        dim id as uint16
+        id = stream.Id
+        asm "mov ax, 0x3e00"
+        asm "mov bx, [bp-2]"
+        asm "int 0x21"
+        asm "jnc .fim"
+        return 0
+        asm ".fim:"
+        return 1
+    end
+
+    public function SeekStart(stream as Stream, position as uint16) as uint16
+        dim id as uint16
+        id = stream.Id
+        asm "mov ax, 0x4200"
+        asm "mov bx, [bp-2]"
+        asm "xor cx, cx"
+        asm "mov dx, [bp+10]"
+        asm "int 0x21"
+        asm "jnc .fim"
+        return 0
+        asm ".fim:"
+        return 1
+    end
+
+    public function SeekCurrent(stream as Stream, position as uint16) as uint16
+        dim id as uint16
+        id = stream.Id
+        asm "mov ax, 0x4201"
+        asm "mov bx, [bp-2]"
+        asm "xor cx, cx"
+        asm "mov dx, [bp+10]"
+        asm "int 0x21"
+        asm "jnc .fim"
+        return 0
+        asm ".fim:"
+        return 1
+    end
+
+    public function SeekEnd(stream as Stream, position as uint16) as uint16
+        dim id as uint16
+        id = stream.Id
+        asm "mov ax, 0x4202"
+        asm "mov bx, [bp-2]"
+        asm "xor cx, cx"
+        asm "mov dx, [bp+10]"
+        asm "int 0x21"
+        asm "jnc .fim"
+        return 0
+        asm ".fim:"
+        return 1
     end
 end
 
+structure String
+    Dim Capacity as UInt8
+end
+
 module Console
-    public sub WriteChar(c as int8)
-        asm "mov ax, [bp+6]"
-        asm "mov ah, 0xe"
-        asm "int 0x10"
+    public function ReadChar() as uint8
+        asm "mov ah, 1"
+        asm "int 0x21"
+        asm "xor ah, ah"
+    end
+
+    public sub ReadLine(txt as ptrbytearray)
+        dim len as uint16
+        dim stdin as Stream
+        len = txt
+        @txt++
+        stdin = new
+        stdin.Id = 0
+        len = File.ReadRaw(stdin, txt, len)
+        while txt > 0 and txt <> 13 and txt <> 10
+            @txt++
+        end
+        txt = 0
+    end
+
+    public sub WriteChar(c as uint8)
+        asm "mov dl, [bp+6]"
+        asm "mov ah, 2"
+        asm "int 0x21"
     end
 
     public sub Write(txt as ptrbytearray)
         ' Ignora o byte inicial com a capacidade da variavel
-        Let @txt ++
+        @txt ++
         while txt > 0
             WriteChar txt
-            let @txt ++
+            @txt ++
         end
     end
 
@@ -116,6 +279,7 @@ module Console
 end
 
 module UInt32
+' IGNORAR ESTE TRECHO ESTA COM UM CODIGO DE UMA VERSAO PRE PROTOTIPO, DEVE SER ALTERADA PARA PRODUCAO
     public sub Add(ptrDest as uint16, ptrOrig as uint16)
         asm "push bp"
         asm "mov bp, sp"
