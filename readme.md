@@ -233,6 +233,8 @@ Preferencialmente devem ser colocados no topo do arquivo para melhor legibilidad
 
 Deve-se sempre importar o arquivo **System** ao projeto pois ele contém a biblioteca e recursos base para uso da linguagem.
 
+Recomendase uso de um editor de texto com suporte a colorização, sendo este o caso selecione o modo de colorização "Visual Basic" ou "Visual Basic.NET" para melhor visualização
+
 ## Variáveis Locais e Campos do Módulo
 
 Por ser uma linguagem próxima ao baixo nível, os tipos de variáveis se limitam ao que o processador suporta, e por este compilador ter como objetivo plataformas 16 bits, se limita os tipos base a 16bits, podendo manipular números tanto com ou sem sinal, mudando o range conforme o capítulo **Tipos de dados** deste manual.
