@@ -667,6 +667,8 @@ End
 
 ## 8086 ou Compatíveis
 
+**Assembler:** NASM
+
 Todo código gerado por este compilador considera que o CS (Ponteiro do Código fonte) é independente do DS (Ponteiro de Dados), porém este deve ser igual a SS (Ponteiro da Pilha), e o ES (Ponteiro Extra) é usado para acessar ponteiros remotos.
 
 **Logo:**
