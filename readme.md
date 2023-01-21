@@ -384,7 +384,7 @@ Qual a diferença do Shl com o Rol e do Shr com o Ror?
 
 Para facilitar a manipulação de estruturas complexas de dados é possível usar o tipo Structure para manipulação de objetos planos de dados.
 
-Pelas estruturas ocuparem um espaço maior na memória local, a alocação é manual, usando uma atribuição que recebe o comando "New".
+Pelas estruturas ocuparem um espaço maior na memória local, a alocação é manual, usando uma atribuição que recebe o comando "New" OU recebendo o segmento e desvio como outros ponteiros.
 
 Apenas podem ser inicializadas estruturas com o comando "New" se elas se restringirem a rotina atual e as rotinas que esta chamar, então com isto, na implementação atual, não se pode retornar uma Structure para a função chamadora, pois a alocação da memória é temporária e existe apenas dentro da execução da rotina atual.
 
