@@ -37,6 +37,7 @@ O uso do Makefile é opcional e voltado para Linux e macOS, existindo apenas par
 ## Bugs/Problemas conhecidos
 
 - Comandos ROL, ROR, SHL e SHR aplicam sempre em 16 bits, mesmo quando a variável é de 8 bits, onde os comando ROL e ROR ficam inutilizados para sua função, por enquanto usar esses comandos apenas com variáveis 16 bits
+- **Por padrão este compilador não inicializa suas variáveis, e AINDA não verifica se o usuário esta tentando usa-las sem inicializar, isto é problemático principalmente com ponteiros/estruturas que podem ao ser manipuladas com um valor inicial inválido corromper dados na memória ou mesmo gerar crashs no sistema operacional, este comportamento deve ser alterado no futuro para se parecer mais com um compilador BASIC e menos com o comportamento de um compilador C**
 
 ## Objetivos Atuais e Prioritários
 
@@ -386,6 +387,8 @@ Para facilitar a manipulação de estruturas complexas de dados é possível usa
 Pelas estruturas ocuparem um espaço maior na memória local, a alocação é manual, usando uma atribuição que recebe o comando "New".
 
 Apenas podem ser inicializadas estruturas com o comando "New" se elas se restringirem a rotina atual e as rotinas que esta chamar, então com isto, na implementação atual, não se pode retornar uma Structure para a função chamadora, pois a alocação da memória é temporária e existe apenas dentro da execução da rotina atual.
+
+**IMPORTANTE:** O compilador não verifica se o ponteiro da Structure foi inicializado usando New ou usando a definição de segmento e desvio como os demais ponteiros, portanto o valor inicial dele é inválido e sua manipulação pode gerar corrupção de dados, isto deve ser alterado no futuro, mas por enquanto lembre-se de **SEMPRE** inicializar suaa variáveis
 
 **Exemplo:**
 
