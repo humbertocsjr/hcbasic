@@ -649,8 +649,11 @@ Console.WriteLine texto
 
 **Exemplo de uso simples**
 
+**IMPORTANTE:** A variavel do tipo Stream **SEMPRE** deve ser inicializada com o comando New antes de usar, para alocar espaço na memória
+
 ```vb
 dim arquivo as Stream
+arquivo = New
 if File.Open(arquivo, "arquivo.txt") Then
     File.Write arquivo, "Teste"
     File.Close arquivo
