@@ -365,7 +365,7 @@ Qual a diferença do Shl com o Rol e do Shr com o Ror?
 
     Enquanto
 
-    Formula: 128 ROL 1 => 0
+    Formula: 128 ROL 1 => 1
     Em binarios: 10000000 ROL 1 => 00000001 (1 é movido)
 
     Outro exemplo:
