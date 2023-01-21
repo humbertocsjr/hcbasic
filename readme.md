@@ -663,6 +663,24 @@ Else
 End
 ```
 
+# Características de cada Plataforma Implementada
+
+## 8086 ou Compatíveis
+
+Todo código gerado por este compilador considera que o CS (Ponteiro do Código fonte) é independente do DS (Ponteiro de Dados), porém este deve ser igual a SS (Ponteiro da Pilha), e o ES (Ponteiro Extra) é usado para acessar ponteiros remotos.
+
+**Logo:**
+
+CS <> DS (Pode ser)
+DS == SS (Sempre é)
+ES <> DS <> CS (Pode ser)
+
+Todas as chamadas são do tipo FAR, ou seja ao chamar é incluido o segmento de retorno e usado o RETF para retornar, possibilitanto o código ser chamado de qualquer local da memoria RAM.
+
+Este compilador se aproxima ao tradicional modo HUGE porém limita o tamanho do executável a 64 KiB
+
+
+
 # Como portar para outro processador
 
 **AVISO:** A implementação mínima ainda está em desenvolvimento, podendo sofrer alterações em ritmo mais acelerado nas classes do projeto citadas neste documento.
