@@ -45,6 +45,7 @@ abstract class Saida
     public abstract void EmiteCopiaAcumuladorParaVariavelLocal(int posicao);
     public abstract int TamanhoPonteiro{get;}
     public abstract int CalculaTamanho(TipoVariavel tipo);
+    public abstract int CalculaTamanhoReal(TipoVariavel tipo);
     public abstract void EmiteSubtraiDoPtrPilha(int qtd);
     public abstract void EmiteAdicionaNoPtrPilha(int qtd);
     public abstract void EmiteEmpilhaAcumulador();
@@ -124,14 +125,22 @@ abstract class Saida
     public abstract void EmiteCopiaByteArrayDaVariavelGlobalParaAcumulador(string rotulo, int desvio);
     public abstract void EmiteCopiaSegDaVariavelGlobalParaAcumulador(string rotulo);
     public abstract void EmiteCopiaWordArrayDaVariavelGlobalParaAcumulador(string rotulo, int desvio);
-    public abstract void EmiteDefineWordArrayDaVariavelLocalComoPonteiro(int posicao);
-    public abstract void EmiteDefineByteArrayDaVariavelLocalComoPonteiro(int posicao);
-    public abstract void EmiteDefineWordArrayDaVariavelGlobalComoPonteiro(string rotulo);
-    public abstract void EmiteDefineByteArrayDaVariavelGlobalComoPonteiro(string rotulo);
+    public abstract void EmiteCopiaWordArrayDaVariavelLocalParaPonteiroRemoto(int posicao);
+    public abstract void EmiteCopiaByteArrayDaVariavelLocalParaPonteiroRemoto(int posicao);
+    public abstract void EmiteCopiaWordArrayDaVariavelGlobalParaPonteiroRemoto(string rotulo);
+    public abstract void EmiteCopiaByteArrayDaVariavelGlobalComoPonteiroRemoto(string rotulo);
     public abstract void EmiteCopiaPonteiroRemotoParaVariavelGlobal(string rotulo);
     public abstract void EmiteCopiaPonteiroPilhaParaPonteiroRemoto();
     public abstract void MarcaInicioDeRepeticao();
     public abstract void MarcaFimDeRepeticao();
+    public abstract void EmiteChamaRotinaEmVariavelLocal(int posicao);
+    public abstract void EmiteChamaRotinaEmVariavelGlobal(string rotulo);
+    public abstract void EmiteChamaRotinaEmPonteiroNaVariavelLocal(int posicao, int desvio);
+    public abstract void EmiteChamaRotinaEmPonteiroNaVariavelGlobal(string rotulo, int desvio);
+    public abstract void EmiteCopiaPonteiroRemotoParaWordArrayNaVariavelLocal(int posicao, int desvio);
+    public abstract void EmiteCopiaPonteiroRemotoParaWordArrayNaVariavelGlobal(string rotulo, int desvio);
+    public abstract void EmiteCopiaPonteiroRemotoParaByteArrayNaVariavelLocal(int posicao, int desvio);
+    public abstract void EmiteCopiaPonteiroRemotoParaByteArrayNaVariavelGlobal(string rotulo, int desvio);
 
 
 

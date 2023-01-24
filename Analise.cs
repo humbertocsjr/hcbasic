@@ -43,9 +43,9 @@ class Analise
                 return TipoVariavel.PtrByteArray;
             case "ptrwordarray":
                 return TipoVariavel.PtrWordArray;
-            case "function":
+            case "func":
                 return TipoVariavel.Func;
-            case "sub":
+            case "action":
                 return TipoVariavel.Action;
             default:
                 return TipoVariavel.Structure;
@@ -63,7 +63,7 @@ class Analise
         TipoVariavel dimTipo = TipoVariavel.Int16;
         bool dimColecao = false;
         int dimColecaoTam = 0;
-        string dimTipoNome = "";
+        string dimTipoNome = "int16";
         if(trechos.Proximo())
         {
             trechos.ExigeId("as", "Esperado 'as' após o nome da variável");
@@ -72,7 +72,45 @@ class Analise
             dimTipoNome = trechos.Atual.Conteudo.ToLower();
         }
         trechos.Proximo();
+        List<DeclaraVariavel> argumentos = new List<DeclaraVariavel>();
+        TipoVariavel tipoRetorno = TipoVariavel.UInt16;
+        string tipoRetornoNome = "uint16";
         DeclaraVariavel dim = new DeclaraVariavel(dimTrecho, mod, varDoModulo, publi, dimTipo, dimTipoNome, dimColecao, dimColecaoTam);
+        if(dimTipo == TipoVariavel.Func | dimTipo == TipoVariavel.Action)
+        {
+            trechos.ExigeTipo(TipoTrecho.AbreParenteses, $"Esperado '(' após '{dimTipoNome}'");
+            trechos.Proximo();
+            if(!trechos.EhTipo(TipoTrecho.FechaParenteses))
+            {
+                trechos.ExigeId("of", "Esperado 'Of' após o '('");
+                trechos.Proximo();
+                while(!trechos.EhTipo(TipoTrecho.FechaParenteses) & !trechos.FimDaLinha)
+                {
+                    trechos.ExigeId("Esperado tipo de variavel");
+                    TipoVariavel argTipo = processaTipo(ref trechos);
+                    if(argTipo == TipoVariavel.Func | argTipo == TipoVariavel.Action) trechos.Erro("Tipo inválido de argumento");
+                    argumentos.Add(new DeclaraVariavel(trechos.Atual, mod, false, NivelPublicidade.Local, argTipo, trechos.Atual.Conteudo, false, 0, 0));
+                    trechos.Proximo();
+                    if(!trechos.EhTipo(TipoTrecho.FechaParenteses))
+                    {
+                        trechos.ExigeTipo(TipoTrecho.Virgula, "Esperado ',' após o tipo de argumento");
+                        trechos.Proximo();
+                    }
+                }
+                if(dimTipo == TipoVariavel.Func)
+                {
+                    if(!argumentos.Any()) trechos.Erro("Espearado tipo de retorno da função declarada");
+                    tipoRetorno = argumentos.Last().Tipo;
+                    tipoRetornoNome =argumentos.Last().TipoNome;
+                    argumentos.Remove(argumentos.Last());
+                }
+            }
+            trechos.ExigeTipo(TipoTrecho.FechaParenteses, "Esperado ')' ao fim dos argumentos");
+            trechos.Proximo();
+            dim.ArgumentosFuncAction = argumentos;
+            dim.RetornoFunc = tipoRetorno;
+            dim.RetornoFuncNome = tipoRetornoNome;
+        }
         return dim;
     }
 
@@ -545,7 +583,7 @@ class Analise
             }
             else if(!trechos.FimDaLinha)
             {
-                trechos.Erro("Comando desconhecido");
+                trechos.Erro($"Comando {trechos.Atual.Conteudo}({trechos.Atual.Tipo}) desconhecido");
             }
             if(apenasUmComando) 
                 return;
@@ -704,10 +742,21 @@ class Analise
                 {
                     trechos.Proximo();
                     trechos.ExigeId("Esperado o nome do módulo a ser importado");
-                    string nomeImport = trechos.Atual.ConteudoOriginal + ".hcb";
+                    string nomeImport = "";
+                    while(trechos.Atual.Tipo != TipoTrecho.FimDaLinha)
+                    {
+                        if(trechos.EhIdentificador())
+                            nomeImport += trechos.Atual.ConteudoOriginal;
+                        else if(trechos.EhTipo(TipoTrecho.Ponto))
+                            nomeImport += ".";
+                        else trechos.Erro("Esperado um nome de arquivo");
+                        trechos.Proximo();
+                    }
+                    nomeImport += ".hcb";
                     if(File.Exists(nomeImport))
                     {
-                        Processar(new Fonte(nomeImport));
+                        if(!Fontes.Any(f => f.NomeCompleto == nomeImport))
+                            Processar(new Fonte(nomeImport));
                     }
                     else
                     {
@@ -719,7 +768,8 @@ class Analise
                             {
                                 encontradoArq = true;
                                 nomeImport = arqCons.First().FullName;
-                                Processar(new Fonte(nomeImport));
+                                if(!Fontes.Any(f => f.NomeCompleto == nomeImport))
+                                    Processar(new Fonte(nomeImport));
                                 break;
                             }
                         }
@@ -731,7 +781,7 @@ class Analise
                 }
                 else if(!trechos.FimDaLinha)
                 {
-                    trechos.ExigeFimDaLinha("Comando não suportado neste nível.");
+                    trechos.ExigeFimDaLinha($"Comando {trechos.Atual.Conteudo}({trechos.Atual.Tipo}) não suportado neste nível.");
                 }
             }
         }while (trechos.ProximaLinha());
@@ -751,8 +801,11 @@ class Analise
     {
         foreach (var modref in mod.Referencias)
         {
-            CompilaReferencias(modref, amb);
-            modref.Compila(amb);
+            if(!modref.Compilado)
+            {
+                modref.Compila(amb);
+                CompilaReferencias(modref, amb);
+            }
         }
     }
 

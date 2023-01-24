@@ -112,7 +112,9 @@ class Acao : No
                     else
                     {
                         amb.Tipo = variavel.Tipo;
+                        amb.VariavelDestino = variavel;
                         ValorGravacao.Compila(amb);
+                        amb.VariavelDestino = null;
                         amb.Tipo = null;
                         amb.Saida.EmiteCopiaAcumuladorParaVariavelLocal(variavel.Posicao);
                     }
@@ -126,7 +128,9 @@ class Acao : No
                     else
                     {
                         amb.Tipo = variavel.Tipo;
+                        amb.VariavelDestino = variavel;
                         ValorGravacao.Compila(amb);
+                        amb.VariavelDestino = null;
                         amb.Tipo = null;
                         amb.Saida.EmiteCopiaAcumuladorParaVariavelGlobal(variavel.NomeGlobal);
                     }
@@ -142,7 +146,9 @@ class Acao : No
                     else
                     {
                         amb.Tipo = variavel.Tipo;
+                        amb.VariavelDestino = variavel;
                         ValorGravacao.Compila(amb);
+                        amb.VariavelDestino = null;
                         amb.Tipo = null;
                         amb.Saida.EmiteCopiaAcumuladorParaSegDaVariavelLocal(variavel.Posicao);
                     }
@@ -156,7 +162,9 @@ class Acao : No
                     else
                     {
                         amb.Tipo = variavel.Tipo;
+                        amb.VariavelDestino = variavel;
                         ValorGravacao.Compila(amb);
+                        amb.VariavelDestino = null;
                         amb.Tipo = null;
                         amb.Saida.EmiteCopiaAcumuladorParaSegDaVariavelGlobal(variavel.NomeGlobal);
                     }
@@ -180,7 +188,7 @@ class Acao : No
                 if(variavel.Publicidade == NivelPublicidade.Local)
                 {
                     if(amb.TipoPonteiro)
-                        amb.Saida.EmiteDefineByteArrayDaVariavelLocalComoPonteiro(variavel.Posicao);
+                        amb.Saida.EmiteCopiaByteArrayDaVariavelLocalParaPonteiroRemoto(variavel.Posicao);
                     else if(tipoPonteiro == TipoAcaoPonteiro.Byte)
                         amb.Saida.EmiteCopiaByteArrayDaVariavelLocalParaAcumulador(variavel.Posicao, desvioNoPonteiro);
                     else if(tipoPonteiro == TipoAcaoPonteiro.Word)
@@ -190,7 +198,7 @@ class Acao : No
                 else
                 {
                     if(amb.TipoPonteiro)
-                        amb.Saida.EmiteDefineWordArrayDaVariavelLocalComoPonteiro(variavel.Posicao);
+                        amb.Saida.EmiteCopiaWordArrayDaVariavelLocalParaPonteiroRemoto(variavel.Posicao);
                     if(tipoPonteiro == TipoAcaoPonteiro.Byte)
                         amb.Saida.EmiteCopiaByteArrayDaVariavelGlobalParaAcumulador(variavel.NomeGlobal, desvioNoPonteiro);
                     else if(tipoPonteiro == TipoAcaoPonteiro.Word)
@@ -265,8 +273,8 @@ class Acao : No
                     else
                     {
                         amb.Tipo = variavel.Tipo;
+                        amb.VariavelDestino = variavel;
                         ValorGravacao.Compila(amb);
-                        amb.Tipo = null;
                         if(amb.TipoPonteiro)
                             amb.Saida.EmiteCopiaPonteiroRemotoParaVariavelLocal(variavel.Posicao);
                         else if(tipoPonteiro == TipoAcaoPonteiro.Byte)
@@ -274,6 +282,8 @@ class Acao : No
                         else if(tipoPonteiro == TipoAcaoPonteiro.Word)
                             amb.Saida.EmiteCopiaAcumuladorParaWordArrayDaVariavelLocal(variavel.Posicao, desvioNoPonteiro);
                         else throw Erro("Tipo não suportado");
+                        amb.VariavelDestino = null;
+                        amb.Tipo = null;
                     }
                 }
                 else
@@ -306,8 +316,8 @@ class Acao : No
                     else
                     {
                         amb.Tipo = variavel.Tipo;
+                        amb.VariavelDestino = variavel;
                         ValorGravacao.Compila(amb);
-                        amb.Tipo = null;
                         if(amb.TipoPonteiro)
                             amb.Saida.EmiteCopiaPonteiroRemotoParaVariavelGlobal(variavel.NomeGlobal);
                         if(tipoPonteiro == TipoAcaoPonteiro.Byte)
@@ -315,6 +325,8 @@ class Acao : No
                         else if(tipoPonteiro == TipoAcaoPonteiro.Word)
                             amb.Saida.EmiteCopiaAcumuladorParaWordArrayDaVariavelGlobal(variavel.NomeGlobal, desvioNoPonteiro);
                         else throw Erro("Tipo não suportado");
+                        amb.VariavelDestino = null;
+                        amb.Tipo = null;
                     }
                 }
                 break;
@@ -367,6 +379,18 @@ class Acao : No
                             acaoVariavel(amb, variavel);
                             break;
                         case TipoVariavel.PtrByteArray:
+                            if(referencia.Any()) throw Erro("Variavel de tipo inválido");
+                            if(TipoSegmento | TipoDesvio)
+                            {
+                                acaoVariavel(amb, variavel);
+                            }
+                            else
+                            {
+                                acaoPonteiro(amb, variavel, TipoAcaoPonteiro.Byte, 0);
+                            }
+                            break;
+                        case TipoVariavel.Func:
+                        case TipoVariavel.Action:
                             if(referencia.Any()) throw Erro("Variavel de tipo inválido");
                             if(TipoSegmento | TipoDesvio)
                             {
@@ -431,6 +455,18 @@ class Acao : No
                                 if(campo == null) throw Erro($"Campo '{referencia.Peek()}' não encontrado");
                                 switch(Tipo)
                                 {
+                                    case TipoDeAcao.LeituraSegmento:
+                                        if(variavel.Publicidade == NivelPublicidade.Local)
+                                            amb.Saida.EmiteCopiaWordArrayDaVariavelLocalParaAcumulador(variavel.Posicao, campo.Posicao + 2);
+                                        else
+                                            amb.Saida.EmiteCopiaWordArrayDaVariavelGlobalParaAcumulador(variavel.NomeGlobal, campo.Posicao + 2);
+                                        break;
+                                    case TipoDeAcao.LeituraDesvio:
+                                        if(variavel.Publicidade == NivelPublicidade.Local)
+                                            amb.Saida.EmiteCopiaWordArrayDaVariavelLocalParaAcumulador(variavel.Posicao, campo.Posicao);
+                                        else
+                                            amb.Saida.EmiteCopiaWordArrayDaVariavelGlobalParaAcumulador(variavel.NomeGlobal, campo.Posicao);
+                                        break;
                                     case TipoDeAcao.Leitura:
                                         if(campo.Tipo == TipoVariavel.Int8 | campo.Tipo == TipoVariavel.UInt8)
                                         {
@@ -445,6 +481,20 @@ class Acao : No
                                                 amb.Saida.EmiteCopiaWordArrayDaVariavelLocalParaAcumulador(variavel.Posicao, campo.Posicao);
                                             else
                                                 amb.Saida.EmiteCopiaWordArrayDaVariavelGlobalParaAcumulador(variavel.NomeGlobal, campo.Posicao);
+                                        }
+                                        else if(campo.Tipo == TipoVariavel.PtrByteArray | campo.Tipo == TipoVariavel.Structure | campo.Tipo == TipoVariavel.Func | campo.Tipo == TipoVariavel.Action)
+                                        {
+                                            if(variavel.Publicidade == NivelPublicidade.Local)
+                                                amb.Saida.EmiteCopiaByteArrayDaVariavelLocalParaPonteiroRemoto(variavel.Posicao);
+                                            else
+                                                amb.Saida.EmiteCopiaByteArrayDaVariavelGlobalComoPonteiroRemoto(variavel.NomeGlobal);
+                                        }
+                                        else if(campo.Tipo == TipoVariavel.PtrWordArray)
+                                        {
+                                            if(variavel.Publicidade == NivelPublicidade.Local)
+                                                amb.Saida.EmiteCopiaWordArrayDaVariavelLocalParaPonteiroRemoto(variavel.Posicao);
+                                            else
+                                                amb.Saida.EmiteCopiaWordArrayDaVariavelGlobalParaPonteiroRemoto(variavel.NomeGlobal);
                                         }
                                         else throw Erro("Tipo dentro da estrutura não suportado para esta operação");
                                         break;
@@ -484,7 +534,9 @@ class Acao : No
                                         break;
                                     case TipoDeAcao.Gravacao:
                                         amb.Tipo = campo.Tipo;
+                                        amb.VariavelDestino = campo;
                                         ValorGravacao.Compila(amb);
+                                        amb.VariavelDestino = null;
                                         amb.Tipo = null;
                                         if(campo.Tipo == TipoVariavel.Int8 | campo.Tipo == TipoVariavel.UInt8)
                                         {
@@ -500,6 +552,20 @@ class Acao : No
                                             else
                                                 amb.Saida.EmiteCopiaAcumuladorParaWordArrayDaVariavelGlobal(variavel.NomeGlobal, campo.Posicao);
                                         }
+                                        else if(campo.Tipo == TipoVariavel.PtrByteArray | campo.Tipo == TipoVariavel.Structure | campo.Tipo == TipoVariavel.Func | campo.Tipo == TipoVariavel.Action)
+                                        {
+                                            if(variavel.Publicidade == NivelPublicidade.Local)
+                                                amb.Saida.EmiteCopiaPonteiroRemotoParaByteArrayNaVariavelLocal(variavel.Posicao, campo.Posicao);
+                                            else
+                                                amb.Saida.EmiteCopiaPonteiroRemotoParaByteArrayNaVariavelGlobal(variavel.NomeGlobal, campo.Posicao);
+                                        }
+                                        else if(campo.Tipo == TipoVariavel.PtrWordArray)
+                                        {
+                                            if(variavel.Publicidade == NivelPublicidade.Local)
+                                                amb.Saida.EmiteCopiaPonteiroRemotoParaWordArrayNaVariavelLocal(variavel.Posicao, campo.Posicao);
+                                            else
+                                                amb.Saida.EmiteCopiaPonteiroRemotoParaWordArrayNaVariavelGlobal(variavel.NomeGlobal, campo.Posicao);
+                                        }
                                         else throw Erro("Tipo dentro da estrutura não suportado para esta operação");
                                         break;
                                     default: throw Erro("Tipo de ação não suportado dentro de uma estrutura");
@@ -512,52 +578,208 @@ class Acao : No
                 break;
             case TipoDeAcao.Chamada:
                 {
-                    Rotina? rot = amb.Modulo.PesquisaRotina(referencia.Peek());
-                    if(rot == null)
+                    if(referencia.Count() == 1 & referencia.First() == "addressof")
                     {
-                        mod = amb.PesquisaModulo(referencia.Peek());
-                        if(mod == null) throw Erro("Rotina não encontrada");
-                        referencia.Dequeue();
-                        rot = mod.PesquisaRotina(referencia.Peek());
-                    }
-                    if(rot == null) throw Erro("Rotina não encontrada");
-                    referencia.Dequeue();
-                    if(referencia.Any()) throw Erro("Caminho indisponível para rotina");
-                    var tipoAnterior = amb.Tipo;
-                    List<No> args = new List<No>();
-                    args.AddRange(ArgumentosChamada);
-                    args.Reverse();
-                    List<DeclaraVariavel> pars = new List<DeclaraVariavel>();
-                    pars.AddRange(rot.Argumentos);
-                    pars.Reverse();
-                    for (int i = 0; i < args.Count; i++)
-                    {
-                        amb.Tipo = pars[i].Tipo;
-                        args[i].Compila(amb);
-                        switch (amb.Tipo)
+                        referencia.Clear();
+                        foreach(No no in ArgumentosChamada)
                         {
-                            case TipoVariavel.Int8:
-                            case TipoVariavel.UInt8:
-                                amb.Saida.EmiteConverteAcumuladorEmByte();
-                                amb.Saida.EmiteEmpilhaAcumulador();
-                                break;
-                            case TipoVariavel.Int16:
-                            case TipoVariavel.UInt16:
-                                amb.Saida.EmiteEmpilhaAcumulador();
-                                break;
-                            case TipoVariavel.PtrByteArray:
-                            case TipoVariavel.PtrWordArray:
-                            case TipoVariavel.Structure:
-                                amb.Saida.EmiteEmpilhaPonteiroRemoto();
-                                break;
-                            default: throw Erro("Tipo não suportado");
+                            if(no is not Acao)
+                            {
+                                throw Erro("");
+                            }
+                            referencia = new Queue<string>((((Acao)no).Nome));
                         }
-                        amb.Tipo = null;
+                        Rotina? rot = amb.Modulo.PesquisaRotina(referencia.Peek());
+                        if(rot == null)
+                        {
+                            mod = amb.PesquisaModulo(referencia.Peek());
+                            if(mod == null) throw Erro("Rotina não encontrada");
+                            referencia.Dequeue();
+                            rot = mod.PesquisaRotina(referencia.Peek());
+                        }
+                        if(rot == null) throw Erro("Rotina não encontrada");
+                        referencia.Dequeue();
+                        if(referencia.Any()) throw Erro("Caminho indisponível para rotina");
+                        amb.Saida.EmiteDefinePonteiroRemotoParaRotuloDoCodigo($"_{rot.Modulo.Nome}_{rot.Nome}");
+                        if(!amb.TipoPonteiro) throw Erro("Retorno do comando AddressOf deve ser um tipo de ponteiro");
+                        if(amb.Tipo == TipoVariavel.Func | amb.Tipo == TipoVariavel.Action)
+                        {
+                            if(amb.Tipo == TipoVariavel.Func & !rot.RetornaValor) throw Erro("Esperada função, porém fornecido uma sub-rotina");
+                            if(amb.Tipo == TipoVariavel.Action & rot.RetornaValor) throw Erro("Esperada sub-rotina, porém fornecido uma função");
+                            if(amb.VariavelDestino == null) throw Erro("Erro de compilador: não informado variável destino");
+                            DeclaraVariavel destino = amb.VariavelDestino;
+                            for (int i = 0; i < destino.ArgumentosFuncAction.Count(); i++)
+                            {
+                                if(destino.ArgumentosFuncAction[i].Tipo == rot.Argumentos[i].Tipo)
+                                {
+                                    if(destino.ArgumentosFuncAction[i].Tipo == TipoVariavel.Structure)
+                                    {
+                                        if(destino.ArgumentosFuncAction[i].TipoNome != rot.Argumentos[i].TipoNome)
+                                            throw Erro("Os tipos declarados na variavel não são compatíveis com os tipos da rotina referênciada");
+                                    }
+                                }
+                                else throw Erro("Os tipos declarados na variavel não são compatíveis com os tipos da rotina referênciada");
+                            }
+                        }
                     }
-                    amb.Saida.EmiteChamaRotina(rot.Modulo.Nome, rot.Nome);
-                    if(rot.PosicaoArg != 6)
-                        amb.Saida.EmiteAdicionaNoPtrPilha(rot.PosicaoArg - 6);
-                    amb.Tipo = tipoAnterior;
+                    else if(referencia.Last().ToLower() == "invoke")
+                    {
+                        DeclaraVariavel? variavel = amb.Rotina.PesquisaVariavel(referencia.Peek());
+                        List<string> nomeVariavel = new List<string>();
+                        nomeVariavel.Add(referencia.Peek());
+                        if(variavel == null) variavel = amb.Modulo.PesquisaCampo(referencia.Peek());
+                        if(variavel == null)
+                        {
+                            mod = amb.PesquisaModulo(referencia.Peek());
+                            if(mod == null) throw Erro($"Referência {referencia.Peek()} não encontrada.");
+                            referencia.Dequeue();
+                            if(!referencia.Any()) throw Erro($"Esperada uma referência a uma variável ou rotina, porém encontrada apenas o nome do módulo");
+                            variavel = mod.PesquisaCampo(referencia.Peek());
+                            nomeVariavel.Add(referencia.Peek());
+                        }
+                        if(variavel == null) throw Erro("Variável não encontrada");
+                        TipoVariavel tipoVariavel = variavel.Tipo;
+                        int desvio = 0;
+                        referencia.Dequeue();
+                        List<No> args = new List<No>();
+                        List<DeclaraVariavel> pars = new List<DeclaraVariavel>();
+                        bool parteDeEstrutura = false;
+                        if(tipoVariavel == TipoVariavel.Structure)
+                        {
+                            parteDeEstrutura = true;
+                            Estrutura? subEstrutura = amb.PesquisaEstrutura(variavel.TipoNome);
+                            if(subEstrutura == null) throw Erro($"Estrutura {variavel.TipoNome} não encontrada");
+                            DeclaraVariavel? subVariavel = subEstrutura.PesquisaCampo(referencia.Peek());
+                            if(subVariavel == null)throw Erro($"Campo {referencia.Peek()} não encontrada na estrutura {variavel.TipoNome} não encontrada");
+                            desvio = subVariavel.Posicao;
+                            tipoVariavel = subVariavel.Tipo;
+                            referencia.Dequeue();
+                            if(subVariavel.ArgumentosFuncAction.Any() && subEstrutura.Nome == subVariavel.ArgumentosFuncAction.First().TipoNome)
+                            {
+                                args.Add(new Acao(Trecho, new List<string>(nomeVariavel), TipoDeAcao.Leitura));
+                            }
+                            pars.AddRange(subVariavel.ArgumentosFuncAction);
+                            pars.Reverse();
+                        }
+                        else
+                        {
+                            pars.AddRange(variavel.ArgumentosFuncAction);
+                            pars.Reverse();
+                        }
+                        if(referencia.Count() != 1 & referencia.Peek().ToLower() != "invoke") 
+                            throw Erro("Esperado 'Invoke' para chamada da rotina");
+                        if(variavel.Publicidade == NivelPublicidade.Privado & mod != amb.Modulo) throw Erro("Esta variável não é acessível de fora do módulo");
+                        var tipoAnterior = amb.Tipo;
+                        var variavelAnterior = amb.VariavelDestino;
+                        args.AddRange(ArgumentosChamada);
+                        args.Reverse();
+                        int tamArgumentos = 0;
+                        for (int i = 0; i < args.Count; i++)
+                        {
+                            amb.Tipo = pars[i].Tipo;
+                            if(amb.Tipo != null) tamArgumentos += amb.Saida.CalculaTamanho((TipoVariavel)amb.Tipo);
+                            amb.VariavelDestino = pars[i];
+                            args[i].Compila(amb);
+                            switch (amb.Tipo)
+                            {
+                                case TipoVariavel.Int8:
+                                case TipoVariavel.UInt8:
+                                    amb.Saida.EmiteConverteAcumuladorEmByte();
+                                    amb.Saida.EmiteEmpilhaAcumulador();
+                                    break;
+                                case TipoVariavel.Int16:
+                                case TipoVariavel.UInt16:
+                                    amb.Saida.EmiteEmpilhaAcumulador();
+                                    break;
+                                case TipoVariavel.PtrByteArray:
+                                case TipoVariavel.PtrWordArray:
+                                case TipoVariavel.Structure:
+                                    amb.Saida.EmiteEmpilhaPonteiroRemoto();
+                                    break;
+                                default: throw Erro("Tipo não suportado");
+                            }
+                            amb.VariavelDestino = null;
+                            amb.Tipo = null;
+                        }
+                        if(parteDeEstrutura)
+                        {
+                            if(variavel.Publicidade == NivelPublicidade.Local)
+                            {
+                                amb.Saida.EmiteChamaRotinaEmPonteiroNaVariavelLocal(variavel.Posicao, desvio);
+                            }
+                            else
+                            {
+                                amb.Saida.EmiteChamaRotinaEmPonteiroNaVariavelGlobal(variavel.NomeGlobal, desvio);
+                            }
+                        }
+                        else if(variavel.Publicidade == NivelPublicidade.Local)
+                        {
+                            amb.Saida.EmiteChamaRotinaEmVariavelLocal(variavel.Posicao);
+                        }
+                        else
+                        {
+                            amb.Saida.EmiteChamaRotinaEmVariavelGlobal(variavel.NomeGlobal);
+                        }
+                        if(tamArgumentos != 0)
+                            amb.Saida.EmiteAdicionaNoPtrPilha(tamArgumentos);
+                        amb.VariavelDestino = variavelAnterior;
+                        amb.Tipo = tipoAnterior;
+                    }
+                    else
+                    {                    
+                        Rotina? rot = amb.Modulo.PesquisaRotina(referencia.Peek());
+                        if(rot == null)
+                        {
+                            mod = amb.PesquisaModulo(referencia.Peek());
+                            if(mod == null) 
+                                throw Erro("Rotina não encontrada");
+                            referencia.Dequeue();
+                            rot = mod.PesquisaRotina(referencia.Peek());
+                        }
+                        if(rot == null) 
+                            throw Erro("Rotina não encontrada");
+                        referencia.Dequeue();
+                        if(referencia.Any()) throw Erro("Caminho indisponível para rotina");
+                        var tipoAnterior = amb.Tipo;
+                        var variavelAnterior = amb.VariavelDestino;
+                        List<No> args = new List<No>();
+                        args.AddRange(ArgumentosChamada);
+                        args.Reverse();
+                        List<DeclaraVariavel> pars = new List<DeclaraVariavel>();
+                        pars.AddRange(rot.Argumentos);
+                        pars.Reverse();
+                        for (int i = 0; i < args.Count; i++)
+                        {
+                            amb.Tipo = pars[i].Tipo;
+                            amb.VariavelDestino = pars[i];
+                            args[i].Compila(amb);
+                            switch (amb.Tipo)
+                            {
+                                case TipoVariavel.Int8:
+                                case TipoVariavel.UInt8:
+                                    amb.Saida.EmiteConverteAcumuladorEmByte();
+                                    amb.Saida.EmiteEmpilhaAcumulador();
+                                    break;
+                                case TipoVariavel.Int16:
+                                case TipoVariavel.UInt16:
+                                    amb.Saida.EmiteEmpilhaAcumulador();
+                                    break;
+                                case TipoVariavel.PtrByteArray:
+                                case TipoVariavel.PtrWordArray:
+                                case TipoVariavel.Structure:
+                                    amb.Saida.EmiteEmpilhaPonteiroRemoto();
+                                    break;
+                                default: throw Erro("Tipo não suportado");
+                            }
+                            amb.VariavelDestino = null;
+                            amb.Tipo = null;
+                        }
+                        amb.Saida.EmiteChamaRotina(rot.Modulo.Nome, rot.Nome);
+                        if(rot.PosicaoArg != 6)
+                            amb.Saida.EmiteAdicionaNoPtrPilha(rot.PosicaoArg - 6);
+                        amb.VariavelDestino = variavelAnterior;
+                        amb.Tipo = tipoAnterior;
+                    }
                 }
                 break;
             default: throw Erro("Tipo de ação desconhecida");

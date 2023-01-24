@@ -6,11 +6,12 @@ Esta linguagem não tem como objetivo ser orientada a objetos, sendo próximo de
 
 ## Novidades
 
+- **Resolvidos vários bugs de ponteiro**
 - Implementação da atribuição sem o comando Let
 - Criada um mecanismo de gerar as distribuições, será usado a partir do momento compilador e a Biblioteca System estiver utilizável para subir os Releases no GitHub
 - Implementado Estruturas (Falta suporte a ponteiros para rotinas)
 - Implementado a Biblioteca System, com os recursos de Console e Arquivos basico
-- **Neste fim de semana por eu ter mais tempo para dedicar a este projeto devo terminar as Structures (Suporte a Ponteiros de Funcoes) e gerar a primeira versão oficial completamente funcional**
+- Agora existem Ponteiros para Função e Rotinas e suas chamadas (Baseado no Func(Of), Action(Of) e .Invoke() do VB.Net)
 
 ## Requisitos Mínimos para Utilização
 
@@ -41,7 +42,7 @@ O uso do Makefile é opcional e voltado para Linux e macOS, existindo apenas par
 
 ## Objetivos Atuais e Prioritários
 
-- Terminar a implementação de Structures/Tipos Personalizados
+- Implementar SizeOf
 - Limpeza de itens não utilizados na implementação do Saida
 
 ## Objetivos
@@ -55,8 +56,8 @@ O uso do Makefile é opcional e voltado para Linux e macOS, existindo apenas par
 - [x] Implementar na biblioteca System, comandos de manipular arquivos
 - [x] Correto tratamento e diferenciação do public e private
 - [x] Comando FOR
-- [ ] Suporte a rotinas externas usando ponteiro (Implementar comando INVOKE)
-- [ ] Implementar tipos personalizados usando uma dinâmica próxima ao TYPE do QuickBASIC, por trás usar comandos do PtrByteArray e PtrWordArray, mas permitindo declarar Rotinas, para ser uma proto orientação a objetos para poder implementar as bibliotecas System de forma mais próxima ao .NET
+- [x] Suporte a rotinas externas usando ponteiro (Implementar comando INVOKE)
+- [x] Implementar tipos personalizados usando uma dinâmica próxima ao TYPE do QuickBASIC, por trás usar comandos do PtrByteArray e PtrWordArray, mas permitindo declarar Rotinas, para ser uma proto orientação a objetos para poder implementar as bibliotecas System de forma mais próxima ao .NET
 - [x] Ponteiros
 - [ ] String (Concatenar, substring, etc)
 - [x] Adicionar ao inicio das constantes de texto, o seu tamanho para evitar o estouro de variável pelas rotinas de manipulação de Strings
@@ -65,6 +66,7 @@ O uso do Makefile é opcional e voltado para Linux e macOS, existindo apenas par
 - [x] Inclui apenas módulos usados no projeto, deixando o executável mais compacto
 - [x] Permitir conversão dos ponteiros PtrByteArray em PtrWordArray de forma simples
 - [ ] Implementar um tipo de Try Catch Finally / Throw Exception
+- [ ] Implementar SizeOf para tipos e para variaveis
 - [x] Implementar forma de definir os diretórios de pesquisa do Imports
 - [ ] Quanto tudo estiver pronto, criar um protótipo do compilador feito diretamente em HCBasic para que seja executável localmente, para isso usar assemblers já existente para a plataforma, por exemplo o Old-School Assembler para DOS
 
@@ -185,12 +187,24 @@ As rotinas podem ser separadas em dois tipos:
 
 As rotinas podem ser marcadas como acessível publicamente ou privadamente, onde apenas as rotinas públicas são acessíveis de fora do módulo atual.
 
+Para chamar uma rotina deve-se informar seu nome seguido dos argumentos, porém quando dentro de uma expressão que espera seu retorno, deve-se informar os argumentos entre parenteses conforme exemplo abaixo:
+
+```vb
+variavel = Rotina() 'Exemplo sem argumentos
+variavel = RotinaComArgs(1, 2) ' Exemplo com argumentos
+Rotina 'Exemplo sem argumentos
+RotinaComArgs 1, 2 ' Exemplo com argumentos
+```
+
 **Exemplo de declaração de rotinas:**
 
 ```vb
 Module Program
     Public Sub Main (args as ptrbytearray)
         ' Esta rotina pode ser chamada de fora do Módulo
+        Dim teste as UInt16
+        teste = Retorna2() ' Chama uma rotina e guarda seu retorno em teste
+        RotinaInternaDoModulo ' Chama uma rotina sem retorno de valor
     End
 
     Public Function Retorna2 as UInt16
@@ -204,6 +218,39 @@ Module Program
 End
 
 ```
+
+## Ponteiros para rotinas
+
+Para chamar indiretamente uma rotina, de forma dinâmica, deve-se declarar um tipo com argumentos esperados, e após chamar usando o sub-comando invoke.
+
+Para associar um ponteiro a uma função deve-se usar a função AddressOf que tem como seu único argumento o nome da rotina destino.
+
+**Exemplo:**
+
+```vb
+    Dim funcaoSoma as Func(Of UInt16, UInt16, UInt16)
+    ' Os primeiros itens do comando Func informam os tipos de argumentos, sendo o último informando o retorno
+    funcaoSoma = AddressOf(Soma) ' Associa o funcaoSoma a rotina Soma
+    Console.WriteUInt16 funcaoSoma.Invoke(1, 2) ' Invoca a rotina que o funcaoSoma aponta
+
+    Dim funcaoEscreva as Action(Of String)
+    ' Todos os arguentos do Action, são argumentos da rotina destino
+    funcaoEscreva = AddressOf(Escreva)
+    funcaoEscreva.Invoke "Teste" ' Invoca a rotina que o funcaoEscreva aponta
+
+
+    ' EXEMPLO DAS ROTINAS REFERENCIADAS ACIMA
+
+    Public Function Soma(valor1 as UInt16, valor2 as UInt16) as UInt16
+        Return valor1 + valor2
+    End
+
+    Public Sub Escreve(texto as String)
+        Console.WriteLine texto
+    End
+
+```
+
 
 ## Importar Bibliotecas/Arquivos Externos
 
@@ -393,6 +440,8 @@ Apenas podem ser inicializadas estruturas com o comando "New" se elas se restrin
 
 **IMPORTANTE:** O compilador não verifica se o ponteiro da Structure foi inicializado usando New ou usando a definição de segmento e desvio como os demais ponteiros, portanto o valor inicial dele é inválido e sua manipulação pode gerar corrupção de dados, isto deve ser alterado no futuro, mas por enquanto lembre-se de **SEMPRE** inicializar suas variáveis
 
+Sobre os ponteiros de rotina dentro de estrutura, caso a função/sub-rotina atrelada tenha como primeiro argumento a propria estrutura, esta será passada automaticamente.
+
 **Exemplo:**
 
 ```vb
@@ -402,16 +451,20 @@ Imports System
 Structure EstruturaTeste
     Dim Campo0 as UInt16
     Dim Campo1 as UInt16
+    Dim Soma as Func(Of EstruturaTeste, UInt16)
 End
 
 Module Program
     Public Sub Main(args as PtrByteArray)
         Dim teste as EstruturaTeste
         teste = New
-        teste.Campo0 = 1
-        teste.Campo1 = teste.Campo0 + 1
         ' Pode chamar rotinas usando a estrutura
         IniciaTeste teste
+        ' Manipulação dos valores
+        teste.Campo0 = 1
+        teste.Campo1 = teste.Campo0 + 1
+        ' Caso o primeiro argumento seja o proprio tipo ele é passado automaticamente pelo compilador
+        Console.WriteUInt16 teste.Soma()
     End
 
     Public Sub IniciaTeste(teste as EstruturaTeste)
@@ -419,7 +472,13 @@ Module Program
         ' Nao podendo criar uma nova e retornar para a rotina anterior
         teste.Campo0 = 1
         teste.Campo1 = 2
+        teste.Soma = AddressOf(SomaEstruturaTeste)
     End
+
+    Public Function SomaEstruturaTeste(teste as EstruturaTeste) as UInt16
+        Return teste.Campo0 + teste.Campo1
+    End
+
 End
 
 
@@ -599,17 +658,20 @@ Console.WriteLine texto
     - Retorna Verdadeiro ou Falso se conseguiu abrir
 
 - File.Close STREAM
+- VARIAVEL_STREAM.Close.Invoke
     - Fecha um arquivo em um Stream 
     - STREAM = Deve usar um stream aberto com o comando File.Open
     - Retorna Verdadeiro ou Falso se conseguiu fechar
 
 - File.Read STREAM, TEXTO
+- VARIAVEL_STREAM.Read.Invoke TEXTO
     - Leia um arquivo em um Stream 
     - STREAM = Deve usar um stream aberto com o comando File.Open
     - TEXTO = String alocada com o comando 'New'
     - Retorna qtd. de bytes lidos
 
 - File.ReadRaw STREAM, PONTEIRO, TAMANHO
+- VARIAVEL_STREAM.ReadRaw.Invoke PONTEIRO, TAMANHO
     - Leia um arquivo em um Stream 
     - STREAM = Deve usar um stream aberto com o comando File.Open
     - PONTEIRO = PtrByteArray que esteja inicializado
@@ -617,12 +679,14 @@ Console.WriteLine texto
     - Retorna qtd. de bytes lidos
 
 - File.Write STREAM, TEXTO
+- VARIAVEL_STREAM.Write.Invoke TEXTO
     - Escreve um arquivo de um Stream 
     - STREAM = Deve usar um stream aberto com o comando File.Open
     - TEXTO = String iniciada com um texto
     - Retorna qtd. de bytes gravados
 
 - File.WriteRaw STREAM, PONTEIRO, TAMANHO
+- VARIAVEL_STREAM.WriteRaw.Invoke PONTEIRO, TAMANHO
     - Escreve em um arquivo de um Stream 
     - STREAM = Deve usar um stream aberto com o comando File.Open
     - PONTEIRO = PtrByteArray que esteja inicializado
@@ -630,18 +694,21 @@ Console.WriteLine texto
     - Retorna qtd. de bytes gravados
 
 - File.SeekStart STREAM, POSICAO
+- VARIAVEL_STREAM.SeekStart.Invoke POSICAO
     - Movimenta no arquivo a partir do inicio
     - STREAM = Deve usar um stream aberto com o comando File.Open
     - POSICAO = Posicao que deve se mover
     - Retorna Verdadeiro ou Falso se conseguiu mover
 
 - File.SeekCurrent STREAM, POSICAO
+- VARIAVEL_STREAM.SeekCurrent.Invoke POSICAO
     - Movimenta no arquivo a partir da posicao atual
     - STREAM = Deve usar um stream aberto com o comando File.Open
     - POSICAO = Posicao que deve se mover
     - Retorna Verdadeiro ou Falso se conseguiu mover
 
 - File.SeekEnd STREAM, POSICAO
+- VARIAVEL_STREAM.SeekEnd.Invoke POSICAO
     - Movimenta no arquivo a partir do fim
     - STREAM = Deve usar um stream aberto com o comando File.Open
     - POSICAO = Posicao que deve se mover
@@ -655,8 +722,8 @@ Console.WriteLine texto
 dim arquivo as Stream
 arquivo = New
 if File.Open(arquivo, "arquivo.txt") Then
-    File.Write arquivo, "Teste"
-    File.Close arquivo
+    arquivo.Write.Invoke arquivo, "Teste"
+    arquivo.Close.Invoke arquivo
     Console.WriteLine "Sucesso"
 Else
     Console.WriteLine "Falha"

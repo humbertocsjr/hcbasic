@@ -25,7 +25,10 @@ class Ambiente
 
     public bool TipoSemSinal => Tipo == TipoVariavel.UInt8 | Tipo == TipoVariavel.UInt16 | Tipo == TipoVariavel.PtrByteArray | Tipo == TipoVariavel.PtrWordArray;
     public bool TipoComSinal => Tipo == TipoVariavel.Int8 | Tipo == TipoVariavel.Int16;
-    public bool TipoPonteiro => Tipo == TipoVariavel.PtrByteArray | Tipo == TipoVariavel.PtrWordArray | Tipo == TipoVariavel.Structure;
+    public bool TipoPonteiro => Tipo == TipoVariavel.PtrByteArray | Tipo == TipoVariavel.PtrWordArray | Tipo == TipoVariavel.Structure | Tipo == TipoVariavel.Func | Tipo == TipoVariavel.Action;
+
+
+    public DeclaraVariavel? VariavelDestino { get; set; } = null;
 
 
     // Usado pelos nós que fazem chamada ou manipulam campos de modulos, registrando quais modulos eles referenciaram, para uso da compilação mais tarde

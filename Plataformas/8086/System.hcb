@@ -1,0 +1,199 @@
+Imports System.OS
+
+module String
+    public function Length(text as ptrbytearray) as uint16
+        dim i as uint16
+        let i = 0
+        ' Ignora o byte inicial com a capacidade da variavel
+        let @text++
+        while text > 0
+            let i ++
+            let @text++
+        end
+        return i
+    end
+end
+
+structure Stream
+    Dim Id as uint16
+    Dim ReadRaw as func(of stream, ptrbytearray, uint16, uint16)
+    Dim Read as func(of stream, ptrbytearray, uint16)
+    Dim WriteRaw as func(of stream, ptrbytearray, uint16, uint16)
+    Dim Write as func(of stream, ptrbytearray, uint16)
+    Dim Close as func(of stream, uint16)
+    Dim SeekCurrent as func(of stream, uint16) as uint16
+    Dim SeekStart as func(of stream, uint16) as uint16
+    Dim SeekEnd as func(of stream, uint16) as uint16
+end
+
+
+structure String
+    Dim Capacity as UInt8
+end
+
+module Console
+    public function ReadChar() as uint8
+        return OS.ConsoleReadChar()
+    end
+
+    public sub ReadLine(txt as ptrbytearray)
+        dim len as uint16
+        dim stdin as Stream
+        len = txt
+        @txt++
+        stdin = new
+        stdin.Id = 0
+        len = File.ReadRaw(stdin, txt, len)
+        while txt > 0 and txt <> 13 and txt <> 10
+            @txt++
+        end
+        txt = 0
+    end
+
+    public sub WriteChar(c as uint8)
+        OS.ConsoleWriteChar c
+    end
+
+    public sub Write(txt as ptrbytearray)
+        ' Ignora o byte inicial com a capacidade da variavel
+        @txt ++
+        while txt > 0
+            WriteChar txt
+            @txt ++
+        end
+    end
+
+    public sub WriteLine(txt as ptrbytearray)
+        Write txt
+        WriteChar 13
+        WriteChar 10
+    end
+
+    public sub WriteUInt16(nro as uint16)
+        dim tmp as uint16
+        dim prox as uint16
+        let tmp = nro mod 10
+        let prox = nro / 10
+        if prox > 0 then WriteUInt16 prox
+        WriteChar 48 + tmp
+    end
+
+    public sub WriteInt16(nro as int16)
+        if nro < 0 then
+            let nro = -nro
+        end
+        WriteUInt16 nro
+    end
+
+    public sub WriteUInt8(nro as uint8)
+        WriteUInt16 nro
+    end
+
+    public sub WriteInt8(nro as int8)
+        WriteInt16 nro
+    end
+end
+
+module UInt32
+' IGNORAR ESTE TRECHO ESTA COM UM CODIGO DE UMA VERSAO PRE PROTOTIPO, DEVE SER ALTERADA PARA PRODUCAO
+    public sub Add(ptrDest as uint16, ptrOrig as uint16)
+        asm "push bp"
+        asm "mov bp, sp"
+        asm "mov di, [bp+4]"
+        asm "mov si, [bp+6]"
+        asm "mov ax, [si]"
+        asm "mov bx, [si+2]"
+        asm "add [di], ax"
+        asm "adc [di+2], bx"
+        asm "pop bp"
+    end
+
+    public sub Subtract(ptrDest as uint16, ptrOrig as uint16)
+        asm "push bp"
+        asm "mov bp, sp"
+        asm "mov di, [bp+4]"
+        asm "mov si, [bp+6]"
+        asm "mov ax, [si]"
+        asm "mov bx, [si+2]"
+        asm "sub [di], ax"
+        asm "sbb [di+2], bx"
+        asm "pop bp"
+    end
+
+    public sub Multiply(ptrDest as uint16, ptrOrig as uint16)
+        dim temp1 as uint16
+        dim temp2 as uint16
+        asm "mov byte [bp-2], 32\n"
+        asm "mov si, [bp+4]\n"
+        asm "mov ax, [si]\n"
+        asm "mov bx, [si+2]\n"
+        asm "mov si, [bp+6]\n"
+        asm "mov di, [si]\n"
+        asm "mov si, [si+2]\n"
+        asm "mov [bp-4], ax\n"
+        asm "mov [bp-6], bx\n"
+        asm "xor ax, ax\n"
+        asm "xor bx, bx\n"
+        asm "xor cx, cx\n"
+        asm "xor dx, dx\n"
+        asm ".calcula:\n"
+        asm "test di, 1\n"
+        asm "jz .ignora\n"
+        asm "add cx, [bp-4]\n"
+        asm "adc dx, [bp-6]\n"
+        asm ".ignora:\n"
+        asm "rcr dx, 1\n"
+        asm "rcr cx, 1\n"
+        asm "rcr bx, 1\n"
+        asm "rcr ax, 1\n"
+        asm "rcr si, 1\n"
+        asm "rcr di, 1\n"
+        asm "dec byte [bp-2]\n"
+        asm "jnz .calcula\n"
+        asm "mov si, [bp+4]\n"
+        asm "mov [si], ax\n"
+        asm "mov [si+2], bx\n"
+    end
+
+    public sub Divide(ptrModule as uint16, ptrDest as uint16, ptrOrig as uint16)
+        dim temp1 as uint16
+        dim temp2 as uint16
+        dim temp3 as uint16
+        asm "mov di, [bp+6]"
+        asm "mov word [di], 0"
+        asm "mov word [di+2], 0"
+        asm "; bx:ax Resto"
+        asm "; dx:cx Divisor"
+        asm "; di:si Resultado"
+        asm "mov byte [bp-2], 32\n"
+        asm "mov si, [bp+8]\n"
+        asm "mov ax, [si]\n"
+        asm "mov bx, [si+2]\n"
+        asm "mov si, [bp+10]\n"
+        asm "mov di, [si]\n"
+        asm "mov si, [si+2]\n"
+        asm "mov [bp-4], ax\n"
+        asm "mov [bp-6], bx\n"
+        asm "xor ax, ax\n"
+        asm "xor bx, bx\n"
+        asm "xor cx, cx\n"
+        asm "xor dx, dx\n"
+        asm ".calcula:\n"
+        asm "test di, 1\n"
+        asm "jz .ignora\n"
+        asm "add cx, [bp-4]\n"
+        asm "adc dx, [bp-6]\n"
+        asm ".ignora:\n"
+        asm "rcr dx, 1\n"
+        asm "rcr cx, 1\n"
+        asm "rcr bx, 1\n"
+        asm "rcr ax, 1\n"
+        asm "rcr si, 1\n"
+        asm "rcr di, 1\n"
+        asm "dec byte [bp-2]\n"
+        asm "jnz .calcula\n"
+        asm "mov si, [bp+6]\n"
+        asm "mov [si], ax\n"
+        asm "mov [si+2], bx\n"
+    end
+end

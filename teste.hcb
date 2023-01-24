@@ -1,14 +1,27 @@
+' Arquivo de teste
 imports System
 
+module ReferenciaCruzada
+    Public Sub TesteCruzada
+        Program.TesteCruzada
+    End
+End
+
 module Program
+    Public Sub TesteCruzada
+        ReferenciaCruzada.TesteCruzada
+    End
     public sub Main(args as ptrbytearray)
         dim arq as stream
         dim txt as string
+        dim funcao as Func(Of UInt16)
         arq = new
         txt = new
         Console.Write "Teste Criacao de arquivo: "
         if File.Create(arq, "teste.txt") Then
-            Console.WriteUInt16 File.Write(arq, "Texto teste no arquivo escrito pelo teste.hcb")
+            Console.WriteUInt16 File.Write(arq, "Texto teste no arquivo escrito pelo teste.hcb. ")
+            Console.Write " + "
+            Console.WriteUInt16 arq.Write.Invoke("Texto teste emitido via Structure Stream.")
             File.Close arq
             Console.WriteLine " Bytes escritos"
         else
@@ -17,8 +30,19 @@ module Program
         Console.Write "Escreva seu nome: "
         Console.ReadLine txt
         Console.Write "Oie "
-        Console.Write txt
+        If String.Length(txt) == 0 Then
+            Console.Write "Sem Nome"
+        else
+            Console.Write txt
+        End
         Console.WriteLine "!"
+        Console.Write "Teste de funcao indireta: "
+        funcao = AddressOf(TesteFunc)
+        Console.WriteUInt16 funcao.Invoke()
+    end
+
+    function TesteFunc() as UInt16
+        return 123
     end
 
 end

@@ -1,0 +1,216 @@
+module OS
+    public sub Start
+        ' Inicializa o compilador
+        asm "cpu 8086"
+        asm "bits 16"
+        asm "org 0x100"
+        Start2
+    end
+
+    sub Start2
+        ' Declara ponteiro para os argumentos
+        dim args as ptrbytearray
+        ' Define ponteiro
+        asm "mov ax, cs"
+        asm "mov [bp-2], ax"
+        asm "mov word [bp-4], 0x80"
+        ' Adiciona um zero ao final da variavel para ser ASCIZ
+        asm "mov al, [0x80]"
+        asm "xor ah, ah"
+        asm "mov si, ax"
+        asm "add si, 0x80"
+        asm "mov byte [si+1], 0"
+        ' Chama o Main
+        Program.Main args
+        ' Encerra programa quando retornar do main
+        asm "int 0x20"
+    end
+
+    public function CodeSegment() as uint16
+        asm "mov ax, cs"
+    end
+
+    public function StackSegment() as uint16
+        asm "mov ax, ss"
+    end
+
+    public function ConsoleReadChar() as uint8
+        asm "mov ah, 1"
+        asm "int 0x21"
+        asm "xor ah, ah"
+    end
+
+    public sub ConsoleWriteChar(c as uint8)
+        asm "mov dl, [bp+6]"
+        asm "mov ah, 2"
+        asm "int 0x21"
+    end
+end
+
+
+module File
+    public function Open(stream as Stream, filename as ptrbytearray) as uint16
+        dim id as uint16
+        asm "mov ax, 0x3d02"
+        asm "push ds"
+        asm "push word [bp+12]"
+        asm "pop ds"
+        asm "mov dx, [bp+10]"
+        asm "inc dx"
+        asm "int 0x21"
+        asm "pushf"
+        asm "mov [bp-2], ax"
+        asm "popf"
+        asm "pop ds"
+        asm "jnc .fim"
+        return 0
+        asm ".fim:"
+        stream.Id = id
+        stream.Read = AddressOf(Read)
+        stream.ReadRaw = AddressOf(ReadRaw)
+        stream.Write = AddressOf(Write)
+        stream.WriteRaw = AddressOf(WriteRaw)
+        stream.Close = AddressOf(Close)
+        stream.SeekCurrent = AddressOf(SeekCurrent)
+        stream.SeekEnd = AddressOf(SeekEnd)
+        stream.SeekStart = AddressOf(SeekStart)
+        return 1
+    end
+
+    public function Create(stream as Stream, filename as ptrbytearray) as uint16
+        dim id as uint16
+        asm "mov ax, 0x3c00"
+        asm "push ds"
+        asm "push word [bp+12]"
+        asm "pop ds"
+        asm "xor cx, cx"
+        asm "mov dx, [bp+10]"
+        asm "inc dx"
+        asm "int 0x21"
+        asm "pushf"
+        asm "mov [bp-2], ax"
+        asm "popf"
+        asm "pop ds"
+        asm "jnc .fim"
+        return 0
+        asm ".fim:"
+        stream.Id = id
+        stream.Read = AddressOf(Read)
+        stream.ReadRaw = AddressOf(ReadRaw)
+        stream.Write = AddressOf(Write)
+        stream.WriteRaw = AddressOf(WriteRaw)
+        stream.Close = AddressOf(Close)
+        return 1
+    end
+
+    public function Read(stream as Stream, text as ptrbytearray) as uint16
+        dim len as uint16
+        len = text
+        @text++
+        len = ReadRaw(stream, text, len)
+        return len
+    end
+
+    public function ReadRaw(stream as Stream, data as ptrbytearray, len as uint16) as uint16
+        dim id as uint16
+        id = stream.Id
+        asm "mov ax, 0x3f00"
+        asm "push ds"
+        asm "push word [bp+12]"
+        asm "pop ds"
+        asm "mov dx, [bp+10]"
+        asm "mov cx, [bp+14]"
+        asm "mov bx, [bp-2]"
+        asm "int 0x21"
+        asm "pushf"
+        asm "mov [bp-2], ax"
+        asm "popf"
+        asm "pop ds"
+        asm "jnc .fim"
+        return 0
+        asm ".fim:"
+        return id
+    end
+
+    public function Write(stream as Stream, text as ptrbytearray) as uint16
+        dim len as uint16
+        len = String.Length(text)
+        @text++
+        return WriteRaw(stream, text, len)
+    end
+
+    public function WriteRaw(stream as Stream, data as ptrbytearray, len as uint16) as uint16
+        dim id as uint16
+        id = stream.Id
+        asm "mov ax, 0x4000"
+        asm "push ds"
+        asm "push word [bp+12]"
+        asm "pop ds"
+        asm "mov dx, [bp+10]"
+        asm "mov cx, [bp+14]"
+        asm "mov bx, [bp-2]"
+        asm "int 0x21"
+        asm "pushf"
+        asm "mov [bp-2], ax"
+        asm "popf"
+        asm "pop ds"
+        asm "jnc .fim"
+        return 0
+        asm ".fim:"
+        return id
+    end
+
+    public function Close(stream as Stream) as uint16
+        dim id as uint16
+        id = stream.Id
+        asm "mov ax, 0x3e00"
+        asm "mov bx, [bp-2]"
+        asm "int 0x21"
+        asm "jnc .fim"
+        return 0
+        asm ".fim:"
+        return 1
+    end
+
+    public function SeekStart(stream as Stream, position as uint16) as uint16
+        dim id as uint16
+        id = stream.Id
+        asm "mov ax, 0x4200"
+        asm "mov bx, [bp-2]"
+        asm "xor cx, cx"
+        asm "mov dx, [bp+10]"
+        asm "int 0x21"
+        asm "jnc .fim"
+        return 0
+        asm ".fim:"
+        return 1
+    end
+
+    public function SeekCurrent(stream as Stream, position as uint16) as uint16
+        dim id as uint16
+        id = stream.Id
+        asm "mov ax, 0x4201"
+        asm "mov bx, [bp-2]"
+        asm "xor cx, cx"
+        asm "mov dx, [bp+10]"
+        asm "int 0x21"
+        asm "jnc .fim"
+        return 0
+        asm ".fim:"
+        return 1
+    end
+
+    public function SeekEnd(stream as Stream, position as uint16) as uint16
+        dim id as uint16
+        id = stream.Id
+        asm "mov ax, 0x4202"
+        asm "mov bx, [bp-2]"
+        asm "xor cx, cx"
+        asm "mov dx, [bp+10]"
+        asm "int 0x21"
+        asm "jnc .fim"
+        return 0
+        asm ".fim:"
+        return 1
+    end
+end

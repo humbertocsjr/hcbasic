@@ -11,7 +11,7 @@
             "preLaunchTask": "build",
             // If you have changed target frameworks, make sure to update the program path.
             "program": "${workspaceFolder}/bin/Debug/net7.0/hcbasic.dll",
-            "args": ["teste.hcb", "teste.asm", "Plataformas/8086-DOS"],
+            "args": ["teste.hcb", "teste.asm", "Plataformas/8086-DOS", "Plataformas/8086"],
             "cwd": "${workspaceFolder}",
             // For more information about the 'console' field, see https://aka.ms/VSCode-CS-LaunchJson-Console
             "console": "internalConsole",

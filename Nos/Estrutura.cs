@@ -33,7 +33,7 @@ class Estrutura : No
         {
             item.Posicao = posicao;
             if(item.Tipo == TipoVariavel.Structure) throw Erro("Estrutura dentro de outra não é suportada");
-            posicao += amb.Saida.CalculaTamanho(item.Tipo);
+            posicao += amb.Saida.CalculaTamanhoReal(item.Tipo);
         }
         TamanhoCampos = posicao;
     }

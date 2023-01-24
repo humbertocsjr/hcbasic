@@ -51,6 +51,14 @@ end
 
 structure Stream
     Dim Id as uint16
+    Dim ReadRaw as func(of stream, ptrbytearray, uint16, uint16)
+    Dim Read as func(of stream, ptrbytearray, uint16)
+    Dim WriteRaw as func(of stream, ptrbytearray, uint16, uint16)
+    Dim Write as func(of stream, ptrbytearray, uint16)
+    Dim Close as func(of stream, uint16)
+    Dim SeekCurrent as func(of stream, uint16) as uint16
+    Dim SeekStart as func(of stream, uint16) as uint16
+    Dim SeekEnd as func(of stream, uint16) as uint16
 end
 
 module File
@@ -71,6 +79,14 @@ module File
         return 0
         asm ".fim:"
         stream.Id = id
+        stream.Read = AddressOf(Read)
+        stream.ReadRaw = AddressOf(ReadRaw)
+        stream.Write = AddressOf(Write)
+        stream.WriteRaw = AddressOf(WriteRaw)
+        stream.Close = AddressOf(Close)
+        stream.SeekCurrent = AddressOf(SeekCurrent)
+        stream.SeekEnd = AddressOf(SeekEnd)
+        stream.SeekStart = AddressOf(SeekStart)
         return 1
     end
 
@@ -92,6 +108,11 @@ module File
         return 0
         asm ".fim:"
         stream.Id = id
+        stream.Read = AddressOf(Read)
+        stream.ReadRaw = AddressOf(ReadRaw)
+        stream.Write = AddressOf(Write)
+        stream.WriteRaw = AddressOf(WriteRaw)
+        stream.Close = AddressOf(Close)
         return 1
     end
 

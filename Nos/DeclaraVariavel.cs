@@ -12,6 +12,9 @@ class DeclaraVariavel : No
     public bool Colecao { get; set; }
     public bool VariavelDoModulo { get; set; }
     public int Posicao { get; set; }
+    public List<DeclaraVariavel>  ArgumentosFuncAction { get; set; } = new List<DeclaraVariavel>();
+    public TipoVariavel RetornoFunc { get; set; } = TipoVariavel.UInt16;
+    public string RetornoFuncNome { get; set; } = "uint16";
 
     public Estrutura Modulo { get; set; }
     public DeclaraVariavel(Trecho trecho, Estrutura modulo, bool varDoModulo, NivelPublicidade publicidade, TipoVariavel tipo, string tipoNome, bool colecao, int colecaoTam, int posicao = 0) : base(trecho)

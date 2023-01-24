@@ -51,9 +51,15 @@ distro-linux:
 
 install:
 	install Distro/Atual/* /usr/bin/
+	mkdir -p /usr/lib/hcbasic/8086
+	install Plataformas/8086/* /usr/lib/hcbasic/8086/
+	mkdir -p /usr/lib/hcbasic/8086-dos
+	install Plataformas/8086-DOS/* /usr/lib/hcbasic/8086-dos/
+	mkdir -p /usr/lib/hcbasic/8086-kernel
+	install Plataformas/8086-KERNEL/* /usr/lib/hcbasic/8086-kernel/
 
 teste: all
-	Distro/Atual/hcbasic teste.hcb teste.asm Plataformas/8086-DOS
+	Distro/Atual/hcbasic teste.hcb teste.asm Plataformas/8086-DOS / Plataformas/8086/
 	nasm -f bin -o teste.com teste.asm
 	dosbox -C "mount c: ." -C "c:" -C "teste.com"
 clean:

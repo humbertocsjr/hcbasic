@@ -8,7 +8,7 @@ class Fonte
     public Fonte(string endereco)
     {
         NomeCompleto = endereco;
-        _arq = new FileStream(endereco, FileMode.Open);
+        _arq = new FileStream(endereco, FileMode.Open, FileAccess.Read);
         _leitor = new StreamReader(_arq);
     }
 
@@ -19,7 +19,7 @@ class Fonte
         List<Trecho> ret = new List<Trecho>();
         Trecho? atual = null;
         string? txt = _leitor.ReadLine();
-        if(txt == null) return new Trechos(this, new Trecho[0]){ FimDaLinha = true, FimDoArquivo = true};
+        if(txt == null) return new Trechos(this, new Trecho[]{new Trecho(this, TipoTrecho.FimDaLinha, _linha, 0, "")}){ FimDoArquivo = true};
         _linha++;
         int coluna = 0;
         bool escape = false;
@@ -259,7 +259,7 @@ class Fonte
             else throw new NotFiniteNumberException($"Tipo {atual.Tipo} não implementado.");
         }
         ret.Add(new Trecho(this, TipoTrecho.FimDaLinha, _linha, coluna, ""));
-        return new Trechos(this, ret.ToArray()){ FimDaLinha = !ret.Any(), FimDoArquivo = false};
+        return new Trechos(this, ret.ToArray()){ FimDoArquivo = false};
     }
 
 }

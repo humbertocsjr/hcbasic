@@ -4,7 +4,7 @@ class Trechos
     public Trecho[] Conteudo { get; set; }
     public int PosAtual { get; set; }
 
-    public bool FimDaLinha { get; set; }
+    public bool FimDaLinha => Atual.Tipo == TipoTrecho.FimDaLinha;
     public bool FimDoArquivo { get; set; }
 
     public Trechos(Fonte fonte, Trecho[] trechos)
@@ -20,13 +20,12 @@ class Trechos
         Trechos tmp = Fonte.LeiaLinha();
         PosAtual = -1;
         Conteudo = tmp.Conteudo;
-        FimDaLinha = tmp.FimDaLinha;
         FimDoArquivo = tmp.FimDoArquivo;
         Proximo();
         return !FimDoArquivo;
     }
 
-    public Trecho Atual => Conteudo[PosAtual];
+    public Trecho Atual => PosAtual < Conteudo.Length ? Conteudo[PosAtual] : Conteudo.Last();
     public Trecho Anterior => Conteudo[PosAtual-1];
 
     public bool EhProximoTipo(TipoTrecho tipo)
@@ -46,9 +45,6 @@ class Trechos
     public bool Proximo()
     {
         PosAtual++;
-        FimDaLinha = (PosAtual >= Conteudo.Length);
-        if(!FimDaLinha)
-            FimDaLinha = Atual.Tipo == TipoTrecho.FimDaLinha;
         return !FimDaLinha;
     }
 

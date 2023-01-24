@@ -110,6 +110,22 @@ class Saida8086 : Saida
             default: throw new Exception("Tipo não suportado por essa arquitetura");
         }
     }
+    public override int CalculaTamanhoReal(TipoVariavel tipo)
+    {
+        switch(tipo)
+        {
+            case TipoVariavel.Int8: return 1;
+            case TipoVariavel.UInt8: return 1;
+            case TipoVariavel.Int16: return 2;
+            case TipoVariavel.UInt16: return 2;
+            case TipoVariavel.PtrByteArray: return 4;
+            case TipoVariavel.PtrWordArray: return 4;
+            case TipoVariavel.Structure: return 4;
+            case TipoVariavel.Func: return 4;
+            case TipoVariavel.Action: return 4;
+            default: throw new Exception("Tipo não suportado por essa arquitetura");
+        }
+    }
     public override void EmiteAdicionaAuxNoAcumulador()
     {
         EmiteL("add ax, bx");
@@ -357,10 +373,15 @@ class Saida8086 : Saida
     public override void EmiteIncrementaSegDaVariavelLocal(int posicao)
     {
         EmiteL($"inc word [bp+{posicao}+2]");
+        PonteiroDefinido = false;
     }
     public override void EmiteIncrementaVariavelLocal(int posicao)
     {
         EmiteL($"inc word [bp+{posicao}]");
+        if(PonteiroDefinido & PonteiroLocal & PonteiroLocalPosicao == posicao)
+        {
+            EmiteL("inc di");
+        }
     }
     public override void EmiteDecrementaByteArrayNaVariavelLocal(int posicao, int desvio)
     {
@@ -378,10 +399,15 @@ class Saida8086 : Saida
     public override void EmiteDecrementaSegDaVariavelLocal(int posicao)
     {
         EmiteL($"dec word [bp+{posicao}+2]");
+        PonteiroDefinido = false;
     }
     public override void EmiteDecrementaVariavelLocal(int posicao)
     {
         EmiteL($"dec word [bp+{posicao}]");
+        if(PonteiroDefinido & PonteiroLocal & PonteiroLocalPosicao == posicao)
+        {
+            EmiteL("dec di");
+        }
     }
     public override void EmiteDecrementaWordArrayNaVariavelLocal(int posicao, int desvio)
     {
@@ -478,10 +504,12 @@ class Saida8086 : Saida
     public override void EmiteCopiaAcumuladorParaSegDaVariavelGlobal(string rotulo)
     {
         EmiteL($"cs mov [{rotulo}+2], ax");
+        PonteiroDefinido = false;
     }
     public override void EmiteCopiaAcumuladorParaVariavelGlobal(string rotulo)
     {
         EmiteL($"cs mov [{rotulo}], ax");
+        PonteiroDefinido = false;
     }
     public override void EmiteCopiaAcumuladorParaWordArrayDaVariavelGlobal(string rotulo, int desvio)
     {
@@ -499,6 +527,10 @@ class Saida8086 : Saida
     public override void EmiteDecrementaVariavelGlobal(string rotulo)
     {
         EmiteL($"cs dec word [{rotulo}]");
+        if((PonteiroDefinido & !PonteiroLocal & PonteiroGlobalNome == rotulo))
+        {
+            EmiteL("dec di");
+        }
     }
     public override void EmiteDecrementaByteArrayNaVariavelGlobal(string rotulo, int desvio)
     {
@@ -550,14 +582,20 @@ class Saida8086 : Saida
     public override void EmiteIncrementaVariavelGlobal(string rotulo)
     {
         EmiteL($"cs inc word [{rotulo}]");
+        if(PonteiroDefinido & !PonteiroLocal & PonteiroGlobalNome == rotulo)
+        {
+            EmiteL("inc di");
+        }
     }
     public override void EmiteGravaNumeroNoSegDaVariavelGlobal(string rotulo, decimal valor)
     {
         EmiteL($"cs mov word [{rotulo}+2], {valor}");
+        PonteiroDefinido = false;
     }
     public override void EmiteIncrementaSegDaVariavelGlobal(string rotulo)
     {
         EmiteL($"cs inc word [{rotulo}+2]");
+        PonteiroDefinido = false;
     }
     public override void EmiteIncrementaByteArrayNaVariavelGlobal(string rotulo, int desvio)
     {
@@ -633,7 +671,7 @@ class Saida8086 : Saida
         }
         EmiteL($"es mov ax, [di+{desvio}]");
     }
-    public override void EmiteDefineByteArrayDaVariavelGlobalComoPonteiro(string rotulo)
+    public override void EmiteCopiaByteArrayDaVariavelGlobalComoPonteiroRemoto(string rotulo)
     {
         if(!(PonteiroDefinido & !PonteiroLocal & PonteiroGlobalNome == rotulo))
         {
@@ -645,7 +683,7 @@ class Saida8086 : Saida
             EmiteL($"cs mov di, [{rotulo}]");
         }
     }
-    public override void EmiteDefineByteArrayDaVariavelLocalComoPonteiro(int posicao)
+    public override void EmiteCopiaByteArrayDaVariavelLocalParaPonteiroRemoto(int posicao)
     {
         if(!(PonteiroDefinido & PonteiroLocal & PonteiroLocalPosicao == posicao))
         {
@@ -657,7 +695,7 @@ class Saida8086 : Saida
             EmiteL($"mov di, [bp+{posicao}]");
         }
     }
-    public override void EmiteDefineWordArrayDaVariavelGlobalComoPonteiro(string rotulo)
+    public override void EmiteCopiaWordArrayDaVariavelGlobalParaPonteiroRemoto(string rotulo)
     {
         if(!(PonteiroDefinido & !PonteiroLocal & PonteiroGlobalNome == rotulo))
         {
@@ -669,7 +707,7 @@ class Saida8086 : Saida
             EmiteL($"cs mov di, [{rotulo}]");
         }
     }
-    public override void EmiteDefineWordArrayDaVariavelLocalComoPonteiro(int posicao)
+    public override void EmiteCopiaWordArrayDaVariavelLocalParaPonteiroRemoto(int posicao)
     {
         if(!(PonteiroDefinido & PonteiroLocal & PonteiroLocalPosicao == posicao))
         {
@@ -708,5 +746,58 @@ class Saida8086 : Saida
         PonteiroDefinido = false;
     }
 
+    public override void EmiteChamaRotinaEmVariavelGlobal(string rotulo)
+    {
+        EmiteCopiaWordArrayDaVariavelGlobalParaPonteiroRemoto(rotulo);
+        EmiteL($"cs call far [{rotulo}]");
+    }
+    public override void EmiteChamaRotinaEmVariavelLocal(int posicao)
+    {
+        EmiteCopiaWordArrayDaVariavelLocalParaPonteiroRemoto(posicao);
+        EmiteL($"call far [bp+{posicao}]");
+    }
+
+    public override void EmiteCopiaPonteiroRemotoParaByteArrayNaVariavelGlobal(string rotulo, int desvio)
+    {
+        EmiteL("push es");
+        EmiteL("push di");
+        EmiteCopiaWordArrayDaVariavelGlobalParaPonteiroRemoto(rotulo);
+        EmiteL($"es pop word [di+{desvio}]");
+        EmiteL($"es pop word [di+{desvio}+2]");
+    }
+    public override void EmiteCopiaPonteiroRemotoParaByteArrayNaVariavelLocal(int posicao, int desvio)
+    {
+        EmiteL("push es");
+        EmiteL("push di");
+        EmiteCopiaWordArrayDaVariavelLocalParaPonteiroRemoto(posicao);
+        EmiteL($"es pop word [di+{desvio}]");
+        EmiteL($"es pop word [di+{desvio}+2]");
+    }
+    public override void EmiteCopiaPonteiroRemotoParaWordArrayNaVariavelGlobal(string rotulo, int desvio)
+    {
+        EmiteL("push es");
+        EmiteL("push di");
+        EmiteCopiaWordArrayDaVariavelGlobalParaPonteiroRemoto(rotulo);
+        EmiteL($"es pop word [di+{desvio}]");
+        EmiteL($"es pop word [di+{desvio}+2]");
+    }
+    public override void EmiteCopiaPonteiroRemotoParaWordArrayNaVariavelLocal(int posicao, int desvio)
+    {
+        EmiteL("push es");
+        EmiteL("push di");
+        EmiteCopiaWordArrayDaVariavelLocalParaPonteiroRemoto(posicao);
+        EmiteL($"es pop word [di+{desvio}]");
+        EmiteL($"es pop word [di+{desvio}+2]");
+    }
+    public override void EmiteChamaRotinaEmPonteiroNaVariavelGlobal(string rotulo, int desvio)
+    {
+        EmiteCopiaWordArrayDaVariavelGlobalParaPonteiroRemoto(rotulo);
+        EmiteL($"es call far [di+{desvio}]");
+    }
+    public override void EmiteChamaRotinaEmPonteiroNaVariavelLocal(int posicao, int desvio)
+    {
+        EmiteCopiaWordArrayDaVariavelLocalParaPonteiroRemoto(posicao);
+        EmiteL($"es call far [di+{desvio}]");
+    }
 
 }

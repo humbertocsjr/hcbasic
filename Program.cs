@@ -6,7 +6,7 @@
 
 if(args.Count() < 2)
 {
-    Console.WriteLine("HCBasic v0.9");
+    Console.WriteLine("HCBasic v0.9.5");
     Console.WriteLine("Copyright (c) 2023, Humberto Costa dos Santos Junior");
     Console.WriteLine("Uso: hcbasic [arquivo.hcb] [arquivo.asm] [lista de diretorios include] ...");
     return 0;
