@@ -1,1 +1,1 @@
-hcbasic helloworld.hcb helloworld.com Plataforma\8086-DOS\ Plataforma\8086\
+hcbasic helloworld.hcb helloworld.com Plataformas\8086-DOS\ Plataformas\8086\

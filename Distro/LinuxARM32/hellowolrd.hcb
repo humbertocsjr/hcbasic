@@ -1,7 +1,0 @@
-Imports System
-
-Module Program
-    Public Sub Main(args as PtrByteArray)
-        Console.WriteLine "Hello World!!"
-    End
-End
