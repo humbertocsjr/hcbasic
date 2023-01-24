@@ -189,6 +189,10 @@ class Acao : No
         switch(Tipo)
         {
             case TipoDeAcao.Leitura:
+                if(variavel.Nome == "texto")
+                {
+                    
+                }
                 if(variavel.Publicidade == NivelPublicidade.Local)
                 {
                     if(amb.TipoPonteiro)

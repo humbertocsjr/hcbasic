@@ -312,8 +312,8 @@ class Saida8086 : Saida
             PonteiroDefinido = true;
             PonteiroLocal = true;
             PonteiroLocalPosicao = posicao;
-            EmiteL($"mov ax, [bp+{posicao}+2]");
-            EmiteL($"mov es, ax");
+            EmiteL($"push word [bp+{posicao}+2]");
+            EmiteL($"pop es");
             EmiteL($"mov di, [bp+{posicao}]");
         }
         EmiteL($"es mov byte [di+{desvio}], {valor}");
@@ -325,8 +325,8 @@ class Saida8086 : Saida
             PonteiroDefinido = true;
             PonteiroLocal = true;
             PonteiroLocalPosicao = posicao;
-            EmiteL($"mov ax, [bp+{posicao}+2]");
-            EmiteL($"mov es, ax");
+            EmiteL($"push word [bp+{posicao}+2]");
+            EmiteL($"pop es");
             EmiteL($"mov di, [bp+{posicao}]");
         }
         EmiteL($"es mov word [di+{desvio}], {valor}");
@@ -495,8 +495,8 @@ class Saida8086 : Saida
             PonteiroDefinido = true;
             PonteiroLocal = false;
             PonteiroGlobalNome = rotulo;
-            EmiteL($"cs mov ax, [{rotulo}+2]");
-            EmiteL($"mov es, ax");
+            EmiteL($"cs push word [{rotulo}+2]");
+            EmiteL($"pop es");
             EmiteL($"cs mov di, [{rotulo}]");
         }
         EmiteL($"es mov [di+{desvio}], al");
@@ -518,8 +518,8 @@ class Saida8086 : Saida
             PonteiroDefinido = true;
             PonteiroLocal = false;
             PonteiroGlobalNome = rotulo;
-            EmiteL($"cs mov ax, [{rotulo}+2]");
-            EmiteL($"mov es, ax");
+            EmiteL($"cs push word [{rotulo}+2]");
+            EmiteL($"pop es");
             EmiteL($"cs mov di, [{rotulo}]");
         }
         EmiteL($"es mov [di+{desvio}], ax");
@@ -539,8 +539,8 @@ class Saida8086 : Saida
             PonteiroDefinido = true;
             PonteiroLocal = false;
             PonteiroGlobalNome = rotulo;
-            EmiteL($"cs mov ax, [{rotulo}+2]");
-            EmiteL($"mov es, ax");
+            EmiteL($"cs push word [{rotulo}+2]");
+            EmiteL($"pop es");
             EmiteL($"cs mov di, [{rotulo}]");
         }
         EmiteL($"es dec byte [di+{desvio}]");
@@ -556,8 +556,8 @@ class Saida8086 : Saida
             PonteiroDefinido = true;
             PonteiroLocal = false;
             PonteiroGlobalNome = rotulo;
-            EmiteL($"cs mov ax, [{rotulo}+2]");
-            EmiteL($"mov es, ax");
+            EmiteL($"cs push word [{rotulo}+2]");
+            EmiteL($"pop es");
             EmiteL($"cs mov di, [{rotulo}]");
         }
         EmiteL($"es dec word [di+{desvio}]");
@@ -574,8 +574,8 @@ class Saida8086 : Saida
             PonteiroDefinido = true;
             PonteiroLocal = false;
             PonteiroGlobalNome = rotulo;
-            EmiteL($"cs mov ax, [{rotulo}+2]");
-            EmiteL($"mov es, ax");
+            EmiteL($"cs push word [{rotulo}+2]");
+            EmiteL($"pop es");
             EmiteL($"cs mov di, [{rotulo}]");
         }
         EmiteL($"es mov byte [di+{desvio}], {valor}");
@@ -605,8 +605,8 @@ class Saida8086 : Saida
             PonteiroDefinido = true;
             PonteiroLocal = false;
             PonteiroGlobalNome = rotulo;
-            EmiteL($"cs mov ax, [{rotulo}+2]");
-            EmiteL($"mov es, ax");
+            EmiteL($"cs push word [{rotulo}+2]");
+            EmiteL($"pop es");
             EmiteL($"cs mov di, [{rotulo}]");
         }
         EmiteL($"es inc byte [di+{desvio}]");
@@ -618,8 +618,8 @@ class Saida8086 : Saida
             PonteiroDefinido = true;
             PonteiroLocal = false;
             PonteiroGlobalNome = rotulo;
-            EmiteL($"cs mov ax, [{rotulo}+2]");
-            EmiteL($"mov es, ax");
+            EmiteL($"cs push word [{rotulo}+2]");
+            EmiteL($"pop es");
             EmiteL($"cs mov di, [{rotulo}]");
         }
         EmiteL($"es mov word [di+{desvio}], {valor}");
@@ -631,8 +631,8 @@ class Saida8086 : Saida
             PonteiroDefinido = true;
             PonteiroLocal = false;
             PonteiroGlobalNome = rotulo;
-            EmiteL($"cs mov ax, [{rotulo}+2]");
-            EmiteL($"mov es, ax");
+            EmiteL($"cs push word [{rotulo}+2]");
+            EmiteL($"pop es");
             EmiteL($"cs mov di, [{rotulo}]");
         }
         EmiteL($"es inc word [di+{desvio}]");
@@ -644,8 +644,8 @@ class Saida8086 : Saida
             PonteiroDefinido = true;
             PonteiroLocal = false;
             PonteiroGlobalNome = rotulo;
-            EmiteL($"cs mov ax, [{rotulo}+2]");
-            EmiteL($"mov es, ax");
+            EmiteL($"cs push word [{rotulo}+2]");
+            EmiteL($"pop es");
             EmiteL($"cs mov di, [{rotulo}]");
         }
         EmiteL($"xor ax, ax");
@@ -666,8 +666,8 @@ class Saida8086 : Saida
             PonteiroDefinido = true;
             PonteiroLocal = false;
             PonteiroGlobalNome = rotulo;
-            EmiteL($"cs mov ax, [{rotulo}+2]");
-            EmiteL($"mov es, ax");
+            EmiteL($"cs push word [{rotulo}+2]");
+            EmiteL($"pop es");
             EmiteL($"cs mov di, [{rotulo}]");
         }
         EmiteL($"es mov ax, [di+{desvio}]");
@@ -679,8 +679,8 @@ class Saida8086 : Saida
             PonteiroDefinido = true;
             PonteiroLocal = false;
             PonteiroGlobalNome = rotulo;
-            EmiteL($"cs mov ax, [{rotulo}+2]");
-            EmiteL($"mov es, ax");
+            EmiteL($"cs push word [{rotulo}+2]");
+            EmiteL($"pop es");
             EmiteL($"cs mov di, [{rotulo}]");
         }
     }
@@ -703,8 +703,8 @@ class Saida8086 : Saida
             PonteiroDefinido = true;
             PonteiroLocal = false;
             PonteiroGlobalNome = rotulo;
-            EmiteL($"cs mov ax, [{rotulo}+2]");
-            EmiteL($"mov es, ax");
+            EmiteL($"cs push word [{rotulo}+2]");
+            EmiteL($"pop es");
             EmiteL($"cs mov di, [{rotulo}]");
         }
     }
