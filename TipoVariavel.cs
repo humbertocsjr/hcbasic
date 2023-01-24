@@ -1,5 +1,6 @@
 enum TipoVariavel
 {
+    Desconhecido,
     Int8,
     UInt8,
     Int16,

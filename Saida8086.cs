@@ -565,6 +565,7 @@ class Saida8086 : Saida
     public override void EmiteGravaNumeroNaVariavelGlobal(string rotulo, decimal valor)
     {
         EmiteL($"cs mov word [{rotulo}], {valor}");
+        PonteiroDefinido = false;
     }
     public override void EmiteGravaNumeroNoByteArrayDaVariavelGlobal(string rotulo, decimal valor, int desvio)
     {

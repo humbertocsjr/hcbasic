@@ -17,6 +17,8 @@ module Program
         dim funcao as Func(Of UInt16)
         arq = new
         txt = new
+        VideoTexto.Inicializa
+        VideoTexto.Escreva "Oieeeee"
         Console.Write "Teste Criacao de arquivo: "
         if File.Create(arq, "teste.txt") Then
             Console.WriteUInt16 File.Write(arq, "Texto teste no arquivo escrito pelo teste.hcb. ")
@@ -46,3 +48,98 @@ module Program
     end
 
 end
+Module VideoTexto
+    Dim X as UInt16
+    Dim Y as UInt16
+    Dim Ptr as PtrByteArray
+    Dim Cor as UInt8
+
+    Public Sub Inicializa()
+        #Ptr = 0xb800
+        @Ptr = 0
+        X = 0
+        Y = 0
+        Cor = 3 shl 4
+        Memoria.DefineWords Ptr, 32 + Cor Shl 8, 80 * 25
+    End
+
+    Public Sub DefineCores(texto as UInt8, fundo as UInt8)
+        Cor = texto + fundo shl 4
+    End
+
+    Sub arrumaTela()
+        Dim telaDest as PtrByteArray
+        Dim telaOrig as PtrByteArray
+        Dim tam as UInt16
+        telaDest = Ptr
+        telaOrig = Ptr
+        @telaOrig = 160
+        tam = 80 * 24 * 2
+        While X > 80
+            Y ++
+            X = X - 80
+        End
+        While Y >= 25
+            @telaDest = 0
+            Memoria.Copia telaDest, telaOrig, tam 
+            @telaDest = tam
+            Memoria.DefineWords telaDest, 32 + Cor shl 8, 80
+            Y--
+        End
+        @Ptr = Y * 160 + X Shl 1
+    End
+
+    Public Sub EscrevaC(c as UInt8)
+        If Y >= 25 OrElse X >= 80 Then arrumaTela
+        Ptr = c
+        @Ptr ++
+        Ptr = Cor
+        @Ptr ++
+        X ++
+    End
+
+    Public Sub Escreva(texto as PtrByteArray)
+        @texto ++
+        While texto <> 0
+            EscrevaC texto
+            @texto++
+        End
+    End
+End
+Module Memoria
+    Public Sub Copia(destino as PtrByteArray, origem as PtrByteArray, tam as UInt16)
+        asm "cld"
+        asm "push ds"
+        asm "push si"
+        asm "mov ax, [bp+8]"
+        asm "mov es, ax"
+        asm "mov di, [bp+6]"
+        asm "mov ax, [bp+12]"
+        asm "mov ds, ax"
+        asm "mov si, [bp+10]"
+        asm "mov cx, [bp+14]"
+        asm "rep movsb"
+        asm "pop si"
+        asm "pop ds"
+    End
+
+    Public Sub Define(destino as PtrByteArray, valor as UInt8, tam as UInt16)
+        asm "cld"
+        asm "mov ax, [bp+8]"
+        asm "mov es, ax"
+        asm "mov di, [bp+6]"
+        asm "mov ax, [bp+10]"
+        asm "mov cx, [bp+12]"
+        asm "rep stosb"
+    End
+
+    Public Sub DefineWords(destino as PtrByteArray, valor as UInt16, tam as UInt16)
+        asm "cld"
+        asm "mov ax, [bp+8]"
+        asm "mov es, ax"
+        asm "mov di, [bp+6]"
+        asm "mov ax, [bp+10]"
+        asm "mov cx, [bp+12]"
+        asm "rep stosw"
+    End
+End

@@ -18,6 +18,8 @@ class Acao : No
         DecrementoSegmento,
         NovaEstrutura
     }
+    public TipoVariavel TipoCompilado { get; set; } = TipoVariavel.Desconhecido;
+    public bool TipoCompiladoPonteiro => TipoCompilado == TipoVariavel.PtrByteArray | TipoCompilado == TipoVariavel.PtrWordArray | TipoCompilado == TipoVariavel.Structure | TipoCompilado == TipoVariavel.Func | TipoCompilado == TipoVariavel.Action;
     public TipoDeAcao Tipo { get; set; } = TipoDeAcao.Desconhecida;
     public bool TipoSegmento => Tipo == TipoDeAcao.GravacaoSegmento | Tipo == TipoDeAcao.LeituraSegmento | Tipo == TipoDeAcao.IncrementoSegmento | Tipo == TipoDeAcao.DecrementoSegmento;
     public bool TipoDesvio => Tipo == TipoDeAcao.GravacaoDesvio | Tipo == TipoDeAcao.LeituraDesvio | Tipo == TipoDeAcao.IncrementoDesvio | Tipo == TipoDeAcao.DecrementoDesvio;
@@ -36,6 +38,7 @@ class Acao : No
 
     void acaoVariavel(Ambiente amb, DeclaraVariavel variavel)
     {
+        TipoCompilado = variavel.Tipo;
         switch(Tipo)
         {
             case TipoDeAcao.Leitura:
@@ -182,6 +185,7 @@ class Acao : No
 
     void acaoPonteiro(Ambiente amb, DeclaraVariavel variavel, TipoAcaoPonteiro tipoPonteiro, int desvioNoPonteiro)
     {
+        TipoCompilado = variavel.Tipo;
         switch(Tipo)
         {
             case TipoDeAcao.Leitura:
@@ -275,7 +279,7 @@ class Acao : No
                         amb.Tipo = variavel.Tipo;
                         amb.VariavelDestino = variavel;
                         ValorGravacao.Compila(amb);
-                        if(amb.TipoPonteiro)
+                        if(ValorGravacao is Acao && ((Acao)ValorGravacao).TipoCompiladoPonteiro)
                             amb.Saida.EmiteCopiaPonteiroRemotoParaVariavelLocal(variavel.Posicao);
                         else if(tipoPonteiro == TipoAcaoPonteiro.Byte)
                             amb.Saida.EmiteCopiaAcumuladorParaByteArrayDaVariavelLocal(variavel.Posicao, desvioNoPonteiro);
@@ -318,7 +322,7 @@ class Acao : No
                         amb.Tipo = variavel.Tipo;
                         amb.VariavelDestino = variavel;
                         ValorGravacao.Compila(amb);
-                        if(amb.TipoPonteiro)
+                        if(ValorGravacao is Acao && ((Acao)ValorGravacao).TipoCompiladoPonteiro)
                             amb.Saida.EmiteCopiaPonteiroRemotoParaVariavelGlobal(variavel.NomeGlobal);
                         if(tipoPonteiro == TipoAcaoPonteiro.Byte)
                             amb.Saida.EmiteCopiaAcumuladorParaByteArrayDaVariavelGlobal(variavel.NomeGlobal, desvioNoPonteiro);
@@ -338,6 +342,10 @@ class Acao : No
     {
         if(amb.Modulo == null) throw Erro("Módulo não declarado");
         if(amb.Rotina == null) throw Erro("Rotina não declarado");
+        if(amb.Rotina.Nome == "escrevac")
+        {
+            //REMOVA
+        }
         Queue<string> referencia = new Queue<string>(Nome);
         Modulo? mod = amb.Modulo;
         switch (Tipo)
@@ -425,6 +433,7 @@ class Acao : No
                                 }
                                 else if(Tipo == TipoDeAcao.NovaEstrutura)
                                 {
+                                    TipoCompilado = variavel.Tipo;
                                     Estrutura? estru = amb.PesquisaEstrutura(variavel.TipoNome);
                                     if(variavel.Publicidade != NivelPublicidade.Local) throw Erro("Este tipo de ação só é suportada em variáveis locais internas");
                                     if(amb.Rotina.Argumentos.Any(a => a.Nome.ToLower() == variavel.Nome.ToLower()))  throw Erro("Este tipo de ação só é suportada em variáveis locais internas");
@@ -453,6 +462,7 @@ class Acao : No
                                 if(estru == null) throw Erro("Estrutura não encontrada");
                                 DeclaraVariavel? campo = estru.PesquisaCampo(referencia.Peek());
                                 if(campo == null) throw Erro($"Campo '{referencia.Peek()}' não encontrado");
+                                TipoCompilado = campo.Tipo;
                                 switch(Tipo)
                                 {
                                     case TipoDeAcao.LeituraSegmento:
@@ -538,6 +548,7 @@ class Acao : No
                                         ValorGravacao.Compila(amb);
                                         amb.VariavelDestino = null;
                                         amb.Tipo = null;
+                                        TipoCompilado = variavel.Tipo;
                                         if(campo.Tipo == TipoVariavel.Int8 | campo.Tipo == TipoVariavel.UInt8)
                                         {
                                             if(variavel.Publicidade == NivelPublicidade.Local)

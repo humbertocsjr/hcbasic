@@ -34,8 +34,16 @@ class Modulo : Estrutura
         {
             campo.Compila(amb);
         }
+        if(amb.Modulo.Nome == "videotexto")
+        {
+            //REMOVA
+        }
         foreach (var rot in Rotinas)
         {
+            if(rot.Nome == "escrevac")
+            {
+                //REMOVA
+            }
             rot.Compila(amb);
         }
         amb.Saida.EmiteModuloFim(Nome);
