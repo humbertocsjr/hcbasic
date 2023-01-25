@@ -3,5 +3,17 @@ Imports System
 Module Program
     Public Sub Main(args as PtrByteArray)
         Console.WriteLine "Hello World!!"
+        Try
+            Dim teste1 as UInt16
+            Dim teste2 as UInt16
+            teste1 = 0
+            teste2 = 10 / teste1
+        Catch DivByZeroError
+            Console.WriteLine "Teste de erro por divisão por zero"
+            Console.Write "Arquivo: "
+            Console.WriteLine ErrorFile()
+            Console.Write "Linha..: "
+            Console.WriteUInt16 ErrorLine()
+        End
     End
 End

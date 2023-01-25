@@ -602,7 +602,90 @@ class Acao : No
                 break;
             case TipoDeAcao.Chamada:
                 {
-                    if(referencia.Count() == 1 & referencia.First() == "addressof")
+                    if(referencia.Count() == 1 & referencia.First() == "errorfile")
+                    {
+                        TipoCompilado = TipoVariavel.PtrByteArray;
+                        amb.Saida.EmiteCopiaPonteiroLocalEmVariavelLocalParaPonteiroRemoto(-8);
+                    }
+                    else if(referencia.Count() == 1 & referencia.First() == "errorline")
+                    {
+                        TipoCompilado = TipoVariavel.UInt16;
+                        amb.Saida.EmiteCopiaVariavelLocalParaAcumulador(-10);
+                    }
+                    else if(referencia.Count() == 1 & referencia.First() == "sizeof")
+                    {
+                        TipoCompilado = TipoVariavel.UInt16;
+                        foreach(No no in ArgumentosChamada)
+                        {
+                            if(no is not Acao)
+                            {
+                                throw Erro("Esperado um nome de rotina ou campo");
+                            }
+                            referencia = new Queue<string>((((Acao)no).Nome));
+                        }
+                        Estrutura? estru = amb.PesquisaEstrutura(referencia.Peek());
+                        Modulo? modulo = amb.PesquisaModulo(referencia.Peek());
+                        if(amb.Rotina == null) throw Erro("Rotina não declarada");
+                        DeclaraVariavel? variavel = amb.Rotina.PesquisaVariavel(referencia.Peek());
+                        TipoVariavel tipoVar = Analise.ProcessaTipo(referencia.Peek());
+                        if(variavel != null)
+                        {
+                            referencia.Dequeue();
+                            if(referencia.Any())
+                            {
+                                if(variavel.Tipo != TipoVariavel.Structure) throw Erro("Esta variável não contém campos");
+                                estru = amb.PesquisaEstrutura(variavel.TipoNome);
+                                if(estru == null) throw Erro("Estrutura não localizada");
+                                variavel = estru.PesquisaCampo(referencia.Peek());
+                                if(variavel == null) throw Erro("Campo não encontrado na estrutura");
+                                referencia.Dequeue();
+                                if(referencia.Any()) throw Erro("Não é possível verificar tamanho em estruturas multinível");
+                                amb.Saida.EmiteGravaNumeroEmAcumulador(amb.Saida.CalculaTamanhoReal(variavel.Tipo));
+                            }
+                            else
+                            {
+                                amb.Saida.EmiteGravaNumeroEmAcumulador(amb.Saida.CalculaTamanhoReal(variavel.Tipo));
+                            }
+                        }
+                        else if(modulo != null)
+                        {
+                            referencia.Dequeue();
+                            if(referencia.Any())
+                            {
+                                variavel = modulo.PesquisaCampo(referencia.Peek());
+                                if(variavel == null) throw Erro("Campo não encontrado na estrutura");
+                                referencia.Dequeue();
+                                if(referencia.Any()) throw Erro("Não é possível verificar tamanho em estruturas multinível");
+                                amb.Saida.EmiteGravaNumeroEmAcumulador(amb.Saida.CalculaTamanhoReal(variavel.Tipo));
+                            }
+                            else
+                            {
+                                amb.Saida.EmiteGravaNumeroEmAcumulador(modulo.TamanhoCampos);
+                            }
+                        }
+                        else if(estru != null)
+                        {
+                            referencia.Dequeue();
+                            if(referencia.Any())
+                            {
+                                variavel = estru.PesquisaCampo(referencia.Peek());
+                                if(variavel == null) throw Erro("Campo não encontrado na estrutura");
+                                referencia.Dequeue();
+                                if(referencia.Any()) throw Erro("Não é possível verificar tamanho em estruturas multinível");
+                                amb.Saida.EmiteGravaNumeroEmAcumulador(amb.Saida.CalculaTamanhoReal(variavel.Tipo));
+                            }
+                            else
+                            {
+                                amb.Saida.EmiteGravaNumeroEmAcumulador(estru.TamanhoCampos);
+                            }
+                        }
+                        else if(tipoVar != TipoVariavel.Structure)
+                        {
+                            amb.Saida.EmiteGravaNumeroEmAcumulador(amb.Saida.CalculaTamanhoReal(tipoVar));
+                        }
+                        else throw Erro($"Objeto {referencia.Peek()} não encontrado");
+                    }
+                    else if(referencia.Count() == 1 & referencia.First() == "addressof")
                     {
                         TipoCompilado = TipoVariavel.PtrByteArray;
                         referencia.Clear();

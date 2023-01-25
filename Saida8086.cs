@@ -20,10 +20,14 @@ class Saida8086 : Saida
         EmiteL($"; {comentario}");
     }
 
-    public override void EmiteModulo(string nome)
+    public override void EmiteModulo(string nome, string arquivo)
     {
         Modulo = nome;
         EmiteComentario($"MODULO: {nome}");
+        EmiteL($"_{nome}:");
+        EmiteL($"db {System.Text.Encoding.UTF8.GetByteCount(Path.GetFileName(arquivo))}");
+        EmiteBinario(System.Text.Encoding.UTF8.GetBytes(Path.GetFileName(arquivo)));
+        EmiteL("db 0");
     }
 
     public override void EmiteModuloFim(string nome)
@@ -241,7 +245,8 @@ class Saida8086 : Saida
     }
     public override void EmiteBinario(byte[] dados)
     {
-        EmiteL($"db {String.Join(',', dados)}");
+        if(dados.Any())
+            EmiteL($"db {String.Join(',', dados)}");
     }
     public override void EmiteEmpilhaPonteiroRemoto()
     {
@@ -807,4 +812,60 @@ class Saida8086 : Saida
         EmiteL($"dw {realoc.Desvio}");
         EmiteL($"dw {realoc.ValorSoma}");
     }
+    public override void EmiteCopiaPonteiroBaseParaAcumulador()
+    {
+        EmiteL($"mov ax, bp");
+    }
+    public override void EmiteCopiaPonteiroPilhaParaAcumulador()
+    {
+        EmiteL($"mov ax, sp");
+    }
+    public override void EmiteDesempilhaVariavelGlobal(string rotulo)
+    {
+        EmiteL($"cs pop word [{rotulo}]");
+    }
+    public override void EmiteEmpilhaVariavelGlobal(string rotulo)
+    {
+        EmiteL($"cs push word [{rotulo}]");
+    }
+    public override void EmiteCopiaAcumuladorParaPonteiroBase()
+    {
+        EmiteL($"mov bp, ax");
+    }
+    public override void EmiteCopiaAcumuladorParaPonteiroPilha()
+    {
+        EmiteL($"mov sp, ax");
+    }
+    public override void EmiteGravaNumeroEmAuxiliar(decimal numero)
+    {
+        EmiteL($"mov bx, {numero}");
+    }
+    public override void EmitePulaParaLocalEmVariavelGlobal(string rotulo)
+    {
+        EmiteL($"cs jmp word [{rotulo}]");
+    }
+    public override void EmiteCopiaAuxiliarParaAcumulador()
+    {
+        EmiteL($"mov ax, bx");
+    }
+    public override void EmiteCopiaPonteiroPilhaParaAuxiliar()
+    {
+        EmiteL($"mov bx, sp");
+    }
+    public override void EmiteCopiaPonteiroLocalEmVariavelLocalParaPonteiroRemoto(int posicao)
+    {
+        PonteiroDefinido = false;
+        EmiteL($"mov di, [bp+{posicao}]");
+        EmiteL("push cs");
+        EmiteL("pop es");
+    }
+    public override void EmiteCopiaVariavelGlobalParaPonteiroBase(string rotulo)
+    {
+        EmiteL($"cs mov bp, [{rotulo}]");
+    }
+    public override void EmiteCopiaVariavelGlobalParaPonteiroPilha(string rotulo)
+    {
+        EmiteL($"cs mov sp, [{rotulo}]");
+    }
+
 }

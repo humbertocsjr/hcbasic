@@ -1,5 +1,20 @@
 Imports System.OS
 
+error Error = 0
+error DivByZeroError = 1
+error StackOverflowError = 2
+error OutOfMemoryError = 3
+error OutOfBoundsError = 4
+error NotFoundError = 5
+error AlreadyExistsError = 6
+error NotImplementedError = 7
+error UnknownError = 8
+error CapacityOverflowError = 9
+error NoAnswerError = 10
+error TimeoutError = 11
+error InvalidValueError = 12
+error AccessDeniedError = 13
+
 module String
     public function Length(text as ptrbytearray) as uint16
         dim i as uint16
@@ -11,6 +26,58 @@ module String
             let @text++
         end
         return i
+    end
+
+    public function Equals(txt1 as ptrbytearray, txt2 as ptrbytearray) as uint16
+        while txt1 == txt2
+            if txt1 == 0 then return 1
+            @txt1++
+            @txt2++
+        end
+        return 0
+    end
+
+    public function Concat(dest as ptrbytearray, orig as ptrbytearray) as uint16
+        dim dest_len as uint16
+        dim dest_capacity as uint16
+        dim len as uint16
+        dim i as uint16
+        dim tmp as uint8
+        dest_len = String.Length(dest)
+        dest_capacity = dest
+        len = String.Length(orig) + 1
+        if (len +  dest_len + 1) >  dest_capacity then throw CapacityOverflowError
+        @dest = @dest + 1 + dest_len
+        @orig++
+        for i = 1 to len
+            tmp = orig
+            dest = tmp
+            @dest++
+            @orig++
+        end
+        dest = 0
+        return 1
+    end
+
+    public function Copy(dest as ptrbytearray, orig as ptrbytearray) as uint16
+        dim dest_capacity as uint16
+        dim orig_len as uint16
+        dim i as uint16
+        dim tmp as uint8
+        dest_capacity = dest
+        orig_len = String.Length(orig) + 1
+        @dest++
+        @orig++
+        dest = 0
+        if dest_capacity < (orig_len + 1) then throw CapacityOverflowError
+        for i = 1 to orig_len
+            tmp = orig
+            dest = tmp
+            @orig++
+            @dest++
+        end
+        dest = 0
+        return 1
     end
 end
 

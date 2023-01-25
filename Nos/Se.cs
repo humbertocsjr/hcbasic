@@ -22,11 +22,13 @@ class Se : No
         CompilaLista(SeSim, amb);
         if(SeNao.Count > 0)
         {
+            amb.Saida.MarcaInicioDeRepeticao();
             string fim = amb.Saida.GeraRotulo();
             amb.Saida.EmitePulaPara(fim);
             amb.Saida.EmiteRotulo(nao);
             CompilaLista(SeNao, amb);
             amb.Saida.EmiteRotulo(fim);
+            amb.Saida.MarcaFimDeRepeticao();
         }
         else amb.Saida.EmiteRotulo(nao);
 

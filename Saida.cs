@@ -31,7 +31,7 @@ abstract class Saida
     // Os nomes são o mais explicativos possíveis, mas em caso de dúvida busque nos arquivos já implantados
 
     public abstract void EmiteComentario(string comentario);
-    public abstract void EmiteModulo(string nome);
+    public abstract void EmiteModulo(string nome, string arquivo);
     public abstract void EmiteModuloFim(string nome);
     public abstract void EmiteRotina(string nome);
     public abstract void EmiteRotinaFim(string nome);
@@ -142,6 +142,18 @@ abstract class Saida
     public abstract void EmiteCopiaPonteiroRemotoParaByteArrayNaVariavelLocal(int posicao, int desvio);
     public abstract void EmiteCopiaPonteiroRemotoParaByteArrayNaVariavelGlobal(string rotulo, int desvio);
     public abstract void EmiteItemRealocacao(Realocacao realoc);
-
+    public abstract void EmiteEmpilhaVariavelGlobal(string rotulo);
+    public abstract void EmiteDesempilhaVariavelGlobal(string rotulo);
+    public abstract void EmiteCopiaPonteiroBaseParaAcumulador();
+    public abstract void EmiteCopiaPonteiroPilhaParaAcumulador();
+    public abstract void EmiteCopiaAcumuladorParaPonteiroBase();
+    public abstract void EmiteCopiaAcumuladorParaPonteiroPilha();
+    public abstract void EmiteGravaNumeroEmAuxiliar(decimal numero);
+    public abstract void EmitePulaParaLocalEmVariavelGlobal(string rotulo);
+    public abstract void EmiteCopiaAuxiliarParaAcumulador();
+    public abstract void EmiteCopiaPonteiroPilhaParaAuxiliar();
+    public abstract void EmiteCopiaPonteiroLocalEmVariavelLocalParaPonteiroRemoto(int posicao);
+    public abstract void EmiteCopiaVariavelGlobalParaPonteiroBase(string rotulo);
+    public abstract void EmiteCopiaVariavelGlobalParaPonteiroPilha(string rotulo);
 
 }

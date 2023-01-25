@@ -1,9 +1,16 @@
 module OS
+    Dim TryStack as UInt16
+    Dim TryCode as UInt16
+    Dim TryBase as UInt16
+    Dim TryFatal as UInt16
+    Dim MinStackPtr as UInt16
+
     public sub Start
         ' Inicializa o compilador
         asm "cpu 8086"
         asm "bits 16"
         asm "org 0x100"
+        asm "mov word [_os_minstackptr], END"
         Start2
     end
 
@@ -58,9 +65,58 @@ module OS
         asm "mov si, ax"
         asm "add si, 0x80"
         asm "mov byte [si+1], 0"
+        asm "cs mov word [_os_tryfatal], errofatal"
         ' Chama o Main
-        Program.Main args
+        Try
+            Program.Main args
+        Catch DivByZeroError
+            Console.WriteLine "Erro: Divisão por zero"
+            GoTo EscreveErro
+        Catch StackOverflowError
+            Console.WriteLine "Erro: Estouro de pilha"
+            GoTo EscreveErro
+        Catch OutOfMemoryError
+            Console.WriteLine "Erro: Sem memória"
+            GoTo EscreveErro
+        Catch OutOfBoundsError
+            Console.WriteLine "Erro: Valor fora dos limites"
+            GoTo EscreveErro
+        Catch NotFoundError
+            Console.WriteLine "Erro: Não encontrado"
+            GoTo EscreveErro
+        Catch AlreadyExistsError
+            Console.WriteLine "Erro: Item já existe"
+            GoTo EscreveErro
+        Catch NotImplementedError
+            Console.WriteLine "Erro: Não implementado"
+            GoTo EscreveErro
+        Catch UnknownError
+            Console.WriteLine "Erro: Falha desconhecida"
+            GoTo EscreveErro
+        Catch CapacityOverflowError
+            Console.WriteLine "Erro: Estouro da Capacidade"
+            GoTo EscreveErro
+        Catch NoAnswerError
+            Console.WriteLine "Erro: Sem resposta"
+            GoTo EscreveErro
+        Catch TimeoutError
+            Console.WriteLine "Erro: Estouro do tempo limite"
+            GoTo EscreveErro
+        Catch InvalidValueError
+            Console.WriteLine "Erro: Valor inválido"
+            GoTo EscreveErro
+        Catch AccessDeniedError
+            Console.WriteLine "Erro: Acesso negado"
+            GoTo EscreveErro
+        Catch Error
+            Console.WriteLine "Ocorreu um erro não tratado"
+            EscreveErro:
+            Console.Write ErrorFile()
+            Console.Write ": "
+            Console.WriteUInt16 ErrorLine()
+        End
         ' Encerra programa quando retornar do main
+        asm "errofatal:"
         asm "int 0x20"
     end
 
@@ -105,7 +161,7 @@ module File
         asm "popf"
         asm "pop ds"
         asm "jnc .fim"
-        return 0
+        throw NotFoundError
         asm ".fim:"
         stream.Id = id
         stream.Read = AddressOf(Read)
@@ -134,7 +190,7 @@ module File
         asm "popf"
         asm "pop ds"
         asm "jnc .fim"
-        return 0
+        throw AccessDeniedError
         asm ".fim:"
         stream.Id = id
         stream.Read = AddressOf(Read)
@@ -169,7 +225,7 @@ module File
         asm "popf"
         asm "pop ds"
         asm "jnc .fim"
-        return 0
+        throw AccessDeniedError
         asm ".fim:"
         return id
     end
@@ -197,7 +253,7 @@ module File
         asm "popf"
         asm "pop ds"
         asm "jnc .fim"
-        return 0
+        throw AccessDeniedError
         asm ".fim:"
         return id
     end
@@ -209,7 +265,7 @@ module File
         asm "mov bx, [bp-2]"
         asm "int 0x21"
         asm "jnc .fim"
-        return 0
+        throw UnknownError
         asm ".fim:"
         return 1
     end
@@ -223,7 +279,7 @@ module File
         asm "mov dx, [bp+10]"
         asm "int 0x21"
         asm "jnc .fim"
-        return 0
+        throw AccessDeniedError
         asm ".fim:"
         return 1
     end
@@ -237,7 +293,7 @@ module File
         asm "mov dx, [bp+10]"
         asm "int 0x21"
         asm "jnc .fim"
-        return 0
+        throw AccessDeniedError
         asm ".fim:"
         return 1
     end
@@ -251,7 +307,7 @@ module File
         asm "mov dx, [bp+10]"
         asm "int 0x21"
         asm "jnc .fim"
-        return 0
+        throw AccessDeniedError
         asm ".fim:"
         return 1
     end

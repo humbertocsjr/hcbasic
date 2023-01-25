@@ -1,5 +1,6 @@
 class Rotina : No
 {
+    public bool TemTryCatch { get; set; } = false;
     public Modulo Modulo { get; set; }
     public bool IgnorarCabecalhoRodape { get; set; } = false;
     public NivelPublicidade Publicidade { get; set; }
@@ -32,6 +33,7 @@ class Rotina : No
 
     protected override void CompilaInterno(Ambiente amb)
     {
+        amb.DentroDeUmTryCatch = false;
         amb.Rotina = this;
         if(!IgnorarCabecalhoRodape)
         {
@@ -42,6 +44,13 @@ class Rotina : No
             amb.Saida.EmiteEntraNaRotina();
             if(PosicaoVar != 0)
                 amb.Saida.EmiteSubtraiDoPtrPilha(PosicaoVar);
+            amb.Saida.EmiteCopiaVariavelGlobalParaAcumulador("_os_minstackptr");
+            amb.Saida.EmiteCopiaPonteiroPilhaParaAuxiliar();
+            amb.Saida.EmiteComparaAcumuladorComAuxiliar();
+            string semErro = amb.Saida.GeraRotulo();
+            amb.Saida.EmitePulaSeMenorQue(semErro, true);
+            EmiteErro.GeraECompila(amb, "StackOverflowError");
+            amb.Saida.EmiteRotulo(semErro);
         }
         RotuloFim = amb.Saida.GeraRotulo();
         CompilaLista(new List<No>(Argumentos), amb);
@@ -62,9 +71,10 @@ class Rotina : No
     protected override void InicializaInterno(Ambiente amb)
     {
         amb.Rotina = this;
+        InicializaLista(Comandos, amb);
+        if(TemTryCatch) PosicaoVar = 10;
         InicializaLista(new List<No>(Argumentos), amb);
         InicializaLista(new List<No>(Variaveis), amb);
-        InicializaLista(Comandos, amb);
         amb.Rotina = null;
     }
 

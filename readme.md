@@ -6,6 +6,10 @@ Esta linguagem não tem como objetivo ser orientada a objetos, sendo próximo de
 
 ## Novidades
 
+- Proteção mínima contra estouro de pilha (Apenas verifica quando entra numa rotina)
+- Implementado Try Catch, Throw e o Comando Error para definir o código do erro
+- Implementada Função ErrorFile() para pegar o nome do arquivo e ErrorLine() para pegar o numero da linha onde ocorreu o erro
+- Capturado divisão por zero e enviado para o Try Catch como Código 1 = DivByZeroError
 - Implementado estruturas estaticas que não precisam do comando New, estas declaradas no módulo
 - Corrigido GoTo que retornava um erro ao compilar
 - Implementado String.Copy e String.Concat na biblioteca para copiar uma string e concatenar
@@ -41,10 +45,12 @@ O uso do Makefile é opcional e voltado para Linux e macOS, existindo apenas par
 ## Bugs/Problemas conhecidos
 
 - Comandos ROL, ROR, SHL e SHR aplicam sempre em 16 bits, mesmo quando a variável é de 8 bits, onde os comando ROL e ROR ficam inutilizados para sua função, por enquanto usar esses comandos apenas com variáveis 16 bits
+- Try Catch tráz uma limitação de uso exclusivo em monotarefa, pois armazena seus ponteiros estaticamente, deverá ser alterado para armazenar 100% em pilha permitindo uso em multitarefa
 - **Por padrão este compilador não inicializa suas variáveis, e AINDA não verifica se o usuário esta tentando usa-las sem inicializar, isto é problemático principalmente com ponteiros/estruturas que podem ao ser manipuladas com um valor inicial inválido corromper dados na memória ou mesmo gerar crashs no sistema operacional, este comportamento deve ser alterado no futuro para se parecer mais com um compilador BASIC e menos com o comportamento de um compilador C**
 
 ## Objetivos Atuais e Prioritários
 
+- Diminuir código gerado pelo Try Catch, otimizando multiplos comandos genéricos em comandos especializados para o Saida
 - Implementar SizeOf
 - Limpeza de itens não utilizados na implementação do Saida
 
@@ -68,7 +74,9 @@ O uso do Makefile é opcional e voltado para Linux e macOS, existindo apenas par
 - [ ] Suporte a números 32 bits na linguagem
 - [x] Inclui apenas módulos usados no projeto, deixando o executável mais compacto
 - [x] Permitir conversão dos ponteiros PtrByteArray em PtrWordArray de forma simples
-- [ ] Implementar um tipo de Try Catch Finally / Throw Exception
+- [x] Implementar um tipo de Try Catch Finally / Throw Exception
+- [x] Implementar no Try Catch forma de descobrir o nome do arquivo e linha onde ocorreu o erro
+- [ ] Armazenar ponteiros do Try Catch totalmente em pilha, evitando problemas em multitarefa
 - [ ] Implementar SizeOf para tipos e para variaveis
 - [x] Implementar forma de definir os diretórios de pesquisa do Imports
 - [ ] Quanto tudo estiver pronto, criar um protótipo do compilador feito diretamente em HCBasic para que seja executável localmente, para isso usar assemblers já existente para a plataforma, por exemplo o Old-School Assembler para DOS
@@ -485,6 +493,128 @@ Module Program
 
 End
 
+
+```
+
+## Erros e Interceptação de Erros
+
+Para impedir que falhas invisíveis se acumulem e gerem falhas graves, há formas de interceptar e gerar notificações de erros, usando comandos simples.
+
+*O que é um erro?*
+
+- Um erro é uma derivação não desejavel do fluxo, por exemplo quando se utiliza duas variáveis para fazer uma divisão, mas o dividendo contém 0, portanto impossibilitando a divisão.
+
+**Para evitar que haja quebras indesejáveis no fluxo do programa, pode se usar o comando Try para interceptar falhas previsíveis e imprevisíveis**
+
+```vb
+
+Try
+    ' Execute aqui o código que pode apresentar erros, por exemplo abertura de arquivos, que podem retornar um acesso negado
+Catch Error
+    ' Intercepta o erro executando comandos que previnem falhas maiores na execução do código
+End
+
+```
+
+O comando Try é composto por duas partes, a parte monitorada, e a parte de contenção e tratamento de erros, esta segunda parte utiliza o comando Catch para informar qual erro ela trata, podendo ter mais de um Catch prevendo vários cenários, ou mesmo um cenário genérico.
+
+**Comando: Catch [Tipo de Erro]**
+
+Ao declarar o tipo de erro, apenas aquele tipo é interceptado pelo Catch, caso não se enquadre verifica o Catch abaixo, caso nenhum Catch se enquadre a execução do programa é cancelada emitindo o erro ao sistema operacional.
+
+```vb
+
+Try
+
+    ' Código que pode gerar multiplos erros
+
+Catch DivByZeroError
+    ' Executa apenas quando houver um erro de divisão por Zero
+Catch StackOverflowError
+    ' Executa apenas quando houver um erro de estouro da pilha
+Catch Error
+    ' Executa para quaisquer erros não declarados acima, e na ausência deste, quando houver um erro que não se enquadre é cancelada a execução do programa e retorna ao sistema operacional
+End
+
+```
+
+Agora que se sabe qual é o erro dentro do Catch, pode-se extrair qual o arquivo e linha de código onde o erro foi detectado, usando duas funções embutidas chamadas ErrorFile() e ErrorLine().
+
+- ErrorFile() = Retorna um ponteiro para uma string que informa o nome do arquivo onde ocorreu o erro
+- ErrorLine() = Retorna o número da linha de código onde ocorreu o erro, facilitando a correção posterior pelo programador
+
+
+```vb
+
+Try
+
+    ' Código que pode gerar multiplos erros
+
+Catch Error
+    Console.Write "Ocorreu um erro na linha "
+    Console.WriteUInt16 ErrorLine()
+    Console.Write " no arquivo '"
+    Console.Write ErrorFile()
+    Console.WriteLine "'."
+End
+
+```
+
+Tipos de erro padrão e seus códigos, não se deve utilizar para uso próprio códigos de erro inferiores a 1000, para que não hajam conflitos com códigos oficiais de erro da linguagem existente ou futuros.
+
+
+ - Error = 0
+ - DivByZeroError = 1
+ - StackOverflowError = 2
+ - OutOfMemoryError = 3
+ - OutOfBoundsError = 4
+ - NotFoundError = 5
+ - AlreadyExistsError = 6
+ - NotImplementedError = 7
+ - UnknownError = 8
+ - CapacityOverflowError = 9
+ - NoAnswerError = 10
+ - TimeoutError = 11
+ - InvalidValueError = 12
+ - AccessDeniedError = 13
+
+
+Para controladamente gerar um erro, deve-se usar o comando Throw [Tipo de Erro], conforme exemplo abaixo
+
+```vb
+
+Try
+
+    ' Emite um erro do tipo NoAnswerError
+    Throw NoAnswerError
+
+Catch NoAnswerError
+    Console.Write "Ocorreu um erro na linha "
+    Console.WriteUInt16 ErrorLine()
+    Console.Write " no arquivo '"
+    Console.Write ErrorFile()
+    Console.WriteLine "'."
+End
+
+```
+
+Para se declarar um novo tipo de erro, deve-se colocar na raiz do arquivo de código fonte, preferencialmente acima dos módulos usados, o comando error [Tipo de Erro] = [Código do erro]
+
+```vb
+
+' Exemplo de declaração
+error CustomError = 1000
+
+
+Module Program
+    Public Sub Main(args as String)
+        Try
+            ' Exemplo de uso
+            Throw CustomError
+        Catch CustomError
+            ' Exemplo de interceptação
+        End
+    End
 
 ```
 

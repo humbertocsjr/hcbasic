@@ -2,6 +2,7 @@ class Ambiente
 {
     // Aqui armazena variaveis de ambiente usadas por todas as etapas da compilação
 
+    public bool DentroDeUmTryCatch { get; set; } = false;
     public byte TamanhoStringPilha { get; set; } = 128;
     public byte TamanhoStringEstatica { get; set; } = 255;
 
@@ -11,6 +12,8 @@ class Ambiente
     public List<Modulo> Modulos { get; set; }
     // Todos as Estruturas carregados
     public List<Estrutura> Estruturas { get; set; }
+    // Todos os erros possíveis
+    public List<RegistroDeErro> Erros { get; set; }
     // Modulo atual durante o processamento
     public Modulo? Modulo { get; set; } = null;
     // Rotina atual durante o processamento
@@ -55,8 +58,9 @@ class Ambiente
         return null;
     }
 
-    public Ambiente(Saida saida, List<DirectoryInfo> importacao, List<Modulo> modulos, List<Estrutura> estruturas, Trecho trecho, No no)
+    public Ambiente(Saida saida, List<DirectoryInfo> importacao, List<RegistroDeErro> erros, List<Modulo> modulos, List<Estrutura> estruturas, Trecho trecho, No no)
     {
+        Erros = erros;
         Estruturas = estruturas;
         DiretoriosImportacao = importacao;
         Modulos = modulos;

@@ -29,7 +29,7 @@ class Modulo : Estrutura
     protected override void CompilaInterno(Ambiente amb)
     {
         amb.Modulo = this;
-        amb.Saida.EmiteModulo(Nome);
+        amb.Saida.EmiteModulo(Nome, Trecho.Fonte.NomeCompleto);
         foreach (var campo in Campos)
         {
             campo.Compila(amb);

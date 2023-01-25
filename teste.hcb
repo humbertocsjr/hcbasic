@@ -50,6 +50,19 @@ module Program
         String.Concat txt, " Texto concatenado 1,"
         String.Concat txt, " Texto concatenado 2"
         Console.WriteLine txt
+        try
+            dim numero as uint16
+            dim numero2 as uint16
+            numero2 = 0
+            numero = 10 / numero2
+        catch DivByZeroError
+            Console.WriteLine "Divisao por zero pega"
+            Console.Write ErrorFile()
+            Console.Write ": "
+            Console.WriteUInt16 ErrorLine()
+            Console.WriteLine ""
+        end
+        if String.Equals("oi", "oi") then Console.WriteLine "EQUAL TEST"
     end
 
     function TesteFunc() as UInt16

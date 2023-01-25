@@ -14,6 +14,7 @@ class OpMatematica : No
     {
         No esq = Esquerda ?? new Nulo(Trecho);
         No dir = Direita ?? new Nulo(Trecho);
+        string rotuloDivisao = "";
         if(esq is Texto | dir is Texto) throw Erro("Não há suporte a concatenar textos");
         if(amb.Tipo == TipoVariavel.Int16 | amb.Tipo == TipoVariavel.Int8)
         {
@@ -44,6 +45,11 @@ class OpMatematica : No
                     esq.Compila(amb);
                     amb.Saida.EmiteEmpilhaAcumulador();
                     dir.Compila(amb);
+                    amb.Saida.EmiteComparaAcumuladorComZero();
+                    rotuloDivisao = amb.Saida.GeraRotulo();
+                    amb.Saida.EmitePulaSeDiferente(rotuloDivisao);
+                    EmiteErro.GeraECompila(amb, "DivByZeroError");
+                    amb.Saida.EmiteRotulo(rotuloDivisao);
                     amb.Saida.EmiteCopiaAcumuladorParaAuxiliar();
                     amb.Saida.EmiteDesempilhaAcumulador();
                     amb.Saida.EmiteDivideSinalAuxNoAcumulador();
@@ -52,6 +58,11 @@ class OpMatematica : No
                     esq.Compila(amb);
                     amb.Saida.EmiteEmpilhaAcumulador();
                     dir.Compila(amb);
+                    amb.Saida.EmiteComparaAcumuladorComZero();
+                    rotuloDivisao = amb.Saida.GeraRotulo();
+                    amb.Saida.EmitePulaSeDiferente(rotuloDivisao);
+                    EmiteErro.GeraECompila(amb, "DivByZeroError");
+                    amb.Saida.EmiteRotulo(rotuloDivisao);
                     amb.Saida.EmiteCopiaAcumuladorParaAuxiliar();
                     amb.Saida.EmiteDesempilhaAcumulador();
                     amb.Saida.EmiteModSinalAuxNoAcumulador();
@@ -120,6 +131,11 @@ class OpMatematica : No
                     esq.Compila(amb);
                     amb.Saida.EmiteEmpilhaAcumulador();
                     dir.Compila(amb);
+                    amb.Saida.EmiteComparaAcumuladorComZero();
+                    rotuloDivisao = amb.Saida.GeraRotulo();
+                    amb.Saida.EmitePulaSeDiferente(rotuloDivisao);
+                    EmiteErro.GeraECompila(amb, "DivByZeroError");
+                    amb.Saida.EmiteRotulo(rotuloDivisao);
                     amb.Saida.EmiteCopiaAcumuladorParaAuxiliar();
                     amb.Saida.EmiteDesempilhaAcumulador();
                     amb.Saida.EmiteDivideSemSinalAuxNoAcumulador();
@@ -128,6 +144,11 @@ class OpMatematica : No
                     esq.Compila(amb);
                     amb.Saida.EmiteEmpilhaAcumulador();
                     dir.Compila(amb);
+                    amb.Saida.EmiteComparaAcumuladorComZero();
+                    rotuloDivisao = amb.Saida.GeraRotulo();
+                    amb.Saida.EmitePulaSeDiferente(rotuloDivisao);
+                    EmiteErro.GeraECompila(amb, "DivByZeroError");
+                    amb.Saida.EmiteRotulo(rotuloDivisao);
                     amb.Saida.EmiteCopiaAcumuladorParaAuxiliar();
                     amb.Saida.EmiteDesempilhaAcumulador();
                     amb.Saida.EmiteModSemSinalAuxNoAcumulador();
@@ -197,9 +218,11 @@ class OpMatematica : No
                     ret = new Numero(Trecho, ((Numero)esq).Valor * ((Numero)dir).Valor);
                     break;
                 case "/":
+                    if(((Numero)dir).Valor == 0) throw Erro("Divisão por zero encontrada");
                     ret = new Numero(Trecho, ((Numero)esq).Valor / ((Numero)dir).Valor);
                     break;
                 case "mod":
+                    if(((Numero)dir).Valor == 0) throw Erro("Divisão por zero encontrada");
                     ret = new Numero(Trecho, ((Numero)esq).Valor % ((Numero)dir).Valor);
                     break;
                 case "shl":

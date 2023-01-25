@@ -2,6 +2,9 @@ class Analise
 {
     // Variaveis de uso comum do analisador
 
+
+    // Registro de erros possiveis no codigo fonte
+    public List<RegistroDeErro> Erros { get; set; } = new List<RegistroDeErro>();
     // Armazena os códigos fontes analisados
     public List<Fonte> Fontes { get; set; } = new List<Fonte>();
     // Armazena os módulos carregados, usado para compilação
@@ -27,9 +30,9 @@ class Analise
     // Processa tipo de uma variável
     // Usado quando se declara o tipo da variável, por exemplo:
     // Dim variavel as TIPO
-    private TipoVariavel processaTipo(ref Trechos trechos)
+    public static TipoVariavel ProcessaTipo(string tipo)
     {
-        switch(trechos.Atual.Conteudo.ToLower())
+        switch(tipo)
         {
             case "int8":
                 return TipoVariavel.Int16;
@@ -51,11 +54,15 @@ class Analise
                 return TipoVariavel.Structure;
         }
     }
+    private TipoVariavel processaTipo(ref Trechos trechos)
+    {
+        return ProcessaTipo(trechos.Atual.Conteudo.ToLower());
+    }
 
     // Processa declaração de variável ou campo do modulo
     // Exemplo:
     // dim variavel as tipo
-    private DeclaraVariavel processaDim(NivelPublicidade publi, Estrutura mod, bool varDoModulo, ref Trechos trechos)
+    private DeclaraVariavel processaDim(NivelPublicidade publi, Estrutura mod, bool varDoModulo, bool apenasPonteiro, ref Trechos trechos)
     {
         trechos.ExigeProximo("Esperado o nome da variável após o 'dim'");
         trechos.ExigeId("Esperado o nome da variável");
@@ -76,6 +83,7 @@ class Analise
         TipoVariavel tipoRetorno = TipoVariavel.UInt16;
         string tipoRetornoNome = "uint16";
         DeclaraVariavel dim = new DeclaraVariavel(dimTrecho, mod, varDoModulo, publi, dimTipo, dimTipoNome, dimColecao, dimColecaoTam);
+        dim.EstruturaEstaticaApenasPonteiro = apenasPonteiro;
         if(dimTipo == TipoVariavel.Func | dimTipo == TipoVariavel.Action)
         {
             trechos.ExigeTipo(TipoTrecho.AbreParenteses, $"Esperado '(' após '{dimTipoNome}'");
@@ -450,12 +458,12 @@ class Analise
         do 
         {
             reverifica:
-            if(trechos.EhIdentificador("end") | trechos.EhIdentificador("else")) break;
+            if(trechos.EhIdentificador("end") | trechos.EhIdentificador("else") | trechos.EhIdentificador("catch")) break;
             
 
             if(trechos.EhIdentificador("dim"))
             {
-                rot.Variaveis.Add(processaDim(NivelPublicidade.Local, mod, false, ref trechos));
+                rot.Variaveis.Add(processaDim(NivelPublicidade.Local, mod, false, false, ref trechos));
             }
             else if(trechos.EhIdentificador("let"))
             {
@@ -491,9 +499,37 @@ class Analise
                 cmds.Add(new VaPara(trechos.Atual));
                 trechos.Proximo();
             }
-            else if(trechos.EhIdentificador("invoke"))
+            else if(trechos.EhIdentificador("throw"))
             {
-                throw new NotImplementedException();
+                trechos.Proximo();
+                EmiteErro emite = new EmiteErro(trechos.Atual);
+                trechos.ExigeId("Esperado o tipo de erro");
+                cmds.Add(emite);
+                trechos.Proximo();
+            }
+            else if(trechos.EhIdentificador("try"))
+            {
+                trechos.Proximo();
+                Tenta tenta = new Tenta(trechos.Atual);
+                cmds.Add(tenta);
+                trechos.ExigeFimDaLinha("Esperado fim da linha");
+                trechos.ProximaLinha();
+                nivelRotina(mod, rot, tenta.TentaComandos, false, ref trechos);
+                trechos.ExigeId("catch", "Esperado um 'catch' ao final dos comandos de um 'try'");
+                do
+                {
+                    trechos.Proximo();
+                    trechos.ExigeId("Esperado um tipo de erro");
+                    List<No> erroCmds = new List<No>();
+                    string erroTipo = trechos.Atual.Conteudo;
+                    trechos.Proximo();
+                    trechos.ExigeFimDaLinha("Esperado fim da linha");
+                    trechos.ProximaLinha();
+                    nivelRotina(mod, rot, erroCmds, false, ref trechos);
+                    tenta.PegaErros.Add(erroTipo, erroCmds);
+                }while(trechos.EhIdentificador("catch"));
+                trechos.ExigeId("end", "Esperado um 'end' ao final de um Try Catch");
+                trechos.Proximo();
             }
             else if(trechos.EhIdentificador() & trechos.EhProximoTipo(TipoTrecho.DoisPontos))
             {
@@ -650,9 +686,10 @@ class Analise
     // end
     private void nivelModulo(Modulo mod, ref Trechos trechos)
     {
-        NivelPublicidade publi = NivelPublicidade.Privado;
         do 
         {
+            NivelPublicidade publi = NivelPublicidade.Privado;
+            bool apenasPonteiro = false;
             if(trechos.EhIdentificador("end")) break;
             publi = NivelPublicidade.Privado;
             if(trechos.EhIdentificador("public"))
@@ -665,21 +702,29 @@ class Analise
                 publi = NivelPublicidade.Privado;
                 trechos.Proximo();
             }
+            if(trechos.EhIdentificador("pointer"))
+            {
+                apenasPonteiro = true;
+                trechos.Proximo();
+            }
 
             if(trechos.EhIdentificador("dim"))
             {
-                mod.Campos.Add(processaDim(publi, mod, true, ref trechos));
+                mod.Campos.Add(processaDim(publi, mod, true, apenasPonteiro, ref trechos));
             }
             else if(trechos.EhIdentificador("sub"))
             {
+                if(apenasPonteiro) trechos.Erro("Marcador Pointer não é compatível com rotinas");
                 mod.Rotinas.Add(processaSubFunction(mod, publi, false, ref trechos));
             }
             else if(trechos.EhIdentificador("function"))
             {
+                if(apenasPonteiro) trechos.Erro("Marcador Pointer não é compatível com rotinas");
                 mod.Rotinas.Add(processaSubFunction(mod, publi, true, ref trechos));
             }
             else if(!trechos.FimDaLinha)
             {
+                if(apenasPonteiro) trechos.Erro("Esperado alguma declaração de variável");
                 trechos.Erro("Comando desconhecido");
             }
         } while(trechos.ProximaLinha());
@@ -698,7 +743,7 @@ class Analise
 
             if(trechos.EhIdentificador("dim"))
             {
-                estrutura.Campos.Add(processaDim(NivelPublicidade.Publico, estrutura, true, ref trechos));
+                estrutura.Campos.Add(processaDim(NivelPublicidade.Publico, estrutura, true, false, ref trechos));
             }
             else if(!trechos.FimDaLinha)
             {
@@ -738,6 +783,19 @@ class Analise
                     trechos.ExigeId("end");
                     trechos.ExigeProximoFimDaLinha("Esperado apenas o 'end', sem nenhum complemento posterior");
 
+                }
+                else if (trechos.EhIdentificador("error"))
+                {
+                    trechos.Proximo();
+                    trechos.ExigeId("Esperado o nome do erro");
+                    var erroTrecho = trechos.Atual;
+                    trechos.Proximo();
+                    trechos.ExigeTipo(TipoTrecho.Atribuicao, "Esperado um '=' após o nome do erro");
+                    trechos.Proximo();
+                    trechos.ExigeTipo(TipoTrecho.Numero, "Esperado um numero decimal");
+                    RegistroDeErro erro = new RegistroDeErro(erroTrecho, int.Parse(trechos.Atual.Conteudo));
+                    Erros.Add(erro);
+                    trechos.Proximo();
                 }
                 else if(trechos.EhIdentificador("imports"))
                 {
@@ -813,7 +871,7 @@ class Analise
     // Compila codigo fonte
     public void Compila(Saida saida)
     {
-        Ambiente amb = new Ambiente(saida, DiretoriosImportacao, Modulos, Estruturas, Modulos.First().Trecho, Modulos.First());;
+        Ambiente amb = new Ambiente(saida, DiretoriosImportacao, Erros, Modulos, Estruturas, Modulos.First().Trecho, Modulos.First());;
 
 
         foreach (var estru in Estruturas)
@@ -854,5 +912,6 @@ class Analise
             amb.Saida.EmiteItemRealocacao(realoc);
         }
         amb.Saida.EmiteItemRealocacao(new Realocacao(TipoDeRealocacao.FimLista, 0, "0", 0));
+        amb.Saida.EmiteRotulo("END");
     }
 }

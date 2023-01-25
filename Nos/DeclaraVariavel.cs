@@ -1,5 +1,6 @@
 class DeclaraVariavel : No
 {
+    public bool EstruturaEstaticaApenasPonteiro { get; set; } = false;
     public string NomeGlobal => $"_{Modulo.Nome}_{Nome}";
     public bool EhNumerica() => Tipo == TipoVariavel.Int16 | Tipo == TipoVariavel.UInt16 | Tipo == TipoVariavel.Int8 | Tipo == TipoVariavel.UInt8;
     public bool EhPonteiro() => Tipo == TipoVariavel.PtrByteArray | Tipo == TipoVariavel.PtrWordArray;
@@ -46,7 +47,11 @@ class DeclaraVariavel : No
                 rotulo = amb.Saida.GeraRotulo();
                 amb.Saida.EmitePulaPara(rotulo);
                 amb.Saida.EmiteRotulo(NomeGlobal);
-                if(Tipo == TipoVariavel.Structure)
+                if(Tipo != TipoVariavel.Structure && EstruturaEstaticaApenasPonteiro)
+                {
+                    throw Erro("Marcador Pointer só é válido para estruturas");
+                }
+                if(Tipo == TipoVariavel.Structure && !EstruturaEstaticaApenasPonteiro)
                 {
                     Estrutura? estru = amb.PesquisaEstrutura(TipoNome);
                     if(estru == null) throw Erro("Estrutura não encontrada");
