@@ -488,7 +488,8 @@ class Analise
             else if(trechos.EhIdentificador("goto"))
             {
                 trechos.Proximo();
-                cmds.Add(new VaPara(trechos.Anterior));
+                cmds.Add(new VaPara(trechos.Atual));
+                trechos.Proximo();
             }
             else if(trechos.EhIdentificador("invoke"))
             {
@@ -602,7 +603,7 @@ class Analise
         trechos.ExigeProximo("Esperado o nome da rotina após o 'sub'/'function'");
         trechos.ExigeId("Esperado o nome da rotina");
         Trecho subTrecho = trechos.Atual;
-        Rotina rot = new Rotina(subTrecho, mod, publi, retornaValor, TipoVariavel.Int16);
+        Rotina rot = new Rotina(subTrecho, mod, publi, retornaValor, TipoVariavel.Desconhecido);
         trechos.Proximo();
         if(trechos.EhTipo(TipoTrecho.AbreParenteses))
         {
@@ -846,5 +847,12 @@ class Analise
             mod.Compila(amb);
             CompilaReferencias(mod, amb);
         }
+
+        amb.Saida.EmiteRotulo("REALOC_TABLE");
+        foreach (var realoc in amb.Realocacoes)
+        {
+            amb.Saida.EmiteItemRealocacao(realoc);
+        }
+        amb.Saida.EmiteItemRealocacao(new Realocacao(TipoDeRealocacao.FimLista, 0, "0", 0));
     }
 }

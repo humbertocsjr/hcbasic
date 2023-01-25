@@ -10,6 +10,44 @@ module OS
     sub Start2
         ' Declara ponteiro para os argumentos
         dim args as ptrbytearray
+        ' Realoca executavel
+        Dim realoc as PtrWordArray
+        Dim ptr as PtrWordArray
+        Dim tipoRealoc as UInt16
+        Dim desvio as UInt16
+        Dim soma as UInt16
+        #realoc = CodeSegment()
+        #ptr = CodeSegment()
+        @realoc = RealocTable()
+        while realoc <> 0
+            tipoRealoc = realoc
+            @realoc ++
+            @realoc ++
+            @ptr = realoc
+            @realoc ++
+            @realoc ++
+            desvio = realoc
+            @realoc ++
+            @realoc ++
+            soma = realoc
+            @realoc ++
+            @realoc ++
+            if tipoRealoc == 3 then
+                ptr = CodeSegment() + soma
+                desvio = desvio + @ptr
+                @ptr ++
+                @ptr ++
+                ptr = desvio
+            end
+            if tipoRealoc == 2 then
+                @ptr = @ptr + desvio
+                ptr = StackSegment() + soma
+            end
+            if tipoRealoc == 1 then
+                @ptr = @ptr + desvio
+                ptr = CodeSegment() + soma
+            end
+        end
         ' Define ponteiro
         asm "mov ax, cs"
         asm "mov [bp-2], ax"

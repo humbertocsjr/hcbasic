@@ -2,6 +2,10 @@ class Ambiente
 {
     // Aqui armazena variaveis de ambiente usadas por todas as etapas da compilação
 
+    public byte TamanhoStringPilha { get; set; } = 128;
+    public byte TamanhoStringEstatica { get; set; } = 255;
+
+    public List<Realocacao> Realocacoes { get; set; } = new List<Realocacao>();
     public List<DirectoryInfo> DiretoriosImportacao ;
     // Todos os modulos carregados
     public List<Modulo> Modulos { get; set; }

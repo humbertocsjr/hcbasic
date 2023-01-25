@@ -12,6 +12,49 @@ module String
         end
         return i
     end
+
+    public function Concat(dest as ptrbytearray, orig as ptrbytearray) as uint16
+        dim dest_len as uint16
+        dim dest_capacity as uint16
+        dim len as uint16
+        dim i as uint16
+        dim tmp as uint8
+        dest_len = String.Length(dest)
+        dest_capacity = dest
+        len = String.Length(orig) + 1
+        if (len +  dest_len + 1) >  dest_capacity then return 0
+        @dest = @dest + 1 + dest_len
+        @orig++
+        for i = 1 to len
+            tmp = orig
+            dest = tmp
+            @dest++
+            @orig++
+        end
+        dest = 0
+        return 1
+    end
+
+    public function Copy(dest as ptrbytearray, orig as ptrbytearray) as uint16
+        dim dest_capacity as uint16
+        dim orig_len as uint16
+        dim i as uint16
+        dim tmp as uint8
+        dest_capacity = dest
+        orig_len = String.Length(orig) + 1
+        @dest++
+        @orig++
+        dest = 0
+        if dest_capacity < (orig_len + 1) then return 0
+        for i = 1 to orig_len
+            tmp = orig
+            dest = tmp
+            @orig++
+            @dest++
+        end
+        dest = 0
+        return 1
+    end
 end
 
 structure Stream

@@ -6,6 +6,9 @@ Esta linguagem não tem como objetivo ser orientada a objetos, sendo próximo de
 
 ## Novidades
 
+- Implementado estruturas estaticas que não precisam do comando New, estas declaradas no módulo
+- Corrigido GoTo que retornava um erro ao compilar
+- Implementado String.Copy e String.Concat na biblioteca para copiar uma string e concatenar
 - **Resolvidos vários bugs de ponteiro**
 - Implementação da atribuição sem o comando Let
 - Criada um mecanismo de gerar as distribuições, será usado a partir do momento compilador e a Biblioteca System estiver utilizável para subir os Releases no GitHub
@@ -84,11 +87,12 @@ Module Program
         Dim texto as String
         Dim texto2 as String
         texto = new
-        texto2 = "Exemplo"
+        texto2 = new
 
         Console.WriteLine "Hello World!!"
         Console.ReadLine texto
-        Console.WriteLine texto
+        String.Copy texto2, "O usuário digitou: "
+        String.Concat texto2, texto
         Console.WriteLine texto2
 
     End
@@ -597,6 +601,17 @@ Asm "int 0x10"
 ```
 
 ## Biblioteca de Módulos System
+
+### Módulo String
+
+- String.Length TEXTO
+    - Retorna o tamanho ocupado de uma string
+
+- String.Copy DESTINO, ORIGEM
+    - Retorna verdadeiro se conseguiu copiar, e falso se o destino não cabe a origem
+
+- String.Concat DESTINO, ORIGEM
+    - Retorna verdadeiro se conseguiu concatenar, e falso se o destino não cabe a origem
 
 ### Módulo Console
 

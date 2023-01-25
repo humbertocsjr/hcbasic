@@ -38,7 +38,6 @@ class Acao : No
 
     void acaoVariavel(Ambiente amb, DeclaraVariavel variavel)
     {
-        TipoCompilado = variavel.Tipo;
         switch(Tipo)
         {
             case TipoDeAcao.Leitura:
@@ -115,8 +114,10 @@ class Acao : No
                     else
                     {
                         amb.Tipo = variavel.Tipo;
+                        if(amb.TipoPonteiro) amb.Tipo = TipoVariavel.UInt16;
                         amb.VariavelDestino = variavel;
                         ValorGravacao.Compila(amb);
+                        if(ValorGravacao is Acao && ((Acao)ValorGravacao).TipoCompilado == TipoVariavel.Desconhecido) throw Erro($"Falha de compilador: falta o Acao definir o TipoCompilado para {((Acao)ValorGravacao).Tipo} {string.Join('.',((Acao)ValorGravacao).Nome)}");
                         amb.VariavelDestino = null;
                         amb.Tipo = null;
                         amb.Saida.EmiteCopiaAcumuladorParaVariavelLocal(variavel.Posicao);
@@ -133,6 +134,7 @@ class Acao : No
                         amb.Tipo = variavel.Tipo;
                         amb.VariavelDestino = variavel;
                         ValorGravacao.Compila(amb);
+                        if(ValorGravacao is Acao && ((Acao)ValorGravacao).TipoCompilado == TipoVariavel.Desconhecido) throw Erro($"Falha de compilador: falta o Acao definir o TipoCompilado para {((Acao)ValorGravacao).Tipo} {string.Join('.',((Acao)ValorGravacao).Nome)}");
                         amb.VariavelDestino = null;
                         amb.Tipo = null;
                         amb.Saida.EmiteCopiaAcumuladorParaVariavelGlobal(variavel.NomeGlobal);
@@ -149,6 +151,7 @@ class Acao : No
                     else
                     {
                         amb.Tipo = variavel.Tipo;
+                        if(amb.TipoPonteiro) amb.Tipo = TipoVariavel.UInt16;
                         amb.VariavelDestino = variavel;
                         ValorGravacao.Compila(amb);
                         amb.VariavelDestino = null;
@@ -185,14 +188,9 @@ class Acao : No
 
     void acaoPonteiro(Ambiente amb, DeclaraVariavel variavel, TipoAcaoPonteiro tipoPonteiro, int desvioNoPonteiro)
     {
-        TipoCompilado = variavel.Tipo;
         switch(Tipo)
         {
             case TipoDeAcao.Leitura:
-                if(variavel.Nome == "texto")
-                {
-                    
-                }
                 if(variavel.Publicidade == NivelPublicidade.Local)
                 {
                     if(amb.TipoPonteiro)
@@ -283,6 +281,7 @@ class Acao : No
                         amb.Tipo = variavel.Tipo;
                         amb.VariavelDestino = variavel;
                         ValorGravacao.Compila(amb);
+                        if(ValorGravacao is Acao && ((Acao)ValorGravacao).TipoCompilado == TipoVariavel.Desconhecido) throw Erro($"Falha de compilador: falta o Acao definir o TipoCompilado para {((Acao)ValorGravacao).Tipo} {string.Join('.',((Acao)ValorGravacao).Nome)}");
                         if(ValorGravacao is Acao && ((Acao)ValorGravacao).TipoCompiladoPonteiro)
                             amb.Saida.EmiteCopiaPonteiroRemotoParaVariavelLocal(variavel.Posicao);
                         else if(tipoPonteiro == TipoAcaoPonteiro.Byte)
@@ -326,6 +325,7 @@ class Acao : No
                         amb.Tipo = variavel.Tipo;
                         amb.VariavelDestino = variavel;
                         ValorGravacao.Compila(amb);
+                        if(ValorGravacao is Acao && ((Acao)ValorGravacao).TipoCompilado == TipoVariavel.Desconhecido) throw Erro($"Falha de compilador: falta o Acao definir o TipoCompilado para {((Acao)ValorGravacao).Tipo} {string.Join('.',((Acao)ValorGravacao).Nome)}");
                         if(ValorGravacao is Acao && ((Acao)ValorGravacao).TipoCompiladoPonteiro)
                             amb.Saida.EmiteCopiaPonteiroRemotoParaVariavelGlobal(variavel.NomeGlobal);
                         if(tipoPonteiro == TipoAcaoPonteiro.Byte)
@@ -346,10 +346,6 @@ class Acao : No
     {
         if(amb.Modulo == null) throw Erro("Módulo não declarado");
         if(amb.Rotina == null) throw Erro("Rotina não declarado");
-        if(amb.Rotina.Nome == "escrevac")
-        {
-            //REMOVA
-        }
         Queue<string> referencia = new Queue<string>(Nome);
         Modulo? mod = amb.Modulo;
         switch (Tipo)
@@ -381,12 +377,14 @@ class Acao : No
                     referencia.Dequeue();
                     if(variavel == null) throw Erro("Variável não encontrada");
                     if(variavel.Publicidade == NivelPublicidade.Privado & mod != amb.Modulo) throw Erro("Esta variável não é acessível de fora do módulo");
+                    TipoCompilado = variavel.Tipo;
                     switch(variavel.Tipo)
                     {
                         case TipoVariavel.Int8:
                         case TipoVariavel.UInt8:
                         case TipoVariavel.Int16:
                         case TipoVariavel.UInt16:
+                            TipoCompilado = variavel.Tipo;
                             if(referencia.Any()) throw Erro("Variavel de tipo inválido");
                             acaoVariavel(amb, variavel);
                             break;
@@ -394,6 +392,7 @@ class Acao : No
                             if(referencia.Any()) throw Erro("Variavel de tipo inválido");
                             if(TipoSegmento | TipoDesvio)
                             {
+                                TipoCompilado = TipoVariavel.UInt16;
                                 acaoVariavel(amb, variavel);
                             }
                             else
@@ -406,6 +405,7 @@ class Acao : No
                             if(referencia.Any()) throw Erro("Variavel de tipo inválido");
                             if(TipoSegmento | TipoDesvio)
                             {
+                                TipoCompilado = TipoVariavel.UInt16;
                                 acaoVariavel(amb, variavel);
                             }
                             else
@@ -417,6 +417,7 @@ class Acao : No
                             if(referencia.Any()) throw Erro("Variavel de tipo inválido");
                             if(TipoSegmento | TipoDesvio)
                             {
+                                TipoCompilado = TipoVariavel.UInt16;
                                 acaoVariavel(amb, variavel);
                             }
                             else
@@ -429,6 +430,7 @@ class Acao : No
                             {
                                 if(TipoSegmento | TipoDesvio)
                                 {
+                                    TipoCompilado = TipoVariavel.UInt16;
                                     acaoVariavel(amb, variavel);
                                 }
                                 else if(Tipo == TipoDeAcao.Gravacao & ValorGravacao is Texto)
@@ -443,14 +445,14 @@ class Acao : No
                                     if(amb.Rotina.Argumentos.Any(a => a.Nome.ToLower() == variavel.Nome.ToLower()))  throw Erro("Este tipo de ação só é suportada em variáveis locais internas");
                                     if(estru == null) throw Erro("Estrutura não encontrada");
                                     if(estru.Nome.ToLower() == "string")
-                                        amb.Saida.EmiteSubtraiDoPtrPilha(129);
+                                        amb.Saida.EmiteSubtraiDoPtrPilha(amb.TamanhoStringPilha + 1);
                                     else 
                                         amb.Saida.EmiteSubtraiDoPtrPilha(estru.TamanhoCampos);
                                     amb.Saida.EmiteCopiaPonteiroPilhaParaPonteiroRemoto();
                                     amb.Saida.EmiteCopiaPonteiroRemotoParaVariavelLocal(variavel.Posicao);
                                     if(estru.Nome.ToLower() == "string")
                                     {
-                                        amb.Saida.EmiteGravaNumeroNoByteArrayDaVariavelLocal(variavel.Posicao, 128, 0);
+                                        amb.Saida.EmiteGravaNumeroNoByteArrayDaVariavelLocal(variavel.Posicao, amb.TamanhoStringPilha, 0);
                                         amb.Saida.EmiteGravaNumeroNoByteArrayDaVariavelLocal(variavel.Posicao, 0, 1);
                                     }
                                 }
@@ -470,12 +472,14 @@ class Acao : No
                                 switch(Tipo)
                                 {
                                     case TipoDeAcao.LeituraSegmento:
+                                        TipoCompilado = TipoVariavel.UInt16;
                                         if(variavel.Publicidade == NivelPublicidade.Local)
                                             amb.Saida.EmiteCopiaWordArrayDaVariavelLocalParaAcumulador(variavel.Posicao, campo.Posicao + 2);
                                         else
                                             amb.Saida.EmiteCopiaWordArrayDaVariavelGlobalParaAcumulador(variavel.NomeGlobal, campo.Posicao + 2);
                                         break;
                                     case TipoDeAcao.LeituraDesvio:
+                                        TipoCompilado = TipoVariavel.UInt16;
                                         if(variavel.Publicidade == NivelPublicidade.Local)
                                             amb.Saida.EmiteCopiaWordArrayDaVariavelLocalParaAcumulador(variavel.Posicao, campo.Posicao);
                                         else
@@ -484,6 +488,7 @@ class Acao : No
                                     case TipoDeAcao.Leitura:
                                         if(campo.Tipo == TipoVariavel.Int8 | campo.Tipo == TipoVariavel.UInt8)
                                         {
+                                            TipoCompilado = campo.Tipo;
                                             if(variavel.Publicidade == NivelPublicidade.Local)
                                                 amb.Saida.EmiteCopiaByteArrayDaVariavelLocalParaAcumulador(variavel.Posicao, campo.Posicao);
                                             else
@@ -491,6 +496,7 @@ class Acao : No
                                         }
                                         else if(campo.Tipo == TipoVariavel.Int16 | campo.Tipo == TipoVariavel.UInt16)
                                         {
+                                            TipoCompilado = campo.Tipo;
                                             if(variavel.Publicidade == NivelPublicidade.Local)
                                                 amb.Saida.EmiteCopiaWordArrayDaVariavelLocalParaAcumulador(variavel.Posicao, campo.Posicao);
                                             else
@@ -498,6 +504,7 @@ class Acao : No
                                         }
                                         else if(campo.Tipo == TipoVariavel.PtrByteArray | campo.Tipo == TipoVariavel.Structure | campo.Tipo == TipoVariavel.Func | campo.Tipo == TipoVariavel.Action)
                                         {
+                                            TipoCompilado = campo.Tipo;
                                             if(variavel.Publicidade == NivelPublicidade.Local)
                                                 amb.Saida.EmiteCopiaByteArrayDaVariavelLocalParaPonteiroRemoto(variavel.Posicao);
                                             else
@@ -505,6 +512,7 @@ class Acao : No
                                         }
                                         else if(campo.Tipo == TipoVariavel.PtrWordArray)
                                         {
+                                            TipoCompilado = campo.Tipo;
                                             if(variavel.Publicidade == NivelPublicidade.Local)
                                                 amb.Saida.EmiteCopiaWordArrayDaVariavelLocalParaPonteiroRemoto(variavel.Posicao);
                                             else
@@ -539,6 +547,7 @@ class Acao : No
                                         }
                                         else if(campo.Tipo == TipoVariavel.Int16 | campo.Tipo == TipoVariavel.UInt16)
                                         {
+                                            TipoCompilado = campo.Tipo;
                                             if(variavel.Publicidade == NivelPublicidade.Local)
                                                 amb.Saida.EmiteDecrementaWordArrayNaVariavelLocal(variavel.Posicao, campo.Posicao);
                                             else
@@ -595,12 +604,13 @@ class Acao : No
                 {
                     if(referencia.Count() == 1 & referencia.First() == "addressof")
                     {
+                        TipoCompilado = TipoVariavel.PtrByteArray;
                         referencia.Clear();
                         foreach(No no in ArgumentosChamada)
                         {
                             if(no is not Acao)
                             {
-                                throw Erro("");
+                                throw Erro("Esperado um nome de rotina ou campo");
                             }
                             referencia = new Queue<string>((((Acao)no).Nome));
                         }
@@ -654,6 +664,7 @@ class Acao : No
                         }
                         if(variavel == null) throw Erro("Variável não encontrada");
                         TipoVariavel tipoVariavel = variavel.Tipo;
+                        TipoCompilado = variavel.RetornoFunc;
                         int desvio = 0;
                         referencia.Dequeue();
                         List<No> args = new List<No>();
@@ -667,6 +678,7 @@ class Acao : No
                             DeclaraVariavel? subVariavel = subEstrutura.PesquisaCampo(referencia.Peek());
                             if(subVariavel == null)throw Erro($"Campo {referencia.Peek()} não encontrada na estrutura {variavel.TipoNome} não encontrada");
                             desvio = subVariavel.Posicao;
+                            TipoCompilado = subVariavel.RetornoFunc;
                             tipoVariavel = subVariavel.Tipo;
                             referencia.Dequeue();
                             if(subVariavel.ArgumentosFuncAction.Any() && subEstrutura.Nome == subVariavel.ArgumentosFuncAction.First().TipoNome)
@@ -790,6 +802,7 @@ class Acao : No
                             amb.Tipo = null;
                         }
                         amb.Saida.EmiteChamaRotina(rot.Modulo.Nome, rot.Nome);
+                        TipoCompilado = rot.TipoRetorno;
                         if(rot.PosicaoArg != 6)
                             amb.Saida.EmiteAdicionaNoPtrPilha(rot.PosicaoArg - 6);
                         amb.VariavelDestino = variavelAnterior;

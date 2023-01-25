@@ -800,5 +800,11 @@ class Saida8086 : Saida
         EmiteCopiaWordArrayDaVariavelLocalParaPonteiroRemoto(posicao);
         EmiteL($"es call far [di+{desvio}]");
     }
-
+    public override void EmiteItemRealocacao(Realocacao realoc)
+    {
+        EmiteL($"dw {(ushort)realoc.Tipo}");
+        EmiteL($"dw {realoc.Rotulo}");
+        EmiteL($"dw {realoc.Desvio}");
+        EmiteL($"dw {realoc.ValorSoma}");
+    }
 }
