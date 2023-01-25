@@ -13,8 +13,8 @@ class DeclaraVariavel : No
     public bool VariavelDoModulo { get; set; }
     public int Posicao { get; set; }
     public List<DeclaraVariavel>  ArgumentosFuncAction { get; set; } = new List<DeclaraVariavel>();
-    public TipoVariavel RetornoFunc { get; set; } = TipoVariavel.UInt16;
-    public string RetornoFuncNome { get; set; } = "uint16";
+    public TipoVariavel RetornoFunc { get; set; } = TipoVariavel.Desconhecido;
+    public string RetornoFuncNome { get; set; } = "";
 
     public Estrutura Modulo { get; set; }
     public DeclaraVariavel(Trecho trecho, Estrutura modulo, bool varDoModulo, NivelPublicidade publicidade, TipoVariavel tipo, string tipoNome, bool colecao, int colecaoTam, int posicao = 0) : base(trecho)
@@ -48,8 +48,20 @@ class DeclaraVariavel : No
                 amb.Saida.EmiteRotulo(NomeGlobal);
                 if(Tipo == TipoVariavel.Structure)
                 {
-                    throw Erro("Ainda não suportado");
-                    // TODO: Implementar sem ponteiro na variavel, acessando direto, alterar no Acao tbm
+                    Estrutura? estru = amb.PesquisaEstrutura(TipoNome);
+                    if(estru == null) throw Erro("Estrutura não encontrada");
+                    if(TipoNome == "string")
+                    {
+                        amb.Saida.EmiteGerarEspaco(amb.Saida.CalculaTamanho(Tipo));
+                        amb.Saida.EmiteBinario(new byte[]{amb.TamanhoStringEstatica});
+                        amb.Saida.EmiteGerarEspaco(amb.TamanhoStringEstatica);
+                        amb.Realocacoes.Add(new Realocacao(TipoDeRealocacao.CodeSegmentStructure, 0, NomeGlobal, (ushort)amb.Saida.CalculaTamanho(Tipo)));
+                    }
+                    else
+                    {
+                        amb.Saida.EmiteGerarEspaco(amb.Saida.CalculaTamanho(Tipo) + estru.TamanhoCampos);
+                        amb.Realocacoes.Add(new Realocacao(TipoDeRealocacao.CodeSegmentStructure, 0, NomeGlobal, (ushort)amb.Saida.CalculaTamanho(Tipo)));
+                    }
                 }
                 else amb.Saida.EmiteGerarEspaco(amb.Saida.CalculaTamanho(Tipo));
                 amb.Saida.EmiteRotulo(rotulo);

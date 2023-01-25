@@ -141,7 +141,7 @@ abstract class Saida
     public abstract void EmiteCopiaPonteiroRemotoParaWordArrayNaVariavelGlobal(string rotulo, int desvio);
     public abstract void EmiteCopiaPonteiroRemotoParaByteArrayNaVariavelLocal(int posicao, int desvio);
     public abstract void EmiteCopiaPonteiroRemotoParaByteArrayNaVariavelGlobal(string rotulo, int desvio);
-
+    public abstract void EmiteItemRealocacao(Realocacao realoc);
 
 
 }
