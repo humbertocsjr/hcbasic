@@ -21,23 +21,23 @@ class OpMatematica : No
             switch(Operacao)
             {
                 case "+":
-                    esq.Compila(amb);
-                    amb.Saida.EmiteEmpilhaAcumulador();
                     dir.Compila(amb);
+                    amb.Saida.EmiteEmpilhaAcumulador();
+                    esq.Compila(amb);
                     amb.Saida.EmiteDesempilhaAuxiliar();
                     amb.Saida.EmiteAdicionaAuxNoAcumulador();
                     break;
                 case "-":
-                    esq.Compila(amb);
-                    amb.Saida.EmiteEmpilhaAcumulador();
                     dir.Compila(amb);
+                    amb.Saida.EmiteEmpilhaAcumulador();
+                    esq.Compila(amb);
                     amb.Saida.EmiteDesempilhaAuxiliar();
                     amb.Saida.EmiteSubtraiAuxNoAcumulador();
                     break;
                 case "*":
-                    esq.Compila(amb);
-                    amb.Saida.EmiteEmpilhaAcumulador();
                     dir.Compila(amb);
+                    amb.Saida.EmiteEmpilhaAcumulador();
+                    esq.Compila(amb);
                     amb.Saida.EmiteDesempilhaAuxiliar();
                     amb.Saida.EmiteMultiplicaSinalAuxNoAcumulador();
                     break;
@@ -107,23 +107,23 @@ class OpMatematica : No
             switch(Operacao)
             {
                 case "+":
-                    esq.Compila(amb);
-                    amb.Saida.EmiteEmpilhaAcumulador();
                     dir.Compila(amb);
+                    amb.Saida.EmiteEmpilhaAcumulador();
+                    esq.Compila(amb);
                     amb.Saida.EmiteDesempilhaAuxiliar();
                     amb.Saida.EmiteAdicionaAuxNoAcumulador();
                     break;
                 case "-":
-                    esq.Compila(amb);
-                    amb.Saida.EmiteEmpilhaAcumulador();
                     dir.Compila(amb);
+                    amb.Saida.EmiteEmpilhaAcumulador();
+                    esq.Compila(amb);
                     amb.Saida.EmiteDesempilhaAuxiliar();
                     amb.Saida.EmiteSubtraiAuxNoAcumulador();
                     break;
                 case "*":
-                    esq.Compila(amb);
-                    amb.Saida.EmiteEmpilhaAcumulador();
                     dir.Compila(amb);
+                    amb.Saida.EmiteEmpilhaAcumulador();
+                    esq.Compila(amb);
                     amb.Saida.EmiteDesempilhaAuxiliar();
                     amb.Saida.EmiteMultiplicaSemSinalAuxNoAcumulador();
                     break;

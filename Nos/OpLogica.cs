@@ -69,6 +69,14 @@ class OpLogica : No
                 break;
             case ">":
                 esq.Compila(amb);
+                if(esq is Acao & amb.TipoSemSinal)
+                {
+                    if(((Acao)esq).TipoCompilado == TipoVariavel.Int8 | ((Acao)esq).TipoCompilado == TipoVariavel.Int16)
+                    {
+                        if(amb.Tipo == TipoVariavel.UInt8) amb.Tipo = TipoVariavel.Int8;
+                        if(amb.Tipo == TipoVariavel.UInt16) amb.Tipo = TipoVariavel.Int16;
+                    }
+                }
                 amb.Saida.EmiteEmpilhaAcumulador();
                 dir.Compila(amb);
                 amb.Saida.EmiteCopiaAcumuladorParaAuxiliar();
@@ -79,6 +87,14 @@ class OpLogica : No
                 break;
             case ">=":
                 esq.Compila(amb);
+                if(esq is Acao & amb.TipoSemSinal)
+                {
+                    if(((Acao)esq).TipoCompilado == TipoVariavel.Int8 | ((Acao)esq).TipoCompilado == TipoVariavel.Int16)
+                    {
+                        if(amb.Tipo == TipoVariavel.UInt8) amb.Tipo = TipoVariavel.Int8;
+                        if(amb.Tipo == TipoVariavel.UInt16) amb.Tipo = TipoVariavel.Int16;
+                    }
+                }
                 amb.Saida.EmiteEmpilhaAcumulador();
                 dir.Compila(amb);
                 amb.Saida.EmiteCopiaAcumuladorParaAuxiliar();
@@ -89,6 +105,14 @@ class OpLogica : No
                 break;
             case "<":
                 esq.Compila(amb);
+                if(esq is Acao & amb.TipoSemSinal)
+                {
+                    if(((Acao)esq).TipoCompilado == TipoVariavel.Int8 | ((Acao)esq).TipoCompilado == TipoVariavel.Int16)
+                    {
+                        if(amb.Tipo == TipoVariavel.UInt8) amb.Tipo = TipoVariavel.Int8;
+                        if(amb.Tipo == TipoVariavel.UInt16) amb.Tipo = TipoVariavel.Int16;
+                    }
+                }
                 amb.Saida.EmiteEmpilhaAcumulador();
                 dir.Compila(amb);
                 amb.Saida.EmiteCopiaAcumuladorParaAuxiliar();
@@ -99,6 +123,14 @@ class OpLogica : No
                 break;
             case "<=":
                 esq.Compila(amb);
+                if(esq is Acao & amb.TipoSemSinal)
+                {
+                    if(((Acao)esq).TipoCompilado == TipoVariavel.Int8 | ((Acao)esq).TipoCompilado == TipoVariavel.Int16)
+                    {
+                        if(amb.Tipo == TipoVariavel.UInt8) amb.Tipo = TipoVariavel.Int8;
+                        if(amb.Tipo == TipoVariavel.UInt16) amb.Tipo = TipoVariavel.Int16;
+                    }
+                }
                 amb.Saida.EmiteEmpilhaAcumulador();
                 dir.Compila(amb);
                 amb.Saida.EmiteCopiaAcumuladorParaAuxiliar();

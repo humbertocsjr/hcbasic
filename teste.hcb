@@ -71,6 +71,10 @@ module Program
         Graphics.DrawPixel 11, 11, 1
         Graphics.DrawPixel 12, 12, 1
         Graphics.DrawPixel 13, 13, 1
+        Graphics.DrawLine 50, 50, 0, 44, 1
+        Graphics.DrawLine 50, 50, 44, 0, 1
+        Graphics.DrawLine 50, 50, 100, 55, 1
+        Graphics.DrawLine 50, 50, 55, 100, 1
         Console.ReadChar
         Graphics.Mode80x25x16
     end
