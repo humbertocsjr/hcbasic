@@ -51,7 +51,6 @@ O uso do Makefile é opcional e voltado para Linux e macOS, existindo apenas par
 ## Objetivos Atuais e Prioritários
 
 - Diminuir código gerado pelo Try Catch, otimizando multiplos comandos genéricos em comandos especializados para o Saida
-- Implementar SizeOf
 - Limpeza de itens não utilizados na implementação do Saida
 
 ## Objetivos
@@ -68,7 +67,8 @@ O uso do Makefile é opcional e voltado para Linux e macOS, existindo apenas par
 - [x] Suporte a rotinas externas usando ponteiro (Implementar comando INVOKE)
 - [x] Implementar tipos personalizados usando uma dinâmica próxima ao TYPE do QuickBASIC, por trás usar comandos do PtrByteArray e PtrWordArray, mas permitindo declarar Rotinas, para ser uma proto orientação a objetos para poder implementar as bibliotecas System de forma mais próxima ao .NET
 - [x] Ponteiros
-- [ ] String (Concatenar, substring, etc)
+- [x] String (Concatenar, Copiar, etc)
+- [ ] String avançado (Substring, UTF-8)
 - [x] Adicionar ao inicio das constantes de texto, o seu tamanho para evitar o estouro de variável pelas rotinas de manipulação de Strings
 - [x] Suporte a números 32 bits na biblioteca
 - [ ] Suporte a números 32 bits na linguagem
