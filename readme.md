@@ -4,6 +4,8 @@ Esta linguagem de programação tem como objetivo criar uma derivação de baixo
 
 Esta linguagem não tem como objetivo ser orientada a objetos, sendo próximo de uma versão 16Bits procedural do VisualBasic.NET, onde os comandos são agrupados em módulos, com uma dinâmica de nomes próxima as bibliotecas do .NET Framework.
 
+Este compilador foi criado 100% em linguagem C#, evitando ferramentas de geração automática de compiladores como BISON ou Yacc, o que deixam o código "misterioso" para programadores não versados em estruturas como BNF ou EBNF, feito com o código completamente em português, pois todos os exemplos de compilador que conheço são em inglês sendo uma grande barreira para aprendizado na prática para não falantes desta lingua.
+
 ## Novidades
 
 - Proteção mínima contra estouro de pilha (Apenas verifica quando entra numa rotina)
