@@ -135,6 +135,7 @@ class Fonte
                         case "orelse":
                         case "andalso":
                         case "xor":
+                        case "not":
                             atual.Tipo = TipoTrecho.OperacaoLogica;
                             break;
                         case "mod":

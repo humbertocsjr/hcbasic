@@ -867,5 +867,9 @@ class Saida8086 : Saida
     {
         EmiteL($"cs mov sp, [{rotulo}]");
     }
+    public override void EmiteInverteAcumulador()
+    {
+        EmiteL("not ax");
+    }
 
 }

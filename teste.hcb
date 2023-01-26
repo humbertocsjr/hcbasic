@@ -1,5 +1,6 @@
 ' Arquivo de teste
 imports System
+imports System.Drawing
 
 module ReferenciaCruzada
     Public Sub TesteCruzada
@@ -20,15 +21,16 @@ module Program
         arq = new
         txt = new
         Console.Write "Teste Criacao de arquivo: "
-        if File.Create(arq, "teste.txt") Then
+        Try 
+            File.Create arq, "teste.txt"
             Console.WriteUInt16 File.Write(arq, "Texto teste no arquivo escrito pelo teste.hcb. ")
             Console.Write " + "
             Console.WriteUInt16 arq.Write.Invoke("Texto teste emitido via Structure Stream.")
             File.Close arq
             Console.WriteLine " Bytes escritos"
-        else
-            Console.WriteLine " FALHA"
-        end
+        Catch Error
+            Console.WriteLine " FALHA AO MANIPULAR O ARQUIVO teste.txt"
+        End
         Console.Write "Escreva seu nome: "
         Console.ReadLine txt
         Console.Write "Oie "
@@ -63,6 +65,14 @@ module Program
             Console.WriteLine ""
         end
         if String.Equals("oi", "oi") then Console.WriteLine "EQUAL TEST"
+
+        CGA.Mode640x200x2
+        Graphics.DrawPixel 10, 10, 1
+        Graphics.DrawPixel 11, 11, 1
+        Graphics.DrawPixel 12, 12, 1
+        Graphics.DrawPixel 13, 13, 1
+        Console.ReadChar
+        Graphics.Mode80x25x16
     end
 
     function TesteFunc() as UInt16

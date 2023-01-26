@@ -155,5 +155,6 @@ abstract class Saida
     public abstract void EmiteCopiaPonteiroLocalEmVariavelLocalParaPonteiroRemoto(int posicao);
     public abstract void EmiteCopiaVariavelGlobalParaPonteiroBase(string rotulo);
     public abstract void EmiteCopiaVariavelGlobalParaPonteiroPilha(string rotulo);
+    public abstract void EmiteInverteAcumulador();
 
 }

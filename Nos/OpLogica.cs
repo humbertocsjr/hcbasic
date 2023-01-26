@@ -20,6 +20,10 @@ class OpLogica : No
         bool ignora_comparacao = false;
         switch(Operacao)
         {
+            case "not":
+                dir.Compila(amb);
+                amb.Saida.EmiteInverteAcumulador();
+                break;
             case "andalso":
                 esq.Compila(amb);
                 amb.Saida.EmiteComparaAcumuladorComZero();

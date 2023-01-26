@@ -220,7 +220,7 @@ class Analise
         }
         else if
         (
-            trechos.EhOpMatematica("~")
+            trechos.EhOpLogica("not")
         )
         {
             trechos.Proximo();

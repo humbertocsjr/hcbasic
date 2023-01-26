@@ -673,7 +673,7 @@ cmp ax, bx
 jb ROTULO97
 mov ax, _program
 mov [bp+-8], ax
-mov ax, 16
+mov ax, 17
 mov [bp+-10], ax
 mov ax, 2
 cs jmp word [_os_trycode]
@@ -708,6 +708,18 @@ push di
 push cs
 call _console_write
 add sp, 4
+cs mov ax, [_os_trycode]
+mov [bp+-2], ax
+cs mov ax, [_os_trystack]
+mov [bp+-4], ax
+cs mov ax, [_os_trybase]
+mov [bp+-6], ax
+mov ax, bp
+cs mov [_os_trybase], ax
+mov ax, sp
+cs mov [_os_trystack], ax
+mov ax, ROTULO101
+cs mov [_os_trycode], ax
 push cs
 pop es
 mov di, ROTULO104
@@ -727,10 +739,6 @@ push di
 push cs
 call _file_create
 add sp, 8
-cmp ax, 0
-jne ROTULO101
-jmp ROTULO102
-ROTULO101:
 push cs
 pop es
 mov di, ROTULO106
@@ -812,32 +820,53 @@ push di
 push cs
 call _console_writeline
 add sp, 4
-jmp ROTULO113
-ROTULO102:
+jmp ROTULO102
+ROTULO101:
+mov bx, ax
+mov ax, [bp+-10]
+push word [bp+-8+2]
+pop es
+mov di, [bp+-8]
+cs mov bp, [_os_trybase]
+cs mov sp, [_os_trystack]
+push es
+pop word [bp+-8+2]
+mov [bp+-8], di
+mov [bp+-10], ax
+mov ax, bx
 push cs
 pop es
-mov di, ROTULO115
-jmp ROTULO114
-ROTULO115:
-db 6
-db 32,70,65,76,72,65
+mov di, ROTULO116
+jmp ROTULO115
+ROTULO116:
+db 39
+db 32,70,65,76,72,65,32,65,79,32,77,65,78,73,80,85,76,65,82,32,79,32,65,82,81,85,73,86,79,32,116,101,115,116,101,46,116,120,116
 times 1 db 0
-ROTULO114:
+ROTULO115:
 push es
 push di
 push cs
 call _console_writeline
 add sp, 4
-ROTULO113:
+jmp ROTULO102
+ROTULO114:
+cs jmp word [_os_tryfatal]
+ROTULO102:
+mov ax, [bp+-6]
+cs mov [_os_trybase], ax
+mov ax, [bp+-4]
+cs mov [_os_trystack], ax
+mov ax, [bp+-2]
+cs mov [_os_trycode], ax
 push cs
 pop es
-mov di, ROTULO117
-jmp ROTULO116
-ROTULO117:
+mov di, ROTULO118
+jmp ROTULO117
+ROTULO118:
 db 18
 db 69,115,99,114,101,118,97,32,115,101,117,32,110,111,109,101,58,32
 times 1 db 0
-ROTULO116:
+ROTULO117:
 push es
 push di
 push cs
@@ -853,13 +882,13 @@ call _console_readline
 add sp, 4
 push cs
 pop es
-mov di, ROTULO119
-jmp ROTULO118
-ROTULO119:
+mov di, ROTULO120
+jmp ROTULO119
+ROTULO120:
 db 4
 db 79,105,101,32
 times 1 db 0
-ROTULO118:
+ROTULO119:
 push es
 push di
 push cs
@@ -878,34 +907,34 @@ xor ax, ax
 mov bx, ax
 pop ax
 cmp ax, bx
-je ROTULO122
-jmp ROTULO123
-ROTULO122:
-mov ax, 65535
+je ROTULO123
 jmp ROTULO124
 ROTULO123:
-xor ax, ax
+mov ax, 65535
+jmp ROTULO125
 ROTULO124:
+xor ax, ax
+ROTULO125:
 cmp ax, 0
-jne ROTULO120
-jmp ROTULO121
-ROTULO120:
+jne ROTULO121
+jmp ROTULO122
+ROTULO121:
 push cs
 pop es
-mov di, ROTULO126
-jmp ROTULO125
-ROTULO126:
+mov di, ROTULO127
+jmp ROTULO126
+ROTULO127:
 db 8
 db 83,101,109,32,78,111,109,101
 times 1 db 0
-ROTULO125:
+ROTULO126:
 push es
 push di
 push cs
 call _console_write
 add sp, 4
-jmp ROTULO127
-ROTULO121:
+jmp ROTULO128
+ROTULO122:
 push word [bp+-18+2]
 pop es
 mov di, [bp+-18]
@@ -914,16 +943,16 @@ push di
 push cs
 call _console_write
 add sp, 4
-ROTULO127:
+ROTULO128:
 push cs
 pop es
-mov di, ROTULO129
-jmp ROTULO128
-ROTULO129:
+mov di, ROTULO130
+jmp ROTULO129
+ROTULO130:
 db 1
 db 33
 times 1 db 0
-ROTULO128:
+ROTULO129:
 push es
 push di
 push cs
@@ -931,13 +960,13 @@ call _console_writeline
 add sp, 4
 push cs
 pop es
-mov di, ROTULO131
-jmp ROTULO130
-ROTULO131:
+mov di, ROTULO132
+jmp ROTULO131
+ROTULO132:
 db 27
 db 84,101,115,116,101,32,100,101,32,102,117,110,99,97,111,32,105,110,100,105,114,101,116,97,58,32,39
 times 1 db 0
-ROTULO130:
+ROTULO131:
 push es
 push di
 push cs
@@ -956,13 +985,13 @@ call _console_writeuint16
 add sp, 2
 push cs
 pop es
-mov di, ROTULO133
-jmp ROTULO132
-ROTULO133:
+mov di, ROTULO134
+jmp ROTULO133
+ROTULO134:
 db 1
 db 39
 times 1 db 0
-ROTULO132:
+ROTULO133:
 push es
 push di
 push cs
@@ -975,13 +1004,13 @@ call _console_writeuint16
 add sp, 2
 push cs
 pop es
-mov di, ROTULO135
-jmp ROTULO134
-ROTULO135:
+mov di, ROTULO136
+jmp ROTULO135
+ROTULO136:
 db 1
 db 58
 times 1 db 0
-ROTULO134:
+ROTULO135:
 push es
 push di
 push cs
@@ -994,12 +1023,12 @@ call _console_writeuint16
 add sp, 2
 push cs
 pop es
-mov di, ROTULO137
-jmp ROTULO136
-ROTULO137:
+mov di, ROTULO138
+jmp ROTULO137
+ROTULO138:
 db 0
 times 1 db 0
-ROTULO136:
+ROTULO137:
 push es
 push di
 push cs
@@ -1007,13 +1036,13 @@ call _console_writeline
 add sp, 4
 push cs
 pop es
-mov di, ROTULO139
-jmp ROTULO138
-ROTULO139:
+mov di, ROTULO140
+jmp ROTULO139
+ROTULO140:
 db 16
 db 84,101,115,116,101,32,100,101,32,99,111,110,99,97,116,58
 times 1 db 0
-ROTULO138:
+ROTULO139:
 push es
 push di
 push word [bp+-18+2]
@@ -1026,13 +1055,13 @@ call _string_copy
 add sp, 8
 push cs
 pop es
-mov di, ROTULO141
-jmp ROTULO140
-ROTULO141:
+mov di, ROTULO142
+jmp ROTULO141
+ROTULO142:
 db 21
 db 32,84,101,120,116,111,32,99,111,110,99,97,116,101,110,97,100,111,32,49,44
 times 1 db 0
-ROTULO140:
+ROTULO141:
 push es
 push di
 push word [bp+-18+2]
@@ -1045,13 +1074,13 @@ call _string_concat
 add sp, 8
 push cs
 pop es
-mov di, ROTULO143
-jmp ROTULO142
-ROTULO143:
+mov di, ROTULO144
+jmp ROTULO143
+ROTULO144:
 db 20
 db 32,84,101,120,116,111,32,99,111,110,99,97,116,101,110,97,100,111,32,50
 times 1 db 0
-ROTULO142:
+ROTULO143:
 push es
 push di
 push word [bp+-18+2]
@@ -1080,28 +1109,28 @@ mov ax, bp
 cs mov [_os_trybase], ax
 mov ax, sp
 cs mov [_os_trystack], ax
-mov ax, ROTULO144
+mov ax, ROTULO145
 cs mov [_os_trycode], ax
 mov word [bp+-26], 0
 mov ax, 10
 push ax
 mov ax, [bp+-26]
 cmp ax, 0
-jne ROTULO146
+jne ROTULO147
 mov ax, _program
 mov [bp+-8], ax
-mov ax, 57
+mov ax, 59
 mov [bp+-10], ax
 mov ax, 1
 cs jmp word [_os_trycode]
-ROTULO146:
+ROTULO147:
 mov bx, ax
 pop ax
 xor dx, dx
 div bx
 mov [bp+-24], ax
-jmp ROTULO145
-ROTULO144:
+jmp ROTULO146
+ROTULO145:
 mov bx, ax
 mov ax, [bp+-10]
 push word [bp+-8+2]
@@ -1116,18 +1145,18 @@ mov [bp+-10], ax
 mov ax, bx
 mov bx, 1
 cmp ax, bx
-je ROTULO147
-jmp ROTULO148
-ROTULO147:
+je ROTULO148
+jmp ROTULO149
+ROTULO148:
 push cs
 pop es
-mov di, ROTULO150
-jmp ROTULO149
-ROTULO150:
+mov di, ROTULO151
+jmp ROTULO150
+ROTULO151:
 db 21
 db 68,105,118,105,115,97,111,32,112,111,114,32,122,101,114,111,32,112,101,103,97
 times 1 db 0
-ROTULO149:
+ROTULO150:
 push es
 push di
 push cs
@@ -1143,13 +1172,13 @@ call _console_write
 add sp, 4
 push cs
 pop es
-mov di, ROTULO152
-jmp ROTULO151
-ROTULO152:
+mov di, ROTULO153
+jmp ROTULO152
+ROTULO153:
 db 2
 db 58,32
 times 1 db 0
-ROTULO151:
+ROTULO152:
 push es
 push di
 push cs
@@ -1162,21 +1191,21 @@ call _console_writeuint16
 add sp, 2
 push cs
 pop es
-mov di, ROTULO154
-jmp ROTULO153
-ROTULO154:
+mov di, ROTULO155
+jmp ROTULO154
+ROTULO155:
 db 0
 times 1 db 0
-ROTULO153:
+ROTULO154:
 push es
 push di
 push cs
 call _console_writeline
 add sp, 4
-jmp ROTULO145
-ROTULO148:
+jmp ROTULO146
+ROTULO149:
 cs jmp word [_os_tryfatal]
-ROTULO145:
+ROTULO146:
 mov ax, [bp+-6]
 cs mov [_os_trybase], ax
 mov ax, [bp+-4]
@@ -1185,48 +1214,90 @@ mov ax, [bp+-2]
 cs mov [_os_trycode], ax
 push cs
 pop es
-mov di, ROTULO158
-jmp ROTULO157
-ROTULO158:
+mov di, ROTULO159
+jmp ROTULO158
+ROTULO159:
 db 2
 db 111,105
 times 1 db 0
-ROTULO157:
+ROTULO158:
 push es
 push di
 push cs
 pop es
-mov di, ROTULO160
-jmp ROTULO159
-ROTULO160:
+mov di, ROTULO161
+jmp ROTULO160
+ROTULO161:
 db 2
 db 111,105
 times 1 db 0
-ROTULO159:
+ROTULO160:
 push es
 push di
 push cs
 call _string_equals
 add sp, 8
 cmp ax, 0
-jne ROTULO155
-jmp ROTULO156
-ROTULO155:
+jne ROTULO156
+jmp ROTULO157
+ROTULO156:
 push cs
 pop es
-mov di, ROTULO162
-jmp ROTULO161
-ROTULO162:
+mov di, ROTULO163
+jmp ROTULO162
+ROTULO163:
 db 10
 db 69,81,85,65,76,32,84,69,83,84
 times 1 db 0
-ROTULO161:
+ROTULO162:
 push es
 push di
 push cs
 call _console_writeline
 add sp, 4
-ROTULO156:
+ROTULO157:
+push cs
+call _cga_mode640x200x2
+mov ax, 1
+push ax
+mov ax, 10
+push ax
+mov ax, 10
+push ax
+push cs
+call _graphics_drawpixel
+add sp, 6
+mov ax, 1
+push ax
+mov ax, 11
+push ax
+mov ax, 11
+push ax
+push cs
+call _graphics_drawpixel
+add sp, 6
+mov ax, 1
+push ax
+mov ax, 12
+push ax
+mov ax, 12
+push ax
+push cs
+call _graphics_drawpixel
+add sp, 6
+mov ax, 1
+push ax
+mov ax, 13
+push ax
+mov ax, 13
+push ax
+push cs
+call _graphics_drawpixel
+add sp, 6
+push cs
+call _console_readchar
+push cs
+call _graphics_mode80x25x16
 ROTULO98:
 mov sp, bp
 pop bp
@@ -1234,8 +1305,8 @@ FIM_program_main:
 retf
 _program_testefunc:
 mov ax, 123
-jmp ROTULO163
-ROTULO163:
+jmp ROTULO164
+ROTULO164:
 FIM_program_testefunc:
 retf
 ; MODULO FIM: program
@@ -1247,7 +1318,7 @@ db 0
 _referenciacruzada_testecruzada:
 push cs
 call _program_testecruzada
-ROTULO164:
+ROTULO165:
 FIM_referenciacruzada_testecruzada:
 retf
 ; MODULO FIM: referenciacruzada
@@ -1259,8 +1330,8 @@ db 0
 _console_readchar:
 push cs
 call _os_consolereadchar
-jmp ROTULO165
-ROTULO165:
+jmp ROTULO166
+ROTULO166:
 FIM_console_readchar:
 retf
 _console_readline:
@@ -1270,14 +1341,14 @@ sub sp, 6
 cs mov ax, [_os_minstackptr]
 mov bx, sp
 cmp ax, bx
-jb ROTULO166
+jb ROTULO167
 mov ax, _console
 mov [bp+-8], ax
 mov ax, 106
 mov [bp+-10], ax
 mov ax, 2
 cs jmp word [_os_trycode]
-ROTULO166:
+ROTULO167:
 push word [bp+6+2]
 pop es
 mov di, [bp+6]
@@ -1311,7 +1382,7 @@ push cs
 call _file_readraw
 add sp, 10
 mov [bp+-2], ax
-ROTULO168:
+ROTULO169:
 push word [bp+6+2]
 pop es
 mov di, [bp+6]
@@ -1322,14 +1393,14 @@ xor ax, ax
 mov bx, ax
 pop ax
 cmp ax, bx
-ja ROTULO177
-jmp ROTULO178
-ROTULO177:
-mov ax, 65535
+ja ROTULO178
 jmp ROTULO179
 ROTULO178:
-xor ax, ax
+mov ax, 65535
+jmp ROTULO180
 ROTULO179:
+xor ax, ax
+ROTULO180:
 push ax
 xor ax, ax
 es mov al, [di+0]
@@ -1338,14 +1409,14 @@ mov ax, 13
 mov bx, ax
 pop ax
 cmp ax, bx
-jne ROTULO180
-jmp ROTULO181
-ROTULO180:
-mov ax, 65535
+jne ROTULO181
 jmp ROTULO182
 ROTULO181:
-xor ax, ax
+mov ax, 65535
+jmp ROTULO183
 ROTULO182:
+xor ax, ax
+ROTULO183:
 mov bx, ax
 pop ax
 and ax, bx
@@ -1357,30 +1428,30 @@ mov ax, 10
 mov bx, ax
 pop ax
 cmp ax, bx
-jne ROTULO183
-jmp ROTULO184
-ROTULO183:
-mov ax, 65535
+jne ROTULO184
 jmp ROTULO185
 ROTULO184:
-xor ax, ax
+mov ax, 65535
+jmp ROTULO186
 ROTULO185:
+xor ax, ax
+ROTULO186:
 mov bx, ax
 pop ax
 and ax, bx
 cmp ax, 0
-jne ROTULO169
-jmp ROTULO170
-ROTULO169:
+jne ROTULO170
+jmp ROTULO171
+ROTULO170:
 inc word [bp+6]
 inc di
-jmp ROTULO168
-ROTULO170:
+jmp ROTULO169
+ROTULO171:
 push word [bp+6+2]
 pop es
 mov di, [bp+6]
 es mov byte [di+0], 0
-ROTULO167:
+ROTULO168:
 mov sp, bp
 pop bp
 FIM_console_readline:
@@ -1391,20 +1462,20 @@ mov bp, sp
 cs mov ax, [_os_minstackptr]
 mov bx, sp
 cmp ax, bx
-jb ROTULO186
+jb ROTULO187
 mov ax, _console
 mov [bp+-8], ax
 mov ax, 120
 mov [bp+-10], ax
 mov ax, 2
 cs jmp word [_os_trycode]
-ROTULO186:
+ROTULO187:
 mov ax, [bp+6]
 push ax
 push cs
 call _os_consolewritechar
 add sp, 2
-ROTULO187:
+ROTULO188:
 mov sp, bp
 pop bp
 FIM_console_writechar:
@@ -1415,16 +1486,16 @@ mov bp, sp
 cs mov ax, [_os_minstackptr]
 mov bx, sp
 cmp ax, bx
-jb ROTULO188
+jb ROTULO189
 mov ax, _console
 mov [bp+-8], ax
 mov ax, 124
 mov [bp+-10], ax
 mov ax, 2
 cs jmp word [_os_trycode]
-ROTULO188:
+ROTULO189:
 inc word [bp+6]
-ROTULO190:
+ROTULO191:
 push word [bp+6+2]
 pop es
 mov di, [bp+6]
@@ -1435,18 +1506,18 @@ xor ax, ax
 mov bx, ax
 pop ax
 cmp ax, bx
-ja ROTULO193
-jmp ROTULO194
-ROTULO193:
-mov ax, 65535
+ja ROTULO194
 jmp ROTULO195
 ROTULO194:
-xor ax, ax
+mov ax, 65535
+jmp ROTULO196
 ROTULO195:
+xor ax, ax
+ROTULO196:
 cmp ax, 0
-jne ROTULO191
-jmp ROTULO192
-ROTULO191:
+jne ROTULO192
+jmp ROTULO193
+ROTULO192:
 xor ax, ax
 es mov al, [di+0]
 push ax
@@ -1454,9 +1525,9 @@ push cs
 call _console_writechar
 add sp, 2
 inc word [bp+6]
-jmp ROTULO190
-ROTULO192:
-ROTULO189:
+jmp ROTULO191
+ROTULO193:
+ROTULO190:
 mov sp, bp
 pop bp
 FIM_console_write:
@@ -1467,14 +1538,14 @@ mov bp, sp
 cs mov ax, [_os_minstackptr]
 mov bx, sp
 cmp ax, bx
-jb ROTULO196
+jb ROTULO197
 mov ax, _console
 mov [bp+-8], ax
 mov ax, 133
 mov [bp+-10], ax
 mov ax, 2
 cs jmp word [_os_trycode]
-ROTULO196:
+ROTULO197:
 push word [bp+6+2]
 pop es
 mov di, [bp+6]
@@ -1493,7 +1564,7 @@ push ax
 push cs
 call _console_writechar
 add sp, 2
-ROTULO197:
+ROTULO198:
 mov sp, bp
 pop bp
 FIM_console_writeline:
@@ -1505,26 +1576,26 @@ sub sp, 4
 cs mov ax, [_os_minstackptr]
 mov bx, sp
 cmp ax, bx
-jb ROTULO198
+jb ROTULO199
 mov ax, _console
 mov [bp+-8], ax
 mov ax, 139
 mov [bp+-10], ax
 mov ax, 2
 cs jmp word [_os_trycode]
-ROTULO198:
+ROTULO199:
 mov ax, [bp+6]
 push ax
 mov ax, 10
 cmp ax, 0
-jne ROTULO200
+jne ROTULO201
 mov ax, _console
 mov [bp+-8], ax
 mov ax, 142
 mov [bp+-10], ax
 mov ax, 1
 cs jmp word [_os_trycode]
-ROTULO200:
+ROTULO201:
 mov bx, ax
 pop ax
 xor dx, dx
@@ -1535,14 +1606,14 @@ mov ax, [bp+6]
 push ax
 mov ax, 10
 cmp ax, 0
-jne ROTULO201
+jne ROTULO202
 mov ax, _console
 mov [bp+-8], ax
 mov ax, 143
 mov [bp+-10], ax
 mov ax, 1
 cs jmp word [_os_trycode]
-ROTULO201:
+ROTULO202:
 mov bx, ax
 pop ax
 xor dx, dx
@@ -1554,24 +1625,24 @@ xor ax, ax
 mov bx, ax
 pop ax
 cmp ax, bx
-ja ROTULO204
-jmp ROTULO205
-ROTULO204:
-mov ax, 65535
+ja ROTULO205
 jmp ROTULO206
 ROTULO205:
-xor ax, ax
+mov ax, 65535
+jmp ROTULO207
 ROTULO206:
+xor ax, ax
+ROTULO207:
 cmp ax, 0
-jne ROTULO202
-jmp ROTULO203
-ROTULO202:
+jne ROTULO203
+jmp ROTULO204
+ROTULO203:
 mov ax, [bp+-4]
 push ax
 push cs
 call _console_writeuint16
 add sp, 2
-ROTULO203:
+ROTULO204:
 mov ax, 48
 push ax
 mov ax, [bp+-2]
@@ -1581,7 +1652,7 @@ push ax
 push cs
 call _console_writechar
 add sp, 2
-ROTULO199:
+ROTULO200:
 mov sp, bp
 pop bp
 FIM_console_writeuint16:
@@ -1592,45 +1663,45 @@ mov bp, sp
 cs mov ax, [_os_minstackptr]
 mov bx, sp
 cmp ax, bx
-jb ROTULO207
+jb ROTULO208
 mov ax, _console
 mov [bp+-8], ax
 mov ax, 148
 mov [bp+-10], ax
 mov ax, 2
 cs jmp word [_os_trycode]
-ROTULO207:
+ROTULO208:
 mov ax, [bp+6]
 push ax
 xor ax, ax
 mov bx, ax
 pop ax
 cmp ax, bx
-jb ROTULO211
-jmp ROTULO212
-ROTULO211:
-mov ax, 65535
+jb ROTULO212
 jmp ROTULO213
 ROTULO212:
-xor ax, ax
+mov ax, 65535
+jmp ROTULO214
 ROTULO213:
+xor ax, ax
+ROTULO214:
 cmp ax, 0
-jne ROTULO209
-jmp ROTULO210
-ROTULO209:
+jne ROTULO210
+jmp ROTULO211
+ROTULO210:
 xor ax, ax
 push ax
 mov ax, [bp+6]
 pop bx
 sub ax, bx
 mov [bp+6], ax
-ROTULO210:
+ROTULO211:
 mov ax, [bp+6]
 push ax
 push cs
 call _console_writeuint16
 add sp, 2
-ROTULO208:
+ROTULO209:
 mov sp, bp
 pop bp
 FIM_console_writeint16:
@@ -1641,20 +1712,20 @@ mov bp, sp
 cs mov ax, [_os_minstackptr]
 mov bx, sp
 cmp ax, bx
-jb ROTULO214
+jb ROTULO215
 mov ax, _console
 mov [bp+-8], ax
 mov ax, 155
 mov [bp+-10], ax
 mov ax, 2
 cs jmp word [_os_trycode]
-ROTULO214:
+ROTULO215:
 mov ax, [bp+6]
 push ax
 push cs
 call _console_writeuint16
 add sp, 2
-ROTULO215:
+ROTULO216:
 mov sp, bp
 pop bp
 FIM_console_writeuint8:
@@ -1665,20 +1736,20 @@ mov bp, sp
 cs mov ax, [_os_minstackptr]
 mov bx, sp
 cmp ax, bx
-jb ROTULO216
+jb ROTULO217
 mov ax, _console
 mov [bp+-8], ax
 mov ax, 159
 mov [bp+-10], ax
 mov ax, 2
 cs jmp word [_os_trycode]
-ROTULO216:
+ROTULO217:
 mov ax, [bp+6]
 push ax
 push cs
 call _console_writeint16
 add sp, 2
-ROTULO217:
+ROTULO218:
 mov sp, bp
 pop bp
 FIM_console_writeint8:
@@ -1696,14 +1767,14 @@ sub sp, 2
 cs mov ax, [_os_minstackptr]
 mov bx, sp
 cmp ax, bx
-jb ROTULO218
+jb ROTULO219
 mov ax, _file
 mov [bp+-8], ax
 mov ax, 150
 mov [bp+-10], ax
 mov ax, 2
 cs jmp word [_os_trycode]
-ROTULO218:
+ROTULO219:
 mov ax, 0x3d02
 push ds
 push word [bp+12]
@@ -1809,8 +1880,8 @@ mov di, [bp+6]
 es pop word [di+26]
 es pop word [di+26+2]
 mov ax, 1
-jmp ROTULO219
-ROTULO219:
+jmp ROTULO220
+ROTULO220:
 mov sp, bp
 pop bp
 FIM_file_open:
@@ -1822,14 +1893,14 @@ sub sp, 2
 cs mov ax, [_os_minstackptr]
 mov bx, sp
 cmp ax, bx
-jb ROTULO220
+jb ROTULO221
 mov ax, _file
 mov [bp+-8], ax
 mov ax, 178
 mov [bp+-10], ax
 mov ax, 2
 cs jmp word [_os_trycode]
-ROTULO220:
+ROTULO221:
 mov ax, 0x3c00
 push ds
 push word [bp+12]
@@ -1906,8 +1977,8 @@ mov di, [bp+6]
 es pop word [di+18]
 es pop word [di+18+2]
 mov ax, 1
-jmp ROTULO221
-ROTULO221:
+jmp ROTULO222
+ROTULO222:
 mov sp, bp
 pop bp
 FIM_file_create:
@@ -1919,14 +1990,14 @@ sub sp, 2
 cs mov ax, [_os_minstackptr]
 mov bx, sp
 cmp ax, bx
-jb ROTULO222
+jb ROTULO223
 mov ax, _file
 mov [bp+-8], ax
 mov ax, 204
 mov [bp+-10], ax
 mov ax, 2
 cs jmp word [_os_trycode]
-ROTULO222:
+ROTULO223:
 push word [bp+10+2]
 pop es
 mov di, [bp+10]
@@ -1949,8 +2020,8 @@ call _file_readraw
 add sp, 10
 mov [bp+-2], ax
 mov ax, [bp+-2]
-jmp ROTULO223
-ROTULO223:
+jmp ROTULO224
+ROTULO224:
 mov sp, bp
 pop bp
 FIM_file_read:
@@ -1962,14 +2033,14 @@ sub sp, 2
 cs mov ax, [_os_minstackptr]
 mov bx, sp
 cmp ax, bx
-jb ROTULO224
+jb ROTULO225
 mov ax, _file
 mov [bp+-8], ax
 mov ax, 212
 mov [bp+-10], ax
 mov ax, 2
 cs jmp word [_os_trycode]
-ROTULO224:
+ROTULO225:
 push word [bp+6+2]
 pop es
 mov di, [bp+6]
@@ -1996,8 +2067,8 @@ mov ax, 13
 cs jmp word [_os_trycode]
 .fim:
 mov ax, [bp+-2]
-jmp ROTULO225
-ROTULO225:
+jmp ROTULO226
+ROTULO226:
 mov sp, bp
 pop bp
 FIM_file_readraw:
@@ -2009,14 +2080,14 @@ sub sp, 2
 cs mov ax, [_os_minstackptr]
 mov bx, sp
 cmp ax, bx
-jb ROTULO226
+jb ROTULO227
 mov ax, _file
 mov [bp+-8], ax
 mov ax, 233
 mov [bp+-10], ax
 mov ax, 2
 cs jmp word [_os_trycode]
-ROTULO226:
+ROTULO227:
 push word [bp+10+2]
 pop es
 mov di, [bp+10]
@@ -2042,8 +2113,8 @@ push di
 push cs
 call _file_writeraw
 add sp, 10
-jmp ROTULO227
-ROTULO227:
+jmp ROTULO228
+ROTULO228:
 mov sp, bp
 pop bp
 FIM_file_write:
@@ -2055,14 +2126,14 @@ sub sp, 2
 cs mov ax, [_os_minstackptr]
 mov bx, sp
 cmp ax, bx
-jb ROTULO228
+jb ROTULO229
 mov ax, _file
 mov [bp+-8], ax
 mov ax, 240
 mov [bp+-10], ax
 mov ax, 2
 cs jmp word [_os_trycode]
-ROTULO228:
+ROTULO229:
 push word [bp+6+2]
 pop es
 mov di, [bp+6]
@@ -2089,8 +2160,8 @@ mov ax, 13
 cs jmp word [_os_trycode]
 .fim:
 mov ax, [bp+-2]
-jmp ROTULO229
-ROTULO229:
+jmp ROTULO230
+ROTULO230:
 mov sp, bp
 pop bp
 FIM_file_writeraw:
@@ -2102,14 +2173,14 @@ sub sp, 2
 cs mov ax, [_os_minstackptr]
 mov bx, sp
 cmp ax, bx
-jb ROTULO230
+jb ROTULO231
 mov ax, _file
 mov [bp+-8], ax
 mov ax, 261
 mov [bp+-10], ax
 mov ax, 2
 cs jmp word [_os_trycode]
-ROTULO230:
+ROTULO231:
 push word [bp+6+2]
 pop es
 mov di, [bp+6]
@@ -2127,8 +2198,8 @@ mov ax, 8
 cs jmp word [_os_trycode]
 .fim:
 mov ax, 1
-jmp ROTULO231
-ROTULO231:
+jmp ROTULO232
+ROTULO232:
 mov sp, bp
 pop bp
 FIM_file_close:
@@ -2140,14 +2211,14 @@ sub sp, 2
 cs mov ax, [_os_minstackptr]
 mov bx, sp
 cmp ax, bx
-jb ROTULO232
+jb ROTULO233
 mov ax, _file
 mov [bp+-8], ax
 mov ax, 273
 mov [bp+-10], ax
 mov ax, 2
 cs jmp word [_os_trycode]
-ROTULO232:
+ROTULO233:
 push word [bp+6+2]
 pop es
 mov di, [bp+6]
@@ -2167,8 +2238,8 @@ mov ax, 13
 cs jmp word [_os_trycode]
 .fim:
 mov ax, 1
-jmp ROTULO233
-ROTULO233:
+jmp ROTULO234
+ROTULO234:
 mov sp, bp
 pop bp
 FIM_file_seekstart:
@@ -2180,14 +2251,14 @@ sub sp, 2
 cs mov ax, [_os_minstackptr]
 mov bx, sp
 cmp ax, bx
-jb ROTULO234
+jb ROTULO235
 mov ax, _file
 mov [bp+-8], ax
 mov ax, 287
 mov [bp+-10], ax
 mov ax, 2
 cs jmp word [_os_trycode]
-ROTULO234:
+ROTULO235:
 push word [bp+6+2]
 pop es
 mov di, [bp+6]
@@ -2207,8 +2278,8 @@ mov ax, 13
 cs jmp word [_os_trycode]
 .fim:
 mov ax, 1
-jmp ROTULO235
-ROTULO235:
+jmp ROTULO236
+ROTULO236:
 mov sp, bp
 pop bp
 FIM_file_seekcurrent:
@@ -2220,14 +2291,14 @@ sub sp, 2
 cs mov ax, [_os_minstackptr]
 mov bx, sp
 cmp ax, bx
-jb ROTULO236
+jb ROTULO237
 mov ax, _file
 mov [bp+-8], ax
 mov ax, 301
 mov [bp+-10], ax
 mov ax, 2
 cs jmp word [_os_trycode]
-ROTULO236:
+ROTULO237:
 push word [bp+6+2]
 pop es
 mov di, [bp+6]
@@ -2247,8 +2318,8 @@ mov ax, 13
 cs jmp word [_os_trycode]
 .fim:
 mov ax, 1
-jmp ROTULO237
-ROTULO237:
+jmp ROTULO238
+ROTULO238:
 mov sp, bp
 pop bp
 FIM_file_seekend:
@@ -2266,17 +2337,17 @@ sub sp, 2
 cs mov ax, [_os_minstackptr]
 mov bx, sp
 cmp ax, bx
-jb ROTULO238
+jb ROTULO239
 mov ax, _string
 mov [bp+-8], ax
 mov ax, 19
 mov [bp+-10], ax
 mov ax, 2
 cs jmp word [_os_trycode]
-ROTULO238:
+ROTULO239:
 mov word [bp+-2], 0
 inc word [bp+6]
-ROTULO240:
+ROTULO241:
 push word [bp+6+2]
 pop es
 mov di, [bp+6]
@@ -2287,26 +2358,26 @@ xor ax, ax
 mov bx, ax
 pop ax
 cmp ax, bx
-ja ROTULO243
-jmp ROTULO244
-ROTULO243:
-mov ax, 65535
+ja ROTULO244
 jmp ROTULO245
 ROTULO244:
-xor ax, ax
+mov ax, 65535
+jmp ROTULO246
 ROTULO245:
+xor ax, ax
+ROTULO246:
 cmp ax, 0
-jne ROTULO241
-jmp ROTULO242
-ROTULO241:
+jne ROTULO242
+jmp ROTULO243
+ROTULO242:
 inc word [bp+-2]
 inc word [bp+6]
 inc di
-jmp ROTULO240
-ROTULO242:
+jmp ROTULO241
+ROTULO243:
 mov ax, [bp+-2]
-jmp ROTULO239
-ROTULO239:
+jmp ROTULO240
+ROTULO240:
 mov sp, bp
 pop bp
 FIM_string_length:
@@ -2317,15 +2388,15 @@ mov bp, sp
 cs mov ax, [_os_minstackptr]
 mov bx, sp
 cmp ax, bx
-jb ROTULO246
+jb ROTULO247
 mov ax, _string
 mov [bp+-8], ax
 mov ax, 31
 mov [bp+-10], ax
 mov ax, 2
 cs jmp word [_os_trycode]
-ROTULO246:
-ROTULO248:
+ROTULO247:
+ROTULO249:
 push word [bp+6+2]
 pop es
 mov di, [bp+6]
@@ -2340,18 +2411,18 @@ es mov al, [di+0]
 mov bx, ax
 pop ax
 cmp ax, bx
-je ROTULO251
-jmp ROTULO252
-ROTULO251:
-mov ax, 65535
+je ROTULO252
 jmp ROTULO253
 ROTULO252:
-xor ax, ax
+mov ax, 65535
+jmp ROTULO254
 ROTULO253:
+xor ax, ax
+ROTULO254:
 cmp ax, 0
-jne ROTULO249
-jmp ROTULO250
-ROTULO249:
+jne ROTULO250
+jmp ROTULO251
+ROTULO250:
 push word [bp+6+2]
 pop es
 mov di, [bp+6]
@@ -2362,29 +2433,29 @@ xor ax, ax
 mov bx, ax
 pop ax
 cmp ax, bx
-je ROTULO256
-jmp ROTULO257
-ROTULO256:
-mov ax, 65535
+je ROTULO257
 jmp ROTULO258
 ROTULO257:
-xor ax, ax
+mov ax, 65535
+jmp ROTULO259
 ROTULO258:
+xor ax, ax
+ROTULO259:
 cmp ax, 0
-jne ROTULO254
-jmp ROTULO255
-ROTULO254:
-mov ax, 1
-jmp ROTULO247
+jne ROTULO255
+jmp ROTULO256
 ROTULO255:
+mov ax, 1
+jmp ROTULO248
+ROTULO256:
 inc word [bp+6]
 inc di
 inc word [bp+10]
-jmp ROTULO248
-ROTULO250:
+jmp ROTULO249
+ROTULO251:
 xor ax, ax
-jmp ROTULO247
-ROTULO247:
+jmp ROTULO248
+ROTULO248:
 mov sp, bp
 pop bp
 FIM_string_equals:
@@ -2396,14 +2467,14 @@ sub sp, 10
 cs mov ax, [_os_minstackptr]
 mov bx, sp
 cmp ax, bx
-jb ROTULO259
+jb ROTULO260
 mov ax, _string
 mov [bp+-8], ax
 mov ax, 40
 mov [bp+-10], ax
 mov ax, 2
 cs jmp word [_os_trycode]
-ROTULO259:
+ROTULO260:
 push word [bp+6+2]
 pop es
 mov di, [bp+6]
@@ -2446,25 +2517,25 @@ mov ax, [bp+-4]
 mov bx, ax
 pop ax
 cmp ax, bx
-ja ROTULO263
-jmp ROTULO264
-ROTULO263:
-mov ax, 65535
+ja ROTULO264
 jmp ROTULO265
 ROTULO264:
-xor ax, ax
+mov ax, 65535
+jmp ROTULO266
 ROTULO265:
+xor ax, ax
+ROTULO266:
 cmp ax, 0
-jne ROTULO261
-jmp ROTULO262
-ROTULO261:
+jne ROTULO262
+jmp ROTULO263
+ROTULO262:
 mov ax, _string
 mov [bp+-8], ax
 mov ax, 49
 mov [bp+-10], ax
 mov ax, 9
 cs jmp word [_os_trycode]
-ROTULO262:
+ROTULO263:
 mov ax, [bp+6]
 push ax
 mov ax, 1
@@ -2477,25 +2548,25 @@ add ax, bx
 mov [bp+6], ax
 inc word [bp+10]
 mov word [bp+-8], 1
-ROTULO266:
+ROTULO267:
 mov ax, [bp+-8]
 push ax
 mov ax, [bp+-6]
 mov bx, ax
 pop ax
 cmp ax, bx
-jbe ROTULO269
-jmp ROTULO270
-ROTULO269:
-mov ax, 65535
+jbe ROTULO270
 jmp ROTULO271
 ROTULO270:
-xor ax, ax
+mov ax, 65535
+jmp ROTULO272
 ROTULO271:
+xor ax, ax
+ROTULO272:
 cmp ax, 0
-jne ROTULO267
-jmp ROTULO268
-ROTULO267:
+jne ROTULO268
+jmp ROTULO269
+ROTULO268:
 push word [bp+10+2]
 pop es
 mov di, [bp+10]
@@ -2511,15 +2582,15 @@ inc word [bp+6]
 inc di
 inc word [bp+10]
 inc word [bp+-8]
-jmp ROTULO266
-ROTULO268:
+jmp ROTULO267
+ROTULO269:
 push word [bp+6+2]
 pop es
 mov di, [bp+6]
 es mov byte [di+0], 0
 mov ax, 1
-jmp ROTULO260
-ROTULO260:
+jmp ROTULO261
+ROTULO261:
 mov sp, bp
 pop bp
 FIM_string_concat:
@@ -2531,14 +2602,14 @@ sub sp, 8
 cs mov ax, [_os_minstackptr]
 mov bx, sp
 cmp ax, bx
-jb ROTULO272
+jb ROTULO273
 mov ax, _string
 mov [bp+-8], ax
 mov ax, 62
 mov [bp+-10], ax
 mov ax, 2
 cs jmp word [_os_trycode]
-ROTULO272:
+ROTULO273:
 push word [bp+6+2]
 pop es
 mov di, [bp+6]
@@ -2574,45 +2645,45 @@ add ax, bx
 mov bx, ax
 pop ax
 cmp ax, bx
-jb ROTULO276
-jmp ROTULO277
-ROTULO276:
-mov ax, 65535
+jb ROTULO277
 jmp ROTULO278
 ROTULO277:
-xor ax, ax
+mov ax, 65535
+jmp ROTULO279
 ROTULO278:
+xor ax, ax
+ROTULO279:
 cmp ax, 0
-jne ROTULO274
-jmp ROTULO275
-ROTULO274:
+jne ROTULO275
+jmp ROTULO276
+ROTULO275:
 mov ax, _string
 mov [bp+-8], ax
 mov ax, 72
 mov [bp+-10], ax
 mov ax, 9
 cs jmp word [_os_trycode]
-ROTULO275:
+ROTULO276:
 mov word [bp+-6], 1
-ROTULO279:
+ROTULO280:
 mov ax, [bp+-6]
 push ax
 mov ax, [bp+-4]
 mov bx, ax
 pop ax
 cmp ax, bx
-jbe ROTULO282
-jmp ROTULO283
-ROTULO282:
-mov ax, 65535
+jbe ROTULO283
 jmp ROTULO284
 ROTULO283:
-xor ax, ax
+mov ax, 65535
+jmp ROTULO285
 ROTULO284:
+xor ax, ax
+ROTULO285:
 cmp ax, 0
-jne ROTULO280
-jmp ROTULO281
-ROTULO280:
+jne ROTULO281
+jmp ROTULO282
+ROTULO281:
 push word [bp+10+2]
 pop es
 mov di, [bp+10]
@@ -2628,23 +2699,596 @@ inc word [bp+10]
 inc word [bp+6]
 inc di
 inc word [bp+-6]
-jmp ROTULO279
-ROTULO281:
+jmp ROTULO280
+ROTULO282:
 push word [bp+6+2]
 pop es
 mov di, [bp+6]
 es mov byte [di+0], 0
 mov ax, 1
-jmp ROTULO273
-ROTULO273:
+jmp ROTULO274
+ROTULO274:
 mov sp, bp
 pop bp
 FIM_string_copy:
 retf
 ; MODULO FIM: string
+; MODULO: cga
+_cga:
+db 18
+db 83,121,115,116,101,109,46,68,114,97,119,105,110,103,46,104,99,98
+db 0
+jmp ROTULO286
+_cga_video:
+times 30 db 0
+ROTULO286:
+_cga_mode640x200x2:
+mov ax, 0x6
+int 0x10
+mov ax, 640
+cs push word [_cga_video+2]
+pop es
+cs mov di, [_cga_video]
+es mov [di+0], ax
+mov ax, 200
+es mov [di+2], ax
+mov ax, 2
+es mov [di+4], ax
+push cs
+pop es
+mov di, _cga_drawpixel
+push es
+push di
+cs push word [_cga_video+2]
+pop es
+cs mov di, [_cga_video]
+es pop word [di+6]
+es pop word [di+6+2]
+push word [bp+0+2]
+pop es
+mov di, [bp+0]
+cs push word [_cga_video+2]
+pop es
+cs mov di, [_cga_video]
+xor ax, ax
+es mov al, [di+0]
+push es
+push di
+push cs
+call _graphics_modemanual
+add sp, 4
+ROTULO287:
+FIM_cga_mode640x200x2:
+retf
+_cga_drawpixel:
+push bp
+mov bp, sp
+cs mov ax, [_os_minstackptr]
+mov bx, sp
+cmp ax, bx
+jb ROTULO288
+mov ax, _cga
+mov [bp+-8], ax
+mov ax, 85
+mov [bp+-10], ax
+mov ax, 2
+cs jmp word [_os_trycode]
+ROTULO288:
+mov ax, 0xba00
+test word [bp+12], 1
+jne .par
+mov ax, 0xb800
+.par:
+mov es, ax
+mov ax, [bp+12]
+shr ax, 1
+mov bx, 80
+mul bx
+mov bx, [bp+10]
+shr bx, 1
+shr bx, 1
+shr bx, 1
+add ax, bx
+mov di, ax
+mov cx, [bp+10]
+and cx, 7
+mov ax, [bp+14]
+and ax, 1
+je .inverte
+ror al, cl
+es or [di], al
+jmp .fim
+.inverte:
+ror al, cl
+not ax
+es and [di], al
+.fim:
+ROTULO289:
+mov sp, bp
+pop bp
+FIM_cga_drawpixel:
+retf
+; MODULO FIM: cga
+; MODULO: graphics
+_graphics:
+db 18
+db 83,121,115,116,101,109,46,68,114,97,119,105,110,103,46,104,99,98
+db 0
+jmp ROTULO290
+_graphics_active:
+times 2 db 0
+ROTULO290:
+jmp ROTULO291
+_graphics_video:
+times 30 db 0
+ROTULO291:
+_graphics_drawpixel:
+push bp
+mov bp, sp
+cs mov ax, [_os_minstackptr]
+mov bx, sp
+cmp ax, bx
+jb ROTULO292
+mov ax, _graphics
+mov [bp+-8], ax
+mov ax, 18
+mov [bp+-10], ax
+mov ax, 2
+cs jmp word [_os_trycode]
+ROTULO292:
+cs mov ax, [_graphics_active]
+push ax
+xor ax, ax
+mov bx, ax
+pop ax
+cmp ax, bx
+je ROTULO296
+jmp ROTULO297
+ROTULO296:
+mov ax, 65535
+jmp ROTULO298
+ROTULO297:
+xor ax, ax
+ROTULO298:
+cmp ax, 0
+jne ROTULO294
+jmp ROTULO295
+ROTULO294:
+mov ax, _graphics
+mov [bp+-8], ax
+mov ax, 19
+mov [bp+-10], ax
+mov ax, 13
+cs jmp word [_os_trycode]
+ROTULO295:
+mov ax, [bp+10]
+push ax
+mov ax, [bp+8]
+push ax
+mov ax, [bp+6]
+push ax
+push word [bp+0+2]
+pop es
+mov di, [bp+0]
+cs push word [_graphics_video+2]
+pop es
+cs mov di, [_graphics_video]
+xor ax, ax
+es mov al, [di+0]
+push es
+push di
+es call far [di+6]
+add sp, 10
+ROTULO293:
+mov sp, bp
+pop bp
+FIM_graphics_drawpixel:
+retf
+_graphics_drawline:
+push bp
+mov bp, sp
+cs mov ax, [_os_minstackptr]
+mov bx, sp
+cmp ax, bx
+jb ROTULO299
+mov ax, _graphics
+mov [bp+-8], ax
+mov ax, 23
+mov [bp+-10], ax
+mov ax, 2
+cs jmp word [_os_trycode]
+ROTULO299:
+cs mov ax, [_graphics_active]
+push ax
+xor ax, ax
+mov bx, ax
+pop ax
+cmp ax, bx
+je ROTULO303
+jmp ROTULO304
+ROTULO303:
+mov ax, 65535
+jmp ROTULO305
+ROTULO304:
+xor ax, ax
+ROTULO305:
+cmp ax, 0
+jne ROTULO301
+jmp ROTULO302
+ROTULO301:
+mov ax, _graphics
+mov [bp+-8], ax
+mov ax, 24
+mov [bp+-10], ax
+mov ax, 13
+cs jmp word [_os_trycode]
+ROTULO302:
+mov ax, [bp+14]
+push ax
+mov ax, [bp+12]
+push ax
+mov ax, [bp+10]
+push ax
+mov ax, [bp+8]
+push ax
+mov ax, [bp+6]
+push ax
+push word [bp+0+2]
+pop es
+mov di, [bp+0]
+cs push word [_graphics_video+2]
+pop es
+cs mov di, [_graphics_video]
+xor ax, ax
+es mov al, [di+0]
+push es
+push di
+es call far [di+18]
+add sp, 14
+ROTULO300:
+mov sp, bp
+pop bp
+FIM_graphics_drawline:
+retf
+_graphics_drawrectangle:
+push bp
+mov bp, sp
+cs mov ax, [_os_minstackptr]
+mov bx, sp
+cmp ax, bx
+jb ROTULO306
+mov ax, _graphics
+mov [bp+-8], ax
+mov ax, 28
+mov [bp+-10], ax
+mov ax, 2
+cs jmp word [_os_trycode]
+ROTULO306:
+cs mov ax, [_graphics_active]
+push ax
+xor ax, ax
+mov bx, ax
+pop ax
+cmp ax, bx
+je ROTULO310
+jmp ROTULO311
+ROTULO310:
+mov ax, 65535
+jmp ROTULO312
+ROTULO311:
+xor ax, ax
+ROTULO312:
+cmp ax, 0
+jne ROTULO308
+jmp ROTULO309
+ROTULO308:
+mov ax, _graphics
+mov [bp+-8], ax
+mov ax, 29
+mov [bp+-10], ax
+mov ax, 13
+cs jmp word [_os_trycode]
+ROTULO309:
+mov ax, [bp+16]
+push ax
+mov ax, [bp+14]
+push ax
+mov ax, [bp+12]
+push ax
+mov ax, [bp+10]
+push ax
+mov ax, [bp+8]
+push ax
+mov ax, [bp+6]
+push ax
+push word [bp+0+2]
+pop es
+mov di, [bp+0]
+cs push word [_graphics_video+2]
+pop es
+cs mov di, [_graphics_video]
+xor ax, ax
+es mov al, [di+0]
+push es
+push di
+es call far [di+10]
+add sp, 16
+ROTULO307:
+mov sp, bp
+pop bp
+FIM_graphics_drawrectangle:
+retf
+_graphics_drawellipse:
+push bp
+mov bp, sp
+cs mov ax, [_os_minstackptr]
+mov bx, sp
+cmp ax, bx
+jb ROTULO313
+mov ax, _graphics
+mov [bp+-8], ax
+mov ax, 33
+mov [bp+-10], ax
+mov ax, 2
+cs jmp word [_os_trycode]
+ROTULO313:
+cs mov ax, [_graphics_active]
+push ax
+xor ax, ax
+mov bx, ax
+pop ax
+cmp ax, bx
+je ROTULO317
+jmp ROTULO318
+ROTULO317:
+mov ax, 65535
+jmp ROTULO319
+ROTULO318:
+xor ax, ax
+ROTULO319:
+cmp ax, 0
+jne ROTULO315
+jmp ROTULO316
+ROTULO315:
+mov ax, _graphics
+mov [bp+-8], ax
+mov ax, 34
+mov [bp+-10], ax
+mov ax, 13
+cs jmp word [_os_trycode]
+ROTULO316:
+mov ax, [bp+16]
+push ax
+mov ax, [bp+14]
+push ax
+mov ax, [bp+12]
+push ax
+mov ax, [bp+10]
+push ax
+mov ax, [bp+8]
+push ax
+mov ax, [bp+6]
+push ax
+push word [bp+0+2]
+pop es
+mov di, [bp+0]
+cs push word [_graphics_video+2]
+pop es
+cs mov di, [_graphics_video]
+xor ax, ax
+es mov al, [di+0]
+push es
+push di
+es call far [di+14]
+add sp, 16
+ROTULO314:
+mov sp, bp
+pop bp
+FIM_graphics_drawellipse:
+retf
+_graphics_clearscreen:
+push bp
+mov bp, sp
+cs mov ax, [_os_minstackptr]
+mov bx, sp
+cmp ax, bx
+jb ROTULO320
+mov ax, _graphics
+mov [bp+-8], ax
+mov ax, 38
+mov [bp+-10], ax
+mov ax, 2
+cs jmp word [_os_trycode]
+ROTULO320:
+cs mov ax, [_graphics_active]
+push ax
+xor ax, ax
+mov bx, ax
+pop ax
+cmp ax, bx
+je ROTULO324
+jmp ROTULO325
+ROTULO324:
+mov ax, 65535
+jmp ROTULO326
+ROTULO325:
+xor ax, ax
+ROTULO326:
+cmp ax, 0
+jne ROTULO322
+jmp ROTULO323
+ROTULO322:
+mov ax, _graphics
+mov [bp+-8], ax
+mov ax, 39
+mov [bp+-10], ax
+mov ax, 13
+cs jmp word [_os_trycode]
+ROTULO323:
+mov ax, [bp+6]
+push ax
+push word [bp+0+2]
+pop es
+mov di, [bp+0]
+cs push word [_graphics_video+2]
+pop es
+cs mov di, [_graphics_video]
+xor ax, ax
+es mov al, [di+0]
+push es
+push di
+es call far [di+22]
+add sp, 6
+ROTULO321:
+mov sp, bp
+pop bp
+FIM_graphics_clearscreen:
+retf
+_graphics_getwidth:
+cs mov ax, [_graphics_active]
+push ax
+xor ax, ax
+mov bx, ax
+pop ax
+cmp ax, bx
+je ROTULO330
+jmp ROTULO331
+ROTULO330:
+mov ax, 65535
+jmp ROTULO332
+ROTULO331:
+xor ax, ax
+ROTULO332:
+cmp ax, 0
+jne ROTULO328
+jmp ROTULO329
+ROTULO328:
+mov ax, _graphics
+mov [bp+-8], ax
+mov ax, 44
+mov [bp+-10], ax
+mov ax, 13
+cs jmp word [_os_trycode]
+ROTULO329:
+cs push word [_graphics_video+2]
+pop es
+cs mov di, [_graphics_video]
+es mov ax, [di+0]
+jmp ROTULO327
+ROTULO327:
+FIM_graphics_getwidth:
+retf
+_graphics_getheight:
+cs mov ax, [_graphics_active]
+push ax
+xor ax, ax
+mov bx, ax
+pop ax
+cmp ax, bx
+je ROTULO336
+jmp ROTULO337
+ROTULO336:
+mov ax, 65535
+jmp ROTULO338
+ROTULO337:
+xor ax, ax
+ROTULO338:
+cmp ax, 0
+jne ROTULO334
+jmp ROTULO335
+ROTULO334:
+mov ax, _graphics
+mov [bp+-8], ax
+mov ax, 49
+mov [bp+-10], ax
+mov ax, 13
+cs jmp word [_os_trycode]
+ROTULO335:
+cs push word [_graphics_video+2]
+pop es
+cs mov di, [_graphics_video]
+es mov ax, [di+2]
+jmp ROTULO333
+ROTULO333:
+FIM_graphics_getheight:
+retf
+_graphics_getcolors:
+cs mov ax, [_graphics_active]
+push ax
+xor ax, ax
+mov bx, ax
+pop ax
+cmp ax, bx
+je ROTULO342
+jmp ROTULO343
+ROTULO342:
+mov ax, 65535
+jmp ROTULO344
+ROTULO343:
+xor ax, ax
+ROTULO344:
+cmp ax, 0
+jne ROTULO340
+jmp ROTULO341
+ROTULO340:
+mov ax, _graphics
+mov [bp+-8], ax
+mov ax, 54
+mov [bp+-10], ax
+mov ax, 13
+cs jmp word [_os_trycode]
+ROTULO341:
+cs push word [_graphics_video+2]
+pop es
+cs mov di, [_graphics_video]
+es mov ax, [di+4]
+jmp ROTULO339
+ROTULO339:
+FIM_graphics_getcolors:
+retf
+_graphics_mode80x25x16:
+cs mov word [_graphics_active], 0
+mov ax, 3
+int 0x10
+ROTULO345:
+FIM_graphics_mode80x25x16:
+retf
+_graphics_modemanual:
+push bp
+mov bp, sp
+cs mov ax, [_os_minstackptr]
+mov bx, sp
+cmp ax, bx
+jb ROTULO346
+mov ax, _graphics
+mov [bp+-8], ax
+mov ax, 64
+mov [bp+-10], ax
+mov ax, 2
+cs jmp word [_os_trycode]
+ROTULO346:
+cs mov word [_graphics_active], 1
+mov ax, [bp+6+2]
+cs mov [_graphics_video+2], ax
+mov ax, [bp+6]
+cs mov [_graphics_video], ax
+ROTULO347:
+mov sp, bp
+pop bp
+FIM_graphics_modemanual:
+retf
+; MODULO FIM: graphics
 REALOC_TABLE:
 dw 3
 dw _program_testestring
+dw 4
+dw 0
+dw 3
+dw _cga_video
+dw 4
+dw 0
+dw 3
+dw _graphics_video
 dw 4
 dw 0
 dw 0
