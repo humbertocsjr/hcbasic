@@ -364,6 +364,15 @@ Module CGA
     End
 
     Sub ClearScreen(mode as VideoMode, color as UInt16)
-        Throw NotImplementedError
+        Dim tmp as UInt8
+        Dim y as UInt16
+        If color and 1 Then
+            tmp = 0xff
+        Else
+            tmp = 0
+        End
+        For y = 0 to 199
+            ByteSet mode, 0, y, tmp, 80
+        End
     End
 End
