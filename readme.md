@@ -77,7 +77,7 @@ O uso do Makefile é opcional e voltado para Linux e macOS, existindo apenas par
 - [x] Implementar um tipo de Try Catch Finally / Throw Exception
 - [x] Implementar no Try Catch forma de descobrir o nome do arquivo e linha onde ocorreu o erro
 - [ ] Armazenar ponteiros do Try Catch totalmente em pilha, evitando problemas em multitarefa
-- [ ] Implementar SizeOf para tipos e para variaveis
+- [x] Implementar SizeOf para tipos e para variaveis
 - [x] Implementar forma de definir os diretórios de pesquisa do Imports
 - [ ] Quanto tudo estiver pronto, criar um protótipo do compilador feito diretamente em HCBasic para que seja executável localmente, para isso usar assemblers já existente para a plataforma, por exemplo o Old-School Assembler para DOS
 
@@ -621,6 +621,32 @@ Module Program
 ## Comandos da linguagem
 
 Lembrando que a linguagem HCBasic não diferencia maiúsculas com minúsculas, os comandos estão escritos com a primeira letra maiúscula apenas por questão estética.
+
+### Função SizeOf
+
+Esta função retorna o tamanho em bytes de um determinado item, podendo ser o nome de uma estrutura, uma variável ou um tipo de dado.
+
+```vb
+
+Dim teste as String
+
+Console.Write "Tamanho de um ponteiro para uma estrutura do tipo String: "
+Console.WriteUInt16 SizeOf(teste)
+Console.WriteLine ""
+
+Console.Write "Tamanho de uma estrutura chamada Usuario: "
+Console.WriteUInt16 SizeOf(Usuario)
+Console.WriteLine ""
+
+Console.Write "Tamanho de item do tipo UInt16: "
+Console.WriteUInt16 SizeOf(UInt16)
+Console.WriteLine ""
+
+Console.Write "Tamanho de um campo dentro de uma estrutura: "
+Console.WriteUInt16 SizeOf(teste.Capacity)
+Console.WriteLine ""
+
+```
 
 ### If Then Else
 
