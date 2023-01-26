@@ -1260,36 +1260,36 @@ push cs
 call _cga_mode640x200x2
 mov ax, 1
 push ax
-mov ax, 10
+mov ax, 19
 push ax
-mov ax, 10
-push ax
-push cs
-call _graphics_drawpixel
-add sp, 6
-mov ax, 1
-push ax
-mov ax, 11
-push ax
-mov ax, 11
+mov ax, 114
 push ax
 push cs
 call _graphics_drawpixel
 add sp, 6
 mov ax, 1
 push ax
-mov ax, 12
+mov ax, 51
 push ax
-mov ax, 12
+mov ax, 114
 push ax
 push cs
 call _graphics_drawpixel
 add sp, 6
 mov ax, 1
 push ax
-mov ax, 13
+mov ax, 19
 push ax
-mov ax, 13
+mov ax, 216
+push ax
+push cs
+call _graphics_drawpixel
+add sp, 6
+mov ax, 1
+push ax
+mov ax, 51
+push ax
+mov ax, 216
 push ax
 push cs
 call _graphics_drawpixel
@@ -1346,6 +1346,36 @@ push ax
 push cs
 call _graphics_drawline
 add sp, 10
+mov ax, 1
+push ax
+mov ax, 1
+push ax
+mov ax, 48
+push ax
+mov ax, 213
+push ax
+mov ax, 22
+push ax
+mov ax, 117
+push ax
+push cs
+call _graphics_drawrectangle
+add sp, 12
+mov ax, 65535
+push ax
+mov ax, 1
+push ax
+mov ax, 50
+push ax
+mov ax, 215
+push ax
+mov ax, 20
+push ax
+mov ax, 115
+push ax
+push cs
+call _graphics_drawrectangle
+add sp, 12
 push cs
 call _console_readchar
 push cs
@@ -3290,7 +3320,7 @@ mov sp, bp
 pop bp
 FIM_cga_drawellipse:
 retf
-_cga_drawrectangle:
+_cga_byteor:
 push bp
 mov bp, sp
 cs mov ax, [_os_minstackptr]
@@ -3304,13 +3334,927 @@ mov [bp+-10], ax
 mov ax, 2
 cs jmp word [_os_trycode]
 ROTULO335:
+mov ax, 0xba00
+test word [bp+12], 1
+jne .par
+mov ax, 0xb800
+.par:
+mov es, ax
+mov ax, [bp+12]
+shr ax, 1
+mov bx, 80
+mul bx
+mov bx, [bp+10]
+shr bx, 1
+shr bx, 1
+shr bx, 1
+add ax, bx
+mov di, ax
+mov ax, [bp+14]
+es or [di], al
+ROTULO336:
+mov sp, bp
+pop bp
+FIM_cga_byteor:
+retf
+_cga_byteand:
+push bp
+mov bp, sp
+cs mov ax, [_os_minstackptr]
+mov bx, sp
+cmp ax, bx
+jb ROTULO337
 mov ax, _cga
 mov [bp+-8], ax
-mov ax, 188
+mov ax, 208
 mov [bp+-10], ax
-mov ax, 7
+mov ax, 2
 cs jmp word [_os_trycode]
-ROTULO336:
+ROTULO337:
+mov ax, 0xba00
+test word [bp+12], 1
+jne .par
+mov ax, 0xb800
+.par:
+mov es, ax
+mov ax, [bp+12]
+shr ax, 1
+mov bx, 80
+mul bx
+mov bx, [bp+10]
+shr bx, 1
+shr bx, 1
+shr bx, 1
+add ax, bx
+mov di, ax
+mov ax, [bp+14]
+es and [di], al
+ROTULO338:
+mov sp, bp
+pop bp
+FIM_cga_byteand:
+retf
+_cga_byteandor:
+push bp
+mov bp, sp
+cs mov ax, [_os_minstackptr]
+mov bx, sp
+cmp ax, bx
+jb ROTULO339
+mov ax, _cga
+mov [bp+-8], ax
+mov ax, 229
+mov [bp+-10], ax
+mov ax, 2
+cs jmp word [_os_trycode]
+ROTULO339:
+mov ax, 0xba00
+test word [bp+12], 1
+jne .par
+mov ax, 0xb800
+.par:
+mov es, ax
+mov ax, [bp+12]
+shr ax, 1
+mov bx, 80
+mul bx
+mov bx, [bp+10]
+shr bx, 1
+shr bx, 1
+shr bx, 1
+add ax, bx
+mov di, ax
+mov ax, [bp+14]
+es and [di], al
+mov ax, [bp+16]
+es or [di], al
+ROTULO340:
+mov sp, bp
+pop bp
+FIM_cga_byteandor:
+retf
+_cga_byteset:
+push bp
+mov bp, sp
+cs mov ax, [_os_minstackptr]
+mov bx, sp
+cmp ax, bx
+jb ROTULO341
+mov ax, _cga
+mov [bp+-8], ax
+mov ax, 252
+mov [bp+-10], ax
+mov ax, 2
+cs jmp word [_os_trycode]
+ROTULO341:
+mov ax, 0xba00
+test word [bp+12], 1
+jne .par
+mov ax, 0xb800
+.par:
+mov es, ax
+mov ax, [bp+12]
+shr ax, 1
+mov bx, 80
+mul bx
+mov bx, [bp+10]
+shr bx, 1
+shr bx, 1
+shr bx, 1
+add ax, bx
+mov di, ax
+mov ax, [bp+14]
+mov cx, [bp+16]
+cld
+rep stosb
+ROTULO342:
+mov sp, bp
+pop bp
+FIM_cga_byteset:
+retf
+_cga_drawrectangle:
+push bp
+mov bp, sp
+sub sp, 10
+cs mov ax, [_os_minstackptr]
+mov bx, sp
+cmp ax, bx
+jb ROTULO343
+mov ax, _cga
+mov [bp+-8], ax
+mov ax, 275
+mov [bp+-10], ax
+mov ax, 2
+cs jmp word [_os_trycode]
+ROTULO343:
+mov word [bp+-8], 0
+mov word [bp+-10], 255
+mov ax, [bp+10]
+push ax
+mov ax, 7
+mov bx, ax
+pop ax
+and ax, bx
+push ax
+mov ax, 7
+pop bx
+sub ax, bx
+mov [bp+-6], ax
+mov word [bp+-4], 0
+ROTULO348:
+mov ax, [bp+-4]
+push ax
+mov ax, [bp+-6]
+mov bx, ax
+pop ax
+cmp ax, bx
+jbe ROTULO351
+jmp ROTULO352
+ROTULO351:
+mov ax, 65535
+jmp ROTULO353
+ROTULO352:
+xor ax, ax
+ROTULO353:
+cmp ax, 0
+jne ROTULO349
+jmp ROTULO350
+ROTULO349:
+mov ax, [bp+-4]
+push ax
+mov ax, [bp+-6]
+mov bx, ax
+pop ax
+cmp ax, bx
+je ROTULO356
+jmp ROTULO357
+ROTULO356:
+mov ax, 65535
+jmp ROTULO358
+ROTULO357:
+xor ax, ax
+ROTULO358:
+cmp ax, 0
+jne ROTULO354
+jmp ROTULO355
+ROTULO354:
+mov ax, [bp+18]
+push ax
+mov ax, 1
+mov bx, ax
+pop ax
+and ax, bx
+cmp ax, 0
+jne ROTULO359
+jmp ROTULO360
+ROTULO359:
+mov ax, [bp+-10]
+push ax
+mov ax, 1
+push ax
+mov ax, [bp+-4]
+mov cx, ax
+pop ax
+shl ax, cl
+mov bx, ax
+pop ax
+or ax, bx
+mov [bp+-10], ax
+mov ax, [bp+-8]
+push ax
+mov ax, 1
+push ax
+mov ax, [bp+-4]
+mov cx, ax
+pop ax
+shl ax, cl
+mov bx, ax
+pop ax
+or ax, bx
+mov [bp+-8], ax
+ROTULO360:
+jmp ROTULO370
+ROTULO355:
+mov ax, [bp+20]
+push ax
+mov ax, 65535
+mov bx, ax
+pop ax
+cmp ax, bx
+jne ROTULO373
+jmp ROTULO374
+ROTULO373:
+mov ax, 65535
+jmp ROTULO375
+ROTULO374:
+xor ax, ax
+ROTULO375:
+cmp ax, 0
+jne ROTULO371
+jmp ROTULO372
+ROTULO371:
+mov ax, [bp+20]
+push ax
+mov ax, 1
+mov bx, ax
+pop ax
+and ax, bx
+cmp ax, 0
+jne ROTULO376
+jmp ROTULO377
+ROTULO376:
+mov ax, [bp+-10]
+push ax
+mov ax, 1
+push ax
+mov ax, [bp+-4]
+mov cx, ax
+pop ax
+shl ax, cl
+mov bx, ax
+pop ax
+or ax, bx
+mov [bp+-10], ax
+mov ax, [bp+-8]
+push ax
+mov ax, 1
+push ax
+mov ax, [bp+-4]
+mov cx, ax
+pop ax
+shl ax, cl
+mov bx, ax
+pop ax
+or ax, bx
+mov [bp+-8], ax
+ROTULO377:
+ROTULO372:
+ROTULO370:
+inc word [bp+-4]
+jmp ROTULO348
+ROTULO350:
+mov ax, [bp+-10]
+not ax
+ROTULO387:
+mov ax, 65535
+jmp ROTULO389
+ROTULO388:
+xor ax, ax
+ROTULO389:
+mov [bp+-10], ax
+mov ax, 1
+push ax
+mov ax, [bp+12]
+pop bx
+add ax, bx
+mov [bp+-2], ax
+ROTULO390:
+mov ax, [bp+-2]
+push ax
+mov ax, 1
+push ax
+mov ax, [bp+16]
+pop bx
+sub ax, bx
+mov bx, ax
+pop ax
+cmp ax, bx
+jbe ROTULO393
+jmp ROTULO394
+ROTULO393:
+mov ax, 65535
+jmp ROTULO395
+ROTULO394:
+xor ax, ax
+ROTULO395:
+cmp ax, 0
+jne ROTULO391
+jmp ROTULO392
+ROTULO391:
+mov ax, [bp+-8]
+push ax
+mov ax, [bp+-10]
+push ax
+mov ax, [bp+-2]
+push ax
+mov ax, [bp+10]
+push ax
+push word [bp+6+2]
+pop es
+mov di, [bp+6]
+push es
+push di
+push cs
+call _cga_byteandor
+add sp, 12
+inc word [bp+-2]
+jmp ROTULO390
+ROTULO392:
+mov ax, [bp+20]
+push ax
+mov ax, 65535
+mov bx, ax
+pop ax
+cmp ax, bx
+jne ROTULO398
+jmp ROTULO399
+ROTULO398:
+mov ax, 65535
+jmp ROTULO400
+ROTULO399:
+xor ax, ax
+ROTULO400:
+cmp ax, 0
+jne ROTULO396
+jmp ROTULO397
+ROTULO396:
+mov ax, [bp+20]
+push ax
+mov ax, 1
+mov bx, ax
+pop ax
+and ax, bx
+cmp ax, 0
+jne ROTULO401
+jmp ROTULO402
+ROTULO401:
+mov word [bp+-10], 255
+jmp ROTULO406
+ROTULO402:
+mov word [bp+-10], 0
+ROTULO406:
+mov ax, [bp+12]
+mov [bp+-2], ax
+ROTULO407:
+mov ax, [bp+-2]
+push ax
+mov ax, [bp+16]
+mov bx, ax
+pop ax
+cmp ax, bx
+jbe ROTULO410
+jmp ROTULO411
+ROTULO410:
+mov ax, 65535
+jmp ROTULO412
+ROTULO411:
+xor ax, ax
+ROTULO412:
+cmp ax, 0
+jne ROTULO408
+jmp ROTULO409
+ROTULO408:
+mov ax, 8
+push ax
+mov ax, [bp+10]
+push ax
+mov ax, [bp+14]
+pop bx
+sub ax, bx
+pop bx
+sub ax, bx
+push ax
+mov ax, 3
+mov cx, ax
+pop ax
+shr ax, cl
+push ax
+mov ax, [bp+-10]
+push ax
+mov ax, [bp+-2]
+push ax
+mov ax, 8
+push ax
+mov ax, [bp+10]
+pop bx
+add ax, bx
+push ax
+push word [bp+6+2]
+pop es
+mov di, [bp+6]
+push es
+push di
+push cs
+call _cga_byteset
+add sp, 12
+inc word [bp+-2]
+jmp ROTULO407
+ROTULO409:
+ROTULO397:
+mov word [bp+-8], 0
+mov word [bp+-10], 255
+mov ax, [bp+14]
+push ax
+mov ax, 7
+mov bx, ax
+pop ax
+and ax, bx
+mov [bp+-6], ax
+mov word [bp+-4], 0
+ROTULO416:
+mov ax, [bp+-4]
+push ax
+mov ax, [bp+-6]
+mov bx, ax
+pop ax
+cmp ax, bx
+jbe ROTULO419
+jmp ROTULO420
+ROTULO419:
+mov ax, 65535
+jmp ROTULO421
+ROTULO420:
+xor ax, ax
+ROTULO421:
+cmp ax, 0
+jne ROTULO417
+jmp ROTULO418
+ROTULO417:
+mov ax, [bp+-4]
+push ax
+mov ax, [bp+-6]
+mov bx, ax
+pop ax
+cmp ax, bx
+je ROTULO424
+jmp ROTULO425
+ROTULO424:
+mov ax, 65535
+jmp ROTULO426
+ROTULO425:
+xor ax, ax
+ROTULO426:
+cmp ax, 0
+jne ROTULO422
+jmp ROTULO423
+ROTULO422:
+mov ax, [bp+18]
+push ax
+mov ax, 1
+mov bx, ax
+pop ax
+and ax, bx
+cmp ax, 0
+jne ROTULO427
+jmp ROTULO428
+ROTULO427:
+mov ax, [bp+-10]
+push ax
+mov ax, 128
+push ax
+mov ax, [bp+-4]
+mov cx, ax
+pop ax
+shr ax, cl
+mov bx, ax
+pop ax
+or ax, bx
+mov [bp+-10], ax
+mov ax, [bp+-8]
+push ax
+mov ax, 128
+push ax
+mov ax, [bp+-4]
+mov cx, ax
+pop ax
+shr ax, cl
+mov bx, ax
+pop ax
+or ax, bx
+mov [bp+-8], ax
+ROTULO428:
+jmp ROTULO438
+ROTULO423:
+mov ax, [bp+20]
+push ax
+mov ax, 65535
+mov bx, ax
+pop ax
+cmp ax, bx
+jne ROTULO441
+jmp ROTULO442
+ROTULO441:
+mov ax, 65535
+jmp ROTULO443
+ROTULO442:
+xor ax, ax
+ROTULO443:
+cmp ax, 0
+jne ROTULO439
+jmp ROTULO440
+ROTULO439:
+mov ax, [bp+20]
+push ax
+mov ax, 1
+mov bx, ax
+pop ax
+and ax, bx
+cmp ax, 0
+jne ROTULO444
+jmp ROTULO445
+ROTULO444:
+mov ax, [bp+-10]
+push ax
+mov ax, 128
+push ax
+mov ax, [bp+-4]
+mov cx, ax
+pop ax
+shr ax, cl
+mov bx, ax
+pop ax
+or ax, bx
+mov [bp+-10], ax
+mov ax, [bp+-8]
+push ax
+mov ax, 128
+push ax
+mov ax, [bp+-4]
+mov cx, ax
+pop ax
+shr ax, cl
+mov bx, ax
+pop ax
+or ax, bx
+mov [bp+-8], ax
+ROTULO445:
+ROTULO440:
+ROTULO438:
+inc word [bp+-4]
+jmp ROTULO416
+ROTULO418:
+mov ax, 1
+push ax
+mov ax, [bp+12]
+pop bx
+add ax, bx
+mov [bp+-2], ax
+ROTULO455:
+mov ax, [bp+-2]
+push ax
+mov ax, 1
+push ax
+mov ax, [bp+16]
+pop bx
+sub ax, bx
+mov bx, ax
+pop ax
+cmp ax, bx
+jbe ROTULO458
+jmp ROTULO459
+ROTULO458:
+mov ax, 65535
+jmp ROTULO460
+ROTULO459:
+xor ax, ax
+ROTULO460:
+cmp ax, 0
+jne ROTULO456
+jmp ROTULO457
+ROTULO456:
+mov ax, [bp+-8]
+push ax
+mov ax, [bp+-10]
+push ax
+mov ax, [bp+-2]
+push ax
+mov ax, [bp+14]
+push ax
+push word [bp+6+2]
+pop es
+mov di, [bp+6]
+push es
+push di
+push cs
+call _cga_byteandor
+add sp, 12
+inc word [bp+-2]
+jmp ROTULO455
+ROTULO457:
+mov word [bp+-8], 0
+mov word [bp+-10], 255
+mov ax, [bp+10]
+push ax
+mov ax, 7
+mov bx, ax
+pop ax
+and ax, bx
+push ax
+mov ax, 7
+pop bx
+sub ax, bx
+mov [bp+-6], ax
+mov word [bp+-4], 0
+ROTULO464:
+mov ax, [bp+-4]
+push ax
+mov ax, [bp+-6]
+mov bx, ax
+pop ax
+cmp ax, bx
+jbe ROTULO467
+jmp ROTULO468
+ROTULO467:
+mov ax, 65535
+jmp ROTULO469
+ROTULO468:
+xor ax, ax
+ROTULO469:
+cmp ax, 0
+jne ROTULO465
+jmp ROTULO466
+ROTULO465:
+mov ax, [bp+-10]
+push ax
+mov ax, 1
+push ax
+mov ax, [bp+-4]
+mov cx, ax
+pop ax
+shl ax, cl
+mov bx, ax
+pop ax
+or ax, bx
+mov [bp+-10], ax
+mov ax, [bp+18]
+push ax
+mov ax, 1
+mov bx, ax
+pop ax
+and ax, bx
+cmp ax, 0
+jne ROTULO473
+jmp ROTULO474
+ROTULO473:
+mov ax, [bp+-8]
+push ax
+mov ax, 1
+push ax
+mov ax, [bp+-4]
+mov cx, ax
+pop ax
+shl ax, cl
+mov bx, ax
+pop ax
+or ax, bx
+mov [bp+-8], ax
+ROTULO474:
+inc word [bp+-4]
+jmp ROTULO464
+ROTULO466:
+mov ax, [bp+-8]
+push ax
+mov ax, [bp+-10]
+push ax
+mov ax, [bp+12]
+push ax
+mov ax, [bp+10]
+push ax
+push word [bp+6+2]
+pop es
+mov di, [bp+6]
+push es
+push di
+push cs
+call _cga_byteandor
+add sp, 12
+mov ax, [bp+-8]
+push ax
+mov ax, [bp+-10]
+push ax
+mov ax, [bp+16]
+push ax
+mov ax, [bp+10]
+push ax
+push word [bp+6+2]
+pop es
+mov di, [bp+6]
+push es
+push di
+push cs
+call _cga_byteandor
+add sp, 12
+mov word [bp+-8], 0
+mov word [bp+-10], 255
+mov ax, [bp+14]
+push ax
+mov ax, 7
+mov bx, ax
+pop ax
+and ax, bx
+mov [bp+-6], ax
+mov word [bp+-4], 0
+ROTULO484:
+mov ax, [bp+-4]
+push ax
+mov ax, [bp+-6]
+mov bx, ax
+pop ax
+cmp ax, bx
+jbe ROTULO487
+jmp ROTULO488
+ROTULO487:
+mov ax, 65535
+jmp ROTULO489
+ROTULO488:
+xor ax, ax
+ROTULO489:
+cmp ax, 0
+jne ROTULO485
+jmp ROTULO486
+ROTULO485:
+mov ax, [bp+-10]
+push ax
+mov ax, 128
+push ax
+mov ax, [bp+-4]
+mov cx, ax
+pop ax
+shr ax, cl
+mov bx, ax
+pop ax
+or ax, bx
+mov [bp+-10], ax
+mov ax, [bp+18]
+push ax
+mov ax, 1
+mov bx, ax
+pop ax
+and ax, bx
+cmp ax, 0
+jne ROTULO493
+jmp ROTULO494
+ROTULO493:
+mov ax, [bp+-8]
+push ax
+mov ax, 128
+push ax
+mov ax, [bp+-4]
+mov cx, ax
+pop ax
+shr ax, cl
+mov bx, ax
+pop ax
+or ax, bx
+mov [bp+-8], ax
+ROTULO494:
+inc word [bp+-4]
+jmp ROTULO484
+ROTULO486:
+mov ax, [bp+-8]
+push ax
+mov ax, [bp+-10]
+push ax
+mov ax, [bp+12]
+push ax
+mov ax, [bp+14]
+push ax
+push word [bp+6+2]
+pop es
+mov di, [bp+6]
+push es
+push di
+push cs
+call _cga_byteandor
+add sp, 12
+mov ax, [bp+-8]
+push ax
+mov ax, [bp+-10]
+push ax
+mov ax, [bp+16]
+push ax
+mov ax, [bp+14]
+push ax
+push word [bp+6+2]
+pop es
+mov di, [bp+6]
+push es
+push di
+push cs
+call _cga_byteandor
+add sp, 12
+mov ax, [bp+18]
+push ax
+mov ax, 1
+mov bx, ax
+pop ax
+and ax, bx
+cmp ax, 0
+jne ROTULO501
+jmp ROTULO502
+ROTULO501:
+mov word [bp+-10], 255
+jmp ROTULO506
+ROTULO502:
+mov word [bp+-10], 0
+ROTULO506:
+mov ax, 8
+push ax
+mov ax, [bp+10]
+push ax
+mov ax, [bp+14]
+pop bx
+sub ax, bx
+pop bx
+sub ax, bx
+push ax
+mov ax, 3
+mov cx, ax
+pop ax
+shr ax, cl
+push ax
+mov ax, [bp+-10]
+push ax
+mov ax, [bp+12]
+push ax
+mov ax, 8
+push ax
+mov ax, [bp+10]
+pop bx
+add ax, bx
+push ax
+push word [bp+6+2]
+pop es
+mov di, [bp+6]
+push es
+push di
+push cs
+call _cga_byteset
+add sp, 12
+mov ax, 8
+push ax
+mov ax, [bp+10]
+push ax
+mov ax, [bp+14]
+pop bx
+sub ax, bx
+pop bx
+sub ax, bx
+push ax
+mov ax, 3
+mov cx, ax
+pop ax
+shr ax, cl
+push ax
+mov ax, [bp+-10]
+push ax
+mov ax, [bp+16]
+push ax
+mov ax, 8
+push ax
+mov ax, [bp+10]
+pop bx
+add ax, bx
+push ax
+push word [bp+6+2]
+pop es
+mov di, [bp+6]
+push es
+push di
+push cs
+call _cga_byteset
+add sp, 12
+ROTULO344:
 mov sp, bp
 pop bp
 FIM_cga_drawrectangle:
@@ -3321,21 +4265,21 @@ mov bp, sp
 cs mov ax, [_os_minstackptr]
 mov bx, sp
 cmp ax, bx
-jb ROTULO337
+jb ROTULO507
 mov ax, _cga
 mov [bp+-8], ax
-mov ax, 191
+mov ax, 366
 mov [bp+-10], ax
 mov ax, 2
 cs jmp word [_os_trycode]
-ROTULO337:
+ROTULO507:
 mov ax, _cga
 mov [bp+-8], ax
-mov ax, 192
+mov ax, 367
 mov [bp+-10], ax
 mov ax, 7
 cs jmp word [_os_trycode]
-ROTULO338:
+ROTULO508:
 mov sp, bp
 pop bp
 FIM_cga_clearscreen:
@@ -3346,53 +4290,53 @@ _graphics:
 db 18
 db 83,121,115,116,101,109,46,68,114,97,119,105,110,103,46,104,99,98
 db 0
-jmp ROTULO339
+jmp ROTULO509
 _graphics_active:
 times 2 db 0
-ROTULO339:
-jmp ROTULO340
+ROTULO509:
+jmp ROTULO510
 _graphics_video:
 times 30 db 0
-ROTULO340:
+ROTULO510:
 _graphics_drawpixel:
 push bp
 mov bp, sp
 cs mov ax, [_os_minstackptr]
 mov bx, sp
 cmp ax, bx
-jb ROTULO341
+jb ROTULO511
 mov ax, _graphics
 mov [bp+-8], ax
 mov ax, 18
 mov [bp+-10], ax
 mov ax, 2
 cs jmp word [_os_trycode]
-ROTULO341:
+ROTULO511:
 cs mov ax, [_graphics_active]
 push ax
 xor ax, ax
 mov bx, ax
 pop ax
 cmp ax, bx
-je ROTULO345
-jmp ROTULO346
-ROTULO345:
+je ROTULO515
+jmp ROTULO516
+ROTULO515:
 mov ax, 65535
-jmp ROTULO347
-ROTULO346:
+jmp ROTULO517
+ROTULO516:
 xor ax, ax
-ROTULO347:
+ROTULO517:
 cmp ax, 0
-jne ROTULO343
-jmp ROTULO344
-ROTULO343:
+jne ROTULO513
+jmp ROTULO514
+ROTULO513:
 mov ax, _graphics
 mov [bp+-8], ax
 mov ax, 19
 mov [bp+-10], ax
 mov ax, 13
 cs jmp word [_os_trycode]
-ROTULO344:
+ROTULO514:
 mov ax, [bp+10]
 push ax
 mov ax, [bp+8]
@@ -3411,7 +4355,7 @@ push es
 push di
 es call far [di+6]
 add sp, 10
-ROTULO342:
+ROTULO512:
 mov sp, bp
 pop bp
 FIM_graphics_drawpixel:
@@ -3422,39 +4366,39 @@ mov bp, sp
 cs mov ax, [_os_minstackptr]
 mov bx, sp
 cmp ax, bx
-jb ROTULO348
+jb ROTULO518
 mov ax, _graphics
 mov [bp+-8], ax
 mov ax, 23
 mov [bp+-10], ax
 mov ax, 2
 cs jmp word [_os_trycode]
-ROTULO348:
+ROTULO518:
 cs mov ax, [_graphics_active]
 push ax
 xor ax, ax
 mov bx, ax
 pop ax
 cmp ax, bx
-je ROTULO352
-jmp ROTULO353
-ROTULO352:
+je ROTULO522
+jmp ROTULO523
+ROTULO522:
 mov ax, 65535
-jmp ROTULO354
-ROTULO353:
+jmp ROTULO524
+ROTULO523:
 xor ax, ax
-ROTULO354:
+ROTULO524:
 cmp ax, 0
-jne ROTULO350
-jmp ROTULO351
-ROTULO350:
+jne ROTULO520
+jmp ROTULO521
+ROTULO520:
 mov ax, _graphics
 mov [bp+-8], ax
 mov ax, 24
 mov [bp+-10], ax
 mov ax, 13
 cs jmp word [_os_trycode]
-ROTULO351:
+ROTULO521:
 mov ax, [bp+14]
 push ax
 mov ax, [bp+12]
@@ -3477,7 +4421,7 @@ push es
 push di
 es call far [di+18]
 add sp, 14
-ROTULO349:
+ROTULO519:
 mov sp, bp
 pop bp
 FIM_graphics_drawline:
@@ -3488,39 +4432,39 @@ mov bp, sp
 cs mov ax, [_os_minstackptr]
 mov bx, sp
 cmp ax, bx
-jb ROTULO355
+jb ROTULO525
 mov ax, _graphics
 mov [bp+-8], ax
 mov ax, 28
 mov [bp+-10], ax
 mov ax, 2
 cs jmp word [_os_trycode]
-ROTULO355:
+ROTULO525:
 cs mov ax, [_graphics_active]
 push ax
 xor ax, ax
 mov bx, ax
 pop ax
 cmp ax, bx
-je ROTULO359
-jmp ROTULO360
-ROTULO359:
+je ROTULO529
+jmp ROTULO530
+ROTULO529:
 mov ax, 65535
-jmp ROTULO361
-ROTULO360:
+jmp ROTULO531
+ROTULO530:
 xor ax, ax
-ROTULO361:
+ROTULO531:
 cmp ax, 0
-jne ROTULO357
-jmp ROTULO358
-ROTULO357:
+jne ROTULO527
+jmp ROTULO528
+ROTULO527:
 mov ax, _graphics
 mov [bp+-8], ax
 mov ax, 29
 mov [bp+-10], ax
 mov ax, 13
 cs jmp word [_os_trycode]
-ROTULO358:
+ROTULO528:
 mov ax, [bp+16]
 push ax
 mov ax, [bp+14]
@@ -3545,7 +4489,7 @@ push es
 push di
 es call far [di+10]
 add sp, 16
-ROTULO356:
+ROTULO526:
 mov sp, bp
 pop bp
 FIM_graphics_drawrectangle:
@@ -3556,39 +4500,39 @@ mov bp, sp
 cs mov ax, [_os_minstackptr]
 mov bx, sp
 cmp ax, bx
-jb ROTULO362
+jb ROTULO532
 mov ax, _graphics
 mov [bp+-8], ax
 mov ax, 33
 mov [bp+-10], ax
 mov ax, 2
 cs jmp word [_os_trycode]
-ROTULO362:
+ROTULO532:
 cs mov ax, [_graphics_active]
 push ax
 xor ax, ax
 mov bx, ax
 pop ax
 cmp ax, bx
-je ROTULO366
-jmp ROTULO367
-ROTULO366:
+je ROTULO536
+jmp ROTULO537
+ROTULO536:
 mov ax, 65535
-jmp ROTULO368
-ROTULO367:
+jmp ROTULO538
+ROTULO537:
 xor ax, ax
-ROTULO368:
+ROTULO538:
 cmp ax, 0
-jne ROTULO364
-jmp ROTULO365
-ROTULO364:
+jne ROTULO534
+jmp ROTULO535
+ROTULO534:
 mov ax, _graphics
 mov [bp+-8], ax
 mov ax, 34
 mov [bp+-10], ax
 mov ax, 13
 cs jmp word [_os_trycode]
-ROTULO365:
+ROTULO535:
 mov ax, [bp+16]
 push ax
 mov ax, [bp+14]
@@ -3613,7 +4557,7 @@ push es
 push di
 es call far [di+14]
 add sp, 16
-ROTULO363:
+ROTULO533:
 mov sp, bp
 pop bp
 FIM_graphics_drawellipse:
@@ -3624,39 +4568,39 @@ mov bp, sp
 cs mov ax, [_os_minstackptr]
 mov bx, sp
 cmp ax, bx
-jb ROTULO369
+jb ROTULO539
 mov ax, _graphics
 mov [bp+-8], ax
 mov ax, 38
 mov [bp+-10], ax
 mov ax, 2
 cs jmp word [_os_trycode]
-ROTULO369:
+ROTULO539:
 cs mov ax, [_graphics_active]
 push ax
 xor ax, ax
 mov bx, ax
 pop ax
 cmp ax, bx
-je ROTULO373
-jmp ROTULO374
-ROTULO373:
+je ROTULO543
+jmp ROTULO544
+ROTULO543:
 mov ax, 65535
-jmp ROTULO375
-ROTULO374:
+jmp ROTULO545
+ROTULO544:
 xor ax, ax
-ROTULO375:
+ROTULO545:
 cmp ax, 0
-jne ROTULO371
-jmp ROTULO372
-ROTULO371:
+jne ROTULO541
+jmp ROTULO542
+ROTULO541:
 mov ax, _graphics
 mov [bp+-8], ax
 mov ax, 39
 mov [bp+-10], ax
 mov ax, 13
 cs jmp word [_os_trycode]
-ROTULO372:
+ROTULO542:
 mov ax, [bp+6]
 push ax
 push word [bp+0+2]
@@ -3671,15 +4615,15 @@ push es
 push di
 es call far [di+22]
 add sp, 6
-ROTULO370:
+ROTULO540:
 mov sp, bp
 pop bp
 FIM_graphics_clearscreen:
 retf
 _graphics_getactive:
 cs mov ax, [_graphics_active]
-jmp ROTULO376
-ROTULO376:
+jmp ROTULO546
+ROTULO546:
 FIM_graphics_getactive:
 retf
 _graphics_getwidth:
@@ -3689,31 +4633,31 @@ xor ax, ax
 mov bx, ax
 pop ax
 cmp ax, bx
-je ROTULO380
-jmp ROTULO381
-ROTULO380:
+je ROTULO550
+jmp ROTULO551
+ROTULO550:
 mov ax, 65535
-jmp ROTULO382
-ROTULO381:
+jmp ROTULO552
+ROTULO551:
 xor ax, ax
-ROTULO382:
+ROTULO552:
 cmp ax, 0
-jne ROTULO378
-jmp ROTULO379
-ROTULO378:
+jne ROTULO548
+jmp ROTULO549
+ROTULO548:
 mov ax, _graphics
 mov [bp+-8], ax
 mov ax, 48
 mov [bp+-10], ax
 mov ax, 13
 cs jmp word [_os_trycode]
-ROTULO379:
+ROTULO549:
 cs push word [_graphics_video+2]
 pop es
 cs mov di, [_graphics_video]
 es mov ax, [di+0]
-jmp ROTULO377
-ROTULO377:
+jmp ROTULO547
+ROTULO547:
 FIM_graphics_getwidth:
 retf
 _graphics_getheight:
@@ -3723,31 +4667,31 @@ xor ax, ax
 mov bx, ax
 pop ax
 cmp ax, bx
-je ROTULO386
-jmp ROTULO387
-ROTULO386:
+je ROTULO556
+jmp ROTULO557
+ROTULO556:
 mov ax, 65535
-jmp ROTULO388
-ROTULO387:
+jmp ROTULO558
+ROTULO557:
 xor ax, ax
-ROTULO388:
+ROTULO558:
 cmp ax, 0
-jne ROTULO384
-jmp ROTULO385
-ROTULO384:
+jne ROTULO554
+jmp ROTULO555
+ROTULO554:
 mov ax, _graphics
 mov [bp+-8], ax
 mov ax, 53
 mov [bp+-10], ax
 mov ax, 13
 cs jmp word [_os_trycode]
-ROTULO385:
+ROTULO555:
 cs push word [_graphics_video+2]
 pop es
 cs mov di, [_graphics_video]
 es mov ax, [di+2]
-jmp ROTULO383
-ROTULO383:
+jmp ROTULO553
+ROTULO553:
 FIM_graphics_getheight:
 retf
 _graphics_getcolors:
@@ -3757,38 +4701,38 @@ xor ax, ax
 mov bx, ax
 pop ax
 cmp ax, bx
-je ROTULO392
-jmp ROTULO393
-ROTULO392:
+je ROTULO562
+jmp ROTULO563
+ROTULO562:
 mov ax, 65535
-jmp ROTULO394
-ROTULO393:
+jmp ROTULO564
+ROTULO563:
 xor ax, ax
-ROTULO394:
+ROTULO564:
 cmp ax, 0
-jne ROTULO390
-jmp ROTULO391
-ROTULO390:
+jne ROTULO560
+jmp ROTULO561
+ROTULO560:
 mov ax, _graphics
 mov [bp+-8], ax
 mov ax, 58
 mov [bp+-10], ax
 mov ax, 13
 cs jmp word [_os_trycode]
-ROTULO391:
+ROTULO561:
 cs push word [_graphics_video+2]
 pop es
 cs mov di, [_graphics_video]
 es mov ax, [di+4]
-jmp ROTULO389
-ROTULO389:
+jmp ROTULO559
+ROTULO559:
 FIM_graphics_getcolors:
 retf
 _graphics_mode80x25x16:
 cs mov word [_graphics_active], 0
 mov ax, 3
 int 0x10
-ROTULO395:
+ROTULO565:
 FIM_graphics_mode80x25x16:
 retf
 _graphics_modemanual:
@@ -3797,20 +4741,20 @@ mov bp, sp
 cs mov ax, [_os_minstackptr]
 mov bx, sp
 cmp ax, bx
-jb ROTULO396
+jb ROTULO566
 mov ax, _graphics
 mov [bp+-8], ax
 mov ax, 68
 mov [bp+-10], ax
 mov ax, 2
 cs jmp word [_os_trycode]
-ROTULO396:
+ROTULO566:
 cs mov word [_graphics_active], 1
 mov ax, [bp+6+2]
 cs mov [_graphics_video+2], ax
 mov ax, [bp+6]
 cs mov [_graphics_video], ax
-ROTULO397:
+ROTULO567:
 mov sp, bp
 pop bp
 FIM_graphics_modemanual:

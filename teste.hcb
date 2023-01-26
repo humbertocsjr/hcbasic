@@ -67,14 +67,16 @@ module Program
         if String.Equals("oi", "oi") then Console.WriteLine "EQUAL TEST"
 
         CGA.Mode640x200x2
-        Graphics.DrawPixel 10, 10, 1
-        Graphics.DrawPixel 11, 11, 1
-        Graphics.DrawPixel 12, 12, 1
-        Graphics.DrawPixel 13, 13, 1
+        Graphics.DrawPixel 114, 19, 1
+        Graphics.DrawPixel 114, 51, 1
+        Graphics.DrawPixel 216, 19, 1
+        Graphics.DrawPixel 216, 51, 1
         Graphics.DrawLine 50, 50, 0, 44, 1
         Graphics.DrawLine 50, 50, 44, 0, 1
         Graphics.DrawLine 50, 50, 100, 55, 1
         Graphics.DrawLine 50, 50, 55, 100, 1
+        Graphics.DrawRectangle 117, 22, 213, 48,1,1
+        Graphics.DrawRectangle 115, 20, 215, 50,1,0xffff
         Console.ReadChar
         Graphics.Mode80x25x16
     end

@@ -184,8 +184,183 @@ Module CGA
         Throw NotImplementedError
     End
 
+    Sub ByteOr(mode as VideoMode, x as UInt16, y as UInt16, value as UInt8)
+        asm "mov ax, 0xba00"
+        asm "test word [bp+12], 1"
+        asm "jne .par"
+        asm "mov ax, 0xb800"
+        asm ".par:"
+        asm "mov es, ax"
+        asm "mov ax, [bp+12]"
+        asm "shr ax, 1"
+        asm "mov bx, 80"
+        asm "mul bx"
+        asm "mov bx, [bp+10]"
+        asm "shr bx, 1"
+        asm "shr bx, 1"
+        asm "shr bx, 1"
+        asm "add ax, bx"
+        asm "mov di, ax"
+        asm "mov ax, [bp+14]"
+        asm "es or [di], al"
+    End
+
+    Sub ByteAnd(mode as VideoMode, x as UInt16, y as UInt16, value as UInt8)
+        asm "mov ax, 0xba00"
+        asm "test word [bp+12], 1"
+        asm "jne .par"
+        asm "mov ax, 0xb800"
+        asm ".par:"
+        asm "mov es, ax"
+        asm "mov ax, [bp+12]"
+        asm "shr ax, 1"
+        asm "mov bx, 80"
+        asm "mul bx"
+        asm "mov bx, [bp+10]"
+        asm "shr bx, 1"
+        asm "shr bx, 1"
+        asm "shr bx, 1"
+        asm "add ax, bx"
+        asm "mov di, ax"
+        asm "mov ax, [bp+14]"
+        asm "es and [di], al"
+    End
+
+    Sub ByteAndOr(mode as VideoMode, x as UInt16, y as UInt16, valueAnd as UInt8, valueOr as UInt8)
+        asm "mov ax, 0xba00"
+        asm "test word [bp+12], 1"
+        asm "jne .par"
+        asm "mov ax, 0xb800"
+        asm ".par:"
+        asm "mov es, ax"
+        asm "mov ax, [bp+12]"
+        asm "shr ax, 1"
+        asm "mov bx, 80"
+        asm "mul bx"
+        asm "mov bx, [bp+10]"
+        asm "shr bx, 1"
+        asm "shr bx, 1"
+        asm "shr bx, 1"
+        asm "add ax, bx"
+        asm "mov di, ax"
+        asm "mov ax, [bp+14]"
+        asm "es and [di], al"
+        asm "mov ax, [bp+16]"
+        asm "es or [di], al"
+    End
+
+    Sub ByteSet(mode as VideoMode, x as UInt16, y as UInt16, value as UInt8, len as UInt16)
+        asm "mov ax, 0xba00"
+        asm "test word [bp+12], 1"
+        asm "jne .par"
+        asm "mov ax, 0xb800"
+        asm ".par:"
+        asm "mov es, ax"
+        asm "mov ax, [bp+12]"
+        asm "shr ax, 1"
+        asm "mov bx, 80"
+        asm "mul bx"
+        asm "mov bx, [bp+10]"
+        asm "shr bx, 1"
+        asm "shr bx, 1"
+        asm "shr bx, 1"
+        asm "add ax, bx"
+        asm "mov di, ax"
+        asm "mov ax, [bp+14]"
+        asm "mov cx, [bp+16]"
+        asm "cld"
+        asm "rep stosb"
+    End
+
     Sub DrawRectangle(mode as VideoMode, x1 as UInt16, y1 as UInt16, x2 as UInt16, y2 as UInt16, borderColor as UInt16, backgroundColor as UInt16)
-        Throw NotImplementedError
+        Dim y as UInt16
+        Dim x as UInt16
+        Dim tmp as UInt16
+        Dim tmpor as UInt8
+        Dim tmpand as UInt8
+        tmpor = 0
+        tmpand = 0xff
+        tmp = 7 - (x1 and 7)
+        For x = 0 to tmp
+            If x == tmp Then
+                If borderColor and 1 Then
+                    tmpand = tmpand or ((1 shl x))
+                    tmpor  = tmpor or ((1 shl x))
+                End
+            Else
+                If backgroundColor <> 0xffff Then
+                    If backgroundColor and 1 Then
+                        tmpand = tmpand or ((1 shl x))
+                        tmpor  = tmpor or ((1 shl x))
+                    End
+                End
+            End
+        End
+        tmpand = not tmpand
+        For y = y1 + 1 to y2 - 1
+            ByteAndOr mode, x1, y, tmpand, tmpor
+        End
+        If backgroundColor <> 0xffff Then
+            If backgroundColor and 1 Then
+                tmpand = 0xff
+            Else
+                tmpand = 0
+            End
+            For y = y1 to y2
+                ByteSet mode, x1 + 8, y, tmpand, (x2 - x1 - 8) SHR 3
+            End
+        End
+
+        tmpor = 0
+        tmpand = 0xff
+        tmp = x2 and 7
+        For x = 0 to tmp
+            If x == tmp Then
+                If borderColor and 1 Then
+                    tmpand = tmpand or ((128 shr x))
+                    tmpor  = tmpor or ((128 shr x))
+                End
+            Else
+                If backgroundColor <> 0xffff Then
+                    If backgroundColor and 1 Then
+                        tmpand = tmpand or ((128 shr x))
+                        tmpor  = tmpor or ((128 shr x))
+                    End
+                End
+            End
+        End
+        For y = y1 + 1 to y2 - 1
+            ByteAndOr mode, x2, y, tmpand, tmpor
+        End
+        tmpor = 0
+        tmpand = 0xff
+        tmp = 7 - (x1 and 7)
+        For x = 0 to tmp
+            tmpand = tmpand or ((1 shl x))
+            If borderColor and 1 Then
+                tmpor  = tmpor or ((1 shl x))
+            End
+        End
+        ByteAndOr mode, x1, y1, tmpand, tmpor
+        ByteAndOr mode, x1, y2, tmpand, tmpor
+        tmpor = 0
+        tmpand = 0xff
+        tmp = x2 and 7
+        For x = 0 to tmp
+            tmpand = tmpand or ((128 shr x))
+            If borderColor and 1 Then
+                tmpor  = tmpor or ((128 shr x))
+            End
+        End
+        ByteAndOr mode, x2, y1, tmpand, tmpor
+        ByteAndOr mode, x2, y2, tmpand, tmpor
+        If borderColor and 1 Then
+            tmpand = 0xff
+        Else
+            tmpand = 0
+        End
+        ByteSet mode, x1 + 8, y1, tmpand, (x2 - x1 - 8) SHR 3
+        ByteSet mode, x1 + 8, y2, tmpand, (x2 - x1 - 8) SHR 3
     End
 
     Sub ClearScreen(mode as VideoMode, color as UInt16)
