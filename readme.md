@@ -8,6 +8,7 @@ Este compilador foi criado 100% em linguagem C#, evitando ferramentas de geraç�
 
 ## Novidades
 
+- Forma de implementar um Interrupt Handler usando comando Sub NOME() Handles Interrupt
 - Proteção mínima contra estouro de pilha (Apenas verifica quando entra numa rotina)
 - Implementado Try Catch, Throw e o Comando Error para definir o código do erro
 - Implementada Função ErrorFile() para pegar o nome do arquivo e ErrorLine() para pegar o numero da linha onde ocorreu o erro
@@ -52,8 +53,28 @@ O uso do Makefile é opcional e voltado para Linux e macOS, existindo apenas par
 
 ## Objetivos Atuais e Prioritários
 
-- Diminuir código gerado pelo Try Catch, otimizando multiplos comandos genéricos em comandos especializados para o Saida
 - Limpeza de itens não utilizados na implementação do Saida
+
+## Objetivos para Versão 1.0
+
+- [ ] Melhorar a System.hcb 
+
+## Objetivos para Versão 1.1
+
+- [ ] Implementar System.Drawing de forma completa
+- [ ] Concluir a criação da fonte e suporte a acentos
+- [ ] Implementar Protótipo da System.Forms
+- [ ] Importar Gerenciador de Memoria do HUSIX Kernel para que possa alocar dinamicamente memoria
+- [ ] Incluir suporte a executáveis HUSIX
+
+## Objetivos para Versão 1.2
+
+- [ ] Importar as bibliotecas do Framework do HUSIX e adaptar para o DOS, como System.Threading, System.Threading.Semaphore, System.Text.UTF8, System.Timer, System.IO, System.IO.Console, etc
+- [ ] Implementar modos gráficos coloridos para System.Drawing
+
+## Objetivos para Versão 2.0
+
+- [ ] Migrar mecanismo do HUSIX que permite carregar bibliotecas externas ao executavel e liga-las dinamicamente, quebrando o limite de 64 KiB mesmo em executaveis .COM
 
 ## Objetivos
 
@@ -71,6 +92,7 @@ O uso do Makefile é opcional e voltado para Linux e macOS, existindo apenas par
 - [x] Ponteiros
 - [x] String (Concatenar, Copiar, etc)
 - [ ] String avançado (Substring, UTF-8)
+- [ ] Diminuir código gerado pelo Try Catch, otimizando multiplos comandos genéricos em comandos especializados para o Saida
 - [x] Adicionar ao inicio das constantes de texto, o seu tamanho para evitar o estouro de variável pelas rotinas de manipulação de Strings
 - [x] Suporte a números 32 bits na biblioteca
 - [ ] Suporte a números 32 bits na linguagem
