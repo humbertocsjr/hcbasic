@@ -145,7 +145,7 @@ O Compilador HCBasic gera arquivos em Assembly, para executar a compilação bas
 
 ```sh
 
-hcbasic teste.hcb teste.asm Plataformas/8086-DOS
+hcbasic teste.hcb teste.asm Plataformas/8086-DOS Plataformas/8086
 
 nasm -f bin -o teste.com teste.asm
 
