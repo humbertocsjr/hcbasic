@@ -671,6 +671,16 @@ class Analise
             rot.TipoRetorno = processaTipo(ref trechos);
             trechos.Proximo();
         }
+        if(trechos.EhIdentificador("handles"))
+        {
+            trechos.Proximo();
+            if(trechos.EhIdentificador("interrupt"))
+            {
+                trechos.Proximo();
+                rot.ManipuladorDeInterrupcao = true;
+            }
+            else trechos.Erro("Tipo de evento não suportado");
+        }
         trechos.ExigeFimDaLinha("Esperado fim da linha depois da declaração da rotina.");
         trechos.ExigeProximaLinha(subTrecho, "Encontrado fim do arquivo com um 'sub'/'function' aberta");
         nivelRotina(mod, rot, rot.Comandos, false, ref trechos);

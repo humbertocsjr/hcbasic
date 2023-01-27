@@ -160,5 +160,7 @@ abstract class Saida
     public abstract void EmiteCopiaVariavelGlobalParaPonteiroBase(string rotulo);
     public abstract void EmiteCopiaVariavelGlobalParaPonteiroPilha(string rotulo);
     public abstract void EmiteInverteAcumulador();
+    public abstract void EmiteInterrupcao(string nome);
+    public abstract void EmiteInterrupcaoFim(string nome);
 
 }

@@ -1,5 +1,6 @@
 class Rotina : No
 {
+    public bool ManipuladorDeInterrupcao { get; set; } = false;
     public bool TemTryCatch { get; set; } = false;
     public Modulo Modulo { get; set; }
     public bool IgnorarCabecalhoRodape { get; set; } = false;
@@ -35,22 +36,32 @@ class Rotina : No
     {
         amb.DentroDeUmTryCatch = false;
         amb.Rotina = this;
+        if(ManipuladorDeInterrupcao & RetornaValor)
+            throw Erro("Manipuladores de interrupção não podem ser funções, devendo retornar valores via os registradores.");
         if(!IgnorarCabecalhoRodape)
         {
-            amb.Saida.EmiteRotina(Nome);
+            if(ManipuladorDeInterrupcao)
+                amb.Saida.EmiteInterrupcao(Nome);
+            else
+                amb.Saida.EmiteRotina(Nome);
         }
         if(Argumentos.Any() | Variaveis.Any())
         {
             amb.Saida.EmiteEntraNaRotina();
             if(PosicaoVar != 0)
+            {
                 amb.Saida.EmiteSubtraiDoPtrPilha(PosicaoVar);
-            amb.Saida.EmiteCopiaVariavelGlobalParaAcumulador("_os_minstackptr");
-            amb.Saida.EmiteCopiaPonteiroPilhaParaAuxiliar();
-            amb.Saida.EmiteComparaAcumuladorComAuxiliar();
-            string semErro = amb.Saida.GeraRotulo();
-            amb.Saida.EmitePulaSeMenorQue(semErro, true);
-            EmiteErro.GeraECompila(amb, "StackOverflowError");
-            amb.Saida.EmiteRotulo(semErro);
+                if(!ManipuladorDeInterrupcao)
+                {
+                    amb.Saida.EmiteCopiaVariavelGlobalParaAcumulador("_os_minstackptr");
+                    amb.Saida.EmiteCopiaPonteiroPilhaParaAuxiliar();
+                    amb.Saida.EmiteComparaAcumuladorComAuxiliar();
+                    string semErro = amb.Saida.GeraRotulo();
+                    amb.Saida.EmitePulaSeMenorQue(semErro, true);
+                    EmiteErro.GeraECompila(amb, "StackOverflowError");
+                    amb.Saida.EmiteRotulo(semErro);
+                }
+            }
             foreach (var variavel in Argumentos)
             {
                 amb.Saida.EmiteComentario($"ARG: {variavel.Nome} TAM: {amb.Saida.CalculaTamanho(variavel.Tipo)} POS: BP+{variavel.Posicao} ");
@@ -71,13 +82,17 @@ class Rotina : No
         }
         if(!IgnorarCabecalhoRodape)
         {
-            amb.Saida.EmiteRotinaFim(Nome);
+            if(ManipuladorDeInterrupcao)
+                amb.Saida.EmiteInterrupcaoFim(Nome);
+            else
+                amb.Saida.EmiteRotinaFim(Nome);
         }
         amb.Rotina = null;
     }
 
     protected override void InicializaInterno(Ambiente amb)
     {
+        if(ManipuladorDeInterrupcao) PosicaoArg = 2;
         amb.Rotina = this;
         InicializaLista(Comandos, amb);
         if(TemTryCatch) PosicaoVar = 10;

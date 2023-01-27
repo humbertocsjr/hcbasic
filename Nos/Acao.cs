@@ -345,7 +345,7 @@ class Acao : No
                         if(ValorGravacao is Acao && ((Acao)ValorGravacao).TipoCompilado == TipoVariavel.Desconhecido) throw Erro($"Falha de compilador: falta o Acao definir o TipoCompilado para {((Acao)ValorGravacao).Tipo} {string.Join('.',((Acao)ValorGravacao).Nome)}");
                         if(ValorGravacao is Acao && ((Acao)ValorGravacao).TipoCompiladoPonteiro)
                             amb.Saida.EmiteCopiaPonteiroRemotoParaVariavelGlobal(variavel.NomeGlobal);
-                        if(tipoPonteiro == TipoAcaoPonteiro.Byte)
+                        else if(tipoPonteiro == TipoAcaoPonteiro.Byte)
                             amb.Saida.EmiteCopiaAcumuladorParaByteArrayDaVariavelGlobal(variavel.NomeGlobal, desvioNoPonteiro);
                         else if(tipoPonteiro == TipoAcaoPonteiro.Word)
                             amb.Saida.EmiteCopiaAcumuladorParaWordArrayDaVariavelGlobal(variavel.NomeGlobal, desvioNoPonteiro);
@@ -919,6 +919,7 @@ class Acao : No
                             throw Erro("Rotina não encontrada");
                         referencia.Dequeue();
                         if(referencia.Any()) throw Erro("Caminho indisponível para rotina");
+                        if(rot.ManipuladorDeInterrupcao) throw Erro("Não é possível chamar manipuladores de interrupção diretamente");
                         var tipoAnterior = amb.Tipo;
                         var variavelAnterior = amb.VariavelDestino;
                         List<No> args = new List<No>();

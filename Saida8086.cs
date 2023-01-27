@@ -49,6 +49,47 @@ class Saida8086 : Saida
         EmiteL("retf");
     }
 
+    public override void EmiteInterrupcao(string nome)
+    {
+        EmiteL($"_{Modulo}_{nome}:");
+        PonteiroDefinido = false;
+        EmiteL("push di");
+        EmiteL("push es");
+        EmiteL("push si");
+        EmiteL("push ds");
+        EmiteL("push dx");
+        EmiteL("push cx");
+        EmiteL("push bx");
+        EmiteL("push ax");
+        EmiteL("push bp");
+        EmiteL("mov ax, sp");
+        EmiteL("push ax");
+        EmiteL("push ss");
+        // DS = SS
+        EmiteL("push ss");
+        EmiteL("pop ds");
+    }
+
+    public override void EmiteInterrupcaoFim(string nome)
+    {
+        PonteiroDefinido = false;
+        EmiteL("pop ax");
+        EmiteL("pop bx");
+        EmiteL("mov ss, ax");
+        EmiteL("mov sp, bx");
+        EmiteL("pop bp");
+        EmiteL("pop ax");
+        EmiteL("pop bx");
+        EmiteL("pop cx");
+        EmiteL("pop dx");
+        EmiteL("pop ds");
+        EmiteL("pop si");
+        EmiteL("pop es");
+        EmiteL("pop di");
+        EmiteL($"FIM_{Modulo}_{nome}:");
+        EmiteL("iret");
+    }
+
     public override void EmiteEntraNaRotina()
     {
         EmiteL("push bp");
@@ -728,7 +769,7 @@ class Saida8086 : Saida
     public override void EmiteCopiaPonteiroRemotoParaVariavelGlobal(string rotulo)
     {
         EmiteL($"push es");
-        EmiteL($"cs pop word [{rotulo}]");
+        EmiteL($"cs pop word [{rotulo}+2]");
         EmiteL($"cs mov [{rotulo}], di");
         PonteiroDefinido = true;
         PonteiroLocal = false;
