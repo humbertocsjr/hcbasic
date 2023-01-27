@@ -129,6 +129,10 @@ abstract class Saida
     public abstract void EmiteCopiaByteArrayDaVariavelLocalParaPonteiroRemoto(int posicao);
     public abstract void EmiteCopiaWordArrayDaVariavelGlobalParaPonteiroRemoto(string rotulo);
     public abstract void EmiteCopiaByteArrayDaVariavelGlobalComoPonteiroRemoto(string rotulo);
+    public abstract void EmiteCopiaWordArrayDaVariavelLocalParaPonteiroRemoto(int posicao, int desvio);
+    public abstract void EmiteCopiaByteArrayDaVariavelLocalParaPonteiroRemoto(int posicao, int desvio);
+    public abstract void EmiteCopiaWordArrayDaVariavelGlobalParaPonteiroRemoto(string rotulo, int desvio);
+    public abstract void EmiteCopiaByteArrayDaVariavelGlobalComoPonteiroRemoto(string rotulo, int desvio);
     public abstract void EmiteCopiaPonteiroRemotoParaVariavelGlobal(string rotulo);
     public abstract void EmiteCopiaPonteiroPilhaParaPonteiroRemoto();
     public abstract void MarcaInicioDeRepeticao();

@@ -15,6 +15,150 @@ error TimeoutError = 11
 error InvalidValueError = 12
 error AccessDeniedError = 13
 
+Structure ColorPalette
+    Dim Black as UInt16
+    Dim Blue as UInt16
+    Dim Green as UInt16
+    Dim Cyan as UInt16
+    Dim Red as UInt16
+    Dim Magenta as UInt16
+    Dim Brown as UInt16
+    Dim LightGray as UInt16
+    Dim Gray as UInt16
+    Dim LightBlue as UInt16
+    Dim LightGreen as UInt16
+    Dim LightCyan as UInt16
+    Dim LightRed as UInt16
+    Dim LightMagenta as UInt16
+    Dim Yellow as UInt16
+    Dim White as UInt16
+    Dim Transparent as UInt16
+    Dim ConversionTextMode as UInt16
+    Dim ConversionRedShl as UInt8
+    Dim ConversionRedShr as UInt8
+    Dim ConversionGreenShl as UInt8
+    Dim ConversionGreenShr as UInt8
+    Dim ConversionBlueShl as UInt8
+    Dim ConversionBlueShr as UInt8
+End
+
+Module Colors
+    Dim Palette as ColorPalette
+
+    Public Sub Initialize
+        Palette.Black = 0
+        Palette.Blue = 1
+        Palette.Green = 2
+        Palette.Cyan = 3
+        Palette.Red = 4
+        Palette.Magenta = 5
+        Palette.Brown = 6
+        Palette.LightGray = 7
+        Palette.Gray = 8
+        Palette.LightBlue = 9
+        Palette.LightGreen = 10
+        Palette.LightCyan = 11
+        Palette.LightRed = 12
+        Palette.LightMagenta = 13
+        Palette.Yellow = 14
+        Palette.White = 15
+        Palette.Transparent = 0xffff
+        Palette.ConversionTextMode = 1
+    End
+
+    Public Sub Register(newpal as ColorPalette)
+        #Palette = #newpal
+        @Palette = @newpal
+    End
+
+    Public Function Black() as UInt16
+        Return Palette.Black
+    End
+
+    Public Function Blue() as UInt16
+        Return Palette.Blue
+    End
+
+    Public Function Green() as UInt16
+        Return Palette.Green
+    End
+
+    Public Function Cyan() as UInt16
+        Return Palette.Cyan
+    End
+
+    Public Function Red() as UInt16
+        Return Palette.Red
+    End
+
+    Public Function Magenta() as UInt16
+        Return Palette.Magenta
+    End
+
+    Public Function Brown() as UInt16
+        Return Palette.Brown
+    End
+
+    Public Function LightGray() as UInt16
+        Return Palette.LightGray
+    End
+
+    Public Function Gray() as UInt16
+        Return Palette.Gray
+    End
+
+    Public Function LightBlue() as UInt16
+        Return Palette.LightBlue
+    End
+
+    Public Function LightGreen() as UInt16
+        Return Palette.LightGreen
+    End
+
+    Public Function LightCyan() as UInt16
+        Return Palette.LightCyan
+    End
+
+    Public Function LightRed() as UInt16
+        Return Palette.LightRed
+    End
+
+    Public Function LightMagenta() as UInt16
+        Return Palette.LightMagenta
+    End
+
+    Public Function Yellow() as UInt16
+        Return Palette.Yellow
+    End
+
+    Public Function White() as UInt16
+        Return Palette.White
+    End
+
+    Public Function Transparent() as UInt16
+        Return Palette.Transparent
+    End
+
+    Public Function FromRGB(r as UInt8, g as UInt8, b as UInt8) as UInt16
+        Dim tmpR as UInt16
+        Dim tmpG as UInt16
+        Dim tmpB as UInt16
+        Dim tmpI as UInt16
+        If Palette.ConversionTextMode Then
+            tmpR = (r shr 6) and 1
+            tmpG = (g shr 6) and 1
+            tmpB = (b shr 6) and 1
+            tmpI = (r shr 7) + (g shr 7) + (b shr 7)
+            Return (tmpI shl 3) + (tmpR shl 2) + (tmpG shl 1) + tmpB
+        Else
+            tmpR = (r shl Palette.ConversionRedShl) shr Palette.ConversionRedShr
+            tmpG = (r shl Palette.ConversionGreenShl) shr Palette.ConversionGreenShr
+            tmpB = (r shl Palette.ConversionBlueShl) shr Palette.ConversionBlueShr
+            Return tmpR + tmpG + tmpB
+        End
+    End
+End
+
 module String
     public function Length(text as ptrbytearray) as uint16
         dim i as uint16

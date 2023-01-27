@@ -1,4 +1,7 @@
-all:
+fonts:
+	nasm -f bin -o Plataformas/8086/Font.hfn Plataformas/Font.asm
+
+all: fonts
 	dotnet publish -c Release -o Distro/Atual
 
 distro: distro-win distro-linux distro-mac
@@ -68,10 +71,11 @@ install:
 	mkdir -p /usr/lib/hcbasic/8086-kernel
 	install Plataformas/8086-KERNEL/* /usr/lib/hcbasic/8086-kernel/
 
-teste-hcb:
+teste-hcb: fonts
 	Distro/Atual/hcbasic teste.hcb teste.asm Plataformas/8086-DOS / Plataformas/8086/
 	nasm -f bin -o teste.com teste.asm
 	dosbox -C "mount c: ." -C "c:" -C "teste.com"
+	
 teste: all 
 	make teste-hcb
 

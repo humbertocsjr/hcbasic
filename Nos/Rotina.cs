@@ -51,6 +51,14 @@ class Rotina : No
             amb.Saida.EmitePulaSeMenorQue(semErro, true);
             EmiteErro.GeraECompila(amb, "StackOverflowError");
             amb.Saida.EmiteRotulo(semErro);
+            foreach (var variavel in Argumentos)
+            {
+                amb.Saida.EmiteComentario($"ARG: {variavel.Nome} TAM: {amb.Saida.CalculaTamanho(variavel.Tipo)} POS: BP+{variavel.Posicao} ");
+            }
+            foreach (var variavel in Variaveis)
+            {
+                amb.Saida.EmiteComentario($"ARG: {variavel.Nome} TAM: {amb.Saida.CalculaTamanho(variavel.Tipo)} POS: BP-{variavel.Posicao} ");
+            }
         }
         RotuloFim = amb.Saida.GeraRotulo();
         CompilaLista(new List<No>(Argumentos), amb);

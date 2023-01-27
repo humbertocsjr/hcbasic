@@ -871,5 +871,40 @@ class Saida8086 : Saida
     {
         EmiteL("not ax");
     }
-
+    public override void EmiteCopiaByteArrayDaVariavelGlobalComoPonteiroRemoto(string rotulo, int desvio)
+    {
+        EmiteCopiaByteArrayDaVariavelGlobalComoPonteiroRemoto(rotulo);
+        PonteiroDefinido = false;
+        EmiteL($"es push word [di+{desvio}+2]");
+        EmiteL($"es push word [di+{desvio}]");
+        EmiteL($"pop di");
+        EmiteL($"pop es");
+    }
+    public override void EmiteCopiaByteArrayDaVariavelLocalParaPonteiroRemoto(int posicao, int desvio)
+    {
+        EmiteCopiaByteArrayDaVariavelLocalParaPonteiroRemoto(posicao);
+        PonteiroDefinido = false;
+        EmiteL($"es push word [di+{desvio}+2]");
+        EmiteL($"es push word [di+{desvio}]");
+        EmiteL($"pop di");
+        EmiteL($"pop es");
+    }
+    public override void EmiteCopiaWordArrayDaVariavelGlobalParaPonteiroRemoto(string rotulo, int desvio)
+    {
+        EmiteCopiaWordArrayDaVariavelGlobalParaPonteiroRemoto(rotulo);
+        PonteiroDefinido = false;
+        EmiteL($"es push word [di+{desvio}+2]");
+        EmiteL($"es push word [di+{desvio}]");
+        EmiteL($"pop di");
+        EmiteL($"pop es");
+    }
+    public override void EmiteCopiaWordArrayDaVariavelLocalParaPonteiroRemoto(int posicao, int desvio)
+    {
+        EmiteCopiaWordArrayDaVariavelLocalParaPonteiroRemoto(posicao);
+        PonteiroDefinido = false;
+        EmiteL($"es push word [di+{desvio}+2]");
+        EmiteL($"es push word [di+{desvio}]");
+        EmiteL($"pop di");
+        EmiteL($"pop es");
+    }
 }

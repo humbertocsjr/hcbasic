@@ -1,6 +1,7 @@
 ' Arquivo de teste
 imports System
 imports System.Drawing
+imports System.Forms
 
 module ReferenciaCruzada
     Public Sub TesteCruzada
@@ -10,6 +11,8 @@ End
 
 module Program
     Dim testeString as String
+
+    Dim MainForm as Control
 
     Public Sub TesteCruzada
         ReferenciaCruzada.TesteCruzada
@@ -66,18 +69,33 @@ module Program
         end
         if String.Equals("oi", "oi") then Console.WriteLine "EQUAL TEST"
 
-        CGA.Mode640x200x2
+        VGA.Mode640x480x2
         Graphics.DrawPixel 114, 19, 1
         Graphics.DrawPixel 114, 51, 1
         Graphics.DrawPixel 216, 19, 1
         Graphics.DrawPixel 216, 51, 1
         Graphics.DrawLine 50, 50, 0, 44, 1
+        Graphics.DrawLine 50, 50, 0, 50, 1
+        Graphics.DrawLine 50, 50, 0, 65, 1
         Graphics.DrawLine 50, 50, 44, 0, 1
-        Graphics.DrawLine 50, 50, 100, 55, 1
-        Graphics.DrawLine 50, 50, 55, 100, 1
+        Graphics.DrawLine 50, 50, 50, 0, 1
+        Graphics.DrawLine 50, 50, 65, 0, 1
+        Graphics.DrawLine 50, 50, 100, 65, 1
+        Graphics.DrawLine 50, 50, 100, 50, 1
+        Graphics.DrawLine 50, 50, 100, 45, 1
+        Graphics.DrawLine 50, 50, 65, 100, 1
+        Graphics.DrawLine 50, 50, 50, 100, 1
+        Graphics.DrawLine 50, 50, 45, 100, 1
         Graphics.DrawRectangle 117, 22, 213, 48,1,1
         Graphics.DrawRectangle 115, 20, 215, 50,1,0xffff
-        Graphics.ClearScreen 1
+        Application.Initialize
+        Form.Initialize MainForm
+        MainForm.Top = 30
+        MainForm.Left = 10
+        MainForm.Width = 200
+        MainForm.Height = 100
+        Control.SetText MainForm, "0123456789 ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+        Application.Run MainForm
         Console.ReadChar
         Graphics.Mode80x25x16
     end

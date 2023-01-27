@@ -11,28 +11,74 @@ Structure VideoMode
     Dim ClearScreen as Action(Of VideoMode, UInt16)
 End
 
+Structure Size
+    Dim Width as UInt16
+    Dim Height as UInt16
+End
+
+Structure Font
+    Dim Data as PtrByteArray
+    Dim Name as PtrByteArray
+    Dim Author as PtrByteArray
+    Dim Height as UInt16
+    Dim BodyHeight as UInt16
+    Dim AboveHeight as UInt16
+    Dim BelowHeight as UInt16
+    Dim Spacing as UInt16
+    Dim DrawText as Action(Of Font, PtrByteArray, UInt16, UInt16, UInt16, UInt16, UInt16, UInt16)
+    Dim CalcSize as Action(Of Font, PtrByteArray, Size, UInt16, UInt16)
+End
+
 Module Graphics
     Dim Active as UInt16
     Dim Video as VideoMode
 
     Public Sub DrawPixel(x as UInt16, y as UInt16, color as UInt16)
         If Active == 0 Then Throw AccessDeniedError
+        If x >= Video.Width Then Return
+        If y >= Video.Height Then Return
         Video.DrawPixel.Invoke x, y, color
     End
 
     Public Sub DrawLine(x1 as UInt16, y1 as UInt16, x2 as UInt16, y2 as UInt16, color as UInt16)
         If Active == 0 Then Throw AccessDeniedError
+        If x1 >= Video.Width Then Return
+        If y1 >= Video.Height Then Return
+        If x2 >= Video.Width Then x2 = Video.Width - 1
+        If y2 >= Video.Height Then y2 = Video.Height - 1
         Video.DrawLine.Invoke x1, y1, x2, y2, color
     End
 
     Public Sub DrawRectangle(x1 as UInt16, y1 as UInt16, x2 as UInt16, y2 as UInt16, borderColor as UInt16, backgroundColor as UInt16)
         If Active == 0 Then Throw AccessDeniedError
+        If x1 >= Video.Width Then Return
+        If y1 >= Video.Height Then Return
+        If x2 >= Video.Width Then x2 = Video.Width - 1
+        If y2 >= Video.Height Then y2 = Video.Height - 1
         Video.DrawRectangle.Invoke x1, y1, x2, y2, borderColor, backgroundColor
     End
 
     Public Sub DrawEllipse(x1 as UInt16, y1 as UInt16, x2 as UInt16, y2 as UInt16, borderColor as UInt16, backgroundColor as UInt16)
         If Active == 0 Then Throw AccessDeniedError
+        If x1 >= Video.Width Then Return
+        If y1 >= Video.Height Then Return
+        If x2 >= Video.Width Then x2 = Video.Width - 1
+        If y2 >= Video.Height Then y2 = Video.Height - 1
         Video.DrawEllipse.Invoke x1, y1, x2, y2, borderColor, backgroundColor
+    End
+
+    Public Sub DrawText(font as Font, text as String, x1 as UInt16, y1 as UInt16, x2 as UInt16, y2 as UInt16, color as UInt16, multiline as UInt16)
+        If Active == 0 Then Throw AccessDeniedError
+        If x1 >= Video.Width Then Return
+        If y1 >= Video.Height Then Return
+        If x2 >= Video.Width Then x2 = Video.Width - 1
+        If y2 >= Video.Height Then y2 = Video.Height - 1
+        font.DrawText.Invoke text, x1, y1, x2, y2, color, multiline
+    End
+
+    Public Sub CalcFontSize(font as Font, text as String, size as Size, totalWidth as UInt16, multiline as UInt16)
+        If Active == 0 Then Throw AccessDeniedError
+        font.CalcSize.Invoke text, size, totalWidth, multiline
     End
 
     Public Sub ClearScreen(color as UInt16)
@@ -69,6 +115,351 @@ Module Graphics
         Active = 1
         #Video = #newMode
         @Video = @newMode
+        Font.Initialize
+    End
+
+End
+
+Module GenericVideo
+    Dim Palette as ColorPalette
+
+    Public Sub Register2ColorsPalette
+        Palette.Black = 0
+        Palette.Blue = 0
+        Palette.Green = 0
+        Palette.Cyan = 0
+        Palette.Red = 0
+        Palette.Magenta = 0
+        Palette.Brown = 0
+        Palette.LightGray = 1
+        Palette.Gray = 0
+        Palette.LightBlue = 1
+        Palette.LightGreen = 1
+        Palette.LightCyan = 1
+        Palette.LightRed = 1
+        Palette.LightMagenta = 1
+        Palette.Yellow = 1
+        Palette.White = 1
+        Palette.Transparent = 0xffff
+        Palette.ConversionTextMode = 1
+        Colors.Register Palette
+    End
+
+    Public Sub Register16ColorsPalette
+        Palette.Black = 0
+        Palette.Blue = 1
+        Palette.Green = 2
+        Palette.Cyan = 3
+        Palette.Red = 4
+        Palette.Magenta = 5
+        Palette.Brown = 6
+        Palette.LightGray = 7
+        Palette.Gray = 8
+        Palette.LightBlue = 9
+        Palette.LightGreen = 10
+        Palette.LightCyan = 11
+        Palette.LightRed = 12
+        Palette.LightMagenta = 13
+        Palette.Yellow = 14
+        Palette.White = 15
+        Palette.Transparent = 0xffff
+        Palette.ConversionTextMode = 1
+        Colors.Register Palette
+    End
+
+    Public Sub RegisterDrawLine(mode as VideoMode)
+        mode.DrawLine = AddressOf(DrawLine)
+    End
+
+    Public Sub RegisterDrawEllipse(mode as VideoMode)
+        mode.DrawEllipse = AddressOf(DrawEllipse)
+    End
+
+    Sub DrawLine(mode as VideoMode, x1 as UInt16, y1 as UInt16, x2 as UInt16, y2 as UInt16, color as UInt16)
+        Dim inc as Int16
+        Dim inc1 as Int16
+        Dim inc2 as Int16
+        Dim dx as Int16
+        Dim dy as Int16
+        Dim d as Int16
+        Dim x as UInt16
+        Dim y as UInt16
+        If x1 > x2 Then
+            dx = x1 - x2
+        Else
+            dx = x2 - x1
+        End
+        If y1 > y2 Then
+            dy = y1 - y2
+        Else
+            dy = y2 - y1
+        End
+        If dx > dy Then
+            If x1 > x2 Then
+                x = x1
+                x1 = x2
+                x2 = x
+                y = y1
+                y1 = y2
+                y2 = y
+            End
+            If y2 == y1 Then
+                inc = 0
+            Else
+                If y2 > y1 Then
+                    inc = 1
+                Else
+                    inc = -1
+                End
+            End
+            x = x1
+            y = y1
+            d = (dy SHL 1) - dx
+            inc1 = (dy-dx) SHL 1
+            inc2 = dy SHL 1
+            mode.DrawPixel.Invoke x, y, color
+            For x = x1 + 1 To x2
+                If d >= 0 Then
+                    y = y + inc
+                    d = d + inc1
+                Else
+                    d = d + inc2
+                End
+                mode.DrawPixel.Invoke x, y, color
+            End
+        Else
+            If y1 > y2 Then
+                x = x1
+                x1 = x2
+                x2 = x
+                y = y1
+                y1 = y2
+                y2 = y
+            End
+            If x2 == x1 Then
+                inc = 0
+            Else
+                If x2 > x1 Then
+                    inc = 1
+                Else
+                    inc = -1
+                End
+            End
+            x = x1
+            y = y1
+            d = (dx SHL 1) - dy
+            inc1 = (dx-dy) SHL 1
+            inc2 = dx SHL 1
+            mode.DrawPixel.Invoke x, y, color
+            For y = y1 + 1 To y2
+                If d >= 0 Then
+                    x = x + inc
+                    d = d + inc1
+                Else
+                    d = d + inc2
+                End
+                mode.DrawPixel.Invoke x, y, color
+            End
+        End
+    End
+
+    Sub DrawEllipse(mode as VideoMode, x1 as UInt16, y1 as UInt16, x2 as UInt16, y2 as UInt16, borderColor as UInt16, backgroundColor as UInt16)
+        Throw NotImplementedError
+    End
+End
+
+Module VGA
+    Dim Video as VideoMode
+
+    Public Sub Mode640x480x2
+        asm "mov ax, 0x11"
+        asm "int 0x10"
+        Video.Width = 640
+        Video.Height = 480
+        Video.Colors = 2
+        Video.DrawPixel = AddressOf(DrawPixel)
+        GenericVideo.RegisterDrawLine Video
+        GenericVideo.RegisterDrawEllipse Video
+        Video.DrawRectangle = AddressOf(DrawRectangle)
+        Video.ClearScreen = AddressOf(ClearScreen)
+        Graphics.ModeManual Video
+        GenericVideo.Register2ColorsPalette
+    End
+
+    Sub DrawPixel(mode as VideoMode, x as UInt16, y as UInt16, color as UInt16)
+        If x >= mode.Width Then Return
+        If y >= mode.Height Then Return
+        asm "mov ax, 0xa000"
+        asm "mov es, ax"
+        asm "mov ax, [bp+12]"
+        asm "mov bx, 80"
+        asm "mul bx"
+        asm "mov bx, [bp+10]"
+        asm "shr bx, 1"
+        asm "shr bx, 1"
+        asm "shr bx, 1"
+        asm "add ax, bx"
+        asm "mov di, ax"
+        asm "mov cx, [bp+10]"
+        asm "and cx, 7"
+        asm "inc cx"
+        asm "mov ax, [bp+14]"
+        asm "and ax, 1"
+        asm "je .inverte"
+        asm "ror al, cl"
+        asm "es or [di], al"
+        asm "jmp .fim"
+        asm ".inverte:"
+        asm "ror al, cl"
+        asm "not ax"
+        asm "es and [di], al"
+        asm ".fim:"
+    End
+
+    Sub ByteAndOr(mode as VideoMode, x as UInt16, y as UInt16, valueAnd as UInt8, valueOr as UInt8)
+        asm "mov ax, 0xa000"
+        asm "mov es, ax"
+        asm "mov ax, [bp+12]"
+        asm "mov bx, 80"
+        asm "mul bx"
+        asm "mov bx, [bp+10]"
+        asm "shr bx, 1"
+        asm "shr bx, 1"
+        asm "shr bx, 1"
+        asm "add ax, bx"
+        asm "mov di, ax"
+        asm "mov ax, [bp+14]"
+        asm "es and [di], al"
+        asm "mov ax, [bp+16]"
+        asm "es or [di], al"
+    End
+
+    Sub ByteSet(mode as VideoMode, x as UInt16, y as UInt16, value as UInt8, len as UInt16)
+        asm "mov ax, 0xa000"
+        asm "mov es, ax"
+        asm "mov ax, [bp+12]"
+        asm "mov bx, 80"
+        asm "mul bx"
+        asm "mov bx, [bp+10]"
+        asm "shr bx, 1"
+        asm "shr bx, 1"
+        asm "shr bx, 1"
+        asm "add ax, bx"
+        asm "mov di, ax"
+        asm "mov ax, [bp+14]"
+        asm "mov cx, [bp+16]"
+        asm "cld"
+        asm "rep stosb"
+    End
+
+    Sub DrawRectangle(mode as VideoMode, x1 as UInt16, y1 as UInt16, x2 as UInt16, y2 as UInt16, borderColor as UInt16, backgroundColor as UInt16)
+        Dim y as UInt16
+        Dim x as UInt16
+        Dim comp as Int16
+        Dim tmp as UInt16
+        Dim tmpor as UInt8
+        Dim tmpand as UInt8
+        Dim diff as UInt16
+        comp = (x1 and 7) - (x2 and 7)
+        diff = 0
+        if comp == 0 then diff = -1
+        if comp < 0 then diff = -1
+        tmpor = 0
+        tmpand = 0xff
+        tmp = 7 - (x1 and 7)
+        For x = 0 to tmp
+            If x == tmp Then
+                tmpand = tmpand or ((1 shl x))
+                If borderColor and 1 Then
+                    tmpor  = tmpor or ((1 shl x))
+                End
+            Else
+                If backgroundColor <> 0xffff Then
+                    tmpand = tmpand or ((1 shl x))
+                    If backgroundColor and 1 Then
+                        tmpor  = tmpor or ((1 shl x))
+                    End
+                End
+            End
+        End
+        tmpand = not tmpand
+        For y = y1 + 1 to y2 - 1
+            ByteAndOr mode, x1, y, tmpand, tmpor
+        End
+        If backgroundColor <> 0xffff Then
+            If backgroundColor and 1 Then
+                tmpand = 0xff
+            Else
+                tmpand = 0
+            End
+            For y = y1 to y2
+                ByteSet mode, x1 + 8, y, tmpand, ((x2 - x1) SHR 3) + diff
+            End
+        End
+
+        tmpor = 0
+        tmpand = 0xff
+        tmp = x2 and 7
+        For x = 0 to tmp
+            If x == tmp Then
+                tmpand = tmpand or ((128 shr x))
+                If borderColor and 1 Then
+                    tmpor  = tmpor or ((128 shr x))
+                End
+            Else
+                If backgroundColor <> 0xffff Then
+                    tmpand = tmpand or ((128 shr x))
+                    If backgroundColor and 1 Then
+                        tmpor  = tmpor or ((128 shr x))
+                    End
+                End
+            End
+        End
+        For y = y1 + 1 to y2 - 1
+            ByteAndOr mode, x2, y, tmpand, tmpor
+        End
+        tmpor = 0
+        tmpand = 0xff
+        tmp = 7 - (x1 and 7)
+        For x = 0 to tmp
+            tmpand = tmpand or ((1 shl x))
+            If borderColor and 1 Then
+                tmpor  = tmpor or ((1 shl x))
+            End
+        End
+        ByteAndOr mode, x1, y1, tmpand, tmpor
+        ByteAndOr mode, x1, y2, tmpand, tmpor
+        tmpor = 0
+        tmpand = 0xff
+        tmp = x2 and 7
+        For x = 0 to tmp
+            tmpand = tmpand or ((128 shr x))
+            If borderColor and 1 Then
+                tmpor  = tmpor or ((128 shr x))
+            End
+        End
+        ByteAndOr mode, x2, y1, tmpand, tmpor
+        ByteAndOr mode, x2, y2, tmpand, tmpor
+        If borderColor and 1 Then
+            tmpand = 0xff
+        Else
+            tmpand = 0
+        End
+        ByteSet mode, x1 + 8, y1, tmpand, ((x2 - x1) SHR 3) + diff
+        ByteSet mode, x1 + 8, y2, tmpand, ((x2 - x1) SHR 3) + diff
+    End
+
+    Sub ClearScreen(mode as VideoMode, color as UInt16)
+        Dim tmp as UInt8
+        Dim y as UInt16
+        If color and 1 Then
+            tmp = 0xff
+        Else
+            tmp = 0
+        End
+        For y = 0 to 479
+            ByteSet mode, 0, y, tmp, 80
+        End
     End
 
 End
@@ -83,14 +474,17 @@ Module CGA
         Video.Height = 200
         Video.Colors = 2
         Video.DrawPixel = AddressOf(DrawPixel)
-        Video.DrawLine = AddressOf(DrawLine)
-        Video.DrawEllipse = AddressOf(DrawEllipse)
+        GenericVideo.RegisterDrawLine Video
+        GenericVideo.RegisterDrawEllipse Video
         Video.DrawRectangle = AddressOf(DrawRectangle)
         Video.ClearScreen = AddressOf(ClearScreen)
         Graphics.ModeManual Video
+        GenericVideo.Register2ColorsPalette
     End
 
     Sub DrawPixel(mode as VideoMode, x as UInt16, y as UInt16, color as UInt16)
+        If x >= mode.Width Then Return
+        If y >= mode.Height Then Return
         asm "mov ax, 0xba00"
         asm "test word [bp+12], 1"
         asm "jne .par"
@@ -121,67 +515,6 @@ Module CGA
         asm "not ax"
         asm "es and [di], al"
         asm ".fim:"
-    End
-
-    Sub DrawLine(mode as VideoMode, x1 as UInt16, y1 as UInt16, x2 as UInt16, y2 as UInt16, color as UInt16)
-        Dim inc as Int16
-        Dim inc1 as Int16
-        Dim inc2 as Int16
-        Dim dx as Int16
-        Dim dy as Int16
-        Dim d as Int16
-        Dim x as UInt16
-        Dim y as UInt16
-        If x1 > x2 Then
-            x = x1
-            x1 = x2
-            x2 = x
-            y = y1
-            y1 = y2
-            y2 = y
-        End
-        If y2 > y1 Then
-            inc = 1
-        Else
-            inc = -1
-        End
-        x = x1
-        y = y1
-        dx = x2 - x1
-        dy = y2 - y1
-        If dx > dy Then
-            d = (dy SHL 1) - dx
-            inc1 = (dy-dx) SHL 1
-            inc2 = dy SHL 1
-            DrawPixel mode, x, y, color
-            For x = x1 + 1 To x2
-                If d >= 0 Then
-                    y = y + inc
-                    d = d + inc1
-                Else
-                    d = d + inc2
-                End
-                DrawPixel mode, x, y, color
-            End
-        Else
-            d = (dx SHL 1) - dy
-            inc1 = (dx-dy) SHL 1
-            inc2 = dx SHL 1
-            DrawPixel mode, x, y, color
-            For y = y1 + 1 To y2
-                If d >= 0 Then
-                    x = x + inc
-                    d = d + inc1
-                Else
-                    d = d + inc2
-                End
-                DrawPixel mode, x, y, color
-            End
-        End
-    End
-
-    Sub DrawEllipse(mode as VideoMode, x1 as UInt16, y1 as UInt16, x2 as UInt16, y2 as UInt16, borderColor as UInt16, backgroundColor as UInt16)
-        Throw NotImplementedError
     End
 
     Sub ByteOr(mode as VideoMode, x as UInt16, y as UInt16, value as UInt8)
@@ -275,9 +608,15 @@ Module CGA
     Sub DrawRectangle(mode as VideoMode, x1 as UInt16, y1 as UInt16, x2 as UInt16, y2 as UInt16, borderColor as UInt16, backgroundColor as UInt16)
         Dim y as UInt16
         Dim x as UInt16
+        Dim comp as Int16
         Dim tmp as UInt16
         Dim tmpor as UInt8
         Dim tmpand as UInt8
+        Dim diff as UInt16
+        comp = (x1 and 7) - (x2 and 7)
+        diff = 0
+        if comp == 0 then diff = -1
+        if comp < 0 then diff = -1
         tmpor = 0
         tmpand = 0xff
         tmp = 7 - (x1 and 7)
@@ -307,7 +646,7 @@ Module CGA
                 tmpand = 0
             End
             For y = y1 to y2
-                ByteSet mode, x1 + 8, y, tmpand, (x2 - x1 - 8) SHR 3
+                ByteSet mode, x1 + 8, y, tmpand, ((x2 - x1) SHR 3) + diff
             End
         End
 
@@ -316,14 +655,14 @@ Module CGA
         tmp = x2 and 7
         For x = 0 to tmp
             If x == tmp Then
+                tmpand = tmpand or ((128 shr x))
                 If borderColor and 1 Then
-                    tmpand = tmpand or ((128 shr x))
                     tmpor  = tmpor or ((128 shr x))
                 End
             Else
                 If backgroundColor <> 0xffff Then
+                    tmpand = tmpand or ((128 shr x))
                     If backgroundColor and 1 Then
-                        tmpand = tmpand or ((128 shr x))
                         tmpor  = tmpor or ((128 shr x))
                     End
                 End
@@ -359,8 +698,8 @@ Module CGA
         Else
             tmpand = 0
         End
-        ByteSet mode, x1 + 8, y1, tmpand, (x2 - x1 - 8) SHR 3
-        ByteSet mode, x1 + 8, y2, tmpand, (x2 - x1 - 8) SHR 3
+        ByteSet mode, x1 + 8, y1, tmpand, ((x2 - x1) SHR 3) + diff
+        ByteSet mode, x1 + 8, y2, tmpand, ((x2 - x1) SHR 3) + diff
     End
 
     Sub ClearScreen(mode as VideoMode, color as UInt16)
@@ -373,6 +712,175 @@ Module CGA
         End
         For y = 0 to 199
             ByteSet mode, 0, y, tmp, 80
+        End
+    End
+End
+
+Module Font
+    Public Dim Default as Font
+
+    Public Sub Initialize
+        LoadBinary Default, Embed("Font.hfn")
+    End
+
+    Public Sub LoadBinary(dest as Font, data as PtrByteArray)
+        Dim tmp as PtrWordArray
+        Dim name as PtrByteArray
+        tmp = data
+        dest.Data = tmp
+        dest.CalcSize = AddressOf(CalcSize)
+        dest.DrawText = AddressOf(DrawText)
+        dest.BodyHeight = tmp
+        @tmp++
+        @tmp++
+        dest.AboveHeight = tmp
+        @tmp++
+        @tmp++
+        dest.BelowHeight = tmp
+        @tmp++
+        @tmp++
+        dest.Spacing = tmp
+        @tmp++
+        @tmp++
+        @name = tmp + @data
+        #name = #data
+        dest.Name = name
+        @tmp++
+        @tmp++
+        @name = tmp + @data
+        #name = #data
+        dest.Author = name
+        dest.Height = dest.BodyHeight + dest.AboveHeight + dest.BelowHeight
+    End
+
+    Function FindChar(font as Font, index as UInt16) as PtrByteArray
+        Dim ptrIndex as PtrWordArray
+        Dim ptrChar as PtrByteArray
+        Dim tmp as UInt16
+        #ptrIndex = #font.Data
+        @ptrIndex = @font.Data + (index shl 1) + 12
+        #ptrChar = #font.Data
+        tmp = ptrIndex
+        @ptrChar = @font.Data + tmp
+        Return ptrChar
+    End
+
+    Sub DrawText(font as Font, text as PtrByteArray, x1 as UInt16, y1 as UInt16, x2 as UInt16, y2 as UInt16, color as UInt16, multiline as UInt16)
+        Dim ptrChar as PtrByteArray
+        Dim len as UInt16
+        Dim index as UInt16
+        Dim width as UInt16
+        Dim maxBytes as UInt16
+        Dim subWidth as UInt16
+        Dim pos as UInt16
+        Dim extraOffset as UInt16 ' For Above/Below usage
+        Dim i as UInt16
+        Dim j as UInt16
+        Dim k as Uint16
+        Dim x as UInt16
+        Dim yCalc as UInt16
+        Dim xCalc as UInt16
+        Dim tmp as UInt16
+        Dim useAbove as UInt16
+        Dim useBelow as UInt16
+        Dim totalWidth as UInt16
+        totalWidth = x2 - x1
+        len = String.Length(text)
+        @text++
+        x = 0
+        For pos = 1 to len
+            useAbove = 0
+            useBelow = 0
+            index = 0
+            If (text >= 0x30) andalso (text <= 0x39) Then index = text - 0x30 + 2
+            If (text >= 0x41) andalso (text <= 0x5a) Then index = text - 0x41 + 12
+            If text == 0x20 Then index = 1
+            ptrChar = FindChar(font, index)
+            width = ptrChar
+            @ptrChar++
+            extraOffset = ptrChar
+            @ptrChar++
+            maxBytes = (width shr 8)
+            if maxBytes == 0 then maxBytes = 1
+            For i = 1 to font.BodyHeight
+                If (x + width) > totalWidth Then
+                    If multiline Then
+                        x = 0
+                        y1 = y1 + font.Height
+                    Else
+                        Return
+                    End
+                End
+                For j = 1 to maxBytes
+                    If j < maxBytes Then
+                        subWidth = 8
+                    Else
+                        subWidth = width and 7
+                        If width == 8 Then subWidth = 8
+                    End
+                    tmp  = ptrChar
+                    For k = 1 to subWidth
+                        if tmp and 128 then
+                            xCalc = x1 + x + k - 1
+                            yCalc = y1 + font.AboveHeight + i - 1
+                            If (xCalc <= x2) andalso (yCalc <= y2) Then
+                                Graphics.DrawPixel xCalc, yCalc, color 
+                            End
+                        end
+                        tmp = tmp shl 1
+                    End
+                    @ptrChar++
+                End
+            End
+            x = x + width + font.Spacing
+            @text++
+        End
+    End
+
+    Sub CalcSize(font as Font, text as PtrByteArray, output as Size, totalWidth as UInt16, multiline as UInt16)
+        Dim ptrChar as PtrByteArray
+        Dim len as UInt16
+        Dim index as UInt16
+        Dim width as UInt16
+        Dim maxBytes as UInt16
+        Dim subWidth as UInt16
+        Dim pos as UInt16
+        Dim extraOffset as UInt16 ' For Above/Below usage
+        Dim i as UInt16
+        Dim j as UInt16
+        Dim k as Uint16
+        Dim x as UInt16
+        Dim yCalc as UInt16
+        Dim xCalc as UInt16
+        Dim tmp as UInt16
+        Dim useAbove as UInt16
+        Dim useBelow as UInt16
+        Dim newLine as UInt16
+        newLine = 0
+        len = String.Length(text)
+        @text++
+        x = 0
+        output.Height = font.Height
+        For pos = 1 to len
+            index = 0
+            If (text >= 0x30) andalso (text <= 0x39) Then index = text - 0x30 + 2
+            If (text >= 0x41) andalso (text <= 0x5a) Then index = text - 0x41 + 12
+            If text == 0x20 Then index = 1
+            ptrChar = FindChar(font, index)
+            width = ptrChar
+            If (x + width) > totalWidth Then
+                If multiline Then
+                    x = 0
+                    newLine = 1
+                    output.Width = totalWidth
+                    output.Height = output.Height + font.Height
+                Else
+                    Return
+                End
+            End
+            x = x + width + font.Spacing
+            If newLine == 0 Then output.Width = x
+            @text++
         End
     End
 End

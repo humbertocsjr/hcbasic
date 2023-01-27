@@ -40,11 +40,11 @@ module OS
             @realoc ++
             @realoc ++
             if tipoRealoc == 3 then
-                ptr = CodeSegment() + soma
                 desvio = desvio + @ptr
-                @ptr ++
-                @ptr ++
                 ptr = desvio
+                @ptr ++
+                @ptr ++
+                ptr = CodeSegment() + soma
             end
             if tipoRealoc == 2 then
                 @ptr = @ptr + desvio
@@ -67,6 +67,7 @@ module OS
         asm "mov byte [si+1], 0"
         ' Chama o Main
         Try
+            Colors.Initialize
             Program.Main args
         Catch StackOverflowError
             Console.WriteLine "Estouro de pilha"

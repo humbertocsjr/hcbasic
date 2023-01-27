@@ -53,6 +53,7 @@ abstract class No
 
     public void Compila(Ambiente amb)
     {
+        amb.Saida.EmiteComentario($"    ---=== {Trecho.Fonte.NomeCompleto}:{Trecho.Linha}:{Trecho.Coluna} ===---");
         amb.Trecho = Trecho;
         if(!Compilado)CompilaInterno(amb);
         Compilado = true;

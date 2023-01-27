@@ -40,11 +40,11 @@ module OS
             @realoc ++
             @realoc ++
             if tipoRealoc == 3 then
-                ptr = CodeSegment() + soma
                 desvio = desvio + @ptr
-                @ptr ++
-                @ptr ++
                 ptr = desvio
+                @ptr ++
+                @ptr ++
+                ptr = CodeSegment() + soma
             end
             if tipoRealoc == 2 then
                 @ptr = @ptr + desvio
@@ -68,6 +68,7 @@ module OS
         asm "cs mov word [_os_tryfatal], errofatal"
         ' Chama o Main
         Try
+            Colors.Initialize
             Program.Main args
         Catch DivByZeroError
             Console.WriteLine "Erro: Divisão por zero"

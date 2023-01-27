@@ -1,0 +1,335 @@
+Imports System
+Imports System.Drawing
+
+Structure EventArgs
+    Dim Cancel as UInt16
+End
+
+Structure MouseEventArgs
+    Dim X as UInt16
+    Dim Y as UInt16
+    Dim PrimaryButton as UInt16
+    Dim SecondaryButton as UInt16
+    Dim ScroolValue as Int16
+    Dim Cancel as UInt16
+End
+
+Structure KeyboardEventArgs
+    Dim AsciiChar as UInt8
+    Dim UTF8LowWord as UInt16
+    Dim UTF8HighWord as UInt16
+    Dim Pressed as UInt16
+    Dim Cancel as UInt16
+End
+
+Structure Control
+    Dim Top as UInt16
+    Dim Left as UInt16
+    Dim Height as UInt16
+    Dim Width as UInt16
+    Dim Value as UInt16
+    Dim Text as PtrByteArray
+    Dim ForeColor as UInt16
+    Dim BackColor as UInt16
+    Dim BorderColor as UInt16
+    Dim Visible as UInt8
+    Dim Resizable as UInt8
+    Dim Font as PtrByteArray
+    Dim ControlPaint as Action(Of Control)
+    Dim ControlMouseInteraction as Action(Of Control, MouseEventArgs)
+    Dim ControlKeyboardInteracion as Action(Of Control, KeyboardEventArgs)
+    Dim ControlFocusChanged as Action(Of Control, UInt16)
+    Dim OnClick as Action(Of Control, MouseEventArgs)
+    Dim OnKeyPress as Action(Of Control, KeyboardEventArgs)
+    Dim OnKeyRelease as Action(Of Control, KeyboardEventArgs)
+    Dim OnFocus as Action(Of Control)
+    Dim OnLostFocus as Action(Of Control)
+    Dim HasParent as UInt8
+    Dim Parent as PtrByteArray
+    Dim HasChild as UInt8
+    Dim Child as PtrByteArray
+    Dim HasNextControl as UInt8
+    Dim NextControl as PtrByteArray
+End
+
+Module Control
+    Public Sub Initialize(ctrl as Control)
+        ctrl.Font = Font.Default
+        ctrl.Top = 0
+        ctrl.Left = 0
+        ctrl.Width = 10
+        ctrl.Height = 10
+        ctrl.ForeColor = Colors.Black()
+        ctrl.BackColor = Colors.White()
+        ctrl.BorderColor = Colors.Black()
+        ctrl.Visible = 0
+        ctrl.Resizable = 0
+        ctrl.ControlPaint = AddressOf(GenericControlPaint)
+        ctrl.ControlFocusChanged = AddressOf(GenericControlFocusChanged)
+        ctrl.ControlKeyboardInteracion = AddressOf(GenericControlKeyboardInteracion)
+        ctrl.ControlMouseInteraction = AddressOf(GenericControlMouseInteraction)
+        ctrl.OnClick = AddressOf(GenericOnClick)
+        ctrl.OnFocus = AddressOf(GenericOnFocus)
+        ctrl.OnKeyPress = AddressOf(GenericOnKeyPress)
+        ctrl.OnKeyRelease = AddressOf(GenericOnKeyRelease)
+        ctrl.OnLostFocus = AddressOf(GenericOnLostFocus)
+        ctrl.HasParent = 0
+        ctrl.HasChild = 0
+        ctrl.HasNextControl = 0
+        ctrl.Text = ""
+        ctrl.Value = 0
+    End
+
+    Sub GenericControlPaint(ctrl as Control)
+    End
+
+    Sub GenericControlMouseInteraction(ctrl as Control, e as MouseEventArgs)
+        If e.PrimaryButton Or e.SecondaryButton Then
+            ctrl.OnClick.Invoke e
+        End
+    End
+
+    Sub GenericControlKeyboardInteracion(ctrl as Control, e as KeyboardEventArgs)
+        If e.Pressed Then
+            ctrl.OnKeyPress.Invoke e
+        Else
+            ctrl.OnKeyRelease.Invoke e
+        End
+    End
+
+    Sub GenericControlFocusChanged(ctrl as Control, focus as UInt16)
+        If focus Then
+            ctrl.OnFocus.Invoke
+        Else
+            ctrl.OnLostFocus.Invoke
+        End
+    End
+
+    Sub GenericOnClick(ctrl as Control, e as MouseEventArgs)
+    End
+
+    Sub GenericOnKeyPress(ctrl as Control, e as KeyboardEventArgs)
+    End
+
+    Sub GenericOnKeyRelease(ctrl as Control, e as KeyboardEventArgs)
+    End
+
+    Sub GenericOnFocus(ctrl as Control)
+    End
+
+    Sub GenericOnLostFocus(ctrl as Control)
+    End
+
+    Public Sub SetParent(ctrl as Control, parent as Control)
+        ctrl.HasParent = 1
+        ctrl.Parent = parent
+    End
+
+    Public Function GetParent(ctrl as Control) as PtrByteArray
+        if ctrl.HasParent == 0 Then Throw NotFoundError
+        Return ctrl
+    End
+
+    Public Sub Add(ctrl as Control, child as Control)
+        Dim tmp as PtrByteArray
+        If ctrl.HasChild Then
+            #tmp = #ctrl.Child
+            @tmp = @ctrl.Child
+            @ctrl = @tmp
+            #ctrl = #tmp
+            While ctrl.HasNextControl
+                #tmp = #ctrl.NextControl
+                @tmp = @ctrl.NextControl
+                @ctrl = @tmp
+                #ctrl = #tmp
+            End
+            ctrl.HasNextControl = 1
+            #tmp = #child
+            @tmp = @child
+            ctrl.NextControl = tmp
+        Else
+            ctrl.HasChild = 1
+            #tmp = #child
+            @tmp = @child
+            ctrl.Child = tmp
+        End
+    End
+
+    Public Function Count(ctrl as Control) as UInt16
+        Dim ret as UInt16
+        Dim ptr as PtrByteArray
+        ret = 0
+        If ctrl.HasChild Then
+            ret ++
+            #ptr = #ctrl.Child
+            @ptr = @ctrl.Child
+            #ctrl = #ptr
+            @ctrl = @ptr
+            While ctrl.HasNextControl
+                ret++
+                #ptr = #ctrl.NextControl
+                @ptr = @ctrl.NextControl
+                #ctrl = #ptr
+                @ctrl = @ptr
+            End
+        End
+        Return ret
+    End
+
+    Public Function Item(ctrl as Control, position as UInt16) as PtrByteArray
+        Dim i as UInt16
+        Dim ptr as PtrByteArray
+        i = 0
+        If ctrl.HasChild Then
+            i ++
+            #ptr = #ctrl.Child
+            @ptr = @ctrl.Child
+            #ctrl = #ptr
+            @ctrl = @ptr
+            If i == position Then Return ptr
+            While ctrl.HasNextControl
+                i ++
+                #ptr = #ctrl.NextControl
+                @ptr = @ctrl.NextControl
+                #ctrl = #ptr
+                @ctrl = @ptr
+                If i == position Then Return ptr
+            End
+        End
+        Throw NotFoundError
+    End
+
+    Public Sub Redraw(ctrl as Control)
+        ctrl.ControlPaint.Invoke
+    End
+
+    Public Sub SetText(ctrl as Control, txt as PtrByteArray)
+        ctrl.Text = txt
+    End
+
+    Public Function GetText(ctrl as Control) as ptrbytearray
+        Return ctrl.Text
+    End
+
+End
+
+Module Screen
+    Public Dim ScreenControl as Control
+
+    Public Sub Initialize
+        Control.Initialize ScreenControl
+        ScreenControl.Top = 0
+        ScreenControl.Left = 0
+        ScreenControl.Width = Graphics.GetWidth()
+        ScreenControl.Height = Graphics.GetHeight()
+        ScreenControl.Visible = 1
+        ScreenControl.ControlPaint = AddressOf(ControlPaint)
+    End
+
+    Sub ControlPaint(ctrl as Control)
+        Graphics.ClearScreen SystemColors.BackgroundColor()
+        Dim i as UInt16
+        Dim qtd as UInt16
+        Dim child as PtrByteArray
+        qtd = Control.Count(ctrl)
+        If qtd Then
+            For i = 1 to qtd
+                child = Control.Item(ctrl, i)
+                Control.Redraw child
+            End
+        End
+    End
+End
+
+Module Form
+    Public Sub Initialize(ctrl as Control)
+        Control.Initialize ctrl
+        ctrl.BorderColor = SystemColors.WindowBorderColor()
+        ctrl.BackColor = SystemColors.WindowColor()
+        ctrl.ForeColor = SystemColors.WindowTitleColor()
+        ctrl.ControlPaint = AddressOf(ControlPaint)
+    End
+
+    Sub ControlPaint(ctrl as Control)
+        Dim fnt as Font
+        Dim size as Size
+        Dim leftText as UInt16
+        Dim rightText as UInt16
+        Dim i as UInt16
+        size = new
+        #fnt = #ctrl.Font
+        @fnt = @ctrl.Font
+        If ctrl.Height < 30 Then ctrl.Height = 30
+        If ctrl.Width < 50 Then ctrl.Width = 50
+        Graphics.DrawRectangle ctrl.Left, ctrl.Top, ctrl.Left + ctrl.Width, ctrl.Top + ctrl.Height, ctrl.BorderColor, ctrl.BackColor
+        Graphics.DrawLine ctrl.Left, ctrl.Top+1+fnt.Height, ctrl.Left+ctrl.Width, ctrl.Top+1+fnt.Height, ctrl.BorderColor
+        Graphics.CalcFontSize fnt, ctrl.Text, size, ctrl.Width - 50, 0
+        leftText = ctrl.Left + ((ctrl.Width - size.Width) SHR 1)
+        rightText = ctrl.Left + ctrl.Width - ((ctrl.Width - size.Width) SHR 1)
+        Graphics.DrawText fnt, ctrl.Text, leftText, ctrl.Top+1, rightText, ctrl.Top+1+fnt.Height, ctrl.ForeColor, 0
+        For i = ctrl.Top + 4 to ctrl.Top + fnt.Height - 3
+            Graphics.DrawLine ctrl.Left + 2, i, ctrl.Left + 3, i, ctrl.BorderColor
+            Graphics.DrawLine ctrl.Left + 12, i, leftText - 5, i, ctrl.BorderColor
+            Graphics.DrawLine rightText + 4, i, ctrl.Left + ctrl.Width - 2, i, ctrl.BorderColor
+            i++
+        End
+        Graphics.DrawRectangle ctrl.Left + 5, ctrl.Top + 4, ctrl.Left + 10, ctrl.Top + fnt.Height -3, ctrl.BorderColor, ctrl.BackColor
+    End
+End
+
+Structure Theme
+    Dim BackgroundColor as UInt16
+    Dim TextColor as UInt16
+    Dim WindowBorderColor as UInt16
+    Dim WindowColor as UInt16
+    Dim WindowTitleColor as UInt16
+End
+
+Module SystemColors
+    Pointer Dim Current as Theme
+
+    Public Function BackgroundColor() as UInt16
+        Return Current.BackgroundColor
+    End
+
+    Public Function TextColor() as UInt16
+        Return Current.TextColor
+    End
+
+    Public Function WindowBorderColor() as UInt16
+        Return Current.WindowBorderColor
+    End
+
+    Public Function WindowColor() as UInt16
+        Return Current.WindowColor
+    End
+
+    Public Function WindowTitleColor() as UInt16
+        Return Current.WindowTitleColor
+    End
+
+    Public Sub Initialize(newTheme as Theme)
+        @Current = @newTheme
+        #Current = #newTheme
+    End
+End
+
+Module Application
+    Dim CurrentTheme as Theme
+
+    Public Sub Initialize
+        CurrentTheme.BackgroundColor = Colors.Black()
+        CurrentTheme.TextColor = Colors.White()
+        CurrentTheme.WindowBorderColor = Colors.White()
+        CurrentTheme.WindowColor = Colors.Black()
+        CurrentTheme.WindowTitleColor = Colors.White()
+        SystemColors.Initialize CurrentTheme
+        Screen.Initialize
+    End
+
+    Public Sub Run(ctrl as Control)
+        ctrl.Visible = 1
+        Control.Add Screen.ScreenControl, ctrl
+        Control.Redraw Screen.ScreenControl
+    End
+End

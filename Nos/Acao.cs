@@ -42,6 +42,7 @@ class Acao : No
         {
             case TipoDeAcao.Leitura:
             case TipoDeAcao.LeituraDesvio:
+                amb.Saida.EmiteComentario($"ACAO LEITURA - Le variavel");
                 if(variavel.Publicidade == NivelPublicidade.Local)
                 {
                     amb.Saida.EmiteCopiaVariavelLocalParaAcumulador(variavel.Posicao);
@@ -52,6 +53,7 @@ class Acao : No
                 }
                 break;
             case TipoDeAcao.LeituraSegmento:
+                amb.Saida.EmiteComentario($"ACAO LEITURA - Le segmento em variavel");
                 if(variavel.Publicidade == NivelPublicidade.Local)
                 {
                     amb.Saida.EmiteCopiaSegDaVariavelLocalParaAcumulador(variavel.Posicao);
@@ -63,6 +65,7 @@ class Acao : No
                 break;
             case TipoDeAcao.Incremento:
             case TipoDeAcao.IncrementoDesvio:
+                amb.Saida.EmiteComentario($"ACAO INC - Incrementa variavel");
                 if(variavel.Publicidade == NivelPublicidade.Local)
                 {
                     amb.Saida.EmiteIncrementaVariavelLocal(variavel.Posicao);
@@ -73,6 +76,7 @@ class Acao : No
                 }
                 break;
             case TipoDeAcao.IncrementoSegmento:
+                amb.Saida.EmiteComentario($"ACAO INC - Incrementa segmento em variavel");
                 if(variavel.Publicidade == NivelPublicidade.Local)
                 {
                     amb.Saida.EmiteIncrementaSegDaVariavelLocal(variavel.Posicao);
@@ -84,6 +88,7 @@ class Acao : No
                 break;
             case TipoDeAcao.Decremento:
             case TipoDeAcao.DecrementoDesvio:
+                amb.Saida.EmiteComentario($"ACAO DEC - Decrementa variavel");
                 if(variavel.Publicidade == NivelPublicidade.Local)
                 {
                     amb.Saida.EmiteDecrementaVariavelLocal(variavel.Posicao);
@@ -94,6 +99,7 @@ class Acao : No
                 }
                 break;
             case TipoDeAcao.DecrementoSegmento:
+                amb.Saida.EmiteComentario($"ACAO DEC - Decrementa segmento em variavel");
                 if(variavel.Publicidade == NivelPublicidade.Local)
                 {
                     amb.Saida.EmiteDecrementaSegDaVariavelLocal(variavel.Posicao);
@@ -105,6 +111,7 @@ class Acao : No
                 break;
             case TipoDeAcao.Gravacao:
             case TipoDeAcao.GravacaoDesvio:
+                amb.Saida.EmiteComentario($"ACAO GRAVACAO - Grava em variavel");
                 if(variavel.Publicidade == NivelPublicidade.Local)
                 {
                     if(ValorGravacao is Numero)
@@ -142,6 +149,7 @@ class Acao : No
                 }
                 break;
             case TipoDeAcao.GravacaoSegmento:
+                amb.Saida.EmiteComentario($"ACAO GRAVACAO - Grava segmento em variavel");
                 if(variavel.Publicidade == NivelPublicidade.Local)
                 {
                     if(ValorGravacao is Numero)
@@ -191,6 +199,7 @@ class Acao : No
         switch(Tipo)
         {
             case TipoDeAcao.Leitura:
+                amb.Saida.EmiteComentario($"ACAO LEITURA - Le ponteiro");
                 if(variavel.Publicidade == NivelPublicidade.Local)
                 {
                     if(amb.TipoPonteiro)
@@ -204,8 +213,8 @@ class Acao : No
                 else
                 {
                     if(amb.TipoPonteiro)
-                        amb.Saida.EmiteCopiaWordArrayDaVariavelLocalParaPonteiroRemoto(variavel.Posicao);
-                    if(tipoPonteiro == TipoAcaoPonteiro.Byte)
+                        amb.Saida.EmiteCopiaWordArrayDaVariavelGlobalParaPonteiroRemoto(variavel.NomeGlobal);
+                    else if(tipoPonteiro == TipoAcaoPonteiro.Byte)
                         amb.Saida.EmiteCopiaByteArrayDaVariavelGlobalParaAcumulador(variavel.NomeGlobal, desvioNoPonteiro);
                     else if(tipoPonteiro == TipoAcaoPonteiro.Word)
                         amb.Saida.EmiteCopiaWordArrayDaVariavelGlobalParaAcumulador(variavel.NomeGlobal, desvioNoPonteiro);
@@ -213,6 +222,7 @@ class Acao : No
                 }
                 break;
             case TipoDeAcao.Incremento:
+                amb.Saida.EmiteComentario($"ACAO INC - Incrementa ponteiro");
                 if(variavel.Publicidade == NivelPublicidade.Local)
                 {
                     if(tipoPonteiro == TipoAcaoPonteiro.Byte)
@@ -223,14 +233,15 @@ class Acao : No
                 }
                 else
                 {
-                        if(tipoPonteiro == TipoAcaoPonteiro.Byte)
-                            amb.Saida.EmiteIncrementaByteArrayNaVariavelGlobal(variavel.NomeGlobal, desvioNoPonteiro);
-                        else if(tipoPonteiro == TipoAcaoPonteiro.Word)
-                            amb.Saida.EmiteIncrementaWordArrayNaVariavelGlobal(variavel.NomeGlobal, desvioNoPonteiro);
-                        else throw Erro("Tipo não suportado");
+                    if(tipoPonteiro == TipoAcaoPonteiro.Byte)
+                        amb.Saida.EmiteIncrementaByteArrayNaVariavelGlobal(variavel.NomeGlobal, desvioNoPonteiro);
+                    else if(tipoPonteiro == TipoAcaoPonteiro.Word)
+                        amb.Saida.EmiteIncrementaWordArrayNaVariavelGlobal(variavel.NomeGlobal, desvioNoPonteiro);
+                    else throw Erro("Tipo não suportado");
                 }
                 break;
             case TipoDeAcao.Decremento:
+                amb.Saida.EmiteComentario($"ACAO DEC - Decrementa ponteiro");
                 if(variavel.Publicidade == NivelPublicidade.Local)
                 {
                     if(tipoPonteiro == TipoAcaoPonteiro.Byte)
@@ -241,11 +252,11 @@ class Acao : No
                 }
                 else
                 {
-                        if(tipoPonteiro == TipoAcaoPonteiro.Byte)
-                            amb.Saida.EmiteDecrementaByteArrayNaVariavelGlobal(variavel.NomeGlobal, desvioNoPonteiro);
-                        else if(tipoPonteiro == TipoAcaoPonteiro.Word)
-                            amb.Saida.EmiteDecrementaWordArrayNaVariavelGlobal(variavel.NomeGlobal, desvioNoPonteiro);
-                        else throw Erro("Tipo não suportado");
+                    if(tipoPonteiro == TipoAcaoPonteiro.Byte)
+                        amb.Saida.EmiteDecrementaByteArrayNaVariavelGlobal(variavel.NomeGlobal, desvioNoPonteiro);
+                    else if(tipoPonteiro == TipoAcaoPonteiro.Word)
+                        amb.Saida.EmiteDecrementaWordArrayNaVariavelGlobal(variavel.NomeGlobal, desvioNoPonteiro);
+                    else throw Erro("Tipo não suportado");
                 }
                 break;
             case TipoDeAcao.Gravacao:
@@ -253,6 +264,7 @@ class Acao : No
                 {
                     if(ValorGravacao is Numero)
                     {
+                        amb.Saida.EmiteComentario($"ACAO GRAVACAO - Gravacao de numero em ponteiro");
                         if(tipoPonteiro == TipoAcaoPonteiro.Byte)
                             amb.Saida.EmiteGravaNumeroNoByteArrayDaVariavelLocal(variavel.Posicao, ((Numero)ValorGravacao).Valor, desvioNoPonteiro);
                         else if(tipoPonteiro == TipoAcaoPonteiro.Word)
@@ -261,6 +273,7 @@ class Acao : No
                     }
                     else if(ValorGravacao is Texto)
                     {
+                        amb.Saida.EmiteComentario($"ACAO GRAVACAO - Gravacao de texto em ponteiro");
                         string txt_pula = amb.Saida.GeraRotulo();
                         string txt_ptr = amb.Saida.GeraRotulo();
                         int tam = System.Text.Encoding.UTF8.GetByteCount(((Texto)ValorGravacao).Conteudo);
@@ -278,6 +291,7 @@ class Acao : No
                     }
                     else
                     {
+                        amb.Saida.EmiteComentario($"ACAO GRAVACAO - Gravacao em ponteiro");
                         amb.Tipo = variavel.Tipo;
                         amb.VariavelDestino = variavel;
                         ValorGravacao.Compila(amb);
@@ -297,6 +311,7 @@ class Acao : No
                 {
                     if(ValorGravacao is Numero)
                     {
+                        amb.Saida.EmiteComentario($"ACAO GRAVACAO - Gravacao de numero em ponteiro");
                         if(tipoPonteiro == TipoAcaoPonteiro.Byte)
                             amb.Saida.EmiteGravaNumeroNoByteArrayDaVariavelGlobal(variavel.NomeGlobal, ((Numero)ValorGravacao).Valor, desvioNoPonteiro);
                         else if(tipoPonteiro == TipoAcaoPonteiro.Word)
@@ -305,6 +320,7 @@ class Acao : No
                     }
                     else if(ValorGravacao is Texto)
                     {
+                        amb.Saida.EmiteComentario($"ACAO GRAVACAO - Gravacao de texto em ponteiro");
                         string txt_pula = amb.Saida.GeraRotulo();
                         string txt_ptr = amb.Saida.GeraRotulo();
                         int tam = System.Text.Encoding.UTF8.GetByteCount(((Texto)ValorGravacao).Conteudo);
@@ -322,6 +338,7 @@ class Acao : No
                     }
                     else
                     {
+                        amb.Saida.EmiteComentario($"ACAO GRAVACAO - Gravacao em ponteiro");
                         amb.Tipo = variavel.Tipo;
                         amb.VariavelDestino = variavel;
                         ValorGravacao.Compila(amb);
@@ -430,15 +447,18 @@ class Acao : No
                             {
                                 if(TipoSegmento | TipoDesvio)
                                 {
+                                    amb.Saida.EmiteComentario($"ACAO STRUCTURE - Define Segmento/desvio de estrutura");
                                     TipoCompilado = TipoVariavel.UInt16;
                                     acaoVariavel(amb, variavel);
                                 }
                                 else if(Tipo == TipoDeAcao.Gravacao & ValorGravacao is Texto)
                                 {
+                                    amb.Saida.EmiteComentario($"ACAO STRUCTURE - Associa texto em estrutura");
                                     acaoPonteiro(amb, variavel, TipoAcaoPonteiro.Byte, 0);
                                 }
                                 else if(Tipo == TipoDeAcao.NovaEstrutura)
                                 {
+                                    amb.Saida.EmiteComentario($"ACAO STRUCTURE - Aloca estrutura na pilha");
                                     TipoCompilado = variavel.Tipo;
                                     Estrutura? estru = amb.PesquisaEstrutura(variavel.TipoNome);
                                     if(variavel.Publicidade != NivelPublicidade.Local) throw Erro("Este tipo de ação só é suportada em variáveis locais internas");
@@ -472,6 +492,7 @@ class Acao : No
                                 switch(Tipo)
                                 {
                                     case TipoDeAcao.LeituraSegmento:
+                                        amb.Saida.EmiteComentario($"ACAO STRUCTURE - Leitura de Segmento de Ponteiro");
                                         TipoCompilado = TipoVariavel.UInt16;
                                         if(variavel.Publicidade == NivelPublicidade.Local)
                                             amb.Saida.EmiteCopiaWordArrayDaVariavelLocalParaAcumulador(variavel.Posicao, campo.Posicao + 2);
@@ -479,6 +500,7 @@ class Acao : No
                                             amb.Saida.EmiteCopiaWordArrayDaVariavelGlobalParaAcumulador(variavel.NomeGlobal, campo.Posicao + 2);
                                         break;
                                     case TipoDeAcao.LeituraDesvio:
+                                        amb.Saida.EmiteComentario($"ACAO STRUCTURE - Leitura de Desvio de Ponteiro");
                                         TipoCompilado = TipoVariavel.UInt16;
                                         if(variavel.Publicidade == NivelPublicidade.Local)
                                             amb.Saida.EmiteCopiaWordArrayDaVariavelLocalParaAcumulador(variavel.Posicao, campo.Posicao);
@@ -488,6 +510,7 @@ class Acao : No
                                     case TipoDeAcao.Leitura:
                                         if(campo.Tipo == TipoVariavel.Int8 | campo.Tipo == TipoVariavel.UInt8)
                                         {
+                                            amb.Saida.EmiteComentario($"ACAO STRUCTURE - Leitura de Ponteiro - (U)Int8 - Desvio {campo.Posicao}");
                                             TipoCompilado = campo.Tipo;
                                             if(variavel.Publicidade == NivelPublicidade.Local)
                                                 amb.Saida.EmiteCopiaByteArrayDaVariavelLocalParaAcumulador(variavel.Posicao, campo.Posicao);
@@ -496,6 +519,7 @@ class Acao : No
                                         }
                                         else if(campo.Tipo == TipoVariavel.Int16 | campo.Tipo == TipoVariavel.UInt16)
                                         {
+                                            amb.Saida.EmiteComentario($"ACAO STRUCTURE - Leitura de Ponteiro - (U)Int16 - Desvio {campo.Posicao}");
                                             TipoCompilado = campo.Tipo;
                                             if(variavel.Publicidade == NivelPublicidade.Local)
                                                 amb.Saida.EmiteCopiaWordArrayDaVariavelLocalParaAcumulador(variavel.Posicao, campo.Posicao);
@@ -504,23 +528,26 @@ class Acao : No
                                         }
                                         else if(campo.Tipo == TipoVariavel.PtrByteArray | campo.Tipo == TipoVariavel.Structure | campo.Tipo == TipoVariavel.Func | campo.Tipo == TipoVariavel.Action)
                                         {
+                                            amb.Saida.EmiteComentario($"ACAO STRUCTURE - Leitura de Ponteiro - Ponteiro Byte - Desvio {campo.Posicao}");
                                             TipoCompilado = campo.Tipo;
                                             if(variavel.Publicidade == NivelPublicidade.Local)
-                                                amb.Saida.EmiteCopiaByteArrayDaVariavelLocalParaPonteiroRemoto(variavel.Posicao);
+                                                amb.Saida.EmiteCopiaByteArrayDaVariavelLocalParaPonteiroRemoto(variavel.Posicao, campo.Posicao);
                                             else
-                                                amb.Saida.EmiteCopiaByteArrayDaVariavelGlobalComoPonteiroRemoto(variavel.NomeGlobal);
+                                                amb.Saida.EmiteCopiaByteArrayDaVariavelGlobalComoPonteiroRemoto(variavel.NomeGlobal, campo.Posicao);
                                         }
                                         else if(campo.Tipo == TipoVariavel.PtrWordArray)
                                         {
+                                            amb.Saida.EmiteComentario($"ACAO STRUCTURE - Leitura de Ponteiro - Ponteiro Word - Desvio {campo.Posicao}");
                                             TipoCompilado = campo.Tipo;
                                             if(variavel.Publicidade == NivelPublicidade.Local)
-                                                amb.Saida.EmiteCopiaWordArrayDaVariavelLocalParaPonteiroRemoto(variavel.Posicao);
+                                                amb.Saida.EmiteCopiaWordArrayDaVariavelLocalParaPonteiroRemoto(variavel.Posicao, campo.Posicao);
                                             else
-                                                amb.Saida.EmiteCopiaWordArrayDaVariavelGlobalParaPonteiroRemoto(variavel.NomeGlobal);
+                                                amb.Saida.EmiteCopiaWordArrayDaVariavelGlobalParaPonteiroRemoto(variavel.NomeGlobal, campo.Posicao);
                                         }
                                         else throw Erro("Tipo dentro da estrutura não suportado para esta operação");
                                         break;
                                     case TipoDeAcao.Incremento:
+                                        amb.Saida.EmiteComentario($"ACAO STRUCTURE - Incremento de ponteiro");
                                         if(campo.Tipo == TipoVariavel.Int8 | campo.Tipo == TipoVariavel.UInt8)
                                         {
                                             if(variavel.Publicidade == NivelPublicidade.Local)
@@ -538,6 +565,7 @@ class Acao : No
                                         else throw Erro("Tipo dentro da estrutura não suportado para esta operação");
                                         break;
                                     case TipoDeAcao.Decremento:
+                                        amb.Saida.EmiteComentario($"ACAO STRUCTURE - Decremento de Ponteiro");
                                         if(campo.Tipo == TipoVariavel.Int8 | campo.Tipo == TipoVariavel.UInt8)
                                         {
                                             if(variavel.Publicidade == NivelPublicidade.Local)
@@ -556,6 +584,7 @@ class Acao : No
                                         else throw Erro("Tipo dentro da estrutura não suportado para esta operação");
                                         break;
                                     case TipoDeAcao.Gravacao:
+                                        amb.Saida.EmiteComentario($"ACAO STRUCTURE - Gravacao de Ponteiro- Prepara");
                                         amb.Tipo = campo.Tipo;
                                         amb.VariavelDestino = campo;
                                         ValorGravacao.Compila(amb);
@@ -591,6 +620,7 @@ class Acao : No
                                                 amb.Saida.EmiteCopiaPonteiroRemotoParaWordArrayNaVariavelGlobal(variavel.NomeGlobal, campo.Posicao);
                                         }
                                         else throw Erro("Tipo dentro da estrutura não suportado para esta operação");
+                                        amb.Saida.EmiteComentario($"ACAO STRUCTURE - Gravacao de Ponteiro - Fim");
                                         break;
                                     default: throw Erro("Tipo de ação não suportado dentro de uma estrutura");
                                 }
@@ -602,18 +632,55 @@ class Acao : No
                 break;
             case TipoDeAcao.Chamada:
                 {
-                    if(referencia.Count() == 1 & referencia.First() == "errorfile")
+                    if(referencia.Count() == 1 & referencia.First() == "embed")
                     {
+                        amb.Saida.EmiteComentario($"ACAO CHAMADA - Carrega binario embutido");
+                        TipoCompilado = TipoVariavel.PtrByteArray;
+                        if(ArgumentosChamada.Count() != 1 || ArgumentosChamada.First() is not Texto)
+                            throw Erro("Esperado o nome do arquivo entre aspas");
+                        string endereco = ((Texto)ArgumentosChamada.First()).Conteudo;
+                        byte[] binario = new byte[]{};
+                        if(File.Exists(endereco))
+                        {
+                            binario = File.ReadAllBytes(endereco);
+                        }
+                        else
+                        {
+                            foreach (var dir in amb.DiretoriosImportacao)
+                            {
+                                FileInfo[] arqs = dir.GetFiles(endereco);
+                                if(arqs.Length > 0)
+                                {
+                                    binario = File.ReadAllBytes(arqs[0].FullName);
+                                    goto ok;
+                                }
+                            }
+                            throw Erro($"Arquivo {endereco} não encontrado");
+                        }   
+                        ok:
+                        string rotuloPula = amb.Saida.GeraRotulo();
+                        string rotuloDados = amb.Saida.GeraRotulo();
+                        amb.Saida.EmitePulaPara(rotuloPula);
+                        amb.Saida.EmiteRotulo(rotuloDados);
+                        amb.Saida.EmiteBinario(binario);
+                        amb.Saida.EmiteRotulo(rotuloPula);
+                        amb.Saida.EmiteDefinePonteiroRemotoParaRotuloDoCodigo(rotuloDados);
+                    }
+                    else if(referencia.Count() == 1 & referencia.First() == "errorfile")
+                    {
+                        amb.Saida.EmiteComentario($"ACAO CHAMADA - Le nome do arquivo com erro");
                         TipoCompilado = TipoVariavel.PtrByteArray;
                         amb.Saida.EmiteCopiaPonteiroLocalEmVariavelLocalParaPonteiroRemoto(-8);
                     }
                     else if(referencia.Count() == 1 & referencia.First() == "errorline")
                     {
+                        amb.Saida.EmiteComentario($"ACAO CHAMADA - Le linha com erro");
                         TipoCompilado = TipoVariavel.UInt16;
                         amb.Saida.EmiteCopiaVariavelLocalParaAcumulador(-10);
                     }
                     else if(referencia.Count() == 1 & referencia.First() == "sizeof")
                     {
+                        amb.Saida.EmiteComentario($"ACAO CHAMADA - Calcula tamanho de item");
                         TipoCompilado = TipoVariavel.UInt16;
                         foreach(No no in ArgumentosChamada)
                         {
@@ -732,6 +799,7 @@ class Acao : No
                     }
                     else if(referencia.Last().ToLower() == "invoke")
                     {
+                        amb.Saida.EmiteComentario($"ACAO CHAMADA - Chama indiretamente usando Invoke");
                         DeclaraVariavel? variavel = amb.Rotina.PesquisaVariavel(referencia.Peek());
                         List<string> nomeVariavel = new List<string>();
                         nomeVariavel.Add(referencia.Peek());
@@ -837,6 +905,7 @@ class Acao : No
                     }
                     else
                     {                    
+                        amb.Saida.EmiteComentario($"ACAO CHAMADA - Chama rotina");
                         Rotina? rot = amb.Modulo.PesquisaRotina(referencia.Peek());
                         if(rot == null)
                         {
