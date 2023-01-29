@@ -801,7 +801,6 @@ class Acao : No
                             if(amb.Tipo == TipoVariavel.Action & rot.RetornaValor) throw Erro("Esperada sub-rotina, porém fornecido uma função");
                             if(amb.VariavelDestino == null) throw Erro("Erro de compilador: não informado variável destino");
                             DeclaraVariavel destino = amb.VariavelDestino;
-                            if(destino.ArgumentosFuncAction.Count() != rot.Argumentos.Count()) throw Erro("Quantidade de argumentos não é compatível com a rotina chamada");
                             for (int i = 0; i < destino.ArgumentosFuncAction.Count(); i++)
                             {
                                 if(destino.ArgumentosFuncAction[i].Tipo == rot.Argumentos[i].Tipo)
@@ -871,7 +870,8 @@ class Acao : No
                         args.AddRange(ArgumentosChamada);
                         args.Reverse();
                         int tamArgumentos = 0;
-                        if(args.Count() != pars.Count()) throw Erro("Quantidade de argumentos não é compatível com a rotina chamada");
+                        if(args.Count() != pars.Count()) 
+                            throw Erro("Quantidade de argumentos não é compatível com a rotina chamada");
                         for (int i = 0; i < args.Count; i++)
                         {
                             amb.Tipo = pars[i].Tipo;
@@ -948,7 +948,8 @@ class Acao : No
                         List<DeclaraVariavel> pars = new List<DeclaraVariavel>();
                         pars.AddRange(rot.Argumentos);
                         pars.Reverse();
-                        if(args.Count() != pars.Count()) throw Erro("Quantidade de argumentos não é compatível com a rotina chamada");
+                        if(args.Count() != pars.Count()) 
+                            throw Erro("Quantidade de argumentos não é compatível com a rotina chamada");
                         for (int i = 0; i < args.Count; i++)
                         {
                             amb.Tipo = pars[i].Tipo;

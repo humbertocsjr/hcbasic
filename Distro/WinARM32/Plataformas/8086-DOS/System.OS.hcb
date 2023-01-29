@@ -3,16 +3,21 @@ module OS
     Dim TryCode as UInt16
     Dim TryBase as UInt16
     Dim TryFatal as UInt16
-    Dim MinStackPtr as UInt16
 
     public sub Start
         ' Inicializa o compilador
         asm "cpu 8086"
         asm "bits 16"
         asm "org 0x100"
-        asm "mov word [_os_minstackptr], END"
         Start2
     end
+
+    Sub StackCheck
+        asm "cmp sp, END"
+        asm "ja .end"
+        Throw StackOverflowError
+        asm ".end"
+    End
 
     sub Start2
         ' Declara ponteiro para os argumentos

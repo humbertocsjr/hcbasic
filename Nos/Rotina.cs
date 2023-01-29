@@ -53,13 +53,7 @@ class Rotina : No
                 amb.Saida.EmiteSubtraiDoPtrPilha(PosicaoVar);
                 if(!ManipuladorDeInterrupcao)
                 {
-                    amb.Saida.EmiteCopiaVariavelGlobalParaAcumulador("_os_minstackptr");
-                    amb.Saida.EmiteCopiaPonteiroPilhaParaAuxiliar();
-                    amb.Saida.EmiteComparaAcumuladorComAuxiliar();
-                    string semErro = amb.Saida.GeraRotulo();
-                    amb.Saida.EmitePulaSeMenorQue(semErro, true);
-                    EmiteErro.GeraECompila(amb, "StackOverflowError");
-                    amb.Saida.EmiteRotulo(semErro);
+                    amb.Saida.EmiteChamaRotina("os", "stackcheck");
                 }
             }
             foreach (var variavel in Argumentos)
