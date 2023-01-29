@@ -948,4 +948,8 @@ class Saida8086 : Saida
         EmiteL($"pop di");
         EmiteL($"pop es");
     }
+    public override void EmiteMarcaInvalidaOtimizacoes()
+    {
+        PonteiroDefinido = false;
+    }
 }

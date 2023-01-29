@@ -162,5 +162,6 @@ abstract class Saida
     public abstract void EmiteInverteAcumulador();
     public abstract void EmiteInterrupcao(string nome);
     public abstract void EmiteInterrupcaoFim(string nome);
+    public abstract void EmiteMarcaInvalidaOtimizacoes();
 
 }

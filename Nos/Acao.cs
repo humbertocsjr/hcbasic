@@ -66,6 +66,7 @@ class Acao : No
             case TipoDeAcao.Incremento:
             case TipoDeAcao.IncrementoDesvio:
                 amb.Saida.EmiteComentario($"ACAO INC - Incrementa variavel");
+                if(variavel.EhPonteiro()) amb.Saida.EmiteMarcaInvalidaOtimizacoes();
                 if(variavel.Publicidade == NivelPublicidade.Local)
                 {
                     amb.Saida.EmiteIncrementaVariavelLocal(variavel.Posicao);
@@ -89,6 +90,7 @@ class Acao : No
             case TipoDeAcao.Decremento:
             case TipoDeAcao.DecrementoDesvio:
                 amb.Saida.EmiteComentario($"ACAO DEC - Decrementa variavel");
+                if(variavel.EhPonteiro()) amb.Saida.EmiteMarcaInvalidaOtimizacoes();
                 if(variavel.Publicidade == NivelPublicidade.Local)
                 {
                     amb.Saida.EmiteDecrementaVariavelLocal(variavel.Posicao);
@@ -112,6 +114,7 @@ class Acao : No
             case TipoDeAcao.Gravacao:
             case TipoDeAcao.GravacaoDesvio:
                 amb.Saida.EmiteComentario($"ACAO GRAVACAO - Grava em variavel");
+                if(variavel.EhPonteiro()) amb.Saida.EmiteMarcaInvalidaOtimizacoes();
                 if(variavel.Publicidade == NivelPublicidade.Local)
                 {
                     if(ValorGravacao is Numero)
@@ -718,6 +721,33 @@ class Acao : No
                                 amb.Saida.EmiteGravaNumeroEmAcumulador(amb.Saida.CalculaTamanhoReal(variavel.Tipo));
                             }
                         }
+                        else if(estru != null)
+                        {
+                            referencia.Dequeue();
+                            if(referencia.Any())
+                            {
+                                variavel = estru.PesquisaCampo(referencia.Peek());
+                                if(variavel == null && modulo != null)
+                                {
+                                    variavel = modulo.PesquisaCampo(referencia.Peek());
+                                    if(variavel == null) throw Erro("Campo não encontrado na estrutura");
+                                    referencia.Dequeue();
+                                    if(referencia.Any()) throw Erro("Não é possível verificar tamanho em estruturas multinível");
+                                    amb.Saida.EmiteGravaNumeroEmAcumulador(amb.Saida.CalculaTamanhoReal(variavel.Tipo));
+                                }
+                                else
+                                {
+                                    if(variavel == null) throw Erro("Campo não encontrado na estrutura");
+                                    referencia.Dequeue();
+                                    if(referencia.Any()) throw Erro("Não é possível verificar tamanho em estruturas multinível");
+                                    amb.Saida.EmiteGravaNumeroEmAcumulador(amb.Saida.CalculaTamanhoReal(variavel.Tipo));
+                                }
+                            }
+                            else
+                            {
+                                amb.Saida.EmiteGravaNumeroEmAcumulador(estru.TamanhoCampos);
+                            }
+                        }
                         else if(modulo != null)
                         {
                             referencia.Dequeue();
@@ -732,22 +762,6 @@ class Acao : No
                             else
                             {
                                 amb.Saida.EmiteGravaNumeroEmAcumulador(modulo.TamanhoCampos);
-                            }
-                        }
-                        else if(estru != null)
-                        {
-                            referencia.Dequeue();
-                            if(referencia.Any())
-                            {
-                                variavel = estru.PesquisaCampo(referencia.Peek());
-                                if(variavel == null) throw Erro("Campo não encontrado na estrutura");
-                                referencia.Dequeue();
-                                if(referencia.Any()) throw Erro("Não é possível verificar tamanho em estruturas multinível");
-                                amb.Saida.EmiteGravaNumeroEmAcumulador(amb.Saida.CalculaTamanhoReal(variavel.Tipo));
-                            }
-                            else
-                            {
-                                amb.Saida.EmiteGravaNumeroEmAcumulador(estru.TamanhoCampos);
                             }
                         }
                         else if(tipoVar != TipoVariavel.Structure)

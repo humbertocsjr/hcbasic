@@ -26,8 +26,7 @@ module Program
         dim txt as string
         dim funcao as Func(Of UInt16)
         dim testeStru as StruTeste
-        Dim ptr as ptrbytearray
-        testeStru = ptr
+        Console.WriteUInt16 SizeOf(StruTeste)
         arq = new
         txt = new
         Console.Write "Teste Criacao de arquivo: "
