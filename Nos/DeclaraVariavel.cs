@@ -1,5 +1,7 @@
 class DeclaraVariavel : No
 {
+    public int TamanhoManual { get; set; } = 0;
+    public bool UsaTamanhoManual { get; set; } = false;
     public bool EstruturaEstaticaApenasPonteiro { get; set; } = false;
     public string NomeGlobal => $"_{Modulo.Nome}_{Nome}";
     public bool EhNumerica() => Tipo == TipoVariavel.Int16 | Tipo == TipoVariavel.UInt16 | Tipo == TipoVariavel.Int8 | Tipo == TipoVariavel.UInt8;
@@ -33,6 +35,7 @@ class DeclaraVariavel : No
 
     protected override void CompilaInterno(Ambiente amb)
     {
+        if(UsaTamanhoManual) return;
         string rotulo;
         switch(Publicidade)
         {

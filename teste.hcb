@@ -9,6 +9,10 @@ module ReferenciaCruzada
     End
 End
 
+structure StruTeste
+    spacing 10
+End
+
 module Program
     Dim testeString as String
 
@@ -21,6 +25,9 @@ module Program
         dim arq as stream
         dim txt as string
         dim funcao as Func(Of UInt16)
+        dim testeStru as StruTeste
+        Dim ptr as ptrbytearray
+        testeStru = ptr
         arq = new
         txt = new
         Console.Write "Teste Criacao de arquivo: "

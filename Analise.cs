@@ -755,6 +755,12 @@ class Analise
             {
                 estrutura.Campos.Add(processaDim(NivelPublicidade.Publico, estrutura, true, false, ref trechos));
             }
+            else if(trechos.EhIdentificador("spacing"))
+            {
+                trechos.Proximo();
+                trechos.ExigeTipo(TipoTrecho.Numero, "Esperado o tamanho em bytes");
+                estrutura.Campos.Add(new DeclaraVariavel(trechos.Atual, estrutura, true, NivelPublicidade.Publico, TipoVariavel.UInt16, "", false, 0){UsaTamanhoManual = true, TamanhoManual = int.Parse(trechos.Atual.Conteudo)});
+            }
             else if(!trechos.FimDaLinha)
             {
                 trechos.Erro("Comando desconhecido");

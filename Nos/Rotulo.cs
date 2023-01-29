@@ -8,6 +8,7 @@ class Rotulo : No
 
     protected override void CompilaInterno(Ambiente amb)
     {
+        amb.Saida.MarcaInicioDeRepeticao();
         amb.Saida.EmiteRotulo(Nome);
     }
 
