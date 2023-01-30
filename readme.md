@@ -6,6 +6,8 @@ Esta linguagem não tem como objetivo ser orientada a objetos, sendo próximo de
 
 Este compilador foi criado 100% em linguagem C#, evitando ferramentas de geração automática de compiladores como BISON ou Yacc, o que deixam o código "misterioso" para programadores não versados em estruturas como BNF ou EBNF, feito com o código completamente em português, pois todos os exemplos de compilador que conheço são em inglês sendo uma grande barreira para aprendizado na prática para não falantes desta lingua.
 
+Acompanhe também o projeto irmão deste, um sistema operacional para IBM PC, feito com esta linguagem de programação, e de onde virá a base de todas as bibliotecas dessa linguagem. [HUSIX](https://github.com/humbertocsjr/husix)
+
 ## Novidades
 
 - Forma de implementar um Interrupt Handler usando comando Sub NOME() Handles Interrupt

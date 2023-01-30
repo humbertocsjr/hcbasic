@@ -36,7 +36,7 @@ class DeclaraVariavel : No
     protected override void CompilaInterno(Ambiente amb)
     {
         if(UsaTamanhoManual) return;
-        string rotulo;
+        //string rotulo;
         switch(Publicidade)
         {
             case NivelPublicidade.Local:
@@ -47,8 +47,8 @@ class DeclaraVariavel : No
                 break;
             case NivelPublicidade.Publico:
             case NivelPublicidade.Privado:
-                rotulo = amb.Saida.GeraRotulo();
-                amb.Saida.EmitePulaPara(rotulo);
+                //rotulo = amb.Saida.GeraRotulo();
+                //amb.Saida.EmitePulaPara(rotulo);
                 amb.Saida.EmiteRotulo(NomeGlobal);
                 if(Tipo != TipoVariavel.Structure && EstruturaEstaticaApenasPonteiro)
                 {
@@ -72,7 +72,7 @@ class DeclaraVariavel : No
                     }
                 }
                 else amb.Saida.EmiteGerarEspaco(amb.Saida.CalculaTamanho(Tipo));
-                amb.Saida.EmiteRotulo(rotulo);
+                //amb.Saida.EmiteRotulo(rotulo);
                 break;
         }
     }
