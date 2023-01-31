@@ -173,6 +173,8 @@ module String
     end
 
     public function Equals(txt1 as ptrbytearray, txt2 as ptrbytearray) as uint16
+        @txt1++
+        @txt2++
         while txt1 == txt2
             if txt1 == 0 then return 1
             @txt1++
