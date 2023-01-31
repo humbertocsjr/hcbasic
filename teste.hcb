@@ -104,6 +104,7 @@ module Program
         Application.Run MainForm
         Console.ReadChar
         Graphics.Mode80x25x16
+        Console.Write args
     end
 
     function TesteFunc() as UInt16

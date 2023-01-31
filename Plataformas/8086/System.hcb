@@ -14,6 +14,7 @@ error NoAnswerError = 10
 error TimeoutError = 11
 error InvalidValueError = 12
 error AccessDeniedError = 13
+error InvalidFormatError = 14
 
 Structure ColorPalette
     Dim Black as UInt16
@@ -254,11 +255,53 @@ structure Stream
     Dim WriteRaw as func(of stream, ptrbytearray, uint16, uint16)
     Dim Write as func(of stream, ptrbytearray, uint16)
     Dim Close as func(of stream, uint16)
-    Dim SeekCurrent as func(of stream, uint16) as uint16
-    Dim SeekStart as func(of stream, uint16) as uint16
-    Dim SeekEnd as func(of stream, uint16) as uint16
+    Dim SeekCurrent as func(of stream, uint16, uint16)
+    Dim SeekStart as func(of stream, uint16, uint16)
+    Dim SeekEnd as func(of stream, uint16, uint16)
 end
 
+module Stream
+    ' Return size
+    Public Function ReadRaw(s as Stream, data as PtrByteArray, len as UInt16) as UInt16
+        If #s.ReadRaw == 0 Then Throw NotImplementedError
+        Return s.ReadRaw.Invoke(data, len)
+    End
+    ' Return size
+    Public Function Read(s as Stream, data as PtrByteArray) as UInt16
+        If #s.Read == 0 Then Throw NotImplementedError
+        Return s.Read.Invoke(data)
+    End
+    ' Return size
+    Public Function WriteRaw(s as Stream, data as PtrByteArray, len as UInt16) as UInt16
+        If #s.WriteRaw == 0 Then Throw NotImplementedError
+        Return s.WriteRaw.Invoke(data, len)
+    End
+    ' Return size
+    Public Function Write(s as Stream, data as PtrByteArray) as UInt16
+        If #s.Write == 0 Then Throw NotImplementedError
+        Return s.Write.Invoke(data)
+    End
+    
+    Public Function Close(s as Stream) as UInt16
+        If #s.Close == 0 Then Throw NotImplementedError
+        Return s.Close.Invoke()
+    End
+    
+    Public Function SeekCurrent(s as Stream, position as UInt16) as UInt16
+        If #s.SeekCurrent == 0 Then Throw NotImplementedError
+        Return s.SeekCurrent.Invoke(position)
+    End
+    
+    Public Function SeekEnd(s as Stream, pos as UInt16) as UInt16
+        If #s.SeekEnd == 0 Then Throw NotImplementedError
+        Return s.SeekEnd.Invoke(pos)
+    End
+    
+    Public Function SeekStart(s as Stream, pos as UInt16) as UInt16
+        If #s.SeekStart == 0 Then Throw NotImplementedError
+        Return s.SeekStart.Invoke(pos)
+    End
+end
 
 structure String
     Dim Capacity as UInt8
