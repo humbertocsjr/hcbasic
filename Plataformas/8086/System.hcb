@@ -172,6 +172,26 @@ module String
         return i
     end
 
+    public sub Substring(dest as PtrByteArray, orig as PtrByteArray, pos as uint16, size as uint16)
+        dim dest_len as UInt16
+        dim orig_len as UInt16
+        dim i as uint16
+        dim value as uint8
+        dest_len = dest
+        orig_len = String.Length(orig)
+        if pos > orig_len then throw OutOfBoundsError
+        if (size + 1) > dest_len then throw CapacityOverflowError
+        @dest++
+        @orig = @orig + 1 + pos
+        for i = 1 to size
+            value = orig
+            dest = value
+            @dest++
+            @orig++
+        end
+        dest = 0
+    end
+
     public function Equals(txt1 as ptrbytearray, txt2 as ptrbytearray) as uint16
         @txt1++
         @txt2++
