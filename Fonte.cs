@@ -8,7 +8,7 @@ class Fonte
     public Fonte(string endereco)
     {
         _arq = new FileStream(endereco, FileMode.Open, FileAccess.Read);
-        NomeCompleto = Path.GetFullPath(endereco);
+        NomeCompleto = endereco;
         _leitor = new StreamReader(_arq);
     }
 

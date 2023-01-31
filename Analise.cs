@@ -830,6 +830,7 @@ class Analise
                     nomeImport += ".hcb";
                     if(File.Exists(nomeImport))
                     {
+                        nomeImport = Path.GetFullPath(nomeImport);
                         if(!Fontes.Any(f => f.NomeCompleto == nomeImport))
                             Processar(new Fonte(nomeImport));
                     }

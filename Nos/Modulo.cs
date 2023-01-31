@@ -51,9 +51,7 @@ class Modulo : Estrutura
         }
         amb.Modulo = null;
         Estrutura? cons = amb.PesquisaModulo(Nome);
-        if(cons != null && cons != this) throw Erro($"Módulo {Nome} já existe.");
-        cons = amb.PesquisaEstrutura(Nome);
-        //if(cons != null) throw Erro($"Já existe uma estrutura com o nome {Nome}.");
+        if(cons != null && cons != this) throw Erro($"Módulo {Nome} já existe em {cons.Trecho.Fonte.NomeCompleto}:{cons.Trecho.Linha}.");
     }
 
     protected override No OtimizaInterno(Ambiente amb)

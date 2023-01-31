@@ -25,9 +25,7 @@ class Estrutura : No
     {
         InicializaLista(new List<No>(Campos), amb);
         Estrutura? cons = amb.PesquisaEstrutura(Nome);
-        if(cons != null && cons != this) throw Erro($"Estrutura {Nome} já existe.");
-        cons = amb.PesquisaModulo(Nome);
-        //if(cons != null) throw Erro($"Já existe um módulo com o nome {Nome}.");
+        if(cons != null && cons != this) throw Erro($"Estrutura {Nome} já existe em {cons.Trecho.Fonte.NomeCompleto}:{cons.Trecho.Linha}.");
         int posicao = 0;
         foreach (var item in Campos)
         {
