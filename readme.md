@@ -10,6 +10,8 @@ Acompanhe também o projeto irmão deste, um sistema operacional para IBM PC, fe
 
 ## Novidades
 
+- Agora UInt8 e Int8 podem usar os comandos ROL, ROR, SHL, SHR
+- O Compilador verfica se uma variável local esta sendo lida antes da sua inicialização
 - Forma de implementar um Interrupt Handler usando comando Sub NOME() Handles Interrupt
 - Proteção mínima contra estouro de pilha (Apenas verifica quando entra numa rotina)
 - Implementado Try Catch, Throw e o Comando Error para definir o código do erro
@@ -49,9 +51,7 @@ O uso do Makefile é opcional e voltado para Linux e macOS, existindo apenas par
 
 ## Bugs/Problemas conhecidos
 
-- Comandos ROL, ROR, SHL e SHR aplicam sempre em 16 bits, mesmo quando a variável é de 8 bits, onde os comando ROL e ROR ficam inutilizados para sua função, por enquanto usar esses comandos apenas com variáveis 16 bits
 - Try Catch tráz uma limitação de uso exclusivo em monotarefa, pois armazena seus ponteiros estaticamente, deverá ser alterado para armazenar 100% em pilha permitindo uso em multitarefa
-- **Por padrão este compilador não inicializa suas variáveis, e AINDA não verifica se o usuário esta tentando usa-las sem inicializar, isto é problemático principalmente com ponteiros/estruturas que podem ao ser manipuladas com um valor inicial inválido corromper dados na memória ou mesmo gerar crashs no sistema operacional, este comportamento deve ser alterado no futuro para se parecer mais com um compilador BASIC e menos com o comportamento de um compilador C**
 
 ## Objetivos Atuais e Prioritários
 

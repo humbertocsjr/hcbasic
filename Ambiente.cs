@@ -32,6 +32,7 @@ class Ambiente
 
     public bool TipoSemSinal => Tipo == TipoVariavel.UInt8 | Tipo == TipoVariavel.UInt16 | Tipo == TipoVariavel.PtrByteArray | Tipo == TipoVariavel.PtrWordArray;
     public bool TipoComSinal => Tipo == TipoVariavel.Int8 | Tipo == TipoVariavel.Int16;
+    public bool TipoByte => Tipo == TipoVariavel.Int8 | Tipo == TipoVariavel.UInt8;
     public bool TipoPonteiro => Tipo == TipoVariavel.PtrByteArray | Tipo == TipoVariavel.PtrWordArray | Tipo == TipoVariavel.Structure | Tipo == TipoVariavel.Func | Tipo == TipoVariavel.Action;
 
 

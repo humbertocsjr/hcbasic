@@ -42,6 +42,7 @@ class Acao : No
         {
             case TipoDeAcao.Leitura:
             case TipoDeAcao.LeituraDesvio:
+                if(!variavel.AtribuidoValor & variavel.Publicidade == NivelPublicidade.Local) throw Erro($"Uso da variável {variavel.Nome} sem antes atribuir");
                 amb.Saida.EmiteComentario($"ACAO LEITURA - Le variavel");
                 if(variavel.Publicidade == NivelPublicidade.Local)
                 {
@@ -53,6 +54,7 @@ class Acao : No
                 }
                 break;
             case TipoDeAcao.LeituraSegmento:
+                if(!variavel.AtribuidoValor & variavel.Publicidade == NivelPublicidade.Local) throw Erro($"Uso da variável {variavel.Nome} sem antes atribuir");
                 amb.Saida.EmiteComentario($"ACAO LEITURA - Le segmento em variavel");
                 if(variavel.Publicidade == NivelPublicidade.Local)
                 {
@@ -65,6 +67,7 @@ class Acao : No
                 break;
             case TipoDeAcao.Incremento:
             case TipoDeAcao.IncrementoDesvio:
+                if(!variavel.AtribuidoValor & variavel.Publicidade == NivelPublicidade.Local) throw Erro($"Uso da variável {variavel.Nome} sem antes atribuir");
                 amb.Saida.EmiteComentario($"ACAO INC - Incrementa variavel");
                 if(variavel.EhPonteiro()) amb.Saida.EmiteMarcaInvalidaOtimizacoes();
                 if(variavel.Publicidade == NivelPublicidade.Local)
@@ -77,6 +80,7 @@ class Acao : No
                 }
                 break;
             case TipoDeAcao.IncrementoSegmento:
+                if(!variavel.AtribuidoValor & variavel.Publicidade == NivelPublicidade.Local) throw Erro($"Uso da variável {variavel.Nome} sem antes atribuir");
                 amb.Saida.EmiteComentario($"ACAO INC - Incrementa segmento em variavel");
                 if(variavel.Publicidade == NivelPublicidade.Local)
                 {
@@ -89,6 +93,7 @@ class Acao : No
                 break;
             case TipoDeAcao.Decremento:
             case TipoDeAcao.DecrementoDesvio:
+                if(!variavel.AtribuidoValor & variavel.Publicidade == NivelPublicidade.Local) throw Erro($"Uso da variável {variavel.Nome} sem antes atribuir");
                 amb.Saida.EmiteComentario($"ACAO DEC - Decrementa variavel");
                 if(variavel.EhPonteiro()) amb.Saida.EmiteMarcaInvalidaOtimizacoes();
                 if(variavel.Publicidade == NivelPublicidade.Local)
@@ -101,6 +106,7 @@ class Acao : No
                 }
                 break;
             case TipoDeAcao.DecrementoSegmento:
+                if(!variavel.AtribuidoValor & variavel.Publicidade == NivelPublicidade.Local) throw Erro($"Uso da variável {variavel.Nome} sem antes atribuir");
                 amb.Saida.EmiteComentario($"ACAO DEC - Decrementa segmento em variavel");
                 if(variavel.Publicidade == NivelPublicidade.Local)
                 {
@@ -113,6 +119,7 @@ class Acao : No
                 break;
             case TipoDeAcao.Gravacao:
             case TipoDeAcao.GravacaoDesvio:
+                variavel.AtribuidoValor = true;
                 amb.Saida.EmiteComentario($"ACAO GRAVACAO - Grava em variavel");
                 if(variavel.EhPonteiro()) amb.Saida.EmiteMarcaInvalidaOtimizacoes();
                 if(variavel.Publicidade == NivelPublicidade.Local)
@@ -152,6 +159,7 @@ class Acao : No
                 }
                 break;
             case TipoDeAcao.GravacaoSegmento:
+                variavel.AtribuidoValor = true;
                 amb.Saida.EmiteComentario($"ACAO GRAVACAO - Grava segmento em variavel");
                 if(variavel.Publicidade == NivelPublicidade.Local)
                 {
@@ -202,6 +210,7 @@ class Acao : No
         switch(Tipo)
         {
             case TipoDeAcao.Leitura:
+                if(!variavel.AtribuidoValor & variavel.Publicidade == NivelPublicidade.Local) throw Erro($"Uso da variável {variavel.Nome} sem antes atribuir");
                 amb.Saida.EmiteComentario($"ACAO LEITURA - Le ponteiro");
                 if(variavel.Publicidade == NivelPublicidade.Local)
                 {
@@ -225,6 +234,7 @@ class Acao : No
                 }
                 break;
             case TipoDeAcao.Incremento:
+                if(!variavel.AtribuidoValor & variavel.Publicidade == NivelPublicidade.Local) throw Erro($"Uso da variável {variavel.Nome} sem antes atribuir");
                 amb.Saida.EmiteComentario($"ACAO INC - Incrementa ponteiro");
                 if(variavel.Publicidade == NivelPublicidade.Local)
                 {
@@ -267,6 +277,7 @@ class Acao : No
                 {
                     if(ValorGravacao is Numero)
                     {
+                        if(!variavel.AtribuidoValor & variavel.Publicidade == NivelPublicidade.Local) throw Erro($"Uso da variável {variavel.Nome} sem antes atribuir");
                         amb.Saida.EmiteComentario($"ACAO GRAVACAO - Gravacao de numero em ponteiro");
                         if(tipoPonteiro == TipoAcaoPonteiro.Byte)
                             amb.Saida.EmiteGravaNumeroNoByteArrayDaVariavelLocal(variavel.Posicao, ((Numero)ValorGravacao).Valor, desvioNoPonteiro);
@@ -276,6 +287,7 @@ class Acao : No
                     }
                     else if(ValorGravacao is Texto)
                     {
+                        variavel.AtribuidoValor = true;
                         amb.Saida.EmiteComentario($"ACAO GRAVACAO - Gravacao de texto em ponteiro");
                         string txt_pula = amb.Saida.GeraRotulo();
                         string txt_ptr = amb.Saida.GeraRotulo();
@@ -300,11 +312,20 @@ class Acao : No
                         ValorGravacao.Compila(amb);
                         if(ValorGravacao is Acao && ((Acao)ValorGravacao).TipoCompilado == TipoVariavel.Desconhecido) throw Erro($"Falha de compilador: falta o Acao definir o TipoCompilado para {((Acao)ValorGravacao).Tipo} {string.Join('.',((Acao)ValorGravacao).Nome)}");
                         if(ValorGravacao is Acao && ((Acao)ValorGravacao).TipoCompiladoPonteiro)
+                        {
+                            variavel.AtribuidoValor = true;
                             amb.Saida.EmiteCopiaPonteiroRemotoParaVariavelLocal(variavel.Posicao);
+                        }
                         else if(tipoPonteiro == TipoAcaoPonteiro.Byte)
+                        {
+                            if(!variavel.AtribuidoValor & variavel.Publicidade == NivelPublicidade.Local) throw Erro($"Uso da variável {variavel.Nome} sem antes atribuir");
                             amb.Saida.EmiteCopiaAcumuladorParaByteArrayDaVariavelLocal(variavel.Posicao, desvioNoPonteiro);
+                        }
                         else if(tipoPonteiro == TipoAcaoPonteiro.Word)
+                        {
+                            if(!variavel.AtribuidoValor & variavel.Publicidade == NivelPublicidade.Local) throw Erro($"Uso da variável {variavel.Nome} sem antes atribuir");
                             amb.Saida.EmiteCopiaAcumuladorParaWordArrayDaVariavelLocal(variavel.Posicao, desvioNoPonteiro);
+                        }
                         else throw Erro("Tipo não suportado");
                         amb.VariavelDestino = null;
                         amb.Tipo = null;
@@ -314,6 +335,7 @@ class Acao : No
                 {
                     if(ValorGravacao is Numero)
                     {
+                        if(!variavel.AtribuidoValor & variavel.Publicidade == NivelPublicidade.Local) throw Erro($"Uso da variável {variavel.Nome} sem antes atribuir");
                         amb.Saida.EmiteComentario($"ACAO GRAVACAO - Gravacao de numero em ponteiro");
                         if(tipoPonteiro == TipoAcaoPonteiro.Byte)
                             amb.Saida.EmiteGravaNumeroNoByteArrayDaVariavelGlobal(variavel.NomeGlobal, ((Numero)ValorGravacao).Valor, desvioNoPonteiro);
@@ -323,6 +345,7 @@ class Acao : No
                     }
                     else if(ValorGravacao is Texto)
                     {
+                        variavel.AtribuidoValor = true;
                         amb.Saida.EmiteComentario($"ACAO GRAVACAO - Gravacao de texto em ponteiro");
                         string txt_pula = amb.Saida.GeraRotulo();
                         string txt_ptr = amb.Saida.GeraRotulo();
@@ -347,11 +370,20 @@ class Acao : No
                         ValorGravacao.Compila(amb);
                         if(ValorGravacao is Acao && ((Acao)ValorGravacao).TipoCompilado == TipoVariavel.Desconhecido) throw Erro($"Falha de compilador: falta o Acao definir o TipoCompilado para {((Acao)ValorGravacao).Tipo} {string.Join('.',((Acao)ValorGravacao).Nome)}");
                         if(ValorGravacao is Acao && ((Acao)ValorGravacao).TipoCompiladoPonteiro)
+                        {
                             amb.Saida.EmiteCopiaPonteiroRemotoParaVariavelGlobal(variavel.NomeGlobal);
+                            variavel.AtribuidoValor = true;
+                        }
                         else if(tipoPonteiro == TipoAcaoPonteiro.Byte)
+                        {
+                            if(!variavel.AtribuidoValor & variavel.Publicidade == NivelPublicidade.Local) throw Erro($"Uso da variável {variavel.Nome} sem antes atribuir");
                             amb.Saida.EmiteCopiaAcumuladorParaByteArrayDaVariavelGlobal(variavel.NomeGlobal, desvioNoPonteiro);
+                        }
                         else if(tipoPonteiro == TipoAcaoPonteiro.Word)
+                        {
+                            if(!variavel.AtribuidoValor & variavel.Publicidade == NivelPublicidade.Local) throw Erro($"Uso da variável {variavel.Nome} sem antes atribuir");
                             amb.Saida.EmiteCopiaAcumuladorParaWordArrayDaVariavelGlobal(variavel.NomeGlobal, desvioNoPonteiro);
+                        }
                         else throw Erro("Tipo não suportado");
                         amb.VariavelDestino = null;
                         amb.Tipo = null;
@@ -461,6 +493,7 @@ class Acao : No
                                 }
                                 else if(Tipo == TipoDeAcao.NovaEstrutura)
                                 {
+                                    variavel.AtribuidoValor = true;
                                     amb.Saida.EmiteComentario($"ACAO STRUCTURE - Aloca estrutura na pilha");
                                     TipoCompilado = variavel.Tipo;
                                     Estrutura? estru = amb.PesquisaEstrutura(variavel.TipoNome);

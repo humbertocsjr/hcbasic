@@ -61,9 +61,8 @@ module OS
             end
         end
         ' Define ponteiro
-        asm "mov ax, cs"
-        asm "mov [bp-2], ax"
-        asm "mov word [bp-4], 0x80"
+        @args = 0x80
+        #args = CodeSegment()
         ' Adiciona um zero ao final da variavel para ser ASCIZ
         asm "mov al, [0x80]"
         asm "xor ah, ah"
@@ -155,6 +154,7 @@ end
 module File
     public function Open(stream as Stream, filename as ptrbytearray) as uint16
         dim id as uint16
+        id = 0
         asm "mov ax, 0x3d02"
         asm "push ds"
         asm "push word [bp+12]"
@@ -183,6 +183,7 @@ module File
 
     public function Create(stream as Stream, filename as ptrbytearray) as uint16
         dim id as uint16
+        id = 0
         asm "mov ax, 0x3c00"
         asm "push ds"
         asm "push word [bp+12]"

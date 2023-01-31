@@ -850,7 +850,7 @@ class Analise
                         }
                         if(!encontradoArq)
                         {
-                            trechos.Erro("Arquivo {nomeImport} não encontrado.");
+                            trechos.Erro($"Arquivo {nomeImport} não encontrado.");
                         }
                     }
                 }

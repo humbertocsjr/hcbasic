@@ -73,7 +73,7 @@ class OpMatematica : No
                     dir.Compila(amb);
                     amb.Saida.EmiteCopiaAcumuladorParaContador();
                     amb.Saida.EmiteDesempilhaAcumulador();
-                    amb.Saida.EmiteShlContadorNoAcumulador();
+                    amb.Saida.EmiteShlContadorNoAcumulador(!amb.TipoByte);
                     break;
                 case "shr":
                     esq.Compila(amb);
@@ -81,7 +81,7 @@ class OpMatematica : No
                     dir.Compila(amb);
                     amb.Saida.EmiteCopiaAcumuladorParaContador();
                     amb.Saida.EmiteDesempilhaAcumulador();
-                    amb.Saida.EmiteShrContadorNoAcumulador();
+                    amb.Saida.EmiteShrContadorNoAcumulador(!amb.TipoByte);
                     break;
                 case "rol":
                     esq.Compila(amb);
@@ -89,7 +89,7 @@ class OpMatematica : No
                     dir.Compila(amb);
                     amb.Saida.EmiteCopiaAcumuladorParaContador();
                     amb.Saida.EmiteDesempilhaAcumulador();
-                    amb.Saida.EmiteRolContadorNoAcumulador();
+                    amb.Saida.EmiteRolContadorNoAcumulador(!amb.TipoByte);
                     break;
                 case "ror":
                     esq.Compila(amb);
@@ -97,7 +97,7 @@ class OpMatematica : No
                     dir.Compila(amb);
                     amb.Saida.EmiteCopiaAcumuladorParaContador();
                     amb.Saida.EmiteDesempilhaAcumulador();
-                    amb.Saida.EmiteRorContadorNoAcumulador();
+                    amb.Saida.EmiteRorContadorNoAcumulador(!amb.TipoByte);
                     break;
                 default: throw Erro($"Operação {Operacao} não suportada pelo tipo {amb.Tipo}");
             }
@@ -159,7 +159,7 @@ class OpMatematica : No
                     dir.Compila(amb);
                     amb.Saida.EmiteCopiaAcumuladorParaContador();
                     amb.Saida.EmiteDesempilhaAcumulador();
-                    amb.Saida.EmiteShlContadorNoAcumulador();
+                    amb.Saida.EmiteShlContadorNoAcumulador(!amb.TipoByte);
                     break;
                 case "shr":
                     esq.Compila(amb);
@@ -167,7 +167,7 @@ class OpMatematica : No
                     dir.Compila(amb);
                     amb.Saida.EmiteCopiaAcumuladorParaContador();
                     amb.Saida.EmiteDesempilhaAcumulador();
-                    amb.Saida.EmiteShrContadorNoAcumulador();
+                    amb.Saida.EmiteShrContadorNoAcumulador(!amb.TipoByte);
                     break;
                 case "rol":
                     esq.Compila(amb);
@@ -175,7 +175,7 @@ class OpMatematica : No
                     dir.Compila(amb);
                     amb.Saida.EmiteCopiaAcumuladorParaContador();
                     amb.Saida.EmiteDesempilhaAcumulador();
-                    amb.Saida.EmiteRolContadorNoAcumulador();
+                    amb.Saida.EmiteRolContadorNoAcumulador(!amb.TipoByte);
                     break;
                 case "ror":
                     esq.Compila(amb);
@@ -183,7 +183,7 @@ class OpMatematica : No
                     dir.Compila(amb);
                     amb.Saida.EmiteCopiaAcumuladorParaContador();
                     amb.Saida.EmiteDesempilhaAcumulador();
-                    amb.Saida.EmiteRorContadorNoAcumulador();
+                    amb.Saida.EmiteRorContadorNoAcumulador(!amb.TipoByte);
                     break;
                 default: throw Erro($"Operação {Operacao} não suportada pelo tipo {amb.Tipo}");
             }

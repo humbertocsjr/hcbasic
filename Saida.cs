@@ -62,10 +62,10 @@ abstract class Saida
     public abstract void EmiteMultiplicaSemSinalAuxNoAcumulador();
     public abstract void EmiteModSinalAuxNoAcumulador();
     public abstract void EmiteModSemSinalAuxNoAcumulador();
-    public abstract void EmiteShlContadorNoAcumulador();
-    public abstract void EmiteShrContadorNoAcumulador();
-    public abstract void EmiteRorContadorNoAcumulador();
-    public abstract void EmiteRolContadorNoAcumulador();
+    public abstract void EmiteShlContadorNoAcumulador(bool word);
+    public abstract void EmiteShrContadorNoAcumulador(bool word);
+    public abstract void EmiteRorContadorNoAcumulador(bool word);
+    public abstract void EmiteRolContadorNoAcumulador(bool word);
     public abstract void EmiteComparaAcumuladorComZero();
     public abstract void EmitePulaSeIgual(string rotulo);
     public abstract void EmitePulaSeDiferente(string rotulo);

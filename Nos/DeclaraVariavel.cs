@@ -1,5 +1,6 @@
 class DeclaraVariavel : No
 {
+    public bool AtribuidoValor { get; set; } = false;
     public int TamanhoManual { get; set; } = 0;
     public bool UsaTamanhoManual { get; set; } = false;
     public bool EstruturaEstaticaApenasPonteiro { get; set; } = false;

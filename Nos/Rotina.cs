@@ -91,6 +91,10 @@ class Rotina : No
         InicializaLista(Comandos, amb);
         if(TemTryCatch) PosicaoVar = 10;
         InicializaLista(new List<No>(Argumentos), amb);
+        foreach (var item in Argumentos)
+        {
+            item.AtribuidoValor = true;
+        }
         InicializaLista(new List<No>(Variaveis), amb);
         amb.Rotina = null;
     }

@@ -235,21 +235,33 @@ class Saida8086 : Saida
     {
         EmiteL($"imul bx");
     }
-    public override void EmiteRolContadorNoAcumulador()
+    public override void EmiteRolContadorNoAcumulador(bool word)
     {
-        EmiteL($"rol ax, cl");
+        if(word)
+            EmiteL($"rol ax, cl");
+        else
+            EmiteL($"rol al, cl");
     }
-    public override void EmiteRorContadorNoAcumulador()
+    public override void EmiteRorContadorNoAcumulador(bool word)
     {
-        EmiteL($"ror ax, cl");
+        if(word)
+            EmiteL($"ror ax, cl");
+        else
+            EmiteL($"ror al, cl");
     }
-    public override void EmiteShlContadorNoAcumulador()
+    public override void EmiteShlContadorNoAcumulador(bool word)
     {
-        EmiteL($"shl ax, cl");
+        if(word)
+            EmiteL($"shl ax, cl");
+        else
+            EmiteL($"shl al, cl");
     }
-    public override void EmiteShrContadorNoAcumulador()
+    public override void EmiteShrContadorNoAcumulador(bool word)
     {
-        EmiteL($"shr ax, cl");
+        if(word)
+            EmiteL($"shr ax, cl");
+        else
+            EmiteL($"shr al, cl");
     }
     public override void EmiteSubtraiAuxNoAcumulador()
     {
