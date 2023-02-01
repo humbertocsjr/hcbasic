@@ -16,7 +16,7 @@ module OS
         asm "cmp sp, END"
         asm "ja .end"
         Throw StackOverflowError
-        asm ".end"
+        asm ".end:"
     End
 
     sub Start2
@@ -140,9 +140,18 @@ module OS
         asm "mov ax, REALOC_TABLE"
     end
 
-    public function ConsoleReadChar() as uint8
+    public function ConsoleAvail() as uint8
         asm "mov ah, 1"
-        asm "int 0x21"
+        asm "int 0x16"
+        asm "jnz .sim"
+        Return 0
+        asm ".sim:"
+        Return 1
+    end
+
+    public function ConsoleReadChar() as uint8
+        asm "mov ah, 0"
+        asm "int 0x16"
         asm "xor ah, ah"
     end
 

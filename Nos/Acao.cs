@@ -69,7 +69,6 @@ class Acao : No
             case TipoDeAcao.IncrementoDesvio:
                 if(!variavel.AtribuidoValor & variavel.Publicidade == NivelPublicidade.Local) throw Erro($"Uso da variável {variavel.Nome} sem antes atribuir");
                 amb.Saida.EmiteComentario($"ACAO INC - Incrementa variavel");
-                if(variavel.EhPonteiro()) amb.Saida.EmiteMarcaInvalidaOtimizacoes();
                 if(variavel.Publicidade == NivelPublicidade.Local)
                 {
                     amb.Saida.EmiteIncrementaVariavelLocal(variavel.Posicao);
@@ -78,6 +77,7 @@ class Acao : No
                 {
                     amb.Saida.EmiteIncrementaVariavelGlobal(variavel.NomeGlobal);
                 }
+                if(variavel.EhPonteiro()) amb.Saida.EmiteMarcaInvalidaOtimizacoes();
                 break;
             case TipoDeAcao.IncrementoSegmento:
                 if(!variavel.AtribuidoValor & variavel.Publicidade == NivelPublicidade.Local) throw Erro($"Uso da variável {variavel.Nome} sem antes atribuir");
@@ -90,12 +90,12 @@ class Acao : No
                 {
                     amb.Saida.EmiteIncrementaSegDaVariavelGlobal(variavel.NomeGlobal);
                 }
+                if(variavel.EhPonteiro()) amb.Saida.EmiteMarcaInvalidaOtimizacoes();
                 break;
             case TipoDeAcao.Decremento:
             case TipoDeAcao.DecrementoDesvio:
                 if(!variavel.AtribuidoValor & variavel.Publicidade == NivelPublicidade.Local) throw Erro($"Uso da variável {variavel.Nome} sem antes atribuir");
                 amb.Saida.EmiteComentario($"ACAO DEC - Decrementa variavel");
-                if(variavel.EhPonteiro()) amb.Saida.EmiteMarcaInvalidaOtimizacoes();
                 if(variavel.Publicidade == NivelPublicidade.Local)
                 {
                     amb.Saida.EmiteDecrementaVariavelLocal(variavel.Posicao);
@@ -104,6 +104,7 @@ class Acao : No
                 {
                     amb.Saida.EmiteDecrementaVariavelGlobal(variavel.NomeGlobal);
                 }
+                if(variavel.EhPonteiro()) amb.Saida.EmiteMarcaInvalidaOtimizacoes();
                 break;
             case TipoDeAcao.DecrementoSegmento:
                 if(!variavel.AtribuidoValor & variavel.Publicidade == NivelPublicidade.Local) throw Erro($"Uso da variável {variavel.Nome} sem antes atribuir");
@@ -116,12 +117,12 @@ class Acao : No
                 {
                     amb.Saida.EmiteDecrementaSegDaVariavelGlobal(variavel.NomeGlobal);
                 }
+                if(variavel.EhPonteiro()) amb.Saida.EmiteMarcaInvalidaOtimizacoes();
                 break;
             case TipoDeAcao.Gravacao:
             case TipoDeAcao.GravacaoDesvio:
                 variavel.AtribuidoValor = true;
                 amb.Saida.EmiteComentario($"ACAO GRAVACAO - Grava em variavel");
-                if(variavel.EhPonteiro()) amb.Saida.EmiteMarcaInvalidaOtimizacoes();
                 if(variavel.Publicidade == NivelPublicidade.Local)
                 {
                     if(ValorGravacao is Numero)
@@ -157,6 +158,7 @@ class Acao : No
                         amb.Saida.EmiteCopiaAcumuladorParaVariavelGlobal(variavel.NomeGlobal);
                     }
                 }
+                if(variavel.EhPonteiro()) amb.Saida.EmiteMarcaInvalidaOtimizacoes();
                 break;
             case TipoDeAcao.GravacaoSegmento:
                 variavel.AtribuidoValor = true;
@@ -194,6 +196,7 @@ class Acao : No
                         amb.Saida.EmiteCopiaAcumuladorParaSegDaVariavelGlobal(variavel.NomeGlobal);
                     }
                 }
+                if(variavel.EhPonteiro()) amb.Saida.EmiteMarcaInvalidaOtimizacoes();
                 break;
             default: throw Erro("Tipo de operação não suportada");
         }

@@ -1,0 +1,70 @@
+' Este é um protótipo
+Imports System
+Imports System.Drawing
+Imports System.Forms
+Imports VGA
+
+Module Program
+
+    ' Os controles devem ser declarados no modulo
+    Dim MainForm as Control
+    Dim HelloWorldLabel as Control
+    Dim OkButton as Control
+    Dim HelloWorldText as String
+
+    Public Sub Main(args as String)
+        ' O Driver de Video deve ser iniciado
+        VGA.Mode640x480x2
+        ' O Motor de Aplicação deve ser iniciado
+        Application.Initialize
+
+        ' Os controles devem ser criados e inicializados
+        Form.Initialize MainForm
+        MainForm.Top = 30
+        MainForm.Left = 10
+        MainForm.Width = 200
+        MainForm.Height = 100
+        MainForm.Text = "0123456789 ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+
+        Label.Initialize HelloWorldLabel
+        String.Copy HelloWorldText, "HELLO WORLD"
+        HelloWorldLabel.Text =  HelloWorldText
+        HelloWorldLabel.Top = 8
+        HelloWorldLabel.Left = 4
+        HelloWorldLabel.Width = 170
+        HelloWorldLabel.Height = 10
+        HelloWorldLabel.Visible = 1
+        Control.Add MainForm, HelloWorldLabel
+
+        Button.Initialize OkButton
+        OkButton.Text = "Enter para SAIR"
+        OkButton.Top = 21
+        OkButton.Left = 4
+        OkButton.Width = 150
+        OkButton.Height = 20
+        OkButton.Visible = 1
+        OkButton.OnKeyPress = AddressOf(OkButton_OnKeyPress)
+        OkButton.OnClick = AddressOf(OkButton_OnClick)
+        Control.Add MainForm, OkButton
+
+        ' Deve ser iniciado o gerenciador de aplicação que tomará conta dos eventos
+        Application.Run MainForm
+
+        Graphics.Mode80x25x16
+    End
+
+
+    Sub OkButton_OnKeyPress(ctrl as Control, e as KeyboardEventArgs)
+        String.Copy HelloWorldText, "PRESSIONADO     "
+        Dim ptr as PtrByteArray
+        ptr = HelloWorldText
+        @ptr = @ptr + 14
+        ptr = e.AsciiChar
+        Control.Redraw HelloWorldLabel
+    End
+
+    Sub OkButton_OnClick(ctrl as Control, e as MouseEventArgs)
+        Application.Exit 0
+    End
+
+End

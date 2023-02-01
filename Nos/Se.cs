@@ -22,7 +22,7 @@ class Se : No
         CompilaLista(SeSim, amb);
         if(SeNao.Count > 0)
         {
-            amb.Saida.MarcaInicioDeRepeticao();
+            amb.Saida.EmiteMarcaInvalidaOtimizacoes();
             string fim = amb.Saida.GeraRotulo();
             amb.Saida.EmitePulaPara(fim);
             amb.Saida.EmiteRotulo(nao);
@@ -31,6 +31,7 @@ class Se : No
             amb.Saida.MarcaFimDeRepeticao();
         }
         else amb.Saida.EmiteRotulo(nao);
+        amb.Saida.EmiteMarcaInvalidaOtimizacoes();
 
     }
 

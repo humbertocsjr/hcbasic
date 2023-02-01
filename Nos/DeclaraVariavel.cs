@@ -6,7 +6,7 @@ class DeclaraVariavel : No
     public bool EstruturaEstaticaApenasPonteiro { get; set; } = false;
     public string NomeGlobal => $"_{Modulo.Nome}_{Nome}";
     public bool EhNumerica() => Tipo == TipoVariavel.Int16 | Tipo == TipoVariavel.UInt16 | Tipo == TipoVariavel.Int8 | Tipo == TipoVariavel.UInt8;
-    public bool EhPonteiro() => Tipo == TipoVariavel.PtrByteArray | Tipo == TipoVariavel.PtrWordArray;
+    public bool EhPonteiro() => Tipo == TipoVariavel.PtrByteArray | Tipo == TipoVariavel.PtrWordArray | Tipo == TipoVariavel.Func | Tipo == TipoVariavel.Action | Tipo == TipoVariavel.Structure;
     public bool Argumento { get; set; } = false;
     public NivelPublicidade Publicidade { get; set; }
     public string Nome { get; set; }

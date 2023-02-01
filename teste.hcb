@@ -2,131 +2,66 @@
 imports System
 imports System.Drawing
 imports System.Forms
-
-module ReferenciaCruzada
-    Public Sub TesteCruzada
-        Program.TesteCruzada
-    End
-End
-
-structure StruTeste
-    spacing 10
-End
+imports VGA
 
 module Program
-    Dim testeString as String
 
     Dim MainForm as Control
+    Dim HelloWorldLabel as Control
+    Dim OkButton as Control
+    Dim HelloWorldText as String
 
-    Public Sub TesteCruzada
-        ReferenciaCruzada.TesteCruzada
-    End
     public sub Main(args as ptrbytearray)
-        dim arq as stream
-        dim txt as string
-        dim funcao as Func(Of UInt16)
-        dim testeStru as StruTeste
-        Console.WriteUInt16 SizeOf(StruTeste)
-        arq = new
-        txt = new
-        Console.Write "Teste Criacao de arquivo: "
-        Try 
-            File.Create arq, "teste.txt"
-            Console.WriteUInt16 File.Write(arq, "Texto teste no arquivo escrito pelo teste.hcb. ")
-            Console.Write " + "
-            Console.WriteUInt16 arq.Write.Invoke("Texto teste emitido via Structure Stream.")
-            File.Close arq
-            Console.WriteLine " Bytes escritos"
-        Catch Error
-            Console.WriteLine " FALHA AO MANIPULAR O ARQUIVO teste.txt"
-        End
-        Console.Write "Escreva seu nome: "
-        Console.ReadLine txt
-        Console.Write "Oie "
-        If String.Length(txt) == 0 Then
-            Console.Write "Sem Nome"
-        else
-            Console.Write txt
-        End
-        Console.WriteLine "!"
-        Console.Write "Teste de funcao indireta: '"
-        funcao = AddressOf(TesteFunc)
-        Console.WriteUInt16 funcao.Invoke()
-        Console.WriteLine "'"
-        Console.WriteUInt16 #testeString
-        Console.Write ":"
-        Console.WriteUInt16 @testeString
-        Console.WriteLine ""
-        String.Copy txt, "Teste de concat:"
-        String.Concat txt, " Texto concatenado 1,"
-        String.Concat txt, " Texto concatenado 2"
-        Console.WriteLine txt
-        try
-            dim numero as uint16
-            dim numero2 as uint16
-            numero2 = 0
-            numero = 10 / numero2
-        catch DivByZeroError
-            Console.WriteLine "Divisao por zero pega"
-            Console.Write ErrorFile()
-            Console.Write ": "
-            Console.WriteUInt16 ErrorLine()
-            Console.WriteLine ""
-        end
-        if String.Equals("oi", "oi") then Console.WriteLine "EQUAL TEST"
 
         VGA.Mode640x480x2
-        Graphics.DrawPixel 114, 19, 1
-        Graphics.DrawPixel 114, 51, 1
-        Graphics.DrawPixel 216, 19, 1
-        Graphics.DrawPixel 216, 51, 1
-        Graphics.DrawLine 50, 50, 0, 44, 1
-        Graphics.DrawLine 50, 50, 0, 50, 1
-        Graphics.DrawLine 50, 50, 0, 65, 1
-        Graphics.DrawLine 50, 50, 44, 0, 1
-        Graphics.DrawLine 50, 50, 50, 0, 1
-        Graphics.DrawLine 50, 50, 65, 0, 1
-        Graphics.DrawLine 50, 50, 100, 65, 1
-        Graphics.DrawLine 50, 50, 100, 50, 1
-        Graphics.DrawLine 50, 50, 100, 45, 1
-        Graphics.DrawLine 50, 50, 65, 100, 1
-        Graphics.DrawLine 50, 50, 50, 100, 1
-        Graphics.DrawLine 50, 50, 45, 100, 1
-        Graphics.DrawRectangle 117, 22, 213, 48,1,1
-        Graphics.DrawRectangle 115, 20, 215, 50,1,0xffff
         Application.Initialize
+
         Form.Initialize MainForm
         MainForm.Top = 30
         MainForm.Left = 10
         MainForm.Width = 200
         MainForm.Height = 100
-        Control.SetText MainForm, "0123456789 ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+        MainForm.Text = "0123456789 ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+
+        Label.Initialize HelloWorldLabel
+        String.Copy HelloWorldText, "HELLO WORLD"
+        HelloWorldLabel.Text =  HelloWorldText
+        HelloWorldLabel.Top = 8
+        HelloWorldLabel.Left = 4
+        HelloWorldLabel.Width = 170
+        HelloWorldLabel.Height = 10
+        HelloWorldLabel.Visible = 1
+        Control.Add MainForm, HelloWorldLabel
+
+        Button.Initialize OkButton
+        OkButton.Text = "Enter para SAIR"
+        OkButton.Top = 21
+        OkButton.Left = 4
+        OkButton.Width = 150
+        OkButton.Height = 20
+        OkButton.Visible = 1
+        OkButton.OnKeyPress = AddressOf(OkButton_OnKeyPress)
+        OkButton.OnClick = AddressOf(OkButton_OnClick)
+        Control.Add MainForm, OkButton
+
+
         Application.Run MainForm
-        Console.ReadChar
+
         Graphics.Mode80x25x16
-        Console.Write args
-        Dim intPtr as PtrWordArray
-        Dim handlerPtr as PtrByteArray
-        handlerPtr = AddressOf(Interrupcao)    ' Le o endereço do manipulador de interrupção
-        #intPtr = 0
-        @intPtr = 0x99 * 4     ' Calcula o endereço na tabela de interrupções do processador intel
-        asm "cli"     ' Impede interrupcoes enquanto grava na tabela de interrupcoes
-        intPtr = @handlerPtr  ' Grava o Offset do Manipulador
-        @intPtr++
-        @intPtr++
-        intPtr = #handlerPtr   ' Grava o Segment do Manipulador
-        asm "sti"     ' Reativa as interrupções
-        asm "int 0x99"    ' Chama as interrupções
     End
 
 
-    ' Não precisa declarar todos os argumentos, na verdade não precisa declarar nenhum se não usar, mas caso declare deve ser feito exatamente na sequencia abaixo, não podendo pular os argumentos que não utiliza e só declarar os que utiliza, por exemplo se usar apenas o AX, deve declarar ele e todos antes dele
-    Sub Interrupcao(ss as UInt16, sp as UInt16, bp as UInt16, ax as UInt16, bx as UInt16, cx as UInt16, dx as UInt16, ds as UInt16, si as UInt16, es as UInt16, di as UInt16, ip as UInt16, cs as UInt16, flags as UInt16) Handles Interrupt
-        Console.WriteLine "Interrupcao numero 0x99 chamada"
+    Sub OkButton_OnKeyPress(ctrl as Control, e as KeyboardEventArgs)
+        String.Copy HelloWorldText, "PRESSIONADO     "
+        Dim ptr as PtrByteArray
+        ptr = HelloWorldText
+        @ptr = @ptr + 14
+        ptr = e.AsciiChar
+        Control.Redraw HelloWorldLabel
     End
 
-    function TesteFunc() as UInt16
-        return 123
-    end
+    Sub OkButton_OnClick(ctrl as Control, e as MouseEventArgs)
+        Application.Exit 0
+    End
 
 end

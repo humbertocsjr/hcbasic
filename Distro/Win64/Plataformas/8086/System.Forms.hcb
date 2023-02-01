@@ -10,7 +10,7 @@ Structure MouseEventArgs
     Dim Y as UInt16
     Dim PrimaryButton as UInt16
     Dim SecondaryButton as UInt16
-    Dim ScroolValue as Int16
+    Dim ScrollValue as Int16
     Dim Cancel as UInt16
 End
 
@@ -29,11 +29,11 @@ Structure Control
     Dim Width as UInt16
     Dim Value as UInt16
     Dim Text as PtrByteArray
-    Dim ForeColor as UInt16
-    Dim BackColor as UInt16
-    Dim BorderColor as UInt16
     Dim Visible as UInt8
     Dim Resizable as UInt8
+    Dim Focusable as UInt8
+    Dim RedrawOnFocusChanged as UInt8
+    Dim HasFocus as UInt8
     Dim Font as PtrByteArray
     Dim ControlPaint as Action(Of Control)
     Dim ControlMouseInteraction as Action(Of Control, MouseEventArgs)
@@ -50,6 +50,17 @@ Structure Control
     Dim Child as PtrByteArray
     Dim HasNextControl as UInt8
     Dim NextControl as PtrByteArray
+    Dim PaddingTop as UInt16
+    Dim PaddingBottom as UInt16
+    Dim PaddingLeft as UInt16
+    Dim PaddingRight as UInt16
+    Dim CalcX1 as UInt16
+    Dim CalcY1 as UInt16
+    Dim CalcX2 as UInt16
+    Dim CalcY2 as UInt16
+    Dim CalcWidth as UInt16
+    Dim CalcHeight as UInt16
+    Dim CalcVisible as UInt16
 End
 
 Module Control
@@ -59,11 +70,11 @@ Module Control
         ctrl.Left = 0
         ctrl.Width = 10
         ctrl.Height = 10
-        ctrl.ForeColor = Colors.Black()
-        ctrl.BackColor = Colors.White()
-        ctrl.BorderColor = Colors.Black()
         ctrl.Visible = 0
         ctrl.Resizable = 0
+        ctrl.Focusable = 1
+        ctrl.RedrawOnFocusChanged = 1
+        ctrl.HasFocus = 0
         ctrl.ControlPaint = AddressOf(GenericControlPaint)
         ctrl.ControlFocusChanged = AddressOf(GenericControlFocusChanged)
         ctrl.ControlKeyboardInteracion = AddressOf(GenericControlKeyboardInteracion)
@@ -76,6 +87,10 @@ Module Control
         ctrl.HasParent = 0
         ctrl.HasChild = 0
         ctrl.HasNextControl = 0
+        ctrl.PaddingBottom = 0
+        ctrl.PaddingLeft = 0
+        ctrl.PaddingRight = 0
+        ctrl.PaddingTop = 0
         ctrl.Text = ""
         ctrl.Value = 0
     End
@@ -211,6 +226,57 @@ Module Control
         Return ctrl.Text
     End
 
+    Sub DrawChildren(parent as Control)
+        Dim i as UInt16
+        Dim qtd as UInt16
+        Dim child as Control
+        qtd = Count(parent)
+        If qtd Then
+            For i = 1 to qtd
+                child = Control.Item(parent, i)
+                child.CalcX1 = parent.PaddingLeft + parent.Left + child.Left
+                child.CalcY1 = parent.PaddingTop + parent.Top + child.Top
+                child.CalcX2 = parent.PaddingLeft + parent.Left + child.Left + child.Width
+                child.CalcY2 = parent.PaddingTop + parent.Top + child.Top + child.Height
+                child.CalcVisible = 1
+                If child.CalcX2 > (parent.Left + parent.Width - parent.PaddingRight) Then
+                    child.CalcX2 = parent.Left + parent.Width - parent.PaddingRight
+                End
+                If child.CalcY2 > (parent.Top + parent.Height - parent.PaddingBottom) Then
+                    child.CalcY2 = parent.Top + parent.Height - parent.PaddingBottom
+                End
+                If child.CalcX1 > (parent.Left + parent.Width - parent.PaddingRight) Then
+                    child.CalcVisible = 0
+                End
+                If child.CalcY2 > (parent.Top + parent.Height - parent.PaddingBottom) Then
+                    child.CalcVisible = 0
+                End
+                child.CalcWidth = child.CalcX2 - child.CalcX1
+                child.CalcHeight = child.CalcY2 - child.CalcY1
+                If child.CalcVisible <> 0 AndAlso child.Visible <> 0 Then 
+                    Redraw child
+                End
+            End
+        End
+    End
+
+    Public Sub Focus(ctrl as Control)
+        Dim old as Control
+        old = Application.CurrentFocus
+        If #old <> 0 Then 
+            ctrl.HasFocus = 0
+            ctrl.ControlFocusChanged.Invoke 0
+        End
+        Application.CurrentFocus = ctrl
+        ctrl.HasFocus = 1
+        ctrl.ControlFocusChanged.Invoke 1
+        If ctrl.RedrawOnFocusChanged Then Redraw ctrl
+    End
+
+    Public Sub ProcessKeyboard(ctrl as Control, e as KeyboardEventArgs)
+        ctrl.ControlKeyboardInteracion.Invoke e
+    End
+
 End
 
 Module Screen
@@ -228,26 +294,86 @@ Module Screen
 
     Sub ControlPaint(ctrl as Control)
         Graphics.ClearScreen SystemColors.BackgroundColor()
-        Dim i as UInt16
-        Dim qtd as UInt16
-        Dim child as PtrByteArray
-        qtd = Control.Count(ctrl)
-        If qtd Then
-            For i = 1 to qtd
-                child = Control.Item(ctrl, i)
-                Control.Redraw child
+        Control.DrawChildren ctrl
+    End
+End
+
+Module Button
+    Public Sub Initialize(ctrl as Control)
+        Control.Initialize ctrl
+        ctrl.ControlPaint = AddressOf(ControlPaint)
+        ctrl.ControlKeyboardInteracion = AddressOf(ControlKeyboardInteracion)
+    End
+
+    Sub ControlKeyboardInteracion(ctrl as Control, e as KeyboardEventArgs)
+        If e.Pressed Then
+            ctrl.OnKeyPress.Invoke e
+            If (e.AsciiChar == 13) OrElse (e.AsciiChar == 10) OrElse (e.AsciiChar == 32) Then
+                Dim mouse as MouseEventArgs
+                mouse = New
+                mouse.X = ctrl.CalcX1
+                mouse.Y = ctrl.CalcY1
+                mouse.PrimaryButton = 1
+                mouse.SecondaryButton = 0
+                mouse.ScrollValue = 0
+                ctrl.OnClick.Invoke mouse
             End
+        Else
+            ctrl.OnKeyRelease.Invoke e
         End
+    End
+
+    Sub ControlPaint(ctrl as Control)
+        Graphics.DrawRectangle ctrl.CalcX1, ctrl.CalcY1, ctrl.CalcX2, ctrl.CalcY2, SystemColors.WindowColor(), SystemColors.WindowColor()
+        If ctrl.HasFocus <> 0 Then Graphics.DrawLine ctrl.CalcX1 + 4, ctrl.CalcY2 - 2, ctrl.CalcX2 - 4, Ctrl.CalcY2 - 2, SystemColors.WindowBorderColor()
+        Graphics.DrawLine ctrl.CalcX1 + 2, ctrl.CalcY1, ctrl.CalcX2 - 2, Ctrl.CalcY1, SystemColors.WindowBorderColor()
+        Graphics.DrawLine ctrl.CalcX1 + 2, ctrl.CalcY2, ctrl.CalcX2 - 2, Ctrl.CalcY2, SystemColors.WindowBorderColor()
+        Graphics.DrawLine ctrl.CalcX1, ctrl.CalcY1 + 2, ctrl.CalcX1, Ctrl.CalcY2 - 2, SystemColors.WindowBorderColor()
+        Graphics.DrawLine ctrl.CalcX2, ctrl.CalcY1 + 2, ctrl.CalcX2, Ctrl.CalcY2 - 2, SystemColors.WindowBorderColor()
+        Graphics.DrawPixel ctrl.CalcX1 + 1, ctrl.CalcY1 + 1, SystemColors.WindowBorderColor()
+        Graphics.DrawPixel ctrl.CalcX2 - 1, ctrl.CalcY1 + 1, SystemColors.WindowBorderColor()
+        Graphics.DrawPixel ctrl.CalcX1 + 1, ctrl.CalcY2 - 1, SystemColors.WindowBorderColor()
+        Graphics.DrawPixel ctrl.CalcX2 - 1, ctrl.CalcY2 - 1, SystemColors.WindowBorderColor()
+        Graphics.DrawText ctrl.Font, ctrl.Text, ctrl.CalcX1 + 4, ctrl.CalcY1 + 4, ctrl.CalcX2 - 4, ctrl.CalcY2 - 4, SystemColors.TextColor(), 1
+    End
+End
+
+Module Label
+    Public Sub Initialize(ctrl as Control)
+        Control.Initialize ctrl
+        ctrl.ControlPaint = AddressOf(ControlPaint)
+        ctrl.Focusable = 0
+    End
+
+    Sub ControlPaint(ctrl as Control)
+        Graphics.DrawRectangle ctrl.CalcX1, ctrl.CalcY1, ctrl.CalcX2, ctrl.CalcY2, SystemColors.WindowColor(), SystemColors.WindowColor()
+        Graphics.DrawText ctrl.Font, ctrl.Text, ctrl.CalcX1, ctrl.CalcY1, ctrl.CalcX2, ctrl.CalcY2, SystemColors.TextColor(), 1
     End
 End
 
 Module Form
     Public Sub Initialize(ctrl as Control)
         Control.Initialize ctrl
-        ctrl.BorderColor = SystemColors.WindowBorderColor()
-        ctrl.BackColor = SystemColors.WindowColor()
-        ctrl.ForeColor = SystemColors.WindowTitleColor()
         ctrl.ControlPaint = AddressOf(ControlPaint)
+        ctrl.OnFocus = AddressOf(OnFocus)
+        ctrl.PaddingBottom = 2
+        ctrl.PaddingLeft = 2
+        ctrl.PaddingRight = 2
+    End
+
+    Sub OnFocus(ctrl as Control)
+        Dim qtd as Uint16
+        Dim i as UInt16
+        Application.CurrentFocusForm = ctrl
+        qtd = Control.Count(ctrl)
+        For i = 1 to qtd
+            Dim child as Control
+            child = Control.Item(ctrl, i)
+            If child.Focusable Then
+                Control.Focus child
+                Return
+            End
+        End
     End
 
     Sub ControlPaint(ctrl as Control)
@@ -257,23 +383,24 @@ Module Form
         Dim rightText as UInt16
         Dim i as UInt16
         size = new
-        #fnt = #ctrl.Font
-        @fnt = @ctrl.Font
-        If ctrl.Height < 30 Then ctrl.Height = 30
-        If ctrl.Width < 50 Then ctrl.Width = 50
-        Graphics.DrawRectangle ctrl.Left, ctrl.Top, ctrl.Left + ctrl.Width, ctrl.Top + ctrl.Height, ctrl.BorderColor, ctrl.BackColor
-        Graphics.DrawLine ctrl.Left, ctrl.Top+1+fnt.Height, ctrl.Left+ctrl.Width, ctrl.Top+1+fnt.Height, ctrl.BorderColor
-        Graphics.CalcFontSize fnt, ctrl.Text, size, ctrl.Width - 50, 0
-        leftText = ctrl.Left + ((ctrl.Width - size.Width) SHR 1)
-        rightText = ctrl.Left + ctrl.Width - ((ctrl.Width - size.Width) SHR 1)
-        Graphics.DrawText fnt, ctrl.Text, leftText, ctrl.Top+1, rightText, ctrl.Top+1+fnt.Height, ctrl.ForeColor, 0
-        For i = ctrl.Top + 4 to ctrl.Top + fnt.Height - 3
-            Graphics.DrawLine ctrl.Left + 2, i, ctrl.Left + 3, i, ctrl.BorderColor
-            Graphics.DrawLine ctrl.Left + 12, i, leftText - 5, i, ctrl.BorderColor
-            Graphics.DrawLine rightText + 4, i, ctrl.Left + ctrl.Width - 2, i, ctrl.BorderColor
+        fnt = ctrl.Font
+        If ctrl.CalcHeight < 30 Then Throw OutOfBoundsError
+        If ctrl.CalcWidth < 50 Then Throw OutOfBoundsError
+        Graphics.DrawRectangle ctrl.CalcX1, ctrl.CalcY1, ctrl.CalcX2, ctrl.CalcY2, SystemColors.WindowBorderColor(), SystemColors.WindowColor()
+        Graphics.DrawLine ctrl.CalcX1, ctrl.CalcY1+1+fnt.Height, ctrl.CalcX2, ctrl.CalcY1+1+fnt.Height, SystemColors.WindowBorderColor()
+        Graphics.CalcFontSize fnt, ctrl.Text, size, ctrl.CalcWidth - 50, 0
+        leftText = ctrl.CalcX1 + ((ctrl.CalcWidth - size.Width) SHR 1)
+        rightText = ctrl.CalcX2 - ((ctrl.CalcWidth - size.Width) SHR 1)
+        Graphics.DrawText fnt, ctrl.Text, leftText, ctrl.CalcY1+1, rightText, ctrl.CalcY1+1+fnt.Height, SystemColors.WindowTitleColor(), 0
+        For i = ctrl.CalcY1 + 4 to ctrl.CalcY1 + fnt.Height - 3
+            Graphics.DrawLine ctrl.CalcX1 + 2, i, ctrl.CalcX1 + 3, i, SystemColors.WindowBorderColor()
+            Graphics.DrawLine ctrl.CalcX1 + 13, i, leftText - 5, i, SystemColors.WindowBorderColor()
+            Graphics.DrawLine rightText + 4, i, ctrl.CalcX2 - 2, i, SystemColors.WindowBorderColor()
             i++
         End
-        Graphics.DrawRectangle ctrl.Left + 5, ctrl.Top + 4, ctrl.Left + 10, ctrl.Top + fnt.Height -3, ctrl.BorderColor, ctrl.BackColor
+        Graphics.DrawRectangle ctrl.CalcX1 + 5, ctrl.CalcY1 + 4, ctrl.CalcX1 + 11, ctrl.CalcY1 + fnt.Height -3, SystemColors.WindowBorderColor(),SystemColors.WindowColor()
+        ctrl.PaddingTop = 2 + fnt.Height
+        Control.DrawChildren ctrl
     End
 End
 
@@ -309,27 +436,82 @@ Module SystemColors
     End
 
     Public Sub Initialize(newTheme as Theme)
-        @Current = @newTheme
-        #Current = #newTheme
+        Current = newTheme
     End
 End
 
 Module Application
     Dim CurrentTheme as Theme
+    Dim Running as UInt16
+    Public Dim CurrentFocus as Control
+    Public Dim CurrentFocusForm as Control
+    Public Dim KeyboardUpdate as Action(Of Control)
+    Public Dim MouseUpdate as Action(Of Control)
+    Public Dim ExitStatus as UInt16
 
-    Public Sub Initialize
+    Public Sub ApplyDarkTheme()
         CurrentTheme.BackgroundColor = Colors.Black()
         CurrentTheme.TextColor = Colors.White()
         CurrentTheme.WindowBorderColor = Colors.White()
         CurrentTheme.WindowColor = Colors.Black()
         CurrentTheme.WindowTitleColor = Colors.White()
         SystemColors.Initialize CurrentTheme
+        If Running Then Control.Redraw Screen.ScreenControl
+    End
+
+    Public Sub ApplyDefaultTheme()
+        CurrentTheme.BackgroundColor = Colors.White()
+        CurrentTheme.TextColor = Colors.Black()
+        CurrentTheme.WindowBorderColor = Colors.Black()
+        CurrentTheme.WindowColor = Colors.White()
+        CurrentTheme.WindowTitleColor = Colors.Black()
+        SystemColors.Initialize CurrentTheme
+        If Running Then Control.Redraw Screen.ScreenControl
+    End
+
+    Public Sub Initialize
+        #CurrentFocus = 0
+        @CurrentFocus = 0
+        Running = 0
+        ExitStatus = 0
         Screen.Initialize
+        ApplyDefaultTheme
+        KeyboardUpdate = AddressOf(GenericKeyboardUpdate)
+        MouseUpdate = AddressOf(GenericMouseUpdate)
+    End
+
+    Sub GenericKeyboardUpdate(ctrl as Control)
+        If OS.ConsoleAvail() Then
+            Dim e as KeyboardEventArgs
+            e = New
+            e.AsciiChar = OS.ConsoleReadChar()
+            e.UTF8LowWord = e.AsciiChar
+            e.UTF8HighWord = 0
+            e.Cancel = 0
+            e.Pressed = 1
+            Control.ProcessKeyboard ctrl, e
+        End
+    End
+
+    Sub GenericMouseUpdate(ctrl as Control)
+    End
+
+    Public Sub Exit(status as UInt16)
+        ExitStatus = status
+        Running = 0
     End
 
     Public Sub Run(ctrl as Control)
         ctrl.Visible = 1
         Control.Add Screen.ScreenControl, ctrl
         Control.Redraw Screen.ScreenControl
+        Control.Focus ctrl
+        Running = 1
+        While Running
+            KeyboardUpdate.Invoke CurrentFocus
+            MouseUpdate.Invoke CurrentFocus
+            asm "sti"
+            asm "hlt"
+        End
     End
 End

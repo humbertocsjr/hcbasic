@@ -308,6 +308,10 @@ structure String
 end
 
 module Console
+    public function Avail() as uint8
+        return OS.ConsoleAvail()
+    end
+
     public function ReadChar() as uint8
         return OS.ConsoleReadChar()
     end

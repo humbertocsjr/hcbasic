@@ -35,9 +35,9 @@ class Analise
         switch(tipo)
         {
             case "int8":
-                return TipoVariavel.Int16;
+                return TipoVariavel.Int8;
             case "uint8":
-                return TipoVariavel.UInt16;
+                return TipoVariavel.UInt8;
             case "int16":
                 return TipoVariavel.Int16;
             case "uint16":
