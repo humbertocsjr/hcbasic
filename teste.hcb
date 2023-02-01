@@ -9,6 +9,7 @@ module Program
     Dim MainForm as Control
     Dim HelloWorldLabel as Control
     Dim OkButton as Control
+    Dim NadaButton as Control
     Dim HelloWorldText as String
 
     public sub Main(args as ptrbytearray)
@@ -43,6 +44,15 @@ module Program
         OkButton.OnKeyPress = AddressOf(OkButton_OnKeyPress)
         OkButton.OnClick = AddressOf(OkButton_OnClick)
         Control.Add MainForm, OkButton
+
+        Button.Initialize NadaButton
+        NadaButton.Text = "Faz Nada"
+        NadaButton.Top = 43
+        NadaButton.Left = 4
+        NadaButton.Width = 150
+        NadaButton.Height = 20
+        NadaButton.Visible = 1
+        Control.Add MainForm, NadaButton
 
 
         Application.Run MainForm

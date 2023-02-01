@@ -162,11 +162,15 @@ Module Control
             #tmp = #child
             @tmp = @child
             ctrl.NextControl = tmp
+            child.HasParent = 1
+            child.Parent = ctrl
         Else
             ctrl.HasChild = 1
             #tmp = #child
             @tmp = @child
             ctrl.Child = tmp
+            child.HasParent = 1
+            child.Parent = ctrl
         End
     End
 
@@ -264,8 +268,9 @@ Module Control
         Dim old as Control
         old = Application.CurrentFocus
         If #old <> 0 Then 
-            ctrl.HasFocus = 0
-            ctrl.ControlFocusChanged.Invoke 0
+            old.HasFocus = 0
+            old.ControlFocusChanged.Invoke 0
+            If old.RedrawOnFocusChanged Then Redraw old
         End
         Application.CurrentFocus = ctrl
         ctrl.HasFocus = 1
@@ -274,7 +279,22 @@ Module Control
     End
 
     Public Sub ProcessKeyboard(ctrl as Control, e as KeyboardEventArgs)
-        ctrl.ControlKeyboardInteracion.Invoke e
+        If e.AsciiChar == 9 Then
+            Dim next as Control
+            next = ctrl
+            While next.HasNextControl
+                next = ctrl.NextControl
+                If next.Focusable Then
+                    Focus next
+                    Return
+                End 
+            End
+            If ctrl.HasParent Then
+                Focus ctrl.Parent
+            End
+        Else
+            ctrl.ControlKeyboardInteracion.Invoke e
+        End
     End
 
 End
