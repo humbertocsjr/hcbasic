@@ -105,7 +105,25 @@ module Program
         Console.ReadChar
         Graphics.Mode80x25x16
         Console.Write args
-    end
+        Dim intPtr as PtrWordArray
+        Dim handlerPtr as PtrByteArray
+        handlerPtr = AddressOf(Interrupcao)    ' Le o endereço do manipulador de interrupção
+        #intPtr = 0
+        @intPtr = 0x99 * 4     ' Calcula o endereço na tabela de interrupções do processador intel
+        asm "cli"     ' Impede interrupcoes enquanto grava na tabela de interrupcoes
+        intPtr = @handlerPtr  ' Grava o Offset do Manipulador
+        @intPtr++
+        @intPtr++
+        intPtr = #handlerPtr   ' Grava o Segment do Manipulador
+        asm "sti"     ' Reativa as interrupções
+        asm "int 0x99"    ' Chama as interrupções
+    End
+
+
+    ' Não precisa declarar todos os argumentos, na verdade não precisa declarar nenhum se não usar, mas caso declare deve ser feito exatamente na sequencia abaixo, não podendo pular os argumentos que não utiliza e só declarar os que utiliza, por exemplo se usar apenas o AX, deve declarar ele e todos antes dele
+    Sub Interrupcao(ss as UInt16, sp as UInt16, bp as UInt16, ax as UInt16, bx as UInt16, cx as UInt16, dx as UInt16, ds as UInt16, si as UInt16, es as UInt16, di as UInt16, ip as UInt16, cs as UInt16, flags as UInt16) Handles Interrupt
+        Console.WriteLine "Interrupcao numero 0x99 chamada"
+    End
 
     function TesteFunc() as UInt16
         return 123

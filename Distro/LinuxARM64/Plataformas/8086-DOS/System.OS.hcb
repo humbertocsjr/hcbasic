@@ -113,6 +113,9 @@ module OS
         Catch AccessDeniedError
             Console.WriteLine "Erro: Acesso negado"
             GoTo EscreveErro
+        Catch InvalidFormatError
+            Console.WriteLine "Erro: Formato inválido"
+            GoTo EscreveErro
         Catch Error
             Console.WriteLine "Ocorreu um erro não tratado"
             EscreveErro:
