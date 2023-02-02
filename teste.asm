@@ -802,9 +802,13 @@ call _console_writeline
 add sp, 4
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:121:13 ===---
 escreveerro:
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:122:13 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:122:17 ===---
+mov ax, 0x3
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:123:17 ===---
+int 0x10
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:124:13 ===---
 ; ACAO CHAMADA - Chama rotina
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:122:27 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:124:27 ===---
 ; ACAO CHAMADA - Le nome do arquivo com erro
 mov di, [bp+-8]
 push cs
@@ -814,9 +818,9 @@ push di
 push cs
 call _console_write
 add sp, 4
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:123:13 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:125:13 ===---
 ; ACAO CHAMADA - Chama rotina
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:123:27 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:125:27 ===---
 push cs
 pop es
 mov di, ROTULO87
@@ -831,9 +835,9 @@ push di
 push cs
 call _console_write
 add sp, 4
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:124:13 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:126:13 ===---
 ; ACAO CHAMADA - Chama rotina
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:124:33 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:126:33 ===---
 ; ACAO CHAMADA - Le linha com erro
 mov ax, [bp+-10]
 push ax
@@ -850,79 +854,79 @@ mov ax, [bp+-4]
 cs mov [_os_trystack], ax
 mov ax, [bp+-2]
 cs mov [_os_trycode], ax
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:127:13 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:129:13 ===---
 errofatal:
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:128:13 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:130:13 ===---
 int 0x20
 ROTULO2:
 mov sp, bp
 pop bp
 FIM_os_start2:
 retf
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:131:21 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:133:21 ===---
 _os_codesegment:
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:132:13 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:134:13 ===---
 mov ax, cs
 ROTULO88:
 FIM_os_codesegment:
 retf
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:135:21 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:137:21 ===---
 _os_stacksegment:
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:136:13 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:138:13 ===---
 mov ax, ss
 ROTULO89:
 FIM_os_stacksegment:
 retf
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:139:21 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:141:21 ===---
 _os_realoctable:
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:140:13 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:142:13 ===---
 mov ax, REALOC_TABLE
 ROTULO90:
 FIM_os_realoctable:
 retf
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:143:21 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:145:21 ===---
 _os_consoleavail:
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:144:13 ===---
-mov ah, 1
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:145:13 ===---
-int 0x16
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:146:13 ===---
-jnz .sim
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:147:9 ===---
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:147:16 ===---
-xor ax, ax
-jmp ROTULO91
+mov ah, 1
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:147:13 ===---
+int 0x16
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:148:13 ===---
-.sim:
+jnz .sim
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:149:9 ===---
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:149:16 ===---
+xor ax, ax
+jmp ROTULO91
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:150:13 ===---
+.sim:
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:151:9 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:151:16 ===---
 mov ax, 1
 jmp ROTULO91
 ROTULO91:
 FIM_os_consoleavail:
 retf
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:152:21 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:154:21 ===---
 _os_consolereadchar:
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:153:13 ===---
-mov ah, 0
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:154:13 ===---
-int 0x16
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:155:13 ===---
+mov ah, 0
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:156:13 ===---
+int 0x16
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:157:13 ===---
 xor ah, ah
 ROTULO92:
 FIM_os_consolereadchar:
 retf
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:158:16 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:160:16 ===---
 _os_consolewritechar:
 push bp
 mov bp, sp
 ; ARG: c TAM: 2 POS: BP+6 
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:158:33 ===---
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:159:13 ===---
-mov dl, [bp+6]
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:160:13 ===---
-mov ah, 2
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:160:33 ===---
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:161:13 ===---
+mov dl, [bp+6]
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:162:13 ===---
+mov ah, 2
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:163:13 ===---
 int 0x21
 ROTULO93:
 mov sp, bp
@@ -1586,46 +1590,54 @@ pop bp
 FIM_colors_fromrgb:
 retf
 ; MODULO FIM: colors
-;     ---=== teste.hcb:7:8 ===---
+;     ---=== teste.hcb:52:8 ===---
 ; MODULO: program
 _program:
 db 9
 db 116,101,115,116,101,46,104,99,98
 db 0
-;     ---=== teste.hcb:9:9 ===---
+;     ---=== teste.hcb:54:9 ===---
 _program_mainform:
 times 100 db 0
-;     ---=== teste.hcb:10:9 ===---
+;     ---=== teste.hcb:55:9 ===---
 _program_helloworldlabel:
 times 100 db 0
-;     ---=== teste.hcb:11:9 ===---
+;     ---=== teste.hcb:56:9 ===---
 _program_okbutton:
 times 100 db 0
-;     ---=== teste.hcb:12:9 ===---
-_program_nadabutton:
+;     ---=== teste.hcb:57:9 ===---
+_program_temptextbox:
 times 100 db 0
-;     ---=== teste.hcb:13:9 ===---
+;     ---=== teste.hcb:58:9 ===---
+_program_temptext:
+times 4 db 0
+db 255
+times 255 db 0
+;     ---=== teste.hcb:59:9 ===---
+_program_copiabutton:
+times 100 db 0
+;     ---=== teste.hcb:60:9 ===---
 _program_helloworldtext:
 times 4 db 0
 db 255
 times 255 db 0
-;     ---=== teste.hcb:15:16 ===---
+;     ---=== teste.hcb:62:16 ===---
 _program_main:
 push bp
 mov bp, sp
 ; ARG: args TAM: 4 POS: BP+6 
-;     ---=== teste.hcb:15:21 ===---
-;     ---=== teste.hcb:17:9 ===---
+;     ---=== teste.hcb:62:21 ===---
+;     ---=== teste.hcb:64:9 ===---
 ; ACAO CHAMADA - Chama rotina
 push cs
 call _vga_mode640x480x2
-;     ---=== teste.hcb:18:9 ===---
+;     ---=== teste.hcb:65:9 ===---
 ; ACAO CHAMADA - Chama rotina
 push cs
 call _application_initialize
-;     ---=== teste.hcb:20:9 ===---
+;     ---=== teste.hcb:67:9 ===---
 ; ACAO CHAMADA - Chama rotina
-;     ---=== teste.hcb:20:25 ===---
+;     ---=== teste.hcb:67:25 ===---
 ; ACAO LEITURA - Le ponteiro
 cs push word [_program_mainform+2]
 pop es
@@ -1635,43 +1647,43 @@ push di
 push cs
 call _form_initialize
 add sp, 4
-;     ---=== teste.hcb:21:9 ===---
+;     ---=== teste.hcb:68:9 ===---
 ; ACAO STRUCTURE - Gravacao de Ponteiro- Prepara
-;     ---=== teste.hcb:21:24 ===---
+;     ---=== teste.hcb:68:24 ===---
 mov ax, 30
 cs push word [_program_mainform+2]
 pop es
 cs mov di, [_program_mainform]
 es mov [di+0], ax
 ; ACAO STRUCTURE - Gravacao de Ponteiro - Fim
-;     ---=== teste.hcb:22:9 ===---
+;     ---=== teste.hcb:69:9 ===---
 ; ACAO STRUCTURE - Gravacao de Ponteiro- Prepara
-;     ---=== teste.hcb:22:25 ===---
+;     ---=== teste.hcb:69:25 ===---
 mov ax, 10
 es mov [di+2], ax
 ; ACAO STRUCTURE - Gravacao de Ponteiro - Fim
-;     ---=== teste.hcb:23:9 ===---
+;     ---=== teste.hcb:70:9 ===---
 ; ACAO STRUCTURE - Gravacao de Ponteiro- Prepara
-;     ---=== teste.hcb:23:26 ===---
+;     ---=== teste.hcb:70:26 ===---
 mov ax, 200
 es mov [di+6], ax
 ; ACAO STRUCTURE - Gravacao de Ponteiro - Fim
-;     ---=== teste.hcb:24:9 ===---
+;     ---=== teste.hcb:71:9 ===---
 ; ACAO STRUCTURE - Gravacao de Ponteiro- Prepara
-;     ---=== teste.hcb:24:27 ===---
-mov ax, 100
+;     ---=== teste.hcb:71:27 ===---
+mov ax, 110
 es mov [di+4], ax
 ; ACAO STRUCTURE - Gravacao de Ponteiro - Fim
-;     ---=== teste.hcb:25:9 ===---
+;     ---=== teste.hcb:72:9 ===---
 ; ACAO STRUCTURE - Gravacao de Ponteiro- Prepara
-;     ---=== teste.hcb:25:25 ===---
+;     ---=== teste.hcb:72:25 ===---
 push cs
 pop es
 mov di, ROTULO128
 jmp ROTULO127
 ROTULO128:
-db 37
-db 48,49,50,51,52,53,54,55,56,57,32,65,66,67,68,69,70,71,72,73,74,75,76,77,78,79,80,81,82,83,84,85,86,87,88,89,90
+db 18
+db 78,97,118,101,103,117,101,32,117,115,97,110,100,111,32,84,65,66
 times 1 db 0
 ROTULO127:
 push es
@@ -1682,9 +1694,9 @@ cs mov di, [_program_mainform]
 es pop word [di+10]
 es pop word [di+10+2]
 ; ACAO STRUCTURE - Gravacao de Ponteiro - Fim
-;     ---=== teste.hcb:27:9 ===---
+;     ---=== teste.hcb:74:9 ===---
 ; ACAO CHAMADA - Chama rotina
-;     ---=== teste.hcb:27:26 ===---
+;     ---=== teste.hcb:74:26 ===---
 ; ACAO LEITURA - Le ponteiro
 cs push word [_program_helloworldlabel+2]
 pop es
@@ -1694,9 +1706,9 @@ push di
 push cs
 call _label_initialize
 add sp, 4
-;     ---=== teste.hcb:28:9 ===---
+;     ---=== teste.hcb:75:9 ===---
 ; ACAO CHAMADA - Chama rotina
-;     ---=== teste.hcb:28:37 ===---
+;     ---=== teste.hcb:75:37 ===---
 push cs
 pop es
 mov di, ROTULO130
@@ -1708,7 +1720,7 @@ times 1 db 0
 ROTULO129:
 push es
 push di
-;     ---=== teste.hcb:28:21 ===---
+;     ---=== teste.hcb:75:21 ===---
 ; ACAO LEITURA - Le ponteiro
 cs push word [_program_helloworldtext+2]
 pop es
@@ -1718,9 +1730,9 @@ push di
 push cs
 call _string_copy
 add sp, 8
-;     ---=== teste.hcb:29:9 ===---
+;     ---=== teste.hcb:76:9 ===---
 ; ACAO STRUCTURE - Gravacao de Ponteiro- Prepara
-;     ---=== teste.hcb:29:33 ===---
+;     ---=== teste.hcb:76:33 ===---
 ; ACAO LEITURA - Le ponteiro
 cs push word [_program_helloworldtext+2]
 pop es
@@ -1733,43 +1745,43 @@ cs mov di, [_program_helloworldlabel]
 es pop word [di+10]
 es pop word [di+10+2]
 ; ACAO STRUCTURE - Gravacao de Ponteiro - Fim
-;     ---=== teste.hcb:30:9 ===---
+;     ---=== teste.hcb:77:9 ===---
 ; ACAO STRUCTURE - Gravacao de Ponteiro- Prepara
-;     ---=== teste.hcb:30:31 ===---
+;     ---=== teste.hcb:77:31 ===---
 mov ax, 8
 es mov [di+0], ax
 ; ACAO STRUCTURE - Gravacao de Ponteiro - Fim
-;     ---=== teste.hcb:31:9 ===---
+;     ---=== teste.hcb:78:9 ===---
 ; ACAO STRUCTURE - Gravacao de Ponteiro- Prepara
-;     ---=== teste.hcb:31:32 ===---
+;     ---=== teste.hcb:78:32 ===---
 mov ax, 4
 es mov [di+2], ax
 ; ACAO STRUCTURE - Gravacao de Ponteiro - Fim
-;     ---=== teste.hcb:32:9 ===---
+;     ---=== teste.hcb:79:9 ===---
 ; ACAO STRUCTURE - Gravacao de Ponteiro- Prepara
-;     ---=== teste.hcb:32:33 ===---
-mov ax, 170
+;     ---=== teste.hcb:79:33 ===---
+mov ax, 200
 es mov [di+6], ax
 ; ACAO STRUCTURE - Gravacao de Ponteiro - Fim
-;     ---=== teste.hcb:33:9 ===---
+;     ---=== teste.hcb:80:9 ===---
 ; ACAO STRUCTURE - Gravacao de Ponteiro- Prepara
-;     ---=== teste.hcb:33:34 ===---
+;     ---=== teste.hcb:80:34 ===---
 mov ax, 10
 es mov [di+4], ax
 ; ACAO STRUCTURE - Gravacao de Ponteiro - Fim
-;     ---=== teste.hcb:34:9 ===---
+;     ---=== teste.hcb:81:9 ===---
 ; ACAO STRUCTURE - Gravacao de Ponteiro- Prepara
-;     ---=== teste.hcb:34:35 ===---
+;     ---=== teste.hcb:81:35 ===---
 mov ax, 1
 es mov [di+14], al
 ; ACAO STRUCTURE - Gravacao de Ponteiro - Fim
-;     ---=== teste.hcb:35:9 ===---
+;     ---=== teste.hcb:82:9 ===---
 ; ACAO CHAMADA - Chama rotina
-;     ---=== teste.hcb:35:31 ===---
+;     ---=== teste.hcb:82:31 ===---
 ; ACAO LEITURA - Le ponteiro
 push es
 push di
-;     ---=== teste.hcb:35:21 ===---
+;     ---=== teste.hcb:82:21 ===---
 ; ACAO LEITURA - Le ponteiro
 cs push word [_program_mainform+2]
 pop es
@@ -1779,9 +1791,9 @@ push di
 push cs
 call _control_add
 add sp, 8
-;     ---=== teste.hcb:37:9 ===---
+;     ---=== teste.hcb:84:9 ===---
 ; ACAO CHAMADA - Chama rotina
-;     ---=== teste.hcb:37:27 ===---
+;     ---=== teste.hcb:84:27 ===---
 ; ACAO LEITURA - Le ponteiro
 cs push word [_program_okbutton+2]
 pop es
@@ -1791,16 +1803,16 @@ push di
 push cs
 call _button_initialize
 add sp, 4
-;     ---=== teste.hcb:38:9 ===---
+;     ---=== teste.hcb:85:9 ===---
 ; ACAO STRUCTURE - Gravacao de Ponteiro- Prepara
-;     ---=== teste.hcb:38:25 ===---
+;     ---=== teste.hcb:85:25 ===---
 push cs
 pop es
 mov di, ROTULO132
 jmp ROTULO131
 ROTULO132:
-db 15
-db 69,110,116,101,114,32,112,97,114,97,32,83,65,73,82
+db 20
+db 69,110,116,101,114,32,97,113,117,105,32,112,97,114,97,32,83,65,73,82
 times 1 db 0
 ROTULO131:
 push es
@@ -1811,39 +1823,39 @@ cs mov di, [_program_okbutton]
 es pop word [di+10]
 es pop word [di+10+2]
 ; ACAO STRUCTURE - Gravacao de Ponteiro - Fim
-;     ---=== teste.hcb:39:9 ===---
+;     ---=== teste.hcb:86:9 ===---
 ; ACAO STRUCTURE - Gravacao de Ponteiro- Prepara
-;     ---=== teste.hcb:39:24 ===---
+;     ---=== teste.hcb:86:24 ===---
 mov ax, 21
 es mov [di+0], ax
 ; ACAO STRUCTURE - Gravacao de Ponteiro - Fim
-;     ---=== teste.hcb:40:9 ===---
+;     ---=== teste.hcb:87:9 ===---
 ; ACAO STRUCTURE - Gravacao de Ponteiro- Prepara
-;     ---=== teste.hcb:40:25 ===---
+;     ---=== teste.hcb:87:25 ===---
 mov ax, 4
 es mov [di+2], ax
 ; ACAO STRUCTURE - Gravacao de Ponteiro - Fim
-;     ---=== teste.hcb:41:9 ===---
+;     ---=== teste.hcb:88:9 ===---
 ; ACAO STRUCTURE - Gravacao de Ponteiro- Prepara
-;     ---=== teste.hcb:41:26 ===---
-mov ax, 150
+;     ---=== teste.hcb:88:26 ===---
+mov ax, 190
 es mov [di+6], ax
 ; ACAO STRUCTURE - Gravacao de Ponteiro - Fim
-;     ---=== teste.hcb:42:9 ===---
+;     ---=== teste.hcb:89:9 ===---
 ; ACAO STRUCTURE - Gravacao de Ponteiro- Prepara
-;     ---=== teste.hcb:42:27 ===---
+;     ---=== teste.hcb:89:27 ===---
 mov ax, 20
 es mov [di+4], ax
 ; ACAO STRUCTURE - Gravacao de Ponteiro - Fim
-;     ---=== teste.hcb:43:9 ===---
+;     ---=== teste.hcb:90:9 ===---
 ; ACAO STRUCTURE - Gravacao de Ponteiro- Prepara
-;     ---=== teste.hcb:43:28 ===---
+;     ---=== teste.hcb:90:28 ===---
 mov ax, 1
 es mov [di+14], al
 ; ACAO STRUCTURE - Gravacao de Ponteiro - Fim
-;     ---=== teste.hcb:44:9 ===---
+;     ---=== teste.hcb:91:9 ===---
 ; ACAO STRUCTURE - Gravacao de Ponteiro- Prepara
-;     ---=== teste.hcb:44:31 ===---
+;     ---=== teste.hcb:91:31 ===---
 push cs
 pop es
 mov di, _program_okbutton_onkeypress
@@ -1855,9 +1867,9 @@ cs mov di, [_program_okbutton]
 es pop word [di+43]
 es pop word [di+43+2]
 ; ACAO STRUCTURE - Gravacao de Ponteiro - Fim
-;     ---=== teste.hcb:45:9 ===---
+;     ---=== teste.hcb:92:9 ===---
 ; ACAO STRUCTURE - Gravacao de Ponteiro- Prepara
-;     ---=== teste.hcb:45:28 ===---
+;     ---=== teste.hcb:92:28 ===---
 push cs
 pop es
 mov di, _program_okbutton_onclick
@@ -1869,13 +1881,13 @@ cs mov di, [_program_okbutton]
 es pop word [di+39]
 es pop word [di+39+2]
 ; ACAO STRUCTURE - Gravacao de Ponteiro - Fim
-;     ---=== teste.hcb:46:9 ===---
+;     ---=== teste.hcb:93:9 ===---
 ; ACAO CHAMADA - Chama rotina
-;     ---=== teste.hcb:46:31 ===---
+;     ---=== teste.hcb:93:31 ===---
 ; ACAO LEITURA - Le ponteiro
 push es
 push di
-;     ---=== teste.hcb:46:21 ===---
+;     ---=== teste.hcb:93:21 ===---
 ; ACAO LEITURA - Le ponteiro
 cs push word [_program_mainform+2]
 pop es
@@ -1885,75 +1897,108 @@ push di
 push cs
 call _control_add
 add sp, 8
-;     ---=== teste.hcb:48:9 ===---
+;     ---=== teste.hcb:95:9 ===---
 ; ACAO CHAMADA - Chama rotina
-;     ---=== teste.hcb:48:27 ===---
+;     ---=== teste.hcb:95:28 ===---
 ; ACAO LEITURA - Le ponteiro
-cs push word [_program_nadabutton+2]
+cs push word [_program_temptextbox+2]
 pop es
-cs mov di, [_program_nadabutton]
+cs mov di, [_program_temptextbox]
 push es
 push di
 push cs
-call _button_initialize
+call _textbox_initialize
 add sp, 4
-;     ---=== teste.hcb:49:9 ===---
-; ACAO STRUCTURE - Gravacao de Ponteiro- Prepara
-;     ---=== teste.hcb:49:27 ===---
+;     ---=== teste.hcb:96:9 ===---
+; ACAO CHAMADA - Chama rotina
+;     ---=== teste.hcb:96:31 ===---
 push cs
 pop es
 mov di, ROTULO134
 jmp ROTULO133
 ROTULO134:
-db 8
-db 70,97,122,32,78,97,100,97
+db 20
+db 68,105,103,105,116,101,32,115,101,117,32,110,111,109,101,32,97,113,117,105
 times 1 db 0
 ROTULO133:
 push es
 push di
-cs push word [_program_nadabutton+2]
+;     ---=== teste.hcb:96:21 ===---
+; ACAO LEITURA - Le ponteiro
+cs push word [_program_temptext+2]
 pop es
-cs mov di, [_program_nadabutton]
+cs mov di, [_program_temptext]
+push es
+push di
+push cs
+call _string_copy
+add sp, 8
+;     ---=== teste.hcb:97:9 ===---
+; ACAO STRUCTURE - Gravacao de Ponteiro- Prepara
+;     ---=== teste.hcb:97:28 ===---
+; ACAO LEITURA - Le ponteiro
+cs push word [_program_temptext+2]
+pop es
+cs mov di, [_program_temptext]
+push es
+push di
+cs push word [_program_temptextbox+2]
+pop es
+cs mov di, [_program_temptextbox]
 es pop word [di+10]
 es pop word [di+10+2]
 ; ACAO STRUCTURE - Gravacao de Ponteiro - Fim
-;     ---=== teste.hcb:50:9 ===---
+;     ---=== teste.hcb:98:9 ===---
 ; ACAO STRUCTURE - Gravacao de Ponteiro- Prepara
-;     ---=== teste.hcb:50:26 ===---
+;     ---=== teste.hcb:98:27 ===---
 mov ax, 43
 es mov [di+0], ax
 ; ACAO STRUCTURE - Gravacao de Ponteiro - Fim
-;     ---=== teste.hcb:51:9 ===---
+;     ---=== teste.hcb:99:9 ===---
 ; ACAO STRUCTURE - Gravacao de Ponteiro- Prepara
-;     ---=== teste.hcb:51:27 ===---
+;     ---=== teste.hcb:99:28 ===---
 mov ax, 4
 es mov [di+2], ax
 ; ACAO STRUCTURE - Gravacao de Ponteiro - Fim
-;     ---=== teste.hcb:52:9 ===---
+;     ---=== teste.hcb:100:9 ===---
 ; ACAO STRUCTURE - Gravacao de Ponteiro- Prepara
-;     ---=== teste.hcb:52:28 ===---
-mov ax, 150
+;     ---=== teste.hcb:100:29 ===---
+mov ax, 190
 es mov [di+6], ax
 ; ACAO STRUCTURE - Gravacao de Ponteiro - Fim
-;     ---=== teste.hcb:53:9 ===---
+;     ---=== teste.hcb:101:9 ===---
 ; ACAO STRUCTURE - Gravacao de Ponteiro- Prepara
-;     ---=== teste.hcb:53:29 ===---
+;     ---=== teste.hcb:101:30 ===---
 mov ax, 20
 es mov [di+4], ax
 ; ACAO STRUCTURE - Gravacao de Ponteiro - Fim
-;     ---=== teste.hcb:54:9 ===---
+;     ---=== teste.hcb:102:9 ===---
 ; ACAO STRUCTURE - Gravacao de Ponteiro- Prepara
-;     ---=== teste.hcb:54:30 ===---
+;     ---=== teste.hcb:102:31 ===---
 mov ax, 1
 es mov [di+14], al
 ; ACAO STRUCTURE - Gravacao de Ponteiro - Fim
-;     ---=== teste.hcb:55:9 ===---
+;     ---=== teste.hcb:103:9 ===---
+; ACAO STRUCTURE - Gravacao de Ponteiro- Prepara
+;     ---=== teste.hcb:103:34 ===---
+push cs
+pop es
+mov di, _program_temptextbox_onkeypress
+push es
+push di
+cs push word [_program_temptextbox+2]
+pop es
+cs mov di, [_program_temptextbox]
+es pop word [di+43]
+es pop word [di+43+2]
+; ACAO STRUCTURE - Gravacao de Ponteiro - Fim
+;     ---=== teste.hcb:104:9 ===---
 ; ACAO CHAMADA - Chama rotina
-;     ---=== teste.hcb:55:31 ===---
+;     ---=== teste.hcb:104:31 ===---
 ; ACAO LEITURA - Le ponteiro
 push es
 push di
-;     ---=== teste.hcb:55:21 ===---
+;     ---=== teste.hcb:104:21 ===---
 ; ACAO LEITURA - Le ponteiro
 cs push word [_program_mainform+2]
 pop es
@@ -1963,9 +2008,105 @@ push di
 push cs
 call _control_add
 add sp, 8
-;     ---=== teste.hcb:58:9 ===---
+;     ---=== teste.hcb:106:9 ===---
 ; ACAO CHAMADA - Chama rotina
-;     ---=== teste.hcb:58:25 ===---
+;     ---=== teste.hcb:106:27 ===---
+; ACAO LEITURA - Le ponteiro
+cs push word [_program_copiabutton+2]
+pop es
+cs mov di, [_program_copiabutton]
+push es
+push di
+push cs
+call _button_initialize
+add sp, 4
+;     ---=== teste.hcb:107:9 ===---
+; ACAO STRUCTURE - Gravacao de Ponteiro- Prepara
+;     ---=== teste.hcb:107:28 ===---
+push cs
+pop es
+mov di, ROTULO136
+jmp ROTULO135
+ROTULO136:
+db 13
+db 65,112,108,105,99,97,114,32,84,101,120,116,111
+times 1 db 0
+ROTULO135:
+push es
+push di
+cs push word [_program_copiabutton+2]
+pop es
+cs mov di, [_program_copiabutton]
+es pop word [di+10]
+es pop word [di+10+2]
+; ACAO STRUCTURE - Gravacao de Ponteiro - Fim
+;     ---=== teste.hcb:108:9 ===---
+; ACAO STRUCTURE - Gravacao de Ponteiro- Prepara
+;     ---=== teste.hcb:108:27 ===---
+mov ax, 66
+es mov [di+0], ax
+; ACAO STRUCTURE - Gravacao de Ponteiro - Fim
+;     ---=== teste.hcb:109:9 ===---
+; ACAO STRUCTURE - Gravacao de Ponteiro- Prepara
+;     ---=== teste.hcb:109:28 ===---
+mov ax, 4
+es mov [di+2], ax
+; ACAO STRUCTURE - Gravacao de Ponteiro - Fim
+;     ---=== teste.hcb:110:9 ===---
+; ACAO STRUCTURE - Gravacao de Ponteiro- Prepara
+;     ---=== teste.hcb:110:29 ===---
+mov ax, 190
+es mov [di+6], ax
+; ACAO STRUCTURE - Gravacao de Ponteiro - Fim
+;     ---=== teste.hcb:111:9 ===---
+; ACAO STRUCTURE - Gravacao de Ponteiro- Prepara
+;     ---=== teste.hcb:111:30 ===---
+mov ax, 20
+es mov [di+4], ax
+; ACAO STRUCTURE - Gravacao de Ponteiro - Fim
+;     ---=== teste.hcb:112:9 ===---
+; ACAO STRUCTURE - Gravacao de Ponteiro- Prepara
+;     ---=== teste.hcb:112:31 ===---
+mov ax, 1
+es mov [di+14], al
+; ACAO STRUCTURE - Gravacao de Ponteiro - Fim
+;     ---=== teste.hcb:113:9 ===---
+; ACAO STRUCTURE - Gravacao de Ponteiro- Prepara
+;     ---=== teste.hcb:113:31 ===---
+push cs
+pop es
+mov di, _program_copiabutton_onclick
+push es
+push di
+cs push word [_program_copiabutton+2]
+pop es
+cs mov di, [_program_copiabutton]
+es pop word [di+39]
+es pop word [di+39+2]
+; ACAO STRUCTURE - Gravacao de Ponteiro - Fim
+;     ---=== teste.hcb:114:9 ===---
+; ACAO CHAMADA - Chama rotina
+;     ---=== teste.hcb:114:31 ===---
+; ACAO LEITURA - Le ponteiro
+push es
+push di
+;     ---=== teste.hcb:114:21 ===---
+; ACAO LEITURA - Le ponteiro
+cs push word [_program_mainform+2]
+pop es
+cs mov di, [_program_mainform]
+push es
+push di
+push cs
+call _control_add
+add sp, 8
+;     ---=== teste.hcb:116:9 ===---
+; ACAO CHAMADA - Chama rotina
+push cs
+call _info_exibe
+;     ---=== teste.hcb:118:9 ===---
+; ACAO CHAMADA - Chama rotina
+;     ---=== teste.hcb:118:25 ===---
 ; ACAO LEITURA - Le ponteiro
 cs push word [_program_mainform+2]
 pop es
@@ -1975,7 +2116,7 @@ push di
 push cs
 call _application_run
 add sp, 4
-;     ---=== teste.hcb:60:9 ===---
+;     ---=== teste.hcb:120:9 ===---
 ; ACAO CHAMADA - Chama rotina
 push cs
 call _graphics_mode80x25x16
@@ -1984,7 +2125,7 @@ mov sp, bp
 pop bp
 FIM_program_main:
 retf
-;     ---=== teste.hcb:64:9 ===---
+;     ---=== teste.hcb:124:9 ===---
 _program_okbutton_onkeypress:
 push bp
 mov bp, sp
@@ -1994,24 +2135,24 @@ call _os_stackcheck
 ; ARG: ctrl TAM: 4 POS: BP+6 
 ; ARG: e TAM: 4 POS: BP+10 
 ; ARG: ptr TAM: 4 POS: BP--4 
-;     ---=== teste.hcb:64:29 ===---
-;     ---=== teste.hcb:64:46 ===---
-;     ---=== teste.hcb:66:13 ===---
-;     ---=== teste.hcb:65:9 ===---
+;     ---=== teste.hcb:124:29 ===---
+;     ---=== teste.hcb:124:46 ===---
+;     ---=== teste.hcb:126:13 ===---
+;     ---=== teste.hcb:125:9 ===---
 ; ACAO CHAMADA - Chama rotina
-;     ---=== teste.hcb:65:37 ===---
+;     ---=== teste.hcb:125:37 ===---
 push cs
 pop es
-mov di, ROTULO137
-jmp ROTULO136
-ROTULO137:
+mov di, ROTULO139
+jmp ROTULO138
+ROTULO139:
 db 16
 db 80,82,69,83,83,73,79,78,65,68,79,32,32,32,32,32
 times 1 db 0
-ROTULO136:
+ROTULO138:
 push es
 push di
-;     ---=== teste.hcb:65:21 ===---
+;     ---=== teste.hcb:125:21 ===---
 ; ACAO LEITURA - Le ponteiro
 cs push word [_program_helloworldtext+2]
 pop es
@@ -2021,9 +2162,9 @@ push di
 push cs
 call _string_copy
 add sp, 8
-;     ---=== teste.hcb:67:9 ===---
+;     ---=== teste.hcb:127:9 ===---
 ; ACAO GRAVACAO - Gravacao em ponteiro
-;     ---=== teste.hcb:67:15 ===---
+;     ---=== teste.hcb:127:15 ===---
 ; ACAO LEITURA - Le ponteiro
 cs push word [_program_helloworldtext+2]
 pop es
@@ -2031,21 +2172,21 @@ cs mov di, [_program_helloworldtext]
 push es
 pop word [bp+-4+2]
 mov [bp+-4], di
-;     ---=== teste.hcb:68:10 ===---
+;     ---=== teste.hcb:128:10 ===---
 ; ACAO GRAVACAO - Grava em variavel
-;     ---=== teste.hcb:68:21 ===---
-;     ---=== teste.hcb:68:23 ===---
+;     ---=== teste.hcb:128:21 ===---
+;     ---=== teste.hcb:128:23 ===---
 mov ax, 14
 push ax
-;     ---=== teste.hcb:68:17 ===---
+;     ---=== teste.hcb:128:17 ===---
 ; ACAO LEITURA - Le variavel
 mov ax, [bp+-4]
 pop bx
 add ax, bx
 mov [bp+-4], ax
-;     ---=== teste.hcb:69:9 ===---
+;     ---=== teste.hcb:129:9 ===---
 ; ACAO GRAVACAO - Gravacao em ponteiro
-;     ---=== teste.hcb:69:15 ===---
+;     ---=== teste.hcb:129:15 ===---
 ; ACAO STRUCTURE - Leitura de Ponteiro - (U)Int8 - Desvio 0
 push word [bp+10+2]
 pop es
@@ -2056,9 +2197,9 @@ push word [bp+-4+2]
 pop es
 mov di, [bp+-4]
 es mov [di+0], al
-;     ---=== teste.hcb:70:9 ===---
+;     ---=== teste.hcb:130:9 ===---
 ; ACAO CHAMADA - Chama rotina
-;     ---=== teste.hcb:70:24 ===---
+;     ---=== teste.hcb:130:24 ===---
 ; ACAO LEITURA - Le ponteiro
 cs push word [_program_helloworldlabel+2]
 pop es
@@ -2068,31 +2209,162 @@ push di
 push cs
 call _control_redraw
 add sp, 4
-ROTULO135:
+ROTULO137:
 mov sp, bp
 pop bp
 FIM_program_okbutton_onkeypress:
 retf
-;     ---=== teste.hcb:73:9 ===---
+;     ---=== teste.hcb:133:9 ===---
 _program_okbutton_onclick:
 push bp
 mov bp, sp
 ; ARG: ctrl TAM: 4 POS: BP+6 
 ; ARG: e TAM: 4 POS: BP+10 
-;     ---=== teste.hcb:73:26 ===---
-;     ---=== teste.hcb:73:43 ===---
-;     ---=== teste.hcb:74:9 ===---
+;     ---=== teste.hcb:133:26 ===---
+;     ---=== teste.hcb:133:43 ===---
+;     ---=== teste.hcb:134:9 ===---
 ; ACAO CHAMADA - Chama rotina
-;     ---=== teste.hcb:74:26 ===---
+;     ---=== teste.hcb:134:26 ===---
 xor ax, ax
 push ax
 push cs
 call _application_exit
 add sp, 2
-ROTULO138:
+ROTULO140:
 mov sp, bp
 pop bp
 FIM_program_okbutton_onclick:
+retf
+;     ---=== teste.hcb:137:9 ===---
+_program_dizhello:
+;     ---=== teste.hcb:138:9 ===---
+; ACAO CHAMADA - Chama rotina
+;     ---=== teste.hcb:138:37 ===---
+push cs
+pop es
+mov di, ROTULO143
+jmp ROTULO142
+ROTULO143:
+db 6
+db 72,101,108,108,111,32
+times 1 db 0
+ROTULO142:
+push es
+push di
+;     ---=== teste.hcb:138:21 ===---
+; ACAO LEITURA - Le ponteiro
+cs push word [_program_helloworldtext+2]
+pop es
+cs mov di, [_program_helloworldtext]
+push es
+push di
+push cs
+call _string_copy
+add sp, 8
+;     ---=== teste.hcb:139:9 ===---
+; ACAO CHAMADA - Chama rotina
+;     ---=== teste.hcb:139:39 ===---
+; ACAO LEITURA - Le ponteiro
+cs push word [_program_temptext+2]
+pop es
+cs mov di, [_program_temptext]
+push es
+push di
+;     ---=== teste.hcb:139:23 ===---
+; ACAO LEITURA - Le ponteiro
+cs push word [_program_helloworldtext+2]
+pop es
+cs mov di, [_program_helloworldtext]
+push es
+push di
+push cs
+call _string_concat
+add sp, 8
+;     ---=== teste.hcb:140:9 ===---
+; ACAO CHAMADA - Chama rotina
+;     ---=== teste.hcb:140:24 ===---
+; ACAO LEITURA - Le ponteiro
+cs push word [_program_helloworldlabel+2]
+pop es
+cs mov di, [_program_helloworldlabel]
+push es
+push di
+push cs
+call _control_redraw
+add sp, 4
+ROTULO141:
+FIM_program_dizhello:
+retf
+;     ---=== teste.hcb:143:9 ===---
+_program_temptextbox_onkeypress:
+push bp
+mov bp, sp
+; ARG: ctrl TAM: 4 POS: BP+6 
+; ARG: e TAM: 4 POS: BP+10 
+;     ---=== teste.hcb:143:32 ===---
+;     ---=== teste.hcb:143:49 ===---
+;     ---=== teste.hcb:144:9 ===---
+;     ---=== teste.hcb:144:24 ===---
+;     ---=== teste.hcb:144:12 ===---
+; ACAO STRUCTURE - Leitura de Ponteiro - (U)Int8 - Desvio 0
+push word [bp+10+2]
+pop es
+mov di, [bp+10]
+xor ax, ax
+es mov al, [di+0]
+push ax
+;     ---=== teste.hcb:144:27 ===---
+mov ax, 13
+mov bx, ax
+pop ax
+cmp ax, bx
+je ROTULO147
+jmp ROTULO148
+ROTULO147:
+mov ax, 65535
+jmp ROTULO149
+ROTULO148:
+xor ax, ax
+ROTULO149:
+cmp ax, 0
+jne ROTULO145
+jmp ROTULO146
+ROTULO145:
+;     ---=== teste.hcb:145:13 ===---
+; ACAO CHAMADA - Chama rotina
+push cs
+call _program_dizhello
+;     ---=== teste.hcb:146:13 ===---
+; ACAO STRUCTURE - Gravacao de Ponteiro- Prepara
+;     ---=== teste.hcb:146:24 ===---
+mov ax, 1
+push word [bp+10+2]
+pop es
+mov di, [bp+10]
+es mov [di+7], ax
+; ACAO STRUCTURE - Gravacao de Ponteiro - Fim
+ROTULO146:
+ROTULO144:
+mov sp, bp
+pop bp
+FIM_program_temptextbox_onkeypress:
+retf
+;     ---=== teste.hcb:150:9 ===---
+_program_copiabutton_onclick:
+push bp
+mov bp, sp
+; ARG: ctrl TAM: 4 POS: BP+6 
+; ARG: e TAM: 4 POS: BP+10 
+;     ---=== teste.hcb:150:29 ===---
+;     ---=== teste.hcb:150:46 ===---
+;     ---=== teste.hcb:151:9 ===---
+; ACAO CHAMADA - Chama rotina
+push cs
+call _program_dizhello
+ROTULO150:
+mov sp, bp
+pop bp
+FIM_program_copiabutton_onclick:
 retf
 ; MODULO FIM: program
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/VGA.hcb:2:8 ===---
@@ -2207,7 +2479,7 @@ add sp, 4
 ; ACAO CHAMADA - Chama rotina
 push cs
 call _genericvideo_register2colorspalette
-ROTULO139:
+ROTULO151:
 FIM_vga_mode640x480x2:
 retf
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/VGA.hcb:20:9 ===---
@@ -2237,23 +2509,23 @@ es mov ax, [di+0]
 mov bx, ax
 pop ax
 cmp ax, bx
-jae ROTULO143
-jmp ROTULO144
-ROTULO143:
+jae ROTULO155
+jmp ROTULO156
+ROTULO155:
 mov ax, 65535
-jmp ROTULO145
-ROTULO144:
+jmp ROTULO157
+ROTULO156:
 xor ax, ax
-ROTULO145:
+ROTULO157:
 cmp ax, 0
-jne ROTULO141
-jmp ROTULO142
-ROTULO141:
+jne ROTULO153
+jmp ROTULO154
+ROTULO153:
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/VGA.hcb:21:33 ===---
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/VGA.hcb:21:38 ===---
 xor ax, ax
-jmp ROTULO140
-ROTULO142:
+jmp ROTULO152
+ROTULO154:
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/VGA.hcb:22:9 ===---
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/VGA.hcb:22:14 ===---
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/VGA.hcb:22:12 ===---
@@ -2269,23 +2541,23 @@ es mov ax, [di+2]
 mov bx, ax
 pop ax
 cmp ax, bx
-jae ROTULO148
-jmp ROTULO149
-ROTULO148:
+jae ROTULO160
+jmp ROTULO161
+ROTULO160:
 mov ax, 65535
-jmp ROTULO150
-ROTULO149:
+jmp ROTULO162
+ROTULO161:
 xor ax, ax
-ROTULO150:
+ROTULO162:
 cmp ax, 0
-jne ROTULO146
-jmp ROTULO147
-ROTULO146:
+jne ROTULO158
+jmp ROTULO159
+ROTULO158:
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/VGA.hcb:22:34 ===---
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/VGA.hcb:22:39 ===---
 xor ax, ax
-jmp ROTULO140
-ROTULO147:
+jmp ROTULO152
+ROTULO159:
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/VGA.hcb:23:13 ===---
 mov ax, 0xa000
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/VGA.hcb:24:13 ===---
@@ -2338,7 +2610,7 @@ not al
 es and [di], al
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/VGA.hcb:48:13 ===---
 .fim:
-ROTULO140:
+ROTULO152:
 mov sp, bp
 pop bp
 FIM_vga_drawpixel:
@@ -2387,7 +2659,7 @@ es and [di], al
 mov ax, [bp+16]
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/VGA.hcb:66:13 ===---
 es or [di], al
-ROTULO151:
+ROTULO163:
 mov sp, bp
 pop bp
 FIM_vga_byteandor:
@@ -2436,7 +2708,7 @@ mov cx, [bp+16]
 cld
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/VGA.hcb:84:13 ===---
 rep stosb
-ROTULO152:
+ROTULO164:
 mov sp, bp
 pop bp
 FIM_vga_byteset:
@@ -2473,7 +2745,7 @@ mov bx, ax
 pop ax
 and ax, bx
 mov [bp+-4], ax
-ROTULO154:
+ROTULO166:
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/VGA.hcb:91:41 ===---
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/VGA.hcb:91:41 ===---
 ; ACAO LEITURA - Le variavel
@@ -2492,18 +2764,18 @@ and ax, bx
 mov bx, ax
 pop ax
 cmp ax, bx
-jbe ROTULO160
-jmp ROTULO161
-ROTULO160:
+jbe ROTULO172
+jmp ROTULO173
+ROTULO172:
 mov ax, 65535
-jmp ROTULO162
-ROTULO161:
+jmp ROTULO174
+ROTULO173:
 xor ax, ax
-ROTULO162:
+ROTULO174:
 cmp ax, 0
-jne ROTULO155
-jmp ROTULO156
-ROTULO155:
+jne ROTULO167
+jmp ROTULO168
+ROTULO167:
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/VGA.hcb:92:13 ===---
 ; ACAO GRAVACAO - Grava em variavel
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/VGA.hcb:92:23 ===---
@@ -2528,14 +2800,14 @@ mov [bp+-2], ax
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/VGA.hcb:91:41 ===---
 ; ACAO INC - Incrementa variavel
 inc word [bp+-4]
-jmp ROTULO154
-ROTULO156:
+jmp ROTULO166
+ROTULO168:
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/VGA.hcb:94:9 ===---
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/VGA.hcb:94:16 ===---
 ; ACAO LEITURA - Le variavel
 mov ax, [bp+-2]
-jmp ROTULO153
-ROTULO153:
+jmp ROTULO165
+ROTULO165:
 mov sp, bp
 pop bp
 FIM_vga_convertmask:
@@ -2572,7 +2844,7 @@ mov bx, ax
 pop ax
 and ax, bx
 mov [bp+-4], ax
-ROTULO170:
+ROTULO182:
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/VGA.hcb:101:41 ===---
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/VGA.hcb:101:41 ===---
 ; ACAO LEITURA - Le variavel
@@ -2591,18 +2863,18 @@ and ax, bx
 mov bx, ax
 pop ax
 cmp ax, bx
-jbe ROTULO176
-jmp ROTULO177
-ROTULO176:
+jbe ROTULO188
+jmp ROTULO189
+ROTULO188:
 mov ax, 65535
-jmp ROTULO178
-ROTULO177:
+jmp ROTULO190
+ROTULO189:
 xor ax, ax
-ROTULO178:
+ROTULO190:
 cmp ax, 0
-jne ROTULO171
-jmp ROTULO172
-ROTULO171:
+jne ROTULO183
+jmp ROTULO184
+ROTULO183:
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/VGA.hcb:102:13 ===---
 ; ACAO GRAVACAO - Grava em variavel
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/VGA.hcb:102:23 ===---
@@ -2627,22 +2899,22 @@ mov [bp+-2], ax
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/VGA.hcb:101:41 ===---
 ; ACAO INC - Incrementa variavel
 inc word [bp+-4]
-jmp ROTULO170
-ROTULO172:
+jmp ROTULO182
+ROTULO184:
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/VGA.hcb:104:9 ===---
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/VGA.hcb:104:16 ===---
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/VGA.hcb:104:20 ===---
 ; ACAO LEITURA - Le variavel
 mov ax, [bp+-2]
 not ax
-ROTULO185:
+ROTULO197:
 mov ax, 65535
-jmp ROTULO187
-ROTULO186:
+jmp ROTULO199
+ROTULO198:
 xor ax, ax
-ROTULO187:
-jmp ROTULO169
-ROTULO169:
+ROTULO199:
+jmp ROTULO181
+ROTULO181:
 mov sp, bp
 pop bp
 FIM_vga_convertinversemask:
@@ -2700,18 +2972,18 @@ mov ax, 24
 mov bx, ax
 pop ax
 cmp ax, bx
-jb ROTULO191
-jmp ROTULO192
-ROTULO191:
+jb ROTULO203
+jmp ROTULO204
+ROTULO203:
 mov ax, 65535
-jmp ROTULO193
-ROTULO192:
+jmp ROTULO205
+ROTULO204:
 xor ax, ax
-ROTULO193:
+ROTULO205:
 cmp ax, 0
-jne ROTULO189
-jmp ROTULO190
-ROTULO189:
+jne ROTULO201
+jmp ROTULO202
+ROTULO201:
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/VGA.hcb:116:13 ===---
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/VGA.hcb:116:32 ===---
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/VGA.hcb:116:16 ===---
@@ -2723,18 +2995,18 @@ mov ax, 65535
 mov bx, ax
 pop ax
 cmp ax, bx
-jne ROTULO196
-jmp ROTULO197
-ROTULO196:
+jne ROTULO208
+jmp ROTULO209
+ROTULO208:
 mov ax, 65535
-jmp ROTULO198
-ROTULO197:
+jmp ROTULO210
+ROTULO209:
 xor ax, ax
-ROTULO198:
+ROTULO210:
 cmp ax, 0
-jne ROTULO194
-jmp ROTULO195
-ROTULO194:
+jne ROTULO206
+jmp ROTULO207
+ROTULO206:
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/VGA.hcb:117:36 ===---
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/VGA.hcb:117:36 ===---
 ; ACAO GRAVACAO - Grava em variavel
@@ -2748,7 +3020,7 @@ mov ax, [bp+12]
 pop bx
 add ax, bx
 mov [bp+-2], ax
-ROTULO199:
+ROTULO211:
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/VGA.hcb:117:36 ===---
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/VGA.hcb:117:36 ===---
 ; ACAO LEITURA - Le variavel
@@ -2766,18 +3038,18 @@ sub ax, bx
 mov bx, ax
 pop ax
 cmp ax, bx
-jbe ROTULO202
-jmp ROTULO203
-ROTULO202:
+jbe ROTULO214
+jmp ROTULO215
+ROTULO214:
 mov ax, 65535
-jmp ROTULO204
-ROTULO203:
+jmp ROTULO216
+ROTULO215:
 xor ax, ax
-ROTULO204:
+ROTULO216:
 cmp ax, 0
-jne ROTULO200
-jmp ROTULO201
-ROTULO200:
+jne ROTULO212
+jmp ROTULO213
+ROTULO212:
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/VGA.hcb:118:21 ===---
 ; ACAO CHAMADA - Chama rotina
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/VGA.hcb:118:61 ===---
@@ -2818,9 +3090,9 @@ add sp, 10
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/VGA.hcb:117:36 ===---
 ; ACAO INC - Incrementa variavel
 inc word [bp+-2]
-jmp ROTULO199
-ROTULO201:
-ROTULO195:
+jmp ROTULO211
+ROTULO213:
+ROTULO207:
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/VGA.hcb:121:13 ===---
 ; ACAO CHAMADA - Chama rotina
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/VGA.hcb:121:47 ===---
@@ -2924,8 +3196,8 @@ add sp, 10
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/VGA.hcb:125:13 ===---
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/VGA.hcb:125:18 ===---
 xor ax, ax
-jmp ROTULO188
-ROTULO190:
+jmp ROTULO200
+ROTULO202:
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/VGA.hcb:127:9 ===---
 ; ACAO GRAVACAO - Grava em variavel
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/VGA.hcb:127:27 ===---
@@ -2967,18 +3239,18 @@ xor ax, ax
 mov bx, ax
 pop ax
 cmp ax, bx
-je ROTULO213
-jmp ROTULO214
-ROTULO213:
+je ROTULO225
+jmp ROTULO226
+ROTULO225:
 mov ax, 65535
-jmp ROTULO215
-ROTULO214:
+jmp ROTULO227
+ROTULO226:
 xor ax, ax
-ROTULO215:
+ROTULO227:
 cmp ax, 0
-jne ROTULO211
-jmp ROTULO212
-ROTULO211:
+jne ROTULO223
+jmp ROTULO224
+ROTULO223:
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/VGA.hcb:129:27 ===---
 ; ACAO GRAVACAO - Grava em variavel
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/VGA.hcb:129:34 ===---
@@ -2990,7 +3262,7 @@ xor ax, ax
 pop bx
 sub ax, bx
 mov [bp+-14], ax
-ROTULO212:
+ROTULO224:
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/VGA.hcb:130:9 ===---
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/VGA.hcb:130:17 ===---
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/VGA.hcb:130:12 ===---
@@ -3002,18 +3274,18 @@ xor ax, ax
 mov bx, ax
 pop ax
 cmp ax, bx
-jl ROTULO218
-jmp ROTULO219
-ROTULO218:
+jl ROTULO230
+jmp ROTULO231
+ROTULO230:
 mov ax, 65535
-jmp ROTULO220
-ROTULO219:
+jmp ROTULO232
+ROTULO231:
 xor ax, ax
-ROTULO220:
+ROTULO232:
 cmp ax, 0
-jne ROTULO216
-jmp ROTULO217
-ROTULO216:
+jne ROTULO228
+jmp ROTULO229
+ROTULO228:
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/VGA.hcb:130:26 ===---
 ; ACAO GRAVACAO - Grava em variavel
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/VGA.hcb:130:33 ===---
@@ -3025,7 +3297,7 @@ xor ax, ax
 pop bx
 sub ax, bx
 mov [bp+-14], ax
-ROTULO217:
+ROTULO229:
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/VGA.hcb:131:9 ===---
 ; ACAO GRAVACAO - Grava em variavel
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/VGA.hcb:131:19 ===---
@@ -3053,18 +3325,18 @@ xor ax, ax
 mov bx, ax
 pop ax
 cmp ax, bx
-ja ROTULO226
-jmp ROTULO227
-ROTULO226:
+ja ROTULO238
+jmp ROTULO239
+ROTULO238:
 mov ax, 65535
-jmp ROTULO228
-ROTULO227:
+jmp ROTULO240
+ROTULO239:
 xor ax, ax
-ROTULO228:
+ROTULO240:
 cmp ax, 0
-jne ROTULO224
-jmp ROTULO225
-ROTULO224:
+jne ROTULO236
+jmp ROTULO237
+ROTULO236:
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/VGA.hcb:133:25 ===---
 ; ACAO GRAVACAO - Grava em variavel
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/VGA.hcb:133:34 ===---
@@ -3086,12 +3358,12 @@ push cs
 call _vga_convertmask
 add sp, 4
 mov [bp+-12], ax
-jmp ROTULO229
-ROTULO225:
+jmp ROTULO241
+ROTULO237:
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/VGA.hcb:133:61 ===---
 ; ACAO GRAVACAO - Grava em variavel
 mov word [bp+-12], 0
-ROTULO229:
+ROTULO241:
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/VGA.hcb:134:9 ===---
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/VGA.hcb:134:24 ===---
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/VGA.hcb:134:12 ===---
@@ -3104,9 +3376,9 @@ mov bx, ax
 pop ax
 and ax, bx
 cmp ax, 0
-jne ROTULO230
-jmp ROTULO231
-ROTULO230:
+jne ROTULO242
+jmp ROTULO243
+ROTULO242:
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/VGA.hcb:135:13 ===---
 ; ACAO GRAVACAO - Grava em variavel
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/VGA.hcb:135:21 ===---
@@ -3201,8 +3473,8 @@ push di
 push cs
 call _vga_byteandor
 add sp, 12
-jmp ROTULO235
-ROTULO231:
+jmp ROTULO247
+ROTULO243:
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/VGA.hcb:139:13 ===---
 ; ACAO CHAMADA - Chama rotina
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/VGA.hcb:139:45 ===---
@@ -3261,7 +3533,7 @@ push di
 push cs
 call _vga_byteandor
 add sp, 12
-ROTULO235:
+ROTULO247:
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/VGA.hcb:142:9 ===---
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/VGA.hcb:142:28 ===---
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/VGA.hcb:142:12 ===---
@@ -3273,18 +3545,18 @@ mov ax, 65535
 mov bx, ax
 pop ax
 cmp ax, bx
-jne ROTULO238
-jmp ROTULO239
-ROTULO238:
+jne ROTULO250
+jmp ROTULO251
+ROTULO250:
 mov ax, 65535
-jmp ROTULO240
-ROTULO239:
+jmp ROTULO252
+ROTULO251:
 xor ax, ax
-ROTULO240:
+ROTULO252:
 cmp ax, 0
-jne ROTULO236
-jmp ROTULO237
-ROTULO236:
+jne ROTULO248
+jmp ROTULO249
+ROTULO248:
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/VGA.hcb:143:13 ===---
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/VGA.hcb:143:32 ===---
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/VGA.hcb:143:16 ===---
@@ -3297,9 +3569,9 @@ mov bx, ax
 pop ax
 and ax, bx
 cmp ax, 0
-jne ROTULO241
-jmp ROTULO242
-ROTULO241:
+jne ROTULO253
+jmp ROTULO254
+ROTULO253:
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/VGA.hcb:144:17 ===---
 ; ACAO GRAVACAO - Grava em variavel
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/VGA.hcb:144:31 ===---
@@ -3329,9 +3601,9 @@ mov bx, ax
 pop ax
 or ax, bx
 mov [bp+-10], ax
-ROTULO242:
-jmp ROTULO249
-ROTULO237:
+ROTULO254:
+jmp ROTULO261
+ROTULO249:
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/VGA.hcb:147:13 ===---
 ; ACAO GRAVACAO - Grava em variavel
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/VGA.hcb:147:29 ===---
@@ -3361,7 +3633,7 @@ mov bx, ax
 pop ax
 or ax, bx
 mov [bp+-12], ax
-ROTULO249:
+ROTULO261:
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/VGA.hcb:149:32 ===---
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/VGA.hcb:149:32 ===---
 ; ACAO GRAVACAO - Grava em variavel
@@ -3375,7 +3647,7 @@ mov ax, [bp+12]
 pop bx
 add ax, bx
 mov [bp+-2], ax
-ROTULO253:
+ROTULO265:
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/VGA.hcb:149:32 ===---
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/VGA.hcb:149:32 ===---
 ; ACAO LEITURA - Le variavel
@@ -3393,18 +3665,18 @@ sub ax, bx
 mov bx, ax
 pop ax
 cmp ax, bx
-jbe ROTULO256
-jmp ROTULO257
-ROTULO256:
+jbe ROTULO268
+jmp ROTULO269
+ROTULO268:
 mov ax, 65535
-jmp ROTULO258
-ROTULO257:
+jmp ROTULO270
+ROTULO269:
 xor ax, ax
-ROTULO258:
+ROTULO270:
 cmp ax, 0
-jne ROTULO254
-jmp ROTULO255
-ROTULO254:
+jne ROTULO266
+jmp ROTULO267
+ROTULO266:
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/VGA.hcb:150:13 ===---
 ; ACAO CHAMADA - Chama rotina
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/VGA.hcb:150:44 ===---
@@ -3438,8 +3710,8 @@ add sp, 12
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/VGA.hcb:149:32 ===---
 ; ACAO INC - Incrementa variavel
 inc word [bp+-2]
-jmp ROTULO253
-ROTULO255:
+jmp ROTULO265
+ROTULO267:
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/VGA.hcb:152:9 ===---
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/VGA.hcb:152:28 ===---
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/VGA.hcb:152:12 ===---
@@ -3451,18 +3723,18 @@ mov ax, 65535
 mov bx, ax
 pop ax
 cmp ax, bx
-jne ROTULO261
-jmp ROTULO262
-ROTULO261:
+jne ROTULO273
+jmp ROTULO274
+ROTULO273:
 mov ax, 65535
-jmp ROTULO263
-ROTULO262:
+jmp ROTULO275
+ROTULO274:
 xor ax, ax
-ROTULO263:
+ROTULO275:
 cmp ax, 0
-jne ROTULO259
-jmp ROTULO260
-ROTULO259:
+jne ROTULO271
+jmp ROTULO272
+ROTULO271:
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/VGA.hcb:153:13 ===---
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/VGA.hcb:153:32 ===---
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/VGA.hcb:153:16 ===---
@@ -3475,18 +3747,18 @@ mov bx, ax
 pop ax
 and ax, bx
 cmp ax, 0
-jne ROTULO264
-jmp ROTULO265
-ROTULO264:
+jne ROTULO276
+jmp ROTULO277
+ROTULO276:
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/VGA.hcb:154:17 ===---
 ; ACAO GRAVACAO - Grava em variavel
 mov word [bp+-12], 255
-jmp ROTULO269
-ROTULO265:
+jmp ROTULO281
+ROTULO277:
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/VGA.hcb:156:17 ===---
 ; ACAO GRAVACAO - Grava em variavel
 mov word [bp+-12], 0
-ROTULO269:
+ROTULO281:
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/VGA.hcb:158:27 ===---
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/VGA.hcb:158:27 ===---
 ; ACAO GRAVACAO - Grava em variavel
@@ -3494,7 +3766,7 @@ ROTULO269:
 ; ACAO LEITURA - Le variavel
 mov ax, [bp+12]
 mov [bp+-2], ax
-ROTULO270:
+ROTULO282:
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/VGA.hcb:158:27 ===---
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/VGA.hcb:158:27 ===---
 ; ACAO LEITURA - Le variavel
@@ -3506,18 +3778,18 @@ mov ax, [bp+16]
 mov bx, ax
 pop ax
 cmp ax, bx
-jbe ROTULO273
-jmp ROTULO274
-ROTULO273:
+jbe ROTULO285
+jmp ROTULO286
+ROTULO285:
 mov ax, 65535
-jmp ROTULO275
-ROTULO274:
+jmp ROTULO287
+ROTULO286:
 xor ax, ax
-ROTULO275:
+ROTULO287:
 cmp ax, 0
-jne ROTULO271
-jmp ROTULO272
-ROTULO271:
+jne ROTULO283
+jmp ROTULO284
+ROTULO283:
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/VGA.hcb:159:17 ===---
 ; ACAO CHAMADA - Chama rotina
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/VGA.hcb:159:68 ===---
@@ -3577,9 +3849,9 @@ add sp, 12
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/VGA.hcb:158:27 ===---
 ; ACAO INC - Incrementa variavel
 inc word [bp+-2]
-jmp ROTULO270
+jmp ROTULO282
+ROTULO284:
 ROTULO272:
-ROTULO260:
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/VGA.hcb:163:9 ===---
 ; ACAO GRAVACAO - Grava em variavel
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/VGA.hcb:163:19 ===---
@@ -3607,18 +3879,18 @@ mov ax, 7
 mov bx, ax
 pop ax
 cmp ax, bx
-jb ROTULO281
-jmp ROTULO282
-ROTULO281:
+jb ROTULO293
+jmp ROTULO294
+ROTULO293:
 mov ax, 65535
-jmp ROTULO283
-ROTULO282:
+jmp ROTULO295
+ROTULO294:
 xor ax, ax
-ROTULO283:
+ROTULO295:
 cmp ax, 0
-jne ROTULO279
-jmp ROTULO280
-ROTULO279:
+jne ROTULO291
+jmp ROTULO292
+ROTULO291:
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/VGA.hcb:165:25 ===---
 ; ACAO GRAVACAO - Grava em variavel
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/VGA.hcb:165:34 ===---
@@ -3640,8 +3912,8 @@ push cs
 call _vga_convertmask
 add sp, 4
 mov [bp+-12], ax
-jmp ROTULO284
-ROTULO280:
+jmp ROTULO296
+ROTULO292:
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/VGA.hcb:165:61 ===---
 ; ACAO GRAVACAO - Grava em variavel
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/VGA.hcb:165:70 ===---
@@ -3658,7 +3930,7 @@ push cs
 call _vga_convertmask
 add sp, 4
 mov [bp+-12], ax
-ROTULO284:
+ROTULO296:
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/VGA.hcb:166:9 ===---
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/VGA.hcb:166:24 ===---
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/VGA.hcb:166:12 ===---
@@ -3671,9 +3943,9 @@ mov bx, ax
 pop ax
 and ax, bx
 cmp ax, 0
-jne ROTULO285
-jmp ROTULO286
-ROTULO285:
+jne ROTULO297
+jmp ROTULO298
+ROTULO297:
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/VGA.hcb:167:13 ===---
 ; ACAO GRAVACAO - Grava em variavel
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/VGA.hcb:167:21 ===---
@@ -3768,8 +4040,8 @@ push di
 push cs
 call _vga_byteandor
 add sp, 12
-jmp ROTULO290
-ROTULO286:
+jmp ROTULO302
+ROTULO298:
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/VGA.hcb:171:13 ===---
 ; ACAO CHAMADA - Chama rotina
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/VGA.hcb:171:45 ===---
@@ -3828,7 +4100,7 @@ push di
 push cs
 call _vga_byteandor
 add sp, 12
-ROTULO290:
+ROTULO302:
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/VGA.hcb:174:9 ===---
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/VGA.hcb:174:16 ===---
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/VGA.hcb:174:12 ===---
@@ -3840,18 +4112,18 @@ mov ax, 1
 mov bx, ax
 pop ax
 cmp ax, bx
-ja ROTULO293
-jmp ROTULO294
-ROTULO293:
+ja ROTULO305
+jmp ROTULO306
+ROTULO305:
 mov ax, 65535
-jmp ROTULO295
-ROTULO294:
+jmp ROTULO307
+ROTULO306:
 xor ax, ax
-ROTULO295:
+ROTULO307:
 cmp ax, 0
-jne ROTULO291
-jmp ROTULO292
-ROTULO291:
+jne ROTULO303
+jmp ROTULO304
+ROTULO303:
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/VGA.hcb:175:13 ===---
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/VGA.hcb:175:32 ===---
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/VGA.hcb:175:16 ===---
@@ -3863,18 +4135,18 @@ mov ax, 65535
 mov bx, ax
 pop ax
 cmp ax, bx
-jne ROTULO298
-jmp ROTULO299
-ROTULO298:
+jne ROTULO310
+jmp ROTULO311
+ROTULO310:
 mov ax, 65535
-jmp ROTULO300
-ROTULO299:
+jmp ROTULO312
+ROTULO311:
 xor ax, ax
-ROTULO300:
+ROTULO312:
 cmp ax, 0
-jne ROTULO296
-jmp ROTULO297
-ROTULO296:
+jne ROTULO308
+jmp ROTULO309
+ROTULO308:
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/VGA.hcb:176:17 ===---
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/VGA.hcb:176:36 ===---
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/VGA.hcb:176:20 ===---
@@ -3887,9 +4159,9 @@ mov bx, ax
 pop ax
 and ax, bx
 cmp ax, 0
-jne ROTULO301
-jmp ROTULO302
-ROTULO301:
+jne ROTULO313
+jmp ROTULO314
+ROTULO313:
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/VGA.hcb:177:21 ===---
 ; ACAO GRAVACAO - Grava em variavel
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/VGA.hcb:177:35 ===---
@@ -3919,9 +4191,9 @@ mov bx, ax
 pop ax
 or ax, bx
 mov [bp+-10], ax
-ROTULO302:
-jmp ROTULO309
-ROTULO297:
+ROTULO314:
+jmp ROTULO321
+ROTULO309:
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/VGA.hcb:180:17 ===---
 ; ACAO GRAVACAO - Grava em variavel
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/VGA.hcb:180:33 ===---
@@ -3951,8 +4223,8 @@ mov bx, ax
 pop ax
 or ax, bx
 mov [bp+-12], ax
-ROTULO309:
-ROTULO292:
+ROTULO321:
+ROTULO304:
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/VGA.hcb:183:32 ===---
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/VGA.hcb:183:32 ===---
 ; ACAO GRAVACAO - Grava em variavel
@@ -3966,7 +4238,7 @@ mov ax, [bp+12]
 pop bx
 add ax, bx
 mov [bp+-2], ax
-ROTULO313:
+ROTULO325:
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/VGA.hcb:183:32 ===---
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/VGA.hcb:183:32 ===---
 ; ACAO LEITURA - Le variavel
@@ -3984,18 +4256,18 @@ sub ax, bx
 mov bx, ax
 pop ax
 cmp ax, bx
-jbe ROTULO316
-jmp ROTULO317
-ROTULO316:
+jbe ROTULO328
+jmp ROTULO329
+ROTULO328:
 mov ax, 65535
-jmp ROTULO318
-ROTULO317:
+jmp ROTULO330
+ROTULO329:
 xor ax, ax
-ROTULO318:
+ROTULO330:
 cmp ax, 0
-jne ROTULO314
-jmp ROTULO315
-ROTULO314:
+jne ROTULO326
+jmp ROTULO327
+ROTULO326:
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/VGA.hcb:184:13 ===---
 ; ACAO CHAMADA - Chama rotina
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/VGA.hcb:184:44 ===---
@@ -4029,8 +4301,8 @@ add sp, 12
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/VGA.hcb:183:32 ===---
 ; ACAO INC - Incrementa variavel
 inc word [bp+-2]
-jmp ROTULO313
-ROTULO315:
+jmp ROTULO325
+ROTULO327:
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/VGA.hcb:186:9 ===---
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/VGA.hcb:186:24 ===---
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/VGA.hcb:186:12 ===---
@@ -4043,18 +4315,18 @@ mov bx, ax
 pop ax
 and ax, bx
 cmp ax, 0
-jne ROTULO319
-jmp ROTULO320
-ROTULO319:
+jne ROTULO331
+jmp ROTULO332
+ROTULO331:
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/VGA.hcb:187:13 ===---
 ; ACAO GRAVACAO - Grava em variavel
 mov word [bp+-12], 255
-jmp ROTULO324
-ROTULO320:
+jmp ROTULO336
+ROTULO332:
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/VGA.hcb:189:13 ===---
 ; ACAO GRAVACAO - Grava em variavel
 mov word [bp+-12], 0
-ROTULO324:
+ROTULO336:
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/VGA.hcb:191:9 ===---
 ; ACAO CHAMADA - Chama rotina
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/VGA.hcb:191:61 ===---
@@ -4167,7 +4439,7 @@ push di
 push cs
 call _vga_byteset
 add sp, 12
-ROTULO188:
+ROTULO200:
 mov sp, bp
 pop bp
 FIM_vga_drawrectangle:
@@ -4194,7 +4466,7 @@ mov word [bp+-2], 0
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/VGA.hcb:199:22 ===---
 ; ACAO GRAVACAO - Grava em variavel
 mov word [bp+-4], 0
-ROTULO326:
+ROTULO338:
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/VGA.hcb:199:22 ===---
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/VGA.hcb:199:22 ===---
 ; ACAO LEITURA - Le variavel
@@ -4205,18 +4477,18 @@ mov ax, 479
 mov bx, ax
 pop ax
 cmp ax, bx
-jbe ROTULO329
-jmp ROTULO330
-ROTULO329:
+jbe ROTULO341
+jmp ROTULO342
+ROTULO341:
 mov ax, 65535
-jmp ROTULO331
-ROTULO330:
+jmp ROTULO343
+ROTULO342:
 xor ax, ax
-ROTULO331:
+ROTULO343:
 cmp ax, 0
-jne ROTULO327
-jmp ROTULO328
-ROTULO327:
+jne ROTULO339
+jmp ROTULO340
+ROTULO339:
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/VGA.hcb:200:13 ===---
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/VGA.hcb:200:22 ===---
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/VGA.hcb:200:16 ===---
@@ -4229,13 +4501,13 @@ mov bx, ax
 pop ax
 and ax, bx
 cmp ax, 0
-jne ROTULO332
-jmp ROTULO333
-ROTULO332:
+jne ROTULO344
+jmp ROTULO345
+ROTULO344:
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/VGA.hcb:200:33 ===---
 ; ACAO GRAVACAO - Grava em variavel
 mov word [bp+-2], 170
-ROTULO333:
+ROTULO345:
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/VGA.hcb:201:13 ===---
 ; ACAO CHAMADA - Chama rotina
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/VGA.hcb:201:38 ===---
@@ -4278,13 +4550,13 @@ mov bx, ax
 pop ax
 and ax, bx
 cmp ax, 0
-jne ROTULO337
-jmp ROTULO338
-ROTULO337:
+jne ROTULO349
+jmp ROTULO350
+ROTULO349:
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/VGA.hcb:203:33 ===---
 ; ACAO GRAVACAO - Grava em variavel
 mov word [bp+-2], 85
-ROTULO338:
+ROTULO350:
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/VGA.hcb:204:13 ===---
 ; ACAO CHAMADA - Chama rotina
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/VGA.hcb:204:38 ===---
@@ -4315,9 +4587,9 @@ add sp, 12
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/VGA.hcb:199:22 ===---
 ; ACAO INC - Incrementa variavel
 inc word [bp+-4]
-jmp ROTULO326
-ROTULO328:
-ROTULO325:
+jmp ROTULO338
+ROTULO340:
+ROTULO337:
 mov sp, bp
 pop bp
 FIM_vga_clearscreen:
@@ -4454,7 +4726,7 @@ push di
 push cs
 call _colors_register
 add sp, 4
-ROTULO342:
+ROTULO354:
 FIM_genericvideo_register2colorspalette:
 retf
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Drawing.hcb:148:16 ===---
@@ -4579,7 +4851,7 @@ push di
 push cs
 call _colors_register
 add sp, 4
-ROTULO343:
+ROTULO355:
 FIM_genericvideo_register16colorspalette:
 retf
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Drawing.hcb:170:16 ===---
@@ -4602,7 +4874,7 @@ mov di, [bp+6]
 es pop word [di+18]
 es pop word [di+18+2]
 ; ACAO STRUCTURE - Gravacao de Ponteiro - Fim
-ROTULO344:
+ROTULO356:
 mov sp, bp
 pop bp
 FIM_genericvideo_registerdrawline:
@@ -4627,7 +4899,7 @@ mov di, [bp+6]
 es pop word [di+14]
 es pop word [di+14+2]
 ; ACAO STRUCTURE - Gravacao de Ponteiro - Fim
-ROTULO345:
+ROTULO357:
 mov sp, bp
 pop bp
 FIM_genericvideo_registerdrawellipse:
@@ -4679,18 +4951,18 @@ mov ax, [bp+14]
 mov bx, ax
 pop ax
 cmp ax, bx
-ja ROTULO349
-jmp ROTULO350
-ROTULO349:
+ja ROTULO361
+jmp ROTULO362
+ROTULO361:
 mov ax, 65535
-jmp ROTULO351
-ROTULO350:
+jmp ROTULO363
+ROTULO362:
 xor ax, ax
-ROTULO351:
+ROTULO363:
 cmp ax, 0
-jne ROTULO347
-jmp ROTULO348
-ROTULO347:
+jne ROTULO359
+jmp ROTULO360
+ROTULO359:
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Drawing.hcb:188:13 ===---
 ; ACAO GRAVACAO - Grava em variavel
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Drawing.hcb:188:21 ===---
@@ -4704,8 +4976,8 @@ mov ax, [bp+10]
 pop bx
 sub ax, bx
 mov [bp+-8], ax
-jmp ROTULO352
-ROTULO348:
+jmp ROTULO364
+ROTULO360:
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Drawing.hcb:190:13 ===---
 ; ACAO GRAVACAO - Grava em variavel
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Drawing.hcb:190:21 ===---
@@ -4719,7 +4991,7 @@ mov ax, [bp+14]
 pop bx
 sub ax, bx
 mov [bp+-8], ax
-ROTULO352:
+ROTULO364:
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Drawing.hcb:192:9 ===---
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Drawing.hcb:192:15 ===---
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Drawing.hcb:192:12 ===---
@@ -4732,18 +5004,18 @@ mov ax, [bp+16]
 mov bx, ax
 pop ax
 cmp ax, bx
-ja ROTULO355
-jmp ROTULO356
-ROTULO355:
+ja ROTULO367
+jmp ROTULO368
+ROTULO367:
 mov ax, 65535
-jmp ROTULO357
-ROTULO356:
+jmp ROTULO369
+ROTULO368:
 xor ax, ax
-ROTULO357:
+ROTULO369:
 cmp ax, 0
-jne ROTULO353
-jmp ROTULO354
-ROTULO353:
+jne ROTULO365
+jmp ROTULO366
+ROTULO365:
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Drawing.hcb:193:13 ===---
 ; ACAO GRAVACAO - Grava em variavel
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Drawing.hcb:193:21 ===---
@@ -4757,8 +5029,8 @@ mov ax, [bp+12]
 pop bx
 sub ax, bx
 mov [bp+-10], ax
-jmp ROTULO358
-ROTULO354:
+jmp ROTULO370
+ROTULO366:
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Drawing.hcb:195:13 ===---
 ; ACAO GRAVACAO - Grava em variavel
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Drawing.hcb:195:21 ===---
@@ -4772,7 +5044,7 @@ mov ax, [bp+16]
 pop bx
 sub ax, bx
 mov [bp+-10], ax
-ROTULO358:
+ROTULO370:
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Drawing.hcb:197:9 ===---
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Drawing.hcb:197:15 ===---
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Drawing.hcb:197:12 ===---
@@ -4785,18 +5057,18 @@ mov ax, [bp+-10]
 mov bx, ax
 pop ax
 cmp ax, bx
-jg ROTULO361
-jmp ROTULO362
-ROTULO361:
+jg ROTULO373
+jmp ROTULO374
+ROTULO373:
 mov ax, 65535
-jmp ROTULO363
-ROTULO362:
+jmp ROTULO375
+ROTULO374:
 xor ax, ax
-ROTULO363:
+ROTULO375:
 cmp ax, 0
-jne ROTULO359
-jmp ROTULO360
-ROTULO359:
+jne ROTULO371
+jmp ROTULO372
+ROTULO371:
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Drawing.hcb:198:13 ===---
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Drawing.hcb:198:19 ===---
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Drawing.hcb:198:16 ===---
@@ -4809,18 +5081,18 @@ mov ax, [bp+14]
 mov bx, ax
 pop ax
 cmp ax, bx
-ja ROTULO366
-jmp ROTULO367
-ROTULO366:
+ja ROTULO378
+jmp ROTULO379
+ROTULO378:
 mov ax, 65535
-jmp ROTULO368
-ROTULO367:
+jmp ROTULO380
+ROTULO379:
 xor ax, ax
-ROTULO368:
+ROTULO380:
 cmp ax, 0
-jne ROTULO364
-jmp ROTULO365
-ROTULO364:
+jne ROTULO376
+jmp ROTULO377
+ROTULO376:
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Drawing.hcb:199:17 ===---
 ; ACAO GRAVACAO - Grava em variavel
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Drawing.hcb:199:21 ===---
@@ -4857,7 +5129,7 @@ mov [bp+12], ax
 ; ACAO LEITURA - Le variavel
 mov ax, [bp+-16]
 mov [bp+16], ax
-ROTULO365:
+ROTULO377:
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Drawing.hcb:206:13 ===---
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Drawing.hcb:206:19 ===---
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Drawing.hcb:206:16 ===---
@@ -4870,23 +5142,23 @@ mov ax, [bp+12]
 mov bx, ax
 pop ax
 cmp ax, bx
-je ROTULO371
-jmp ROTULO372
-ROTULO371:
+je ROTULO383
+jmp ROTULO384
+ROTULO383:
 mov ax, 65535
-jmp ROTULO373
-ROTULO372:
+jmp ROTULO385
+ROTULO384:
 xor ax, ax
-ROTULO373:
+ROTULO385:
 cmp ax, 0
-jne ROTULO369
-jmp ROTULO370
-ROTULO369:
+jne ROTULO381
+jmp ROTULO382
+ROTULO381:
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Drawing.hcb:207:17 ===---
 ; ACAO GRAVACAO - Grava em variavel
 mov word [bp+-2], 0
-jmp ROTULO374
-ROTULO370:
+jmp ROTULO386
+ROTULO382:
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Drawing.hcb:209:17 ===---
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Drawing.hcb:209:23 ===---
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Drawing.hcb:209:20 ===---
@@ -4899,23 +5171,23 @@ mov ax, [bp+12]
 mov bx, ax
 pop ax
 cmp ax, bx
-ja ROTULO377
-jmp ROTULO378
-ROTULO377:
+ja ROTULO389
+jmp ROTULO390
+ROTULO389:
 mov ax, 65535
-jmp ROTULO379
-ROTULO378:
+jmp ROTULO391
+ROTULO390:
 xor ax, ax
-ROTULO379:
+ROTULO391:
 cmp ax, 0
-jne ROTULO375
-jmp ROTULO376
-ROTULO375:
+jne ROTULO387
+jmp ROTULO388
+ROTULO387:
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Drawing.hcb:210:21 ===---
 ; ACAO GRAVACAO - Grava em variavel
 mov word [bp+-2], 1
-jmp ROTULO380
-ROTULO376:
+jmp ROTULO392
+ROTULO388:
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Drawing.hcb:212:21 ===---
 ; ACAO GRAVACAO - Grava em variavel
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Drawing.hcb:212:27 ===---
@@ -4927,8 +5199,8 @@ xor ax, ax
 pop bx
 sub ax, bx
 mov [bp+-2], ax
-ROTULO380:
-ROTULO374:
+ROTULO392:
+ROTULO386:
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Drawing.hcb:215:13 ===---
 ; ACAO GRAVACAO - Grava em variavel
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Drawing.hcb:215:17 ===---
@@ -5030,7 +5302,7 @@ mov ax, [bp+10]
 pop bx
 add ax, bx
 mov [bp+-14], ax
-ROTULO381:
+ROTULO393:
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Drawing.hcb:221:31 ===---
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Drawing.hcb:221:31 ===---
 ; ACAO LEITURA - Le variavel
@@ -5042,18 +5314,18 @@ mov ax, [bp+14]
 mov bx, ax
 pop ax
 cmp ax, bx
-jbe ROTULO384
-jmp ROTULO385
-ROTULO384:
+jbe ROTULO396
+jmp ROTULO397
+ROTULO396:
 mov ax, 65535
-jmp ROTULO386
-ROTULO385:
+jmp ROTULO398
+ROTULO397:
 xor ax, ax
-ROTULO386:
+ROTULO398:
 cmp ax, 0
-jne ROTULO382
-jmp ROTULO383
-ROTULO382:
+jne ROTULO394
+jmp ROTULO395
+ROTULO394:
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Drawing.hcb:222:17 ===---
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Drawing.hcb:222:22 ===---
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Drawing.hcb:222:20 ===---
@@ -5065,18 +5337,18 @@ xor ax, ax
 mov bx, ax
 pop ax
 cmp ax, bx
-jge ROTULO389
-jmp ROTULO390
-ROTULO389:
+jge ROTULO401
+jmp ROTULO402
+ROTULO401:
 mov ax, 65535
-jmp ROTULO391
-ROTULO390:
+jmp ROTULO403
+ROTULO402:
 xor ax, ax
-ROTULO391:
+ROTULO403:
 cmp ax, 0
-jne ROTULO387
-jmp ROTULO388
-ROTULO387:
+jne ROTULO399
+jmp ROTULO400
+ROTULO399:
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Drawing.hcb:223:21 ===---
 ; ACAO GRAVACAO - Grava em variavel
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Drawing.hcb:223:27 ===---
@@ -5103,8 +5375,8 @@ mov ax, [bp+-12]
 pop bx
 add ax, bx
 mov [bp+-12], ax
-jmp ROTULO392
-ROTULO388:
+jmp ROTULO404
+ROTULO400:
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Drawing.hcb:226:21 ===---
 ; ACAO GRAVACAO - Grava em variavel
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Drawing.hcb:226:27 ===---
@@ -5118,7 +5390,7 @@ mov ax, [bp+-12]
 pop bx
 add ax, bx
 mov [bp+-12], ax
-ROTULO392:
+ROTULO404:
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Drawing.hcb:228:17 ===---
 ; ACAO CHAMADA - Chama indiretamente usando Invoke
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Drawing.hcb:228:45 ===---
@@ -5145,10 +5417,10 @@ add sp, 10
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Drawing.hcb:221:31 ===---
 ; ACAO INC - Incrementa variavel
 inc word [bp+-14]
-jmp ROTULO381
-ROTULO383:
 jmp ROTULO393
-ROTULO360:
+ROTULO395:
+jmp ROTULO405
+ROTULO372:
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Drawing.hcb:231:13 ===---
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Drawing.hcb:231:19 ===---
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Drawing.hcb:231:16 ===---
@@ -5161,18 +5433,18 @@ mov ax, [bp+16]
 mov bx, ax
 pop ax
 cmp ax, bx
-ja ROTULO396
-jmp ROTULO397
-ROTULO396:
+ja ROTULO408
+jmp ROTULO409
+ROTULO408:
 mov ax, 65535
-jmp ROTULO398
-ROTULO397:
+jmp ROTULO410
+ROTULO409:
 xor ax, ax
-ROTULO398:
+ROTULO410:
 cmp ax, 0
-jne ROTULO394
-jmp ROTULO395
-ROTULO394:
+jne ROTULO406
+jmp ROTULO407
+ROTULO406:
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Drawing.hcb:232:17 ===---
 ; ACAO GRAVACAO - Grava em variavel
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Drawing.hcb:232:21 ===---
@@ -5209,7 +5481,7 @@ mov [bp+12], ax
 ; ACAO LEITURA - Le variavel
 mov ax, [bp+-16]
 mov [bp+16], ax
-ROTULO395:
+ROTULO407:
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Drawing.hcb:239:13 ===---
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Drawing.hcb:239:19 ===---
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Drawing.hcb:239:16 ===---
@@ -5222,23 +5494,23 @@ mov ax, [bp+10]
 mov bx, ax
 pop ax
 cmp ax, bx
-je ROTULO401
-jmp ROTULO402
-ROTULO401:
+je ROTULO413
+jmp ROTULO414
+ROTULO413:
 mov ax, 65535
-jmp ROTULO403
-ROTULO402:
+jmp ROTULO415
+ROTULO414:
 xor ax, ax
-ROTULO403:
+ROTULO415:
 cmp ax, 0
-jne ROTULO399
-jmp ROTULO400
-ROTULO399:
+jne ROTULO411
+jmp ROTULO412
+ROTULO411:
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Drawing.hcb:240:17 ===---
 ; ACAO GRAVACAO - Grava em variavel
 mov word [bp+-2], 0
-jmp ROTULO404
-ROTULO400:
+jmp ROTULO416
+ROTULO412:
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Drawing.hcb:242:17 ===---
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Drawing.hcb:242:23 ===---
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Drawing.hcb:242:20 ===---
@@ -5251,23 +5523,23 @@ mov ax, [bp+10]
 mov bx, ax
 pop ax
 cmp ax, bx
-ja ROTULO407
-jmp ROTULO408
-ROTULO407:
+ja ROTULO419
+jmp ROTULO420
+ROTULO419:
 mov ax, 65535
-jmp ROTULO409
-ROTULO408:
+jmp ROTULO421
+ROTULO420:
 xor ax, ax
-ROTULO409:
+ROTULO421:
 cmp ax, 0
-jne ROTULO405
-jmp ROTULO406
-ROTULO405:
+jne ROTULO417
+jmp ROTULO418
+ROTULO417:
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Drawing.hcb:243:21 ===---
 ; ACAO GRAVACAO - Grava em variavel
 mov word [bp+-2], 1
-jmp ROTULO410
-ROTULO406:
+jmp ROTULO422
+ROTULO418:
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Drawing.hcb:245:21 ===---
 ; ACAO GRAVACAO - Grava em variavel
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Drawing.hcb:245:27 ===---
@@ -5279,8 +5551,8 @@ xor ax, ax
 pop bx
 sub ax, bx
 mov [bp+-2], ax
-ROTULO410:
-ROTULO404:
+ROTULO422:
+ROTULO416:
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Drawing.hcb:248:13 ===---
 ; ACAO GRAVACAO - Grava em variavel
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Drawing.hcb:248:17 ===---
@@ -5382,7 +5654,7 @@ mov ax, [bp+12]
 pop bx
 add ax, bx
 mov [bp+-16], ax
-ROTULO411:
+ROTULO423:
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Drawing.hcb:254:31 ===---
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Drawing.hcb:254:31 ===---
 ; ACAO LEITURA - Le variavel
@@ -5394,18 +5666,18 @@ mov ax, [bp+16]
 mov bx, ax
 pop ax
 cmp ax, bx
-jbe ROTULO414
-jmp ROTULO415
-ROTULO414:
+jbe ROTULO426
+jmp ROTULO427
+ROTULO426:
 mov ax, 65535
-jmp ROTULO416
-ROTULO415:
+jmp ROTULO428
+ROTULO427:
 xor ax, ax
-ROTULO416:
+ROTULO428:
 cmp ax, 0
-jne ROTULO412
-jmp ROTULO413
-ROTULO412:
+jne ROTULO424
+jmp ROTULO425
+ROTULO424:
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Drawing.hcb:255:17 ===---
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Drawing.hcb:255:22 ===---
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Drawing.hcb:255:20 ===---
@@ -5417,18 +5689,18 @@ xor ax, ax
 mov bx, ax
 pop ax
 cmp ax, bx
-jge ROTULO419
-jmp ROTULO420
-ROTULO419:
+jge ROTULO431
+jmp ROTULO432
+ROTULO431:
 mov ax, 65535
-jmp ROTULO421
-ROTULO420:
+jmp ROTULO433
+ROTULO432:
 xor ax, ax
-ROTULO421:
+ROTULO433:
 cmp ax, 0
-jne ROTULO417
-jmp ROTULO418
-ROTULO417:
+jne ROTULO429
+jmp ROTULO430
+ROTULO429:
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Drawing.hcb:256:21 ===---
 ; ACAO GRAVACAO - Grava em variavel
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Drawing.hcb:256:27 ===---
@@ -5455,8 +5727,8 @@ mov ax, [bp+-12]
 pop bx
 add ax, bx
 mov [bp+-12], ax
-jmp ROTULO422
-ROTULO418:
+jmp ROTULO434
+ROTULO430:
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Drawing.hcb:259:21 ===---
 ; ACAO GRAVACAO - Grava em variavel
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Drawing.hcb:259:27 ===---
@@ -5470,7 +5742,7 @@ mov ax, [bp+-12]
 pop bx
 add ax, bx
 mov [bp+-12], ax
-ROTULO422:
+ROTULO434:
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Drawing.hcb:261:17 ===---
 ; ACAO CHAMADA - Chama indiretamente usando Invoke
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Drawing.hcb:261:45 ===---
@@ -5497,10 +5769,10 @@ add sp, 10
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Drawing.hcb:254:31 ===---
 ; ACAO INC - Incrementa variavel
 inc word [bp+-16]
-jmp ROTULO411
-ROTULO413:
-ROTULO393:
-ROTULO346:
+jmp ROTULO423
+ROTULO425:
+ROTULO405:
+ROTULO358:
 mov sp, bp
 pop bp
 FIM_genericvideo_drawline:
@@ -5530,7 +5802,7 @@ mov ax, 267
 mov [bp+-10], ax
 mov ax, 7
 cs jmp word [_os_trycode]
-ROTULO423:
+ROTULO435:
 mov sp, bp
 pop bp
 FIM_genericvideo_drawellipse:
@@ -5569,18 +5841,18 @@ xor ax, ax
 mov bx, ax
 pop ax
 cmp ax, bx
-je ROTULO427
-jmp ROTULO428
-ROTULO427:
+je ROTULO439
+jmp ROTULO440
+ROTULO439:
 mov ax, 65535
-jmp ROTULO429
-ROTULO428:
+jmp ROTULO441
+ROTULO440:
 xor ax, ax
-ROTULO429:
+ROTULO441:
 cmp ax, 0
-jne ROTULO425
-jmp ROTULO426
-ROTULO425:
+jne ROTULO437
+jmp ROTULO438
+ROTULO437:
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Drawing.hcb:37:35 ===---
 mov ax, _graphics
 mov [bp+-8], ax
@@ -5588,7 +5860,7 @@ mov ax, 37
 mov [bp+-10], ax
 mov ax, 13
 cs jmp word [_os_trycode]
-ROTULO426:
+ROTULO438:
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Drawing.hcb:38:9 ===---
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Drawing.hcb:38:14 ===---
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Drawing.hcb:38:12 ===---
@@ -5604,23 +5876,23 @@ es mov ax, [di+0]
 mov bx, ax
 pop ax
 cmp ax, bx
-jae ROTULO432
-jmp ROTULO433
-ROTULO432:
+jae ROTULO444
+jmp ROTULO445
+ROTULO444:
 mov ax, 65535
-jmp ROTULO434
-ROTULO433:
+jmp ROTULO446
+ROTULO445:
 xor ax, ax
-ROTULO434:
+ROTULO446:
 cmp ax, 0
-jne ROTULO430
-jmp ROTULO431
-ROTULO430:
+jne ROTULO442
+jmp ROTULO443
+ROTULO442:
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Drawing.hcb:38:34 ===---
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Drawing.hcb:38:39 ===---
 xor ax, ax
-jmp ROTULO424
-ROTULO431:
+jmp ROTULO436
+ROTULO443:
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Drawing.hcb:39:9 ===---
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Drawing.hcb:39:14 ===---
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Drawing.hcb:39:12 ===---
@@ -5636,23 +5908,23 @@ es mov ax, [di+2]
 mov bx, ax
 pop ax
 cmp ax, bx
-jae ROTULO437
-jmp ROTULO438
-ROTULO437:
+jae ROTULO449
+jmp ROTULO450
+ROTULO449:
 mov ax, 65535
-jmp ROTULO439
-ROTULO438:
+jmp ROTULO451
+ROTULO450:
 xor ax, ax
-ROTULO439:
+ROTULO451:
 cmp ax, 0
-jne ROTULO435
-jmp ROTULO436
-ROTULO435:
+jne ROTULO447
+jmp ROTULO448
+ROTULO447:
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Drawing.hcb:39:35 ===---
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Drawing.hcb:39:40 ===---
 xor ax, ax
-jmp ROTULO424
-ROTULO436:
+jmp ROTULO436
+ROTULO448:
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Drawing.hcb:40:9 ===---
 ; ACAO CHAMADA - Chama indiretamente usando Invoke
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Drawing.hcb:40:38 ===---
@@ -5676,7 +5948,7 @@ push es
 push di
 es call far [di+6]
 add sp, 10
-ROTULO424:
+ROTULO436:
 mov sp, bp
 pop bp
 FIM_graphics_drawpixel:
@@ -5706,18 +5978,18 @@ xor ax, ax
 mov bx, ax
 pop ax
 cmp ax, bx
-je ROTULO443
-jmp ROTULO444
-ROTULO443:
+je ROTULO455
+jmp ROTULO456
+ROTULO455:
 mov ax, 65535
-jmp ROTULO445
-ROTULO444:
+jmp ROTULO457
+ROTULO456:
 xor ax, ax
-ROTULO445:
+ROTULO457:
 cmp ax, 0
-jne ROTULO441
-jmp ROTULO442
-ROTULO441:
+jne ROTULO453
+jmp ROTULO454
+ROTULO453:
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Drawing.hcb:44:35 ===---
 mov ax, _graphics
 mov [bp+-8], ax
@@ -5725,7 +5997,7 @@ mov ax, 44
 mov [bp+-10], ax
 mov ax, 13
 cs jmp word [_os_trycode]
-ROTULO442:
+ROTULO454:
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Drawing.hcb:45:9 ===---
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Drawing.hcb:45:15 ===---
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Drawing.hcb:45:12 ===---
@@ -5741,23 +6013,23 @@ es mov ax, [di+0]
 mov bx, ax
 pop ax
 cmp ax, bx
-jae ROTULO448
-jmp ROTULO449
-ROTULO448:
+jae ROTULO460
+jmp ROTULO461
+ROTULO460:
 mov ax, 65535
-jmp ROTULO450
-ROTULO449:
+jmp ROTULO462
+ROTULO461:
 xor ax, ax
-ROTULO450:
+ROTULO462:
 cmp ax, 0
-jne ROTULO446
-jmp ROTULO447
-ROTULO446:
+jne ROTULO458
+jmp ROTULO459
+ROTULO458:
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Drawing.hcb:45:35 ===---
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Drawing.hcb:45:40 ===---
 xor ax, ax
-jmp ROTULO440
-ROTULO447:
+jmp ROTULO452
+ROTULO459:
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Drawing.hcb:46:9 ===---
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Drawing.hcb:46:15 ===---
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Drawing.hcb:46:12 ===---
@@ -5773,23 +6045,23 @@ es mov ax, [di+2]
 mov bx, ax
 pop ax
 cmp ax, bx
-jae ROTULO453
-jmp ROTULO454
-ROTULO453:
+jae ROTULO465
+jmp ROTULO466
+ROTULO465:
 mov ax, 65535
-jmp ROTULO455
-ROTULO454:
+jmp ROTULO467
+ROTULO466:
 xor ax, ax
-ROTULO455:
+ROTULO467:
 cmp ax, 0
-jne ROTULO451
-jmp ROTULO452
-ROTULO451:
+jne ROTULO463
+jmp ROTULO464
+ROTULO463:
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Drawing.hcb:46:36 ===---
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Drawing.hcb:46:41 ===---
 xor ax, ax
-jmp ROTULO440
-ROTULO452:
+jmp ROTULO452
+ROTULO464:
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Drawing.hcb:47:9 ===---
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Drawing.hcb:47:15 ===---
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Drawing.hcb:47:12 ===---
@@ -5805,18 +6077,18 @@ es mov ax, [di+0]
 mov bx, ax
 pop ax
 cmp ax, bx
-jae ROTULO458
-jmp ROTULO459
-ROTULO458:
+jae ROTULO470
+jmp ROTULO471
+ROTULO470:
 mov ax, 65535
-jmp ROTULO460
-ROTULO459:
+jmp ROTULO472
+ROTULO471:
 xor ax, ax
-ROTULO460:
+ROTULO472:
 cmp ax, 0
-jne ROTULO456
-jmp ROTULO457
-ROTULO456:
+jne ROTULO468
+jmp ROTULO469
+ROTULO468:
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Drawing.hcb:47:35 ===---
 ; ACAO GRAVACAO - Grava em variavel
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Drawing.hcb:47:52 ===---
@@ -5829,7 +6101,7 @@ es mov ax, [di+0]
 pop bx
 sub ax, bx
 mov [bp+10], ax
-ROTULO457:
+ROTULO469:
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Drawing.hcb:48:9 ===---
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Drawing.hcb:48:15 ===---
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Drawing.hcb:48:12 ===---
@@ -5845,18 +6117,18 @@ es mov ax, [di+2]
 mov bx, ax
 pop ax
 cmp ax, bx
-jae ROTULO463
-jmp ROTULO464
-ROTULO463:
+jae ROTULO475
+jmp ROTULO476
+ROTULO475:
 mov ax, 65535
-jmp ROTULO465
-ROTULO464:
+jmp ROTULO477
+ROTULO476:
 xor ax, ax
-ROTULO465:
+ROTULO477:
 cmp ax, 0
-jne ROTULO461
-jmp ROTULO462
-ROTULO461:
+jne ROTULO473
+jmp ROTULO474
+ROTULO473:
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Drawing.hcb:48:36 ===---
 ; ACAO GRAVACAO - Grava em variavel
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Drawing.hcb:48:54 ===---
@@ -5869,7 +6141,7 @@ es mov ax, [di+2]
 pop bx
 sub ax, bx
 mov [bp+12], ax
-ROTULO462:
+ROTULO474:
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Drawing.hcb:49:9 ===---
 ; ACAO CHAMADA - Chama indiretamente usando Invoke
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Drawing.hcb:49:47 ===---
@@ -5901,7 +6173,7 @@ push es
 push di
 es call far [di+18]
 add sp, 14
-ROTULO440:
+ROTULO452:
 mov sp, bp
 pop bp
 FIM_graphics_drawline:
@@ -5933,18 +6205,18 @@ xor ax, ax
 mov bx, ax
 pop ax
 cmp ax, bx
-je ROTULO469
-jmp ROTULO470
-ROTULO469:
+je ROTULO481
+jmp ROTULO482
+ROTULO481:
 mov ax, 65535
-jmp ROTULO471
-ROTULO470:
+jmp ROTULO483
+ROTULO482:
 xor ax, ax
-ROTULO471:
+ROTULO483:
 cmp ax, 0
-jne ROTULO467
-jmp ROTULO468
-ROTULO467:
+jne ROTULO479
+jmp ROTULO480
+ROTULO479:
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Drawing.hcb:53:35 ===---
 mov ax, _graphics
 mov [bp+-8], ax
@@ -5952,7 +6224,7 @@ mov ax, 53
 mov [bp+-10], ax
 mov ax, 13
 cs jmp word [_os_trycode]
-ROTULO468:
+ROTULO480:
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Drawing.hcb:54:9 ===---
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Drawing.hcb:54:15 ===---
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Drawing.hcb:54:12 ===---
@@ -5968,23 +6240,23 @@ es mov ax, [di+0]
 mov bx, ax
 pop ax
 cmp ax, bx
-jae ROTULO474
-jmp ROTULO475
-ROTULO474:
+jae ROTULO486
+jmp ROTULO487
+ROTULO486:
 mov ax, 65535
-jmp ROTULO476
-ROTULO475:
+jmp ROTULO488
+ROTULO487:
 xor ax, ax
-ROTULO476:
+ROTULO488:
 cmp ax, 0
-jne ROTULO472
-jmp ROTULO473
-ROTULO472:
+jne ROTULO484
+jmp ROTULO485
+ROTULO484:
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Drawing.hcb:54:35 ===---
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Drawing.hcb:54:40 ===---
 xor ax, ax
-jmp ROTULO466
-ROTULO473:
+jmp ROTULO478
+ROTULO485:
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Drawing.hcb:55:9 ===---
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Drawing.hcb:55:15 ===---
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Drawing.hcb:55:12 ===---
@@ -6000,23 +6272,23 @@ es mov ax, [di+2]
 mov bx, ax
 pop ax
 cmp ax, bx
-jae ROTULO479
-jmp ROTULO480
-ROTULO479:
+jae ROTULO491
+jmp ROTULO492
+ROTULO491:
 mov ax, 65535
-jmp ROTULO481
-ROTULO480:
+jmp ROTULO493
+ROTULO492:
 xor ax, ax
-ROTULO481:
+ROTULO493:
 cmp ax, 0
-jne ROTULO477
-jmp ROTULO478
-ROTULO477:
+jne ROTULO489
+jmp ROTULO490
+ROTULO489:
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Drawing.hcb:55:36 ===---
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Drawing.hcb:55:41 ===---
 xor ax, ax
-jmp ROTULO466
-ROTULO478:
+jmp ROTULO478
+ROTULO490:
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Drawing.hcb:56:9 ===---
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Drawing.hcb:56:15 ===---
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Drawing.hcb:56:12 ===---
@@ -6032,18 +6304,18 @@ es mov ax, [di+0]
 mov bx, ax
 pop ax
 cmp ax, bx
-jae ROTULO484
-jmp ROTULO485
-ROTULO484:
+jae ROTULO496
+jmp ROTULO497
+ROTULO496:
 mov ax, 65535
-jmp ROTULO486
-ROTULO485:
+jmp ROTULO498
+ROTULO497:
 xor ax, ax
-ROTULO486:
+ROTULO498:
 cmp ax, 0
-jne ROTULO482
-jmp ROTULO483
-ROTULO482:
+jne ROTULO494
+jmp ROTULO495
+ROTULO494:
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Drawing.hcb:56:35 ===---
 ; ACAO GRAVACAO - Grava em variavel
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Drawing.hcb:56:52 ===---
@@ -6056,7 +6328,7 @@ es mov ax, [di+0]
 pop bx
 sub ax, bx
 mov [bp+10], ax
-ROTULO483:
+ROTULO495:
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Drawing.hcb:57:9 ===---
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Drawing.hcb:57:15 ===---
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Drawing.hcb:57:12 ===---
@@ -6072,18 +6344,18 @@ es mov ax, [di+2]
 mov bx, ax
 pop ax
 cmp ax, bx
-jae ROTULO489
-jmp ROTULO490
-ROTULO489:
+jae ROTULO501
+jmp ROTULO502
+ROTULO501:
 mov ax, 65535
-jmp ROTULO491
-ROTULO490:
+jmp ROTULO503
+ROTULO502:
 xor ax, ax
-ROTULO491:
+ROTULO503:
 cmp ax, 0
-jne ROTULO487
-jmp ROTULO488
-ROTULO487:
+jne ROTULO499
+jmp ROTULO500
+ROTULO499:
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Drawing.hcb:57:36 ===---
 ; ACAO GRAVACAO - Grava em variavel
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Drawing.hcb:57:54 ===---
@@ -6096,7 +6368,7 @@ es mov ax, [di+2]
 pop bx
 sub ax, bx
 mov [bp+12], ax
-ROTULO488:
+ROTULO500:
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Drawing.hcb:58:9 ===---
 ; ACAO CHAMADA - Chama indiretamente usando Invoke
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Drawing.hcb:58:65 ===---
@@ -6132,7 +6404,7 @@ push es
 push di
 es call far [di+10]
 add sp, 16
-ROTULO466:
+ROTULO478:
 mov sp, bp
 pop bp
 FIM_graphics_drawrectangle:
@@ -6164,18 +6436,18 @@ xor ax, ax
 mov bx, ax
 pop ax
 cmp ax, bx
-je ROTULO495
-jmp ROTULO496
-ROTULO495:
+je ROTULO507
+jmp ROTULO508
+ROTULO507:
 mov ax, 65535
-jmp ROTULO497
-ROTULO496:
+jmp ROTULO509
+ROTULO508:
 xor ax, ax
-ROTULO497:
+ROTULO509:
 cmp ax, 0
-jne ROTULO493
-jmp ROTULO494
-ROTULO493:
+jne ROTULO505
+jmp ROTULO506
+ROTULO505:
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Drawing.hcb:62:35 ===---
 mov ax, _graphics
 mov [bp+-8], ax
@@ -6183,7 +6455,7 @@ mov ax, 62
 mov [bp+-10], ax
 mov ax, 13
 cs jmp word [_os_trycode]
-ROTULO494:
+ROTULO506:
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Drawing.hcb:63:9 ===---
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Drawing.hcb:63:15 ===---
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Drawing.hcb:63:12 ===---
@@ -6199,23 +6471,23 @@ es mov ax, [di+0]
 mov bx, ax
 pop ax
 cmp ax, bx
-jae ROTULO500
-jmp ROTULO501
-ROTULO500:
+jae ROTULO512
+jmp ROTULO513
+ROTULO512:
 mov ax, 65535
-jmp ROTULO502
-ROTULO501:
+jmp ROTULO514
+ROTULO513:
 xor ax, ax
-ROTULO502:
+ROTULO514:
 cmp ax, 0
-jne ROTULO498
-jmp ROTULO499
-ROTULO498:
+jne ROTULO510
+jmp ROTULO511
+ROTULO510:
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Drawing.hcb:63:35 ===---
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Drawing.hcb:63:40 ===---
 xor ax, ax
-jmp ROTULO492
-ROTULO499:
+jmp ROTULO504
+ROTULO511:
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Drawing.hcb:64:9 ===---
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Drawing.hcb:64:15 ===---
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Drawing.hcb:64:12 ===---
@@ -6231,23 +6503,23 @@ es mov ax, [di+2]
 mov bx, ax
 pop ax
 cmp ax, bx
-jae ROTULO505
-jmp ROTULO506
-ROTULO505:
+jae ROTULO517
+jmp ROTULO518
+ROTULO517:
 mov ax, 65535
-jmp ROTULO507
-ROTULO506:
+jmp ROTULO519
+ROTULO518:
 xor ax, ax
-ROTULO507:
+ROTULO519:
 cmp ax, 0
-jne ROTULO503
-jmp ROTULO504
-ROTULO503:
+jne ROTULO515
+jmp ROTULO516
+ROTULO515:
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Drawing.hcb:64:36 ===---
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Drawing.hcb:64:41 ===---
 xor ax, ax
-jmp ROTULO492
-ROTULO504:
+jmp ROTULO504
+ROTULO516:
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Drawing.hcb:65:9 ===---
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Drawing.hcb:65:15 ===---
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Drawing.hcb:65:12 ===---
@@ -6263,18 +6535,18 @@ es mov ax, [di+0]
 mov bx, ax
 pop ax
 cmp ax, bx
-jae ROTULO510
-jmp ROTULO511
-ROTULO510:
+jae ROTULO522
+jmp ROTULO523
+ROTULO522:
 mov ax, 65535
-jmp ROTULO512
-ROTULO511:
+jmp ROTULO524
+ROTULO523:
 xor ax, ax
-ROTULO512:
+ROTULO524:
 cmp ax, 0
-jne ROTULO508
-jmp ROTULO509
-ROTULO508:
+jne ROTULO520
+jmp ROTULO521
+ROTULO520:
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Drawing.hcb:65:35 ===---
 ; ACAO GRAVACAO - Grava em variavel
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Drawing.hcb:65:52 ===---
@@ -6287,7 +6559,7 @@ es mov ax, [di+0]
 pop bx
 sub ax, bx
 mov [bp+10], ax
-ROTULO509:
+ROTULO521:
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Drawing.hcb:66:9 ===---
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Drawing.hcb:66:15 ===---
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Drawing.hcb:66:12 ===---
@@ -6303,18 +6575,18 @@ es mov ax, [di+2]
 mov bx, ax
 pop ax
 cmp ax, bx
-jae ROTULO515
-jmp ROTULO516
-ROTULO515:
+jae ROTULO527
+jmp ROTULO528
+ROTULO527:
 mov ax, 65535
-jmp ROTULO517
-ROTULO516:
+jmp ROTULO529
+ROTULO528:
 xor ax, ax
-ROTULO517:
+ROTULO529:
 cmp ax, 0
-jne ROTULO513
-jmp ROTULO514
-ROTULO513:
+jne ROTULO525
+jmp ROTULO526
+ROTULO525:
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Drawing.hcb:66:36 ===---
 ; ACAO GRAVACAO - Grava em variavel
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Drawing.hcb:66:54 ===---
@@ -6327,7 +6599,7 @@ es mov ax, [di+2]
 pop bx
 sub ax, bx
 mov [bp+12], ax
-ROTULO514:
+ROTULO526:
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Drawing.hcb:67:9 ===---
 ; ACAO CHAMADA - Chama indiretamente usando Invoke
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Drawing.hcb:67:63 ===---
@@ -6363,7 +6635,7 @@ push es
 push di
 es call far [di+14]
 add sp, 16
-ROTULO492:
+ROTULO504:
 mov sp, bp
 pop bp
 FIM_graphics_drawellipse:
@@ -6399,18 +6671,18 @@ xor ax, ax
 mov bx, ax
 pop ax
 cmp ax, bx
-je ROTULO521
-jmp ROTULO522
-ROTULO521:
+je ROTULO533
+jmp ROTULO534
+ROTULO533:
 mov ax, 65535
-jmp ROTULO523
-ROTULO522:
+jmp ROTULO535
+ROTULO534:
 xor ax, ax
-ROTULO523:
+ROTULO535:
 cmp ax, 0
-jne ROTULO519
-jmp ROTULO520
-ROTULO519:
+jne ROTULO531
+jmp ROTULO532
+ROTULO531:
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Drawing.hcb:71:35 ===---
 mov ax, _graphics
 mov [bp+-8], ax
@@ -6418,7 +6690,7 @@ mov ax, 71
 mov [bp+-10], ax
 mov ax, 13
 cs jmp word [_os_trycode]
-ROTULO520:
+ROTULO532:
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Drawing.hcb:72:9 ===---
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Drawing.hcb:72:15 ===---
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Drawing.hcb:72:12 ===---
@@ -6434,23 +6706,23 @@ es mov ax, [di+0]
 mov bx, ax
 pop ax
 cmp ax, bx
-jae ROTULO526
-jmp ROTULO527
-ROTULO526:
+jae ROTULO538
+jmp ROTULO539
+ROTULO538:
 mov ax, 65535
-jmp ROTULO528
-ROTULO527:
+jmp ROTULO540
+ROTULO539:
 xor ax, ax
-ROTULO528:
+ROTULO540:
 cmp ax, 0
-jne ROTULO524
-jmp ROTULO525
-ROTULO524:
+jne ROTULO536
+jmp ROTULO537
+ROTULO536:
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Drawing.hcb:72:35 ===---
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Drawing.hcb:72:40 ===---
 xor ax, ax
-jmp ROTULO518
-ROTULO525:
+jmp ROTULO530
+ROTULO537:
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Drawing.hcb:73:9 ===---
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Drawing.hcb:73:15 ===---
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Drawing.hcb:73:12 ===---
@@ -6466,23 +6738,23 @@ es mov ax, [di+2]
 mov bx, ax
 pop ax
 cmp ax, bx
-jae ROTULO531
-jmp ROTULO532
-ROTULO531:
+jae ROTULO543
+jmp ROTULO544
+ROTULO543:
 mov ax, 65535
-jmp ROTULO533
-ROTULO532:
+jmp ROTULO545
+ROTULO544:
 xor ax, ax
-ROTULO533:
+ROTULO545:
 cmp ax, 0
-jne ROTULO529
-jmp ROTULO530
-ROTULO529:
+jne ROTULO541
+jmp ROTULO542
+ROTULO541:
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Drawing.hcb:73:36 ===---
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Drawing.hcb:73:41 ===---
 xor ax, ax
-jmp ROTULO518
-ROTULO530:
+jmp ROTULO530
+ROTULO542:
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Drawing.hcb:74:9 ===---
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Drawing.hcb:74:15 ===---
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Drawing.hcb:74:12 ===---
@@ -6498,18 +6770,18 @@ es mov ax, [di+0]
 mov bx, ax
 pop ax
 cmp ax, bx
-jae ROTULO536
-jmp ROTULO537
-ROTULO536:
+jae ROTULO548
+jmp ROTULO549
+ROTULO548:
 mov ax, 65535
-jmp ROTULO538
-ROTULO537:
+jmp ROTULO550
+ROTULO549:
 xor ax, ax
-ROTULO538:
+ROTULO550:
 cmp ax, 0
-jne ROTULO534
-jmp ROTULO535
-ROTULO534:
+jne ROTULO546
+jmp ROTULO547
+ROTULO546:
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Drawing.hcb:74:35 ===---
 ; ACAO GRAVACAO - Grava em variavel
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Drawing.hcb:74:52 ===---
@@ -6522,7 +6794,7 @@ es mov ax, [di+0]
 pop bx
 sub ax, bx
 mov [bp+18], ax
-ROTULO535:
+ROTULO547:
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Drawing.hcb:75:9 ===---
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Drawing.hcb:75:15 ===---
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Drawing.hcb:75:12 ===---
@@ -6538,18 +6810,18 @@ es mov ax, [di+2]
 mov bx, ax
 pop ax
 cmp ax, bx
-jae ROTULO541
-jmp ROTULO542
-ROTULO541:
+jae ROTULO553
+jmp ROTULO554
+ROTULO553:
 mov ax, 65535
-jmp ROTULO543
-ROTULO542:
+jmp ROTULO555
+ROTULO554:
 xor ax, ax
-ROTULO543:
+ROTULO555:
 cmp ax, 0
-jne ROTULO539
-jmp ROTULO540
-ROTULO539:
+jne ROTULO551
+jmp ROTULO552
+ROTULO551:
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Drawing.hcb:75:36 ===---
 ; ACAO GRAVACAO - Grava em variavel
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Drawing.hcb:75:54 ===---
@@ -6562,7 +6834,7 @@ es mov ax, [di+2]
 pop bx
 sub ax, bx
 mov [bp+20], ax
-ROTULO540:
+ROTULO552:
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Drawing.hcb:76:9 ===---
 ; ACAO CHAMADA - Chama indiretamente usando Invoke
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Drawing.hcb:76:59 ===---
@@ -6605,7 +6877,7 @@ push es
 push di
 es call far [di+22]
 add sp, 20
-ROTULO518:
+ROTULO530:
 mov sp, bp
 pop bp
 FIM_graphics_drawtext:
@@ -6635,18 +6907,18 @@ xor ax, ax
 mov bx, ax
 pop ax
 cmp ax, bx
-je ROTULO547
-jmp ROTULO548
-ROTULO547:
+je ROTULO559
+jmp ROTULO560
+ROTULO559:
 mov ax, 65535
-jmp ROTULO549
-ROTULO548:
+jmp ROTULO561
+ROTULO560:
 xor ax, ax
-ROTULO549:
+ROTULO561:
 cmp ax, 0
-jne ROTULO545
-jmp ROTULO546
-ROTULO545:
+jne ROTULO557
+jmp ROTULO558
+ROTULO557:
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Drawing.hcb:80:35 ===---
 mov ax, _graphics
 mov [bp+-8], ax
@@ -6654,7 +6926,7 @@ mov ax, 80
 mov [bp+-10], ax
 mov ax, 13
 cs jmp word [_os_trycode]
-ROTULO546:
+ROTULO558:
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Drawing.hcb:81:9 ===---
 ; ACAO CHAMADA - Chama indiretamente usando Invoke
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Drawing.hcb:81:54 ===---
@@ -6688,7 +6960,7 @@ push es
 push di
 es call far [di+26]
 add sp, 16
-ROTULO544:
+ROTULO556:
 mov sp, bp
 pop bp
 FIM_graphics_calcfontsize:
@@ -6710,18 +6982,18 @@ xor ax, ax
 mov bx, ax
 pop ax
 cmp ax, bx
-je ROTULO553
-jmp ROTULO554
-ROTULO553:
+je ROTULO565
+jmp ROTULO566
+ROTULO565:
 mov ax, 65535
-jmp ROTULO555
-ROTULO554:
+jmp ROTULO567
+ROTULO566:
 xor ax, ax
-ROTULO555:
+ROTULO567:
 cmp ax, 0
-jne ROTULO551
-jmp ROTULO552
-ROTULO551:
+jne ROTULO563
+jmp ROTULO564
+ROTULO563:
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Drawing.hcb:85:35 ===---
 mov ax, _graphics
 mov [bp+-8], ax
@@ -6729,7 +7001,7 @@ mov ax, 85
 mov [bp+-10], ax
 mov ax, 13
 cs jmp word [_os_trycode]
-ROTULO552:
+ROTULO564:
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Drawing.hcb:86:9 ===---
 ; ACAO CHAMADA - Chama indiretamente usando Invoke
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Drawing.hcb:86:34 ===---
@@ -6745,7 +7017,7 @@ push es
 push di
 es call far [di+22]
 add sp, 6
-ROTULO550:
+ROTULO562:
 mov sp, bp
 pop bp
 FIM_graphics_clearscreen:
@@ -6756,8 +7028,8 @@ _graphics_getactive:
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Drawing.hcb:90:16 ===---
 ; ACAO LEITURA - Le variavel
 cs mov ax, [_graphics_active]
-jmp ROTULO556
-ROTULO556:
+jmp ROTULO568
+ROTULO568:
 FIM_graphics_getactive:
 retf
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Drawing.hcb:93:21 ===---
@@ -6769,94 +7041,6 @@ _graphics_getwidth:
 cs mov ax, [_graphics_active]
 push ax
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Drawing.hcb:94:22 ===---
-xor ax, ax
-mov bx, ax
-pop ax
-cmp ax, bx
-je ROTULO560
-jmp ROTULO561
-ROTULO560:
-mov ax, 65535
-jmp ROTULO562
-ROTULO561:
-xor ax, ax
-ROTULO562:
-cmp ax, 0
-jne ROTULO558
-jmp ROTULO559
-ROTULO558:
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Drawing.hcb:94:35 ===---
-mov ax, _graphics
-mov [bp+-8], ax
-mov ax, 94
-mov [bp+-10], ax
-mov ax, 13
-cs jmp word [_os_trycode]
-ROTULO559:
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Drawing.hcb:95:9 ===---
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Drawing.hcb:95:16 ===---
-; ACAO STRUCTURE - Leitura de Ponteiro - (U)Int16 - Desvio 0
-cs push word [_graphics_video+2]
-pop es
-cs mov di, [_graphics_video]
-es mov ax, [di+0]
-jmp ROTULO557
-ROTULO557:
-FIM_graphics_getwidth:
-retf
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Drawing.hcb:98:21 ===---
-_graphics_getheight:
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Drawing.hcb:99:9 ===---
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Drawing.hcb:99:19 ===---
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Drawing.hcb:99:12 ===---
-; ACAO LEITURA - Le variavel
-cs mov ax, [_graphics_active]
-push ax
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Drawing.hcb:99:22 ===---
-xor ax, ax
-mov bx, ax
-pop ax
-cmp ax, bx
-je ROTULO566
-jmp ROTULO567
-ROTULO566:
-mov ax, 65535
-jmp ROTULO568
-ROTULO567:
-xor ax, ax
-ROTULO568:
-cmp ax, 0
-jne ROTULO564
-jmp ROTULO565
-ROTULO564:
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Drawing.hcb:99:35 ===---
-mov ax, _graphics
-mov [bp+-8], ax
-mov ax, 99
-mov [bp+-10], ax
-mov ax, 13
-cs jmp word [_os_trycode]
-ROTULO565:
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Drawing.hcb:100:9 ===---
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Drawing.hcb:100:16 ===---
-; ACAO STRUCTURE - Leitura de Ponteiro - (U)Int16 - Desvio 2
-cs push word [_graphics_video+2]
-pop es
-cs mov di, [_graphics_video]
-es mov ax, [di+2]
-jmp ROTULO563
-ROTULO563:
-FIM_graphics_getheight:
-retf
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Drawing.hcb:103:21 ===---
-_graphics_getcolors:
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Drawing.hcb:104:9 ===---
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Drawing.hcb:104:19 ===---
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Drawing.hcb:104:12 ===---
-; ACAO LEITURA - Le variavel
-cs mov ax, [_graphics_active]
-push ax
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Drawing.hcb:104:22 ===---
 xor ax, ax
 mov bx, ax
 pop ax
@@ -6873,6 +7057,94 @@ cmp ax, 0
 jne ROTULO570
 jmp ROTULO571
 ROTULO570:
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Drawing.hcb:94:35 ===---
+mov ax, _graphics
+mov [bp+-8], ax
+mov ax, 94
+mov [bp+-10], ax
+mov ax, 13
+cs jmp word [_os_trycode]
+ROTULO571:
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Drawing.hcb:95:9 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Drawing.hcb:95:16 ===---
+; ACAO STRUCTURE - Leitura de Ponteiro - (U)Int16 - Desvio 0
+cs push word [_graphics_video+2]
+pop es
+cs mov di, [_graphics_video]
+es mov ax, [di+0]
+jmp ROTULO569
+ROTULO569:
+FIM_graphics_getwidth:
+retf
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Drawing.hcb:98:21 ===---
+_graphics_getheight:
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Drawing.hcb:99:9 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Drawing.hcb:99:19 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Drawing.hcb:99:12 ===---
+; ACAO LEITURA - Le variavel
+cs mov ax, [_graphics_active]
+push ax
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Drawing.hcb:99:22 ===---
+xor ax, ax
+mov bx, ax
+pop ax
+cmp ax, bx
+je ROTULO578
+jmp ROTULO579
+ROTULO578:
+mov ax, 65535
+jmp ROTULO580
+ROTULO579:
+xor ax, ax
+ROTULO580:
+cmp ax, 0
+jne ROTULO576
+jmp ROTULO577
+ROTULO576:
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Drawing.hcb:99:35 ===---
+mov ax, _graphics
+mov [bp+-8], ax
+mov ax, 99
+mov [bp+-10], ax
+mov ax, 13
+cs jmp word [_os_trycode]
+ROTULO577:
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Drawing.hcb:100:9 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Drawing.hcb:100:16 ===---
+; ACAO STRUCTURE - Leitura de Ponteiro - (U)Int16 - Desvio 2
+cs push word [_graphics_video+2]
+pop es
+cs mov di, [_graphics_video]
+es mov ax, [di+2]
+jmp ROTULO575
+ROTULO575:
+FIM_graphics_getheight:
+retf
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Drawing.hcb:103:21 ===---
+_graphics_getcolors:
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Drawing.hcb:104:9 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Drawing.hcb:104:19 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Drawing.hcb:104:12 ===---
+; ACAO LEITURA - Le variavel
+cs mov ax, [_graphics_active]
+push ax
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Drawing.hcb:104:22 ===---
+xor ax, ax
+mov bx, ax
+pop ax
+cmp ax, bx
+je ROTULO584
+jmp ROTULO585
+ROTULO584:
+mov ax, 65535
+jmp ROTULO586
+ROTULO585:
+xor ax, ax
+ROTULO586:
+cmp ax, 0
+jne ROTULO582
+jmp ROTULO583
+ROTULO582:
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Drawing.hcb:104:35 ===---
 mov ax, _graphics
 mov [bp+-8], ax
@@ -6880,7 +7152,7 @@ mov ax, 104
 mov [bp+-10], ax
 mov ax, 13
 cs jmp word [_os_trycode]
-ROTULO571:
+ROTULO583:
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Drawing.hcb:105:9 ===---
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Drawing.hcb:105:16 ===---
 ; ACAO STRUCTURE - Leitura de Ponteiro - (U)Int16 - Desvio 4
@@ -6888,8 +7160,8 @@ cs push word [_graphics_video+2]
 pop es
 cs mov di, [_graphics_video]
 es mov ax, [di+4]
-jmp ROTULO569
-ROTULO569:
+jmp ROTULO581
+ROTULO581:
 FIM_graphics_getcolors:
 retf
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Drawing.hcb:108:16 ===---
@@ -6901,7 +7173,7 @@ cs mov word [_graphics_active], 0
 mov ax, 3
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Drawing.hcb:111:13 ===---
 int 0x10
-ROTULO575:
+ROTULO587:
 FIM_graphics_mode80x25x16:
 retf
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Drawing.hcb:114:16 ===---
@@ -6933,7 +7205,7 @@ cs mov [_graphics_video], ax
 ; ACAO CHAMADA - Chama rotina
 push cs
 call _font_initialize
-ROTULO576:
+ROTULO588:
 mov sp, bp
 pop bp
 FIM_graphics_modemanual:
@@ -6954,13 +7226,13 @@ _font_initialize:
 ; ACAO CHAMADA - Chama rotina
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Drawing.hcb:275:29 ===---
 ; ACAO CHAMADA - Carrega binario embutido
-jmp ROTULO578
-ROTULO579:
+jmp ROTULO590
+ROTULO591:
 db 7,0,3,0,3,0,1,0,88,0,97,0,131,0,140,0,149,0,158,0,167,0,176,0,185,0,194,0,203,0,212,0,221,0,230,0,239,0,248,0,1,1,10,1,19,1,28,1,37,1,46,1,55,1,64,1,73,1,82,1,91,1,100,1,109,1,118,1,127,1,136,1,145,1,154,1,163,1,172,1,181,1,190,1,199,1,208,1,9,83,105,115,116,101,109,97,0,34,72,117,109,98,101,114,116,111,32,67,111,115,116,97,32,100,111,115,32,83,97,110,116,111,115,32,74,117,110,105,111,114,0,5,0,0,0,0,0,0,0,0,3,0,0,0,0,0,0,0,0,6,0,48,72,148,164,164,72,48,3,0,32,96,160,32,32,32,32,5,0,112,136,8,16,32,64,248,5,0,248,8,48,8,8,8,240,5,0,136,136,136,248,8,8,8,5,0,248,128,240,8,8,8,240,5,0,112,136,128,240,136,136,112,5,0,248,8,8,16,32,64,128,5,0,112,136,136,112,136,136,112,5,0,112,136,136,120,8,136,112,7,0,56,68,130,254,130,130,130,6,0,248,132,132,248,132,132,248,6,0,56,68,128,128,128,68,56,7,0,248,132,130,130,130,132,248,6,0,252,128,128,240,128,128,252,6,0,252,128,128,240,128,128,128,6,0,120,132,128,156,132,132,120,6,0,132,132,132,252,132,132,132,1,0,128,128,128,128,128,128,128,5,0,8,8,8,8,8,136,112,6,0,132,132,136,240,136,132,132,5,0,128,128,128,128,128,128,248,7,0,130,198,170,146,130,130,130,7,0,130,194,162,146,138,134,130,7,0,124,130,130,130,130,130,124,6,0,248,132,132,248,128,128,128,8,0,124,130,130,130,138,132,123,7,0,248,132,132,248,132,132,130,6,0,120,132,128,120,4,132,120,7,0,254,16,16,16,16,16,16,7,0,130,130,130,130,130,130,124,7,0,130,130,130,130,68,40,16,7,0,130,130,130,146,170,198,130,7,0,130,68,40,16,40,68,130,7,0,130,68,40,16,32,64,128,7,0,254,4,8,16,32,64,254
-ROTULO578:
+ROTULO590:
 push cs
 pop es
-mov di, ROTULO579
+mov di, ROTULO591
 push es
 push di
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Drawing.hcb:275:20 ===---
@@ -6973,7 +7245,7 @@ push di
 push cs
 call _font_loadbinary
 add sp, 8
-ROTULO577:
+ROTULO589:
 FIM_font_initialize:
 retf
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Drawing.hcb:278:16 ===---
@@ -7218,7 +7490,7 @@ pop bx
 add ax, bx
 es mov [di+12], ax
 ; ACAO STRUCTURE - Gravacao de Ponteiro - Fim
-ROTULO580:
+ROTULO592:
 mov sp, bp
 pop bp
 FIM_font_loadbinary:
@@ -7318,8 +7590,8 @@ mov [bp+-8], ax
 push word [bp+-8+2]
 pop es
 mov di, [bp+-8]
-jmp ROTULO581
-ROTULO581:
+jmp ROTULO593
+ROTULO593:
 mov sp, bp
 pop bp
 FIM_font_findchar:
@@ -7421,7 +7693,7 @@ mov word [bp+-26], 0
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Drawing.hcb:343:24 ===---
 ; ACAO GRAVACAO - Grava em variavel
 mov word [bp+-16], 1
-ROTULO583:
+ROTULO595:
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Drawing.hcb:343:24 ===---
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Drawing.hcb:343:24 ===---
 ; ACAO LEITURA - Le variavel
@@ -7433,18 +7705,18 @@ mov ax, [bp+-6]
 mov bx, ax
 pop ax
 cmp ax, bx
-jbe ROTULO586
-jmp ROTULO587
-ROTULO586:
+jbe ROTULO598
+jmp ROTULO599
+ROTULO598:
 mov ax, 65535
-jmp ROTULO588
-ROTULO587:
+jmp ROTULO600
+ROTULO599:
 xor ax, ax
-ROTULO588:
+ROTULO600:
 cmp ax, 0
-jne ROTULO584
-jmp ROTULO585
-ROTULO584:
+jne ROTULO596
+jmp ROTULO597
+ROTULO596:
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Drawing.hcb:344:13 ===---
 ; ACAO GRAVACAO - Grava em variavel
 mov word [bp+-34], 0
@@ -7470,16 +7742,16 @@ mov ax, 48
 mov bx, ax
 pop ax
 cmp ax, bx
-jae ROTULO594
-jmp ROTULO595
-ROTULO594:
+jae ROTULO606
+jmp ROTULO607
+ROTULO606:
 mov ax, 65535
-jmp ROTULO596
-ROTULO595:
+jmp ROTULO608
+ROTULO607:
 xor ax, ax
-ROTULO596:
+ROTULO608:
 cmp ax, 0
-je ROTULO592
+je ROTULO604
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Drawing.hcb:347:45 ===---
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Drawing.hcb:347:40 ===---
 ; ACAO LEITURA - Le ponteiro
@@ -7491,26 +7763,26 @@ mov ax, 57
 mov bx, ax
 pop ax
 cmp ax, bx
-jbe ROTULO597
-jmp ROTULO598
-ROTULO597:
+jbe ROTULO609
+jmp ROTULO610
+ROTULO609:
 mov ax, 65535
-jmp ROTULO599
-ROTULO598:
+jmp ROTULO611
+ROTULO610:
 xor ax, ax
-ROTULO599:
+ROTULO611:
 cmp ax, 0
-je ROTULO592
-ROTULO591:
+je ROTULO604
+ROTULO603:
 mov ax, 65535
-jmp ROTULO593
-ROTULO592:
+jmp ROTULO605
+ROTULO604:
 xor ax, ax
-ROTULO593:
+ROTULO605:
 cmp ax, 0
-jne ROTULO589
-jmp ROTULO590
-ROTULO589:
+jne ROTULO601
+jmp ROTULO602
+ROTULO601:
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Drawing.hcb:347:59 ===---
 ; ACAO GRAVACAO - Grava em variavel
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Drawing.hcb:347:79 ===---
@@ -7530,7 +7802,7 @@ sub ax, bx
 pop bx
 add ax, bx
 mov [bp+-8], ax
-ROTULO590:
+ROTULO602:
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Drawing.hcb:348:13 ===---
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Drawing.hcb:348:31 ===---
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Drawing.hcb:348:22 ===---
@@ -7547,16 +7819,16 @@ mov ax, 65
 mov bx, ax
 pop ax
 cmp ax, bx
-jae ROTULO605
-jmp ROTULO606
-ROTULO605:
+jae ROTULO617
+jmp ROTULO618
+ROTULO617:
 mov ax, 65535
-jmp ROTULO607
-ROTULO606:
+jmp ROTULO619
+ROTULO618:
 xor ax, ax
-ROTULO607:
+ROTULO619:
 cmp ax, 0
-je ROTULO603
+je ROTULO615
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Drawing.hcb:348:45 ===---
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Drawing.hcb:348:40 ===---
 ; ACAO LEITURA - Le ponteiro
@@ -7568,26 +7840,26 @@ mov ax, 90
 mov bx, ax
 pop ax
 cmp ax, bx
-jbe ROTULO608
-jmp ROTULO609
-ROTULO608:
+jbe ROTULO620
+jmp ROTULO621
+ROTULO620:
 mov ax, 65535
-jmp ROTULO610
-ROTULO609:
+jmp ROTULO622
+ROTULO621:
 xor ax, ax
-ROTULO610:
+ROTULO622:
 cmp ax, 0
-je ROTULO603
-ROTULO602:
+je ROTULO615
+ROTULO614:
 mov ax, 65535
-jmp ROTULO604
-ROTULO603:
+jmp ROTULO616
+ROTULO615:
 xor ax, ax
-ROTULO604:
+ROTULO616:
 cmp ax, 0
-jne ROTULO600
-jmp ROTULO601
-ROTULO600:
+jne ROTULO612
+jmp ROTULO613
+ROTULO612:
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Drawing.hcb:348:59 ===---
 ; ACAO GRAVACAO - Grava em variavel
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Drawing.hcb:348:79 ===---
@@ -7607,7 +7879,7 @@ sub ax, bx
 pop bx
 add ax, bx
 mov [bp+-8], ax
-ROTULO601:
+ROTULO613:
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Drawing.hcb:349:13 ===---
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Drawing.hcb:349:31 ===---
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Drawing.hcb:349:22 ===---
@@ -7624,16 +7896,16 @@ mov ax, 97
 mov bx, ax
 pop ax
 cmp ax, bx
-jae ROTULO616
-jmp ROTULO617
-ROTULO616:
+jae ROTULO628
+jmp ROTULO629
+ROTULO628:
 mov ax, 65535
-jmp ROTULO618
-ROTULO617:
+jmp ROTULO630
+ROTULO629:
 xor ax, ax
-ROTULO618:
+ROTULO630:
 cmp ax, 0
-je ROTULO614
+je ROTULO626
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Drawing.hcb:349:45 ===---
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Drawing.hcb:349:40 ===---
 ; ACAO LEITURA - Le ponteiro
@@ -7645,26 +7917,26 @@ mov ax, 122
 mov bx, ax
 pop ax
 cmp ax, bx
-jbe ROTULO619
-jmp ROTULO620
-ROTULO619:
+jbe ROTULO631
+jmp ROTULO632
+ROTULO631:
 mov ax, 65535
-jmp ROTULO621
-ROTULO620:
+jmp ROTULO633
+ROTULO632:
 xor ax, ax
-ROTULO621:
+ROTULO633:
 cmp ax, 0
-je ROTULO614
-ROTULO613:
+je ROTULO626
+ROTULO625:
 mov ax, 65535
-jmp ROTULO615
-ROTULO614:
+jmp ROTULO627
+ROTULO626:
 xor ax, ax
-ROTULO615:
+ROTULO627:
 cmp ax, 0
-jne ROTULO611
-jmp ROTULO612
-ROTULO611:
+jne ROTULO623
+jmp ROTULO624
+ROTULO623:
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Drawing.hcb:349:59 ===---
 ; ACAO GRAVACAO - Grava em variavel
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Drawing.hcb:349:79 ===---
@@ -7684,7 +7956,7 @@ sub ax, bx
 pop bx
 add ax, bx
 mov [bp+-8], ax
-ROTULO612:
+ROTULO624:
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Drawing.hcb:350:13 ===---
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Drawing.hcb:350:21 ===---
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Drawing.hcb:350:16 ===---
@@ -7700,22 +7972,22 @@ mov ax, 32
 mov bx, ax
 pop ax
 cmp ax, bx
-je ROTULO624
-jmp ROTULO625
-ROTULO624:
+je ROTULO636
+jmp ROTULO637
+ROTULO636:
 mov ax, 65535
-jmp ROTULO626
-ROTULO625:
+jmp ROTULO638
+ROTULO637:
 xor ax, ax
-ROTULO626:
+ROTULO638:
 cmp ax, 0
-jne ROTULO622
-jmp ROTULO623
-ROTULO622:
+jne ROTULO634
+jmp ROTULO635
+ROTULO634:
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Drawing.hcb:350:34 ===---
 ; ACAO GRAVACAO - Grava em variavel
 mov word [bp+-8], 1
-ROTULO623:
+ROTULO635:
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Drawing.hcb:351:13 ===---
 ; ACAO GRAVACAO - Gravacao em ponteiro
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Drawing.hcb:351:23 ===---
@@ -7786,27 +8058,27 @@ xor ax, ax
 mov bx, ax
 pop ax
 cmp ax, bx
-je ROTULO629
-jmp ROTULO630
-ROTULO629:
+je ROTULO641
+jmp ROTULO642
+ROTULO641:
 mov ax, 65535
-jmp ROTULO631
-ROTULO630:
+jmp ROTULO643
+ROTULO642:
 xor ax, ax
-ROTULO631:
+ROTULO643:
 cmp ax, 0
-jne ROTULO627
-jmp ROTULO628
-ROTULO627:
+jne ROTULO639
+jmp ROTULO640
+ROTULO639:
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Drawing.hcb:357:35 ===---
 ; ACAO GRAVACAO - Grava em variavel
 mov word [bp+-12], 1
-ROTULO628:
+ROTULO640:
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Drawing.hcb:358:31 ===---
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Drawing.hcb:358:31 ===---
 ; ACAO GRAVACAO - Grava em variavel
 mov word [bp+-20], 1
-ROTULO632:
+ROTULO644:
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Drawing.hcb:358:31 ===---
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Drawing.hcb:358:31 ===---
 ; ACAO LEITURA - Le variavel
@@ -7821,18 +8093,18 @@ es mov ax, [di+14]
 mov bx, ax
 pop ax
 cmp ax, bx
-jbe ROTULO635
-jmp ROTULO636
-ROTULO635:
+jbe ROTULO647
+jmp ROTULO648
+ROTULO647:
 mov ax, 65535
-jmp ROTULO637
-ROTULO636:
+jmp ROTULO649
+ROTULO648:
 xor ax, ax
-ROTULO637:
+ROTULO649:
 cmp ax, 0
-jne ROTULO633
-jmp ROTULO634
-ROTULO633:
+jne ROTULO645
+jmp ROTULO646
+ROTULO645:
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Drawing.hcb:359:17 ===---
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Drawing.hcb:359:32 ===---
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Drawing.hcb:359:23 ===---
@@ -7852,26 +8124,26 @@ mov ax, [bp+-38]
 mov bx, ax
 pop ax
 cmp ax, bx
-ja ROTULO640
-jmp ROTULO641
-ROTULO640:
+ja ROTULO652
+jmp ROTULO653
+ROTULO652:
 mov ax, 65535
-jmp ROTULO642
-ROTULO641:
+jmp ROTULO654
+ROTULO653:
 xor ax, ax
-ROTULO642:
+ROTULO654:
 cmp ax, 0
-jne ROTULO638
-jmp ROTULO639
-ROTULO638:
+jne ROTULO650
+jmp ROTULO651
+ROTULO650:
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Drawing.hcb:360:21 ===---
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Drawing.hcb:360:24 ===---
 ; ACAO LEITURA - Le variavel
 mov ax, [bp+24]
 cmp ax, 0
-jne ROTULO643
-jmp ROTULO644
-ROTULO643:
+jne ROTULO655
+jmp ROTULO656
+ROTULO655:
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Drawing.hcb:361:25 ===---
 ; ACAO GRAVACAO - Grava em variavel
 mov word [bp+-26], 0
@@ -7888,19 +8160,19 @@ mov ax, [bp+16]
 pop bx
 add ax, bx
 mov [bp+16], ax
-jmp ROTULO645
-ROTULO644:
+jmp ROTULO657
+ROTULO656:
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Drawing.hcb:364:25 ===---
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Drawing.hcb:364:30 ===---
 xor ax, ax
-jmp ROTULO582
-ROTULO645:
-ROTULO639:
+jmp ROTULO594
+ROTULO657:
+ROTULO651:
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Drawing.hcb:367:30 ===---
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Drawing.hcb:367:30 ===---
 ; ACAO GRAVACAO - Grava em variavel
 mov word [bp+-22], 1
-ROTULO646:
+ROTULO658:
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Drawing.hcb:367:30 ===---
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Drawing.hcb:367:30 ===---
 ; ACAO LEITURA - Le variavel
@@ -7912,18 +8184,18 @@ mov ax, [bp+-12]
 mov bx, ax
 pop ax
 cmp ax, bx
-jbe ROTULO649
-jmp ROTULO650
-ROTULO649:
+jbe ROTULO661
+jmp ROTULO662
+ROTULO661:
 mov ax, 65535
-jmp ROTULO651
-ROTULO650:
+jmp ROTULO663
+ROTULO662:
 xor ax, ax
-ROTULO651:
+ROTULO663:
 cmp ax, 0
-jne ROTULO647
-jmp ROTULO648
-ROTULO647:
+jne ROTULO659
+jmp ROTULO660
+ROTULO659:
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Drawing.hcb:368:21 ===---
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Drawing.hcb:368:26 ===---
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Drawing.hcb:368:24 ===---
@@ -7936,23 +8208,23 @@ mov ax, [bp+-12]
 mov bx, ax
 pop ax
 cmp ax, bx
-jb ROTULO654
-jmp ROTULO655
-ROTULO654:
+jb ROTULO666
+jmp ROTULO667
+ROTULO666:
 mov ax, 65535
-jmp ROTULO656
-ROTULO655:
+jmp ROTULO668
+ROTULO667:
 xor ax, ax
-ROTULO656:
+ROTULO668:
 cmp ax, 0
-jne ROTULO652
-jmp ROTULO653
-ROTULO652:
+jne ROTULO664
+jmp ROTULO665
+ROTULO664:
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Drawing.hcb:369:25 ===---
 ; ACAO GRAVACAO - Grava em variavel
 mov word [bp+-14], 8
-jmp ROTULO657
-ROTULO653:
+jmp ROTULO669
+ROTULO665:
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Drawing.hcb:371:25 ===---
 ; ACAO GRAVACAO - Grava em variavel
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Drawing.hcb:371:42 ===---
@@ -7977,23 +8249,23 @@ mov ax, 8
 mov bx, ax
 pop ax
 cmp ax, bx
-je ROTULO663
-jmp ROTULO664
-ROTULO663:
+je ROTULO675
+jmp ROTULO676
+ROTULO675:
 mov ax, 65535
-jmp ROTULO665
-ROTULO664:
+jmp ROTULO677
+ROTULO676:
 xor ax, ax
-ROTULO665:
+ROTULO677:
 cmp ax, 0
-jne ROTULO661
-jmp ROTULO662
-ROTULO661:
+jne ROTULO673
+jmp ROTULO674
+ROTULO673:
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Drawing.hcb:372:44 ===---
 ; ACAO GRAVACAO - Grava em variavel
 mov word [bp+-14], 8
-ROTULO662:
-ROTULO657:
+ROTULO674:
+ROTULO669:
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Drawing.hcb:374:21 ===---
 ; ACAO GRAVACAO - Grava em variavel
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Drawing.hcb:374:28 ===---
@@ -8008,7 +8280,7 @@ mov [bp+-32], ax
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Drawing.hcb:375:34 ===---
 ; ACAO GRAVACAO - Grava em variavel
 mov word [bp+-24], 1
-ROTULO666:
+ROTULO678:
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Drawing.hcb:375:34 ===---
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Drawing.hcb:375:34 ===---
 ; ACAO LEITURA - Le variavel
@@ -8020,18 +8292,18 @@ mov ax, [bp+-14]
 mov bx, ax
 pop ax
 cmp ax, bx
-jbe ROTULO669
-jmp ROTULO670
-ROTULO669:
+jbe ROTULO681
+jmp ROTULO682
+ROTULO681:
 mov ax, 65535
-jmp ROTULO671
-ROTULO670:
+jmp ROTULO683
+ROTULO682:
 xor ax, ax
-ROTULO671:
+ROTULO683:
 cmp ax, 0
-jne ROTULO667
-jmp ROTULO668
-ROTULO667:
+jne ROTULO679
+jmp ROTULO680
+ROTULO679:
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Drawing.hcb:376:25 ===---
 ; ACAO GRAVACAO - Grava em variavel
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Drawing.hcb:376:59 ===---
@@ -8073,9 +8345,9 @@ mov bx, ax
 pop ax
 and ax, bx
 cmp ax, 0
-jne ROTULO672
-jmp ROTULO673
-ROTULO672:
+jne ROTULO684
+jmp ROTULO685
+ROTULO684:
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Drawing.hcb:378:29 ===---
 ; ACAO GRAVACAO - Grava em variavel
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Drawing.hcb:378:48 ===---
@@ -8115,16 +8387,16 @@ mov ax, [bp+18]
 mov bx, ax
 pop ax
 cmp ax, bx
-jbe ROTULO682
-jmp ROTULO683
-ROTULO682:
+jbe ROTULO694
+jmp ROTULO695
+ROTULO694:
 mov ax, 65535
-jmp ROTULO684
-ROTULO683:
+jmp ROTULO696
+ROTULO695:
 xor ax, ax
-ROTULO684:
+ROTULO696:
 cmp ax, 0
-je ROTULO680
+je ROTULO692
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Drawing.hcb:379:61 ===---
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Drawing.hcb:379:55 ===---
 ; ACAO LEITURA - Le variavel
@@ -8136,26 +8408,26 @@ mov ax, [bp+20]
 mov bx, ax
 pop ax
 cmp ax, bx
-jbe ROTULO685
-jmp ROTULO686
-ROTULO685:
+jbe ROTULO697
+jmp ROTULO698
+ROTULO697:
 mov ax, 65535
-jmp ROTULO687
-ROTULO686:
+jmp ROTULO699
+ROTULO698:
 xor ax, ax
-ROTULO687:
+ROTULO699:
 cmp ax, 0
-je ROTULO680
-ROTULO679:
+je ROTULO692
+ROTULO691:
 mov ax, 65535
-jmp ROTULO681
-ROTULO680:
+jmp ROTULO693
+ROTULO692:
 xor ax, ax
-ROTULO681:
+ROTULO693:
 cmp ax, 0
-jne ROTULO677
-jmp ROTULO678
-ROTULO677:
+jne ROTULO689
+jmp ROTULO690
+ROTULO689:
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Drawing.hcb:380:33 ===---
 ; ACAO CHAMADA - Chama rotina
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Drawing.hcb:380:66 ===---
@@ -8173,8 +8445,8 @@ push ax
 push cs
 call _graphics_drawpixel
 add sp, 6
-ROTULO678:
-ROTULO673:
+ROTULO690:
+ROTULO685:
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Drawing.hcb:383:25 ===---
 ; ACAO GRAVACAO - Grava em variavel
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Drawing.hcb:383:35 ===---
@@ -8191,21 +8463,21 @@ mov [bp+-32], ax
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Drawing.hcb:375:34 ===---
 ; ACAO INC - Incrementa variavel
 inc word [bp+-24]
-jmp ROTULO666
-ROTULO668:
+jmp ROTULO678
+ROTULO680:
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Drawing.hcb:385:22 ===---
 ; ACAO INC - Incrementa variavel
 inc word [bp+-4]
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Drawing.hcb:367:30 ===---
 ; ACAO INC - Incrementa variavel
 inc word [bp+-22]
-jmp ROTULO646
-ROTULO648:
+jmp ROTULO658
+ROTULO660:
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Drawing.hcb:358:31 ===---
 ; ACAO INC - Incrementa variavel
 inc word [bp+-20]
-jmp ROTULO632
-ROTULO634:
+jmp ROTULO644
+ROTULO646:
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Drawing.hcb:388:13 ===---
 ; ACAO GRAVACAO - Grava em variavel
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Drawing.hcb:388:27 ===---
@@ -8235,9 +8507,9 @@ inc word [bp+10]
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Drawing.hcb:343:24 ===---
 ; ACAO INC - Incrementa variavel
 inc word [bp+-16]
-jmp ROTULO583
-ROTULO585:
-ROTULO582:
+jmp ROTULO595
+ROTULO597:
+ROTULO594:
 mov sp, bp
 pop bp
 FIM_font_drawtext:
@@ -8336,7 +8608,7 @@ es mov [di+2], ax
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Drawing.hcb:417:24 ===---
 ; ACAO GRAVACAO - Grava em variavel
 mov word [bp+-16], 1
-ROTULO689:
+ROTULO701:
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Drawing.hcb:417:24 ===---
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Drawing.hcb:417:24 ===---
 ; ACAO LEITURA - Le variavel
@@ -8348,18 +8620,18 @@ mov ax, [bp+-6]
 mov bx, ax
 pop ax
 cmp ax, bx
-jbe ROTULO692
-jmp ROTULO693
-ROTULO692:
+jbe ROTULO704
+jmp ROTULO705
+ROTULO704:
 mov ax, 65535
-jmp ROTULO694
-ROTULO693:
+jmp ROTULO706
+ROTULO705:
 xor ax, ax
-ROTULO694:
+ROTULO706:
 cmp ax, 0
-jne ROTULO690
-jmp ROTULO691
-ROTULO690:
+jne ROTULO702
+jmp ROTULO703
+ROTULO702:
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Drawing.hcb:418:13 ===---
 ; ACAO GRAVACAO - Grava em variavel
 mov word [bp+-8], 0
@@ -8379,16 +8651,16 @@ mov ax, 48
 mov bx, ax
 pop ax
 cmp ax, bx
-jae ROTULO700
-jmp ROTULO701
-ROTULO700:
+jae ROTULO712
+jmp ROTULO713
+ROTULO712:
 mov ax, 65535
-jmp ROTULO702
-ROTULO701:
+jmp ROTULO714
+ROTULO713:
 xor ax, ax
-ROTULO702:
+ROTULO714:
 cmp ax, 0
-je ROTULO698
+je ROTULO710
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Drawing.hcb:419:45 ===---
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Drawing.hcb:419:40 ===---
 ; ACAO LEITURA - Le ponteiro
@@ -8400,26 +8672,26 @@ mov ax, 57
 mov bx, ax
 pop ax
 cmp ax, bx
-jbe ROTULO703
-jmp ROTULO704
-ROTULO703:
+jbe ROTULO715
+jmp ROTULO716
+ROTULO715:
 mov ax, 65535
-jmp ROTULO705
-ROTULO704:
+jmp ROTULO717
+ROTULO716:
 xor ax, ax
-ROTULO705:
+ROTULO717:
 cmp ax, 0
-je ROTULO698
-ROTULO697:
+je ROTULO710
+ROTULO709:
 mov ax, 65535
-jmp ROTULO699
-ROTULO698:
+jmp ROTULO711
+ROTULO710:
 xor ax, ax
-ROTULO699:
+ROTULO711:
 cmp ax, 0
-jne ROTULO695
-jmp ROTULO696
-ROTULO695:
+jne ROTULO707
+jmp ROTULO708
+ROTULO707:
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Drawing.hcb:419:59 ===---
 ; ACAO GRAVACAO - Grava em variavel
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Drawing.hcb:419:79 ===---
@@ -8439,7 +8711,7 @@ sub ax, bx
 pop bx
 add ax, bx
 mov [bp+-8], ax
-ROTULO696:
+ROTULO708:
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Drawing.hcb:420:13 ===---
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Drawing.hcb:420:31 ===---
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Drawing.hcb:420:22 ===---
@@ -8456,16 +8728,16 @@ mov ax, 65
 mov bx, ax
 pop ax
 cmp ax, bx
-jae ROTULO711
-jmp ROTULO712
-ROTULO711:
+jae ROTULO723
+jmp ROTULO724
+ROTULO723:
 mov ax, 65535
-jmp ROTULO713
-ROTULO712:
+jmp ROTULO725
+ROTULO724:
 xor ax, ax
-ROTULO713:
+ROTULO725:
 cmp ax, 0
-je ROTULO709
+je ROTULO721
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Drawing.hcb:420:45 ===---
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Drawing.hcb:420:40 ===---
 ; ACAO LEITURA - Le ponteiro
@@ -8477,26 +8749,26 @@ mov ax, 90
 mov bx, ax
 pop ax
 cmp ax, bx
-jbe ROTULO714
-jmp ROTULO715
-ROTULO714:
+jbe ROTULO726
+jmp ROTULO727
+ROTULO726:
 mov ax, 65535
-jmp ROTULO716
-ROTULO715:
+jmp ROTULO728
+ROTULO727:
 xor ax, ax
-ROTULO716:
+ROTULO728:
 cmp ax, 0
-je ROTULO709
-ROTULO708:
+je ROTULO721
+ROTULO720:
 mov ax, 65535
-jmp ROTULO710
-ROTULO709:
+jmp ROTULO722
+ROTULO721:
 xor ax, ax
-ROTULO710:
+ROTULO722:
 cmp ax, 0
-jne ROTULO706
-jmp ROTULO707
-ROTULO706:
+jne ROTULO718
+jmp ROTULO719
+ROTULO718:
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Drawing.hcb:420:59 ===---
 ; ACAO GRAVACAO - Grava em variavel
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Drawing.hcb:420:79 ===---
@@ -8516,7 +8788,7 @@ sub ax, bx
 pop bx
 add ax, bx
 mov [bp+-8], ax
-ROTULO707:
+ROTULO719:
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Drawing.hcb:421:13 ===---
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Drawing.hcb:421:31 ===---
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Drawing.hcb:421:22 ===---
@@ -8533,16 +8805,16 @@ mov ax, 97
 mov bx, ax
 pop ax
 cmp ax, bx
-jae ROTULO722
-jmp ROTULO723
-ROTULO722:
+jae ROTULO734
+jmp ROTULO735
+ROTULO734:
 mov ax, 65535
-jmp ROTULO724
-ROTULO723:
+jmp ROTULO736
+ROTULO735:
 xor ax, ax
-ROTULO724:
+ROTULO736:
 cmp ax, 0
-je ROTULO720
+je ROTULO732
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Drawing.hcb:421:45 ===---
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Drawing.hcb:421:40 ===---
 ; ACAO LEITURA - Le ponteiro
@@ -8554,26 +8826,26 @@ mov ax, 122
 mov bx, ax
 pop ax
 cmp ax, bx
-jbe ROTULO725
-jmp ROTULO726
-ROTULO725:
+jbe ROTULO737
+jmp ROTULO738
+ROTULO737:
 mov ax, 65535
-jmp ROTULO727
-ROTULO726:
+jmp ROTULO739
+ROTULO738:
 xor ax, ax
-ROTULO727:
+ROTULO739:
 cmp ax, 0
-je ROTULO720
-ROTULO719:
+je ROTULO732
+ROTULO731:
 mov ax, 65535
-jmp ROTULO721
-ROTULO720:
+jmp ROTULO733
+ROTULO732:
 xor ax, ax
-ROTULO721:
+ROTULO733:
 cmp ax, 0
-jne ROTULO717
-jmp ROTULO718
-ROTULO717:
+jne ROTULO729
+jmp ROTULO730
+ROTULO729:
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Drawing.hcb:421:59 ===---
 ; ACAO GRAVACAO - Grava em variavel
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Drawing.hcb:421:79 ===---
@@ -8593,7 +8865,7 @@ sub ax, bx
 pop bx
 add ax, bx
 mov [bp+-8], ax
-ROTULO718:
+ROTULO730:
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Drawing.hcb:422:13 ===---
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Drawing.hcb:422:21 ===---
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Drawing.hcb:422:16 ===---
@@ -8609,22 +8881,22 @@ mov ax, 32
 mov bx, ax
 pop ax
 cmp ax, bx
-je ROTULO730
-jmp ROTULO731
-ROTULO730:
+je ROTULO742
+jmp ROTULO743
+ROTULO742:
 mov ax, 65535
-jmp ROTULO732
-ROTULO731:
+jmp ROTULO744
+ROTULO743:
 xor ax, ax
-ROTULO732:
+ROTULO744:
 cmp ax, 0
-jne ROTULO728
-jmp ROTULO729
-ROTULO728:
+jne ROTULO740
+jmp ROTULO741
+ROTULO740:
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Drawing.hcb:422:34 ===---
 ; ACAO GRAVACAO - Grava em variavel
 mov word [bp+-8], 1
-ROTULO729:
+ROTULO741:
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Drawing.hcb:423:13 ===---
 ; ACAO GRAVACAO - Gravacao em ponteiro
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Drawing.hcb:423:23 ===---
@@ -8672,26 +8944,26 @@ mov ax, [bp+18]
 mov bx, ax
 pop ax
 cmp ax, bx
-ja ROTULO735
-jmp ROTULO736
-ROTULO735:
+ja ROTULO747
+jmp ROTULO748
+ROTULO747:
 mov ax, 65535
-jmp ROTULO737
-ROTULO736:
+jmp ROTULO749
+ROTULO748:
 xor ax, ax
-ROTULO737:
+ROTULO749:
 cmp ax, 0
-jne ROTULO733
-jmp ROTULO734
-ROTULO733:
+jne ROTULO745
+jmp ROTULO746
+ROTULO745:
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Drawing.hcb:426:17 ===---
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Drawing.hcb:426:20 ===---
 ; ACAO LEITURA - Le variavel
 mov ax, [bp+20]
 cmp ax, 0
-jne ROTULO738
-jmp ROTULO739
-ROTULO738:
+jne ROTULO750
+jmp ROTULO751
+ROTULO750:
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Drawing.hcb:427:21 ===---
 ; ACAO GRAVACAO - Grava em variavel
 mov word [bp+-26], 0
@@ -8728,14 +9000,14 @@ pop bx
 add ax, bx
 es mov [di+2], ax
 ; ACAO STRUCTURE - Gravacao de Ponteiro - Fim
-jmp ROTULO740
-ROTULO739:
+jmp ROTULO752
+ROTULO751:
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Drawing.hcb:432:21 ===---
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Drawing.hcb:432:26 ===---
 xor ax, ax
-jmp ROTULO688
-ROTULO740:
-ROTULO734:
+jmp ROTULO700
+ROTULO752:
+ROTULO746:
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Drawing.hcb:435:13 ===---
 ; ACAO GRAVACAO - Grava em variavel
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Drawing.hcb:435:27 ===---
@@ -8770,18 +9042,18 @@ xor ax, ax
 mov bx, ax
 pop ax
 cmp ax, bx
-je ROTULO743
-jmp ROTULO744
-ROTULO743:
+je ROTULO755
+jmp ROTULO756
+ROTULO755:
 mov ax, 65535
-jmp ROTULO745
-ROTULO744:
+jmp ROTULO757
+ROTULO756:
 xor ax, ax
-ROTULO745:
+ROTULO757:
 cmp ax, 0
-jne ROTULO741
-jmp ROTULO742
-ROTULO741:
+jne ROTULO753
+jmp ROTULO754
+ROTULO753:
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Drawing.hcb:436:34 ===---
 ; ACAO STRUCTURE - Gravacao de Ponteiro- Prepara
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Drawing.hcb:436:49 ===---
@@ -8792,16 +9064,16 @@ pop es
 mov di, [bp+14]
 es mov [di+0], ax
 ; ACAO STRUCTURE - Gravacao de Ponteiro - Fim
-ROTULO742:
+ROTULO754:
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Drawing.hcb:437:14 ===---
 ; ACAO INC - Incrementa variavel
 inc word [bp+10]
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Drawing.hcb:417:24 ===---
 ; ACAO INC - Incrementa variavel
 inc word [bp+-16]
-jmp ROTULO689
-ROTULO691:
-ROTULO688:
+jmp ROTULO701
+ROTULO703:
+ROTULO700:
 mov sp, bp
 pop bp
 FIM_font_calcsize:
@@ -8831,7 +9103,7 @@ mov word [bp+-2], 0
 ; ACAO INC - Incrementa variavel
 inc word [bp+6]
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.hcb:169:9 ===---
-ROTULO747:
+ROTULO759:
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.hcb:169:20 ===---
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.hcb:169:15 ===---
 ; ACAO LEITURA - Le ponteiro
@@ -8846,18 +9118,18 @@ xor ax, ax
 mov bx, ax
 pop ax
 cmp ax, bx
-ja ROTULO750
-jmp ROTULO751
-ROTULO750:
+ja ROTULO762
+jmp ROTULO763
+ROTULO762:
 mov ax, 65535
-jmp ROTULO752
-ROTULO751:
+jmp ROTULO764
+ROTULO763:
 xor ax, ax
-ROTULO752:
+ROTULO764:
 cmp ax, 0
-jne ROTULO748
-jmp ROTULO749
-ROTULO748:
+jne ROTULO760
+jmp ROTULO761
+ROTULO760:
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.hcb:170:17 ===---
 ; ACAO INC - Incrementa variavel
 inc word [bp+-2]
@@ -8865,14 +9137,14 @@ inc word [bp+-2]
 ; ACAO INC - Incrementa variavel
 inc word [bp+6]
 inc di
-jmp ROTULO747
-ROTULO749:
+jmp ROTULO759
+ROTULO761:
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.hcb:173:9 ===---
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.hcb:173:16 ===---
 ; ACAO LEITURA - Le variavel
 mov ax, [bp+-2]
-jmp ROTULO746
-ROTULO746:
+jmp ROTULO758
+ROTULO758:
 mov sp, bp
 pop bp
 FIM_string_length:
@@ -8937,18 +9209,18 @@ mov ax, [bp+-4]
 mov bx, ax
 pop ax
 cmp ax, bx
-ja ROTULO756
-jmp ROTULO757
-ROTULO756:
+ja ROTULO768
+jmp ROTULO769
+ROTULO768:
 mov ax, 65535
-jmp ROTULO758
-ROTULO757:
+jmp ROTULO770
+ROTULO769:
 xor ax, ax
-ROTULO758:
+ROTULO770:
 cmp ax, 0
-jne ROTULO754
-jmp ROTULO755
-ROTULO754:
+jne ROTULO766
+jmp ROTULO767
+ROTULO766:
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.hcb:183:38 ===---
 mov ax, _string
 mov [bp+-8], ax
@@ -8956,7 +9228,7 @@ mov ax, 183
 mov [bp+-10], ax
 mov ax, 4
 cs jmp word [_os_trycode]
-ROTULO755:
+ROTULO767:
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.hcb:184:9 ===---
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.hcb:184:23 ===---
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.hcb:184:18 ===---
@@ -8975,18 +9247,18 @@ mov ax, [bp+-2]
 mov bx, ax
 pop ax
 cmp ax, bx
-ja ROTULO761
-jmp ROTULO762
-ROTULO761:
+ja ROTULO773
+jmp ROTULO774
+ROTULO773:
 mov ax, 65535
-jmp ROTULO763
-ROTULO762:
+jmp ROTULO775
+ROTULO774:
 xor ax, ax
-ROTULO763:
+ROTULO775:
 cmp ax, 0
-jne ROTULO759
-jmp ROTULO760
-ROTULO759:
+jne ROTULO771
+jmp ROTULO772
+ROTULO771:
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.hcb:184:45 ===---
 mov ax, _string
 mov [bp+-8], ax
@@ -8994,7 +9266,7 @@ mov ax, 184
 mov [bp+-10], ax
 mov ax, 9
 cs jmp word [_os_trycode]
-ROTULO760:
+ROTULO772:
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.hcb:185:10 ===---
 ; ACAO INC - Incrementa variavel
 inc word [bp+6]
@@ -9021,7 +9293,7 @@ mov [bp+10], ax
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.hcb:187:22 ===---
 ; ACAO GRAVACAO - Grava em variavel
 mov word [bp+-6], 1
-ROTULO764:
+ROTULO776:
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.hcb:187:22 ===---
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.hcb:187:22 ===---
 ; ACAO LEITURA - Le variavel
@@ -9033,18 +9305,18 @@ mov ax, [bp+16]
 mov bx, ax
 pop ax
 cmp ax, bx
-jbe ROTULO767
-jmp ROTULO768
-ROTULO767:
+jbe ROTULO779
+jmp ROTULO780
+ROTULO779:
 mov ax, 65535
-jmp ROTULO769
-ROTULO768:
+jmp ROTULO781
+ROTULO780:
 xor ax, ax
-ROTULO769:
+ROTULO781:
 cmp ax, 0
-jne ROTULO765
-jmp ROTULO766
-ROTULO765:
+jne ROTULO777
+jmp ROTULO778
+ROTULO777:
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.hcb:188:13 ===---
 ; ACAO GRAVACAO - Grava em variavel
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.hcb:188:21 ===---
@@ -9074,15 +9346,15 @@ inc word [bp+10]
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.hcb:187:22 ===---
 ; ACAO INC - Incrementa variavel
 inc word [bp+-6]
-jmp ROTULO764
-ROTULO766:
+jmp ROTULO776
+ROTULO778:
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.hcb:193:9 ===---
 ; ACAO GRAVACAO - Gravacao de numero em ponteiro
 push word [bp+6+2]
 pop es
 mov di, [bp+6]
 es mov byte [di+0], 0
-ROTULO753:
+ROTULO765:
 mov sp, bp
 pop bp
 FIM_string_substring:
@@ -9102,7 +9374,7 @@ inc word [bp+6]
 ; ACAO INC - Incrementa variavel
 inc word [bp+10]
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.hcb:199:9 ===---
-ROTULO771:
+ROTULO783:
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.hcb:199:20 ===---
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.hcb:199:15 ===---
 ; ACAO LEITURA - Le ponteiro
@@ -9122,18 +9394,18 @@ es mov al, [di+0]
 mov bx, ax
 pop ax
 cmp ax, bx
-je ROTULO774
-jmp ROTULO775
-ROTULO774:
+je ROTULO786
+jmp ROTULO787
+ROTULO786:
 mov ax, 65535
-jmp ROTULO776
-ROTULO775:
+jmp ROTULO788
+ROTULO787:
 xor ax, ax
-ROTULO776:
+ROTULO788:
 cmp ax, 0
-jne ROTULO772
-jmp ROTULO773
-ROTULO772:
+jne ROTULO784
+jmp ROTULO785
+ROTULO784:
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.hcb:200:13 ===---
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.hcb:200:21 ===---
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.hcb:200:16 ===---
@@ -9149,36 +9421,36 @@ xor ax, ax
 mov bx, ax
 pop ax
 cmp ax, bx
-je ROTULO779
-jmp ROTULO780
-ROTULO779:
+je ROTULO791
+jmp ROTULO792
+ROTULO791:
 mov ax, 65535
-jmp ROTULO781
-ROTULO780:
+jmp ROTULO793
+ROTULO792:
 xor ax, ax
-ROTULO781:
+ROTULO793:
 cmp ax, 0
-jne ROTULO777
-jmp ROTULO778
-ROTULO777:
+jne ROTULO789
+jmp ROTULO790
+ROTULO789:
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.hcb:200:31 ===---
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.hcb:200:38 ===---
 mov ax, 1
-jmp ROTULO770
-ROTULO778:
+jmp ROTULO782
+ROTULO790:
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.hcb:201:14 ===---
 ; ACAO INC - Incrementa variavel
 inc word [bp+6]
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.hcb:202:14 ===---
 ; ACAO INC - Incrementa variavel
 inc word [bp+10]
-jmp ROTULO771
-ROTULO773:
+jmp ROTULO783
+ROTULO785:
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.hcb:204:9 ===---
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.hcb:204:16 ===---
 xor ax, ax
-jmp ROTULO770
-ROTULO770:
+jmp ROTULO782
+ROTULO782:
 mov sp, bp
 pop bp
 FIM_string_equals:
@@ -9275,18 +9547,18 @@ mov ax, [bp+-4]
 mov bx, ax
 pop ax
 cmp ax, bx
-ja ROTULO785
-jmp ROTULO786
-ROTULO785:
+ja ROTULO797
+jmp ROTULO798
+ROTULO797:
 mov ax, 65535
-jmp ROTULO787
-ROTULO786:
+jmp ROTULO799
+ROTULO798:
 xor ax, ax
-ROTULO787:
+ROTULO799:
 cmp ax, 0
-jne ROTULO783
-jmp ROTULO784
-ROTULO783:
+jne ROTULO795
+jmp ROTULO796
+ROTULO795:
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.hcb:216:62 ===---
 mov ax, _string
 mov [bp+-8], ax
@@ -9294,7 +9566,7 @@ mov ax, 216
 mov [bp+-10], ax
 mov ax, 9
 cs jmp word [_os_trycode]
-ROTULO784:
+ROTULO796:
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.hcb:217:10 ===---
 ; ACAO GRAVACAO - Grava em variavel
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.hcb:217:27 ===---
@@ -9321,7 +9593,7 @@ inc word [bp+10]
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.hcb:219:22 ===---
 ; ACAO GRAVACAO - Grava em variavel
 mov word [bp+-8], 1
-ROTULO788:
+ROTULO800:
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.hcb:219:22 ===---
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.hcb:219:22 ===---
 ; ACAO LEITURA - Le variavel
@@ -9333,18 +9605,18 @@ mov ax, [bp+-6]
 mov bx, ax
 pop ax
 cmp ax, bx
-jbe ROTULO791
-jmp ROTULO792
-ROTULO791:
+jbe ROTULO803
+jmp ROTULO804
+ROTULO803:
 mov ax, 65535
-jmp ROTULO793
-ROTULO792:
+jmp ROTULO805
+ROTULO804:
 xor ax, ax
-ROTULO793:
+ROTULO805:
 cmp ax, 0
-jne ROTULO789
-jmp ROTULO790
-ROTULO789:
+jne ROTULO801
+jmp ROTULO802
+ROTULO801:
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.hcb:220:13 ===---
 ; ACAO GRAVACAO - Grava em variavel
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.hcb:220:19 ===---
@@ -9374,8 +9646,8 @@ inc word [bp+10]
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.hcb:219:22 ===---
 ; ACAO INC - Incrementa variavel
 inc word [bp+-8]
-jmp ROTULO788
-ROTULO790:
+jmp ROTULO800
+ROTULO802:
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.hcb:225:9 ===---
 ; ACAO GRAVACAO - Gravacao de numero em ponteiro
 push word [bp+6+2]
@@ -9385,8 +9657,8 @@ es mov byte [di+0], 0
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.hcb:226:9 ===---
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.hcb:226:16 ===---
 mov ax, 1
-jmp ROTULO782
-ROTULO782:
+jmp ROTULO794
+ROTULO794:
 mov sp, bp
 pop bp
 FIM_string_concat:
@@ -9471,18 +9743,18 @@ add ax, bx
 mov bx, ax
 pop ax
 cmp ax, bx
-jb ROTULO797
-jmp ROTULO798
-ROTULO797:
+jb ROTULO809
+jmp ROTULO810
+ROTULO809:
 mov ax, 65535
-jmp ROTULO799
-ROTULO798:
+jmp ROTULO811
+ROTULO810:
 xor ax, ax
-ROTULO799:
+ROTULO811:
 cmp ax, 0
-jne ROTULO795
-jmp ROTULO796
-ROTULO795:
+jne ROTULO807
+jmp ROTULO808
+ROTULO807:
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.hcb:239:54 ===---
 mov ax, _string
 mov [bp+-8], ax
@@ -9490,12 +9762,12 @@ mov ax, 239
 mov [bp+-10], ax
 mov ax, 9
 cs jmp word [_os_trycode]
-ROTULO796:
+ROTULO808:
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.hcb:240:22 ===---
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.hcb:240:22 ===---
 ; ACAO GRAVACAO - Grava em variavel
 mov word [bp+-6], 1
-ROTULO800:
+ROTULO812:
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.hcb:240:22 ===---
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.hcb:240:22 ===---
 ; ACAO LEITURA - Le variavel
@@ -9507,18 +9779,18 @@ mov ax, [bp+-4]
 mov bx, ax
 pop ax
 cmp ax, bx
-jbe ROTULO803
-jmp ROTULO804
-ROTULO803:
+jbe ROTULO815
+jmp ROTULO816
+ROTULO815:
 mov ax, 65535
-jmp ROTULO805
-ROTULO804:
+jmp ROTULO817
+ROTULO816:
 xor ax, ax
-ROTULO805:
+ROTULO817:
 cmp ax, 0
-jne ROTULO801
-jmp ROTULO802
-ROTULO801:
+jne ROTULO813
+jmp ROTULO814
+ROTULO813:
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.hcb:241:13 ===---
 ; ACAO GRAVACAO - Grava em variavel
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.hcb:241:19 ===---
@@ -9547,8 +9819,8 @@ inc word [bp+6]
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.hcb:240:22 ===---
 ; ACAO INC - Incrementa variavel
 inc word [bp+-6]
-jmp ROTULO800
-ROTULO802:
+jmp ROTULO812
+ROTULO814:
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.hcb:246:9 ===---
 ; ACAO GRAVACAO - Gravacao de numero em ponteiro
 push word [bp+6+2]
@@ -9558,45 +9830,45 @@ es mov byte [di+0], 0
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.hcb:247:9 ===---
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.hcb:247:16 ===---
 mov ax, 1
-jmp ROTULO794
-ROTULO794:
+jmp ROTULO806
+ROTULO806:
 mov sp, bp
 pop bp
 FIM_string_copy:
 retf
 ; MODULO FIM: string
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:463:8 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:546:8 ===---
 ; MODULO: application
 _application:
 db 16
 db 83,121,115,116,101,109,46,70,111,114,109,115,46,104,99,98
 db 0
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:464:9 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:547:9 ===---
 _application_currenttheme:
 times 14 db 0
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:465:9 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:548:9 ===---
 _application_running:
 times 2 db 0
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:466:16 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:549:16 ===---
 _application_currentfocus:
 times 100 db 0
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:467:16 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:550:16 ===---
 _application_currentfocusform:
 times 100 db 0
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:468:16 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:551:16 ===---
 _application_keyboardupdate:
 times 4 db 0
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:469:16 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:552:16 ===---
 _application_mouseupdate:
 times 4 db 0
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:470:16 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:553:16 ===---
 _application_exitstatus:
 times 2 db 0
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:472:16 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:555:16 ===---
 _application_applydarktheme:
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:473:9 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:556:9 ===---
 ; ACAO STRUCTURE - Gravacao de Ponteiro- Prepara
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:473:40 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:556:40 ===---
 ; ACAO CHAMADA - Chama rotina
 push cs
 call _colors_black
@@ -9605,9 +9877,9 @@ pop es
 cs mov di, [_application_currenttheme]
 es mov [di+0], ax
 ; ACAO STRUCTURE - Gravacao de Ponteiro - Fim
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:474:9 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:557:9 ===---
 ; ACAO STRUCTURE - Gravacao de Ponteiro- Prepara
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:474:34 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:557:34 ===---
 ; ACAO CHAMADA - Chama rotina
 push cs
 call _colors_white
@@ -9616,9 +9888,9 @@ pop es
 cs mov di, [_application_currenttheme]
 es mov [di+2], ax
 ; ACAO STRUCTURE - Gravacao de Ponteiro - Fim
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:475:9 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:558:9 ===---
 ; ACAO STRUCTURE - Gravacao de Ponteiro- Prepara
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:475:42 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:558:42 ===---
 ; ACAO CHAMADA - Chama rotina
 push cs
 call _colors_white
@@ -9627,9 +9899,9 @@ pop es
 cs mov di, [_application_currenttheme]
 es mov [di+4], ax
 ; ACAO STRUCTURE - Gravacao de Ponteiro - Fim
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:476:9 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:559:9 ===---
 ; ACAO STRUCTURE - Gravacao de Ponteiro- Prepara
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:476:36 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:559:36 ===---
 ; ACAO CHAMADA - Chama rotina
 push cs
 call _colors_black
@@ -9638,9 +9910,9 @@ pop es
 cs mov di, [_application_currenttheme]
 es mov [di+6], ax
 ; ACAO STRUCTURE - Gravacao de Ponteiro - Fim
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:477:9 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:560:9 ===---
 ; ACAO STRUCTURE - Gravacao de Ponteiro- Prepara
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:477:41 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:560:41 ===---
 ; ACAO CHAMADA - Chama rotina
 push cs
 call _colors_white
@@ -9649,26 +9921,26 @@ pop es
 cs mov di, [_application_currenttheme]
 es mov [di+8], ax
 ; ACAO STRUCTURE - Gravacao de Ponteiro - Fim
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:478:9 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:561:9 ===---
 ; ACAO CHAMADA - Chama rotina
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:478:33 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:561:33 ===---
 ; ACAO LEITURA - Le ponteiro
 push es
 push di
 push cs
 call _systemcolors_initialize
 add sp, 4
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:479:9 ===---
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:479:12 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:562:9 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:562:12 ===---
 ; ACAO LEITURA - Le variavel
 cs mov ax, [_application_running]
 cmp ax, 0
-jne ROTULO807
-jmp ROTULO808
-ROTULO807:
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:479:25 ===---
+jne ROTULO819
+jmp ROTULO820
+ROTULO819:
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:562:25 ===---
 ; ACAO CHAMADA - Chama rotina
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:479:40 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:562:40 ===---
 ; ACAO LEITURA - Le ponteiro
 cs push word [_screen_screencontrol+2]
 pop es
@@ -9678,15 +9950,15 @@ push di
 push cs
 call _control_redraw
 add sp, 4
-ROTULO808:
-ROTULO806:
+ROTULO820:
+ROTULO818:
 FIM_application_applydarktheme:
 retf
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:482:16 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:565:16 ===---
 _application_applydefaulttheme:
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:483:9 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:566:9 ===---
 ; ACAO STRUCTURE - Gravacao de Ponteiro- Prepara
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:483:40 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:566:40 ===---
 ; ACAO CHAMADA - Chama rotina
 push cs
 call _colors_white
@@ -9695,9 +9967,9 @@ pop es
 cs mov di, [_application_currenttheme]
 es mov [di+0], ax
 ; ACAO STRUCTURE - Gravacao de Ponteiro - Fim
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:484:9 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:567:9 ===---
 ; ACAO STRUCTURE - Gravacao de Ponteiro- Prepara
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:484:34 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:567:34 ===---
 ; ACAO CHAMADA - Chama rotina
 push cs
 call _colors_black
@@ -9706,9 +9978,9 @@ pop es
 cs mov di, [_application_currenttheme]
 es mov [di+2], ax
 ; ACAO STRUCTURE - Gravacao de Ponteiro - Fim
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:485:9 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:568:9 ===---
 ; ACAO STRUCTURE - Gravacao de Ponteiro- Prepara
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:485:42 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:568:42 ===---
 ; ACAO CHAMADA - Chama rotina
 push cs
 call _colors_black
@@ -9717,9 +9989,9 @@ pop es
 cs mov di, [_application_currenttheme]
 es mov [di+4], ax
 ; ACAO STRUCTURE - Gravacao de Ponteiro - Fim
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:486:9 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:569:9 ===---
 ; ACAO STRUCTURE - Gravacao de Ponteiro- Prepara
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:486:36 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:569:36 ===---
 ; ACAO CHAMADA - Chama rotina
 push cs
 call _colors_white
@@ -9728,9 +10000,9 @@ pop es
 cs mov di, [_application_currenttheme]
 es mov [di+6], ax
 ; ACAO STRUCTURE - Gravacao de Ponteiro - Fim
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:487:9 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:570:9 ===---
 ; ACAO STRUCTURE - Gravacao de Ponteiro- Prepara
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:487:41 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:570:41 ===---
 ; ACAO CHAMADA - Chama rotina
 push cs
 call _colors_black
@@ -9739,26 +10011,26 @@ pop es
 cs mov di, [_application_currenttheme]
 es mov [di+8], ax
 ; ACAO STRUCTURE - Gravacao de Ponteiro - Fim
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:488:9 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:571:9 ===---
 ; ACAO CHAMADA - Chama rotina
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:488:33 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:571:33 ===---
 ; ACAO LEITURA - Le ponteiro
 push es
 push di
 push cs
 call _systemcolors_initialize
 add sp, 4
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:489:9 ===---
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:489:12 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:572:9 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:572:12 ===---
 ; ACAO LEITURA - Le variavel
 cs mov ax, [_application_running]
 cmp ax, 0
-jne ROTULO810
-jmp ROTULO811
-ROTULO810:
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:489:25 ===---
+jne ROTULO822
+jmp ROTULO823
+ROTULO822:
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:572:25 ===---
 ; ACAO CHAMADA - Chama rotina
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:489:40 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:572:40 ===---
 ; ACAO LEITURA - Le ponteiro
 cs push word [_screen_screencontrol+2]
 pop es
@@ -9768,56 +10040,56 @@ push di
 push cs
 call _control_redraw
 add sp, 4
-ROTULO811:
-ROTULO809:
+ROTULO823:
+ROTULO821:
 FIM_application_applydefaulttheme:
 retf
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:492:16 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:575:16 ===---
 _application_initialize:
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:493:10 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:576:10 ===---
 ; ACAO STRUCTURE - Define Segmento/desvio de estrutura
 ; ACAO GRAVACAO - Grava segmento em variavel
 cs mov word [_application_currentfocus+2], 0
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:494:10 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:577:10 ===---
 ; ACAO STRUCTURE - Define Segmento/desvio de estrutura
 ; ACAO GRAVACAO - Grava em variavel
 cs mov word [_application_currentfocus], 0
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:495:9 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:578:9 ===---
 ; ACAO GRAVACAO - Grava em variavel
 cs mov word [_application_running], 0
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:496:9 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:579:9 ===---
 ; ACAO GRAVACAO - Grava em variavel
 cs mov word [_application_exitstatus], 0
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:497:9 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:580:9 ===---
 ; ACAO CHAMADA - Chama rotina
 push cs
 call _screen_initialize
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:498:9 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:581:9 ===---
 ; ACAO CHAMADA - Chama rotina
 push cs
 call _application_applydefaulttheme
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:499:9 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:582:9 ===---
 ; ACAO GRAVACAO - Gravacao em ponteiro
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:499:26 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:582:26 ===---
 push cs
 pop es
 mov di, _application_generickeyboardupdate
 push es
 cs pop word [_application_keyboardupdate+2]
 cs mov [_application_keyboardupdate], di
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:500:9 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:583:9 ===---
 ; ACAO GRAVACAO - Gravacao em ponteiro
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:500:23 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:583:23 ===---
 push cs
 pop es
 mov di, _application_genericmouseupdate
 push es
 cs pop word [_application_mouseupdate+2]
 cs mov [_application_mouseupdate], di
-ROTULO812:
+ROTULO824:
 FIM_application_initialize:
 retf
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:503:9 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:586:9 ===---
 _application_generickeyboardupdate:
 push bp
 mov bp, sp
@@ -9826,18 +10098,18 @@ push cs
 call _os_stackcheck
 ; ARG: ctrl TAM: 4 POS: BP+6 
 ; ARG: e TAM: 4 POS: BP--4 
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:503:31 ===---
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:505:17 ===---
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:504:9 ===---
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:504:12 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:586:31 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:588:17 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:587:9 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:587:12 ===---
 ; ACAO CHAMADA - Chama rotina
 push cs
 call _os_consoleavail
 cmp ax, 0
-jne ROTULO814
-jmp ROTULO815
-ROTULO814:
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:506:13 ===---
+jne ROTULO826
+jmp ROTULO827
+ROTULO826:
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:589:13 ===---
 ; ACAO STRUCTURE - Aloca estrutura na pilha
 sub sp, 9
 push ss
@@ -9846,9 +10118,9 @@ mov di, sp
 push es
 pop word [bp+-4+2]
 mov [bp+-4], di
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:507:13 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:590:13 ===---
 ; ACAO STRUCTURE - Gravacao de Ponteiro- Prepara
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:507:27 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:590:27 ===---
 ; ACAO CHAMADA - Chama rotina
 push cs
 call _os_consolereadchar
@@ -9857,39 +10129,39 @@ pop es
 mov di, [bp+-4]
 es mov [di+0], al
 ; ACAO STRUCTURE - Gravacao de Ponteiro - Fim
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:508:13 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:591:13 ===---
 ; ACAO STRUCTURE - Gravacao de Ponteiro- Prepara
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:508:29 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:591:29 ===---
 ; ACAO STRUCTURE - Leitura de Ponteiro - (U)Int8 - Desvio 0
 xor ax, ax
 es mov al, [di+0]
 es mov [di+1], ax
 ; ACAO STRUCTURE - Gravacao de Ponteiro - Fim
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:509:13 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:592:13 ===---
 ; ACAO STRUCTURE - Gravacao de Ponteiro- Prepara
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:509:30 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:592:30 ===---
 xor ax, ax
 es mov [di+3], ax
 ; ACAO STRUCTURE - Gravacao de Ponteiro - Fim
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:510:13 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:593:13 ===---
 ; ACAO STRUCTURE - Gravacao de Ponteiro- Prepara
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:510:24 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:593:24 ===---
 xor ax, ax
 es mov [di+7], ax
 ; ACAO STRUCTURE - Gravacao de Ponteiro - Fim
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:511:13 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:594:13 ===---
 ; ACAO STRUCTURE - Gravacao de Ponteiro- Prepara
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:511:25 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:594:25 ===---
 mov ax, 1
 es mov [di+5], ax
 ; ACAO STRUCTURE - Gravacao de Ponteiro - Fim
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:512:13 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:595:13 ===---
 ; ACAO CHAMADA - Chama rotina
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:512:43 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:595:43 ===---
 ; ACAO LEITURA - Le ponteiro
 push es
 push di
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:512:37 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:595:37 ===---
 ; ACAO LEITURA - Le ponteiro
 push word [bp+6+2]
 pop es
@@ -9899,65 +10171,65 @@ push di
 push cs
 call _control_processkeyboard
 add sp, 8
-ROTULO815:
-ROTULO813:
+ROTULO827:
+ROTULO825:
 mov sp, bp
 pop bp
 FIM_application_generickeyboardupdate:
 retf
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:516:9 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:599:9 ===---
 _application_genericmouseupdate:
 push bp
 mov bp, sp
 ; ARG: ctrl TAM: 4 POS: BP+6 
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:516:28 ===---
-ROTULO816:
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:599:28 ===---
+ROTULO828:
 mov sp, bp
 pop bp
 FIM_application_genericmouseupdate:
 retf
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:519:16 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:602:16 ===---
 _application_exit:
 push bp
 mov bp, sp
 ; ARG: status TAM: 2 POS: BP+6 
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:519:21 ===---
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:520:9 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:602:21 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:603:9 ===---
 ; ACAO GRAVACAO - Grava em variavel
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:520:22 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:603:22 ===---
 ; ACAO LEITURA - Le variavel
 mov ax, [bp+6]
 cs mov [_application_exitstatus], ax
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:521:9 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:604:9 ===---
 ; ACAO GRAVACAO - Grava em variavel
 cs mov word [_application_running], 0
-ROTULO817:
+ROTULO829:
 mov sp, bp
 pop bp
 FIM_application_exit:
 retf
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:524:16 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:607:16 ===---
 _application_run:
 push bp
 mov bp, sp
 ; ARG: ctrl TAM: 4 POS: BP+6 
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:524:20 ===---
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:525:9 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:607:20 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:608:9 ===---
 ; ACAO STRUCTURE - Gravacao de Ponteiro- Prepara
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:525:24 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:608:24 ===---
 mov ax, 1
 push word [bp+6+2]
 pop es
 mov di, [bp+6]
 es mov [di+14], al
 ; ACAO STRUCTURE - Gravacao de Ponteiro - Fim
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:526:9 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:609:9 ===---
 ; ACAO CHAMADA - Chama rotina
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:526:43 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:609:43 ===---
 ; ACAO LEITURA - Le ponteiro
 push es
 push di
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:526:21 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:609:21 ===---
 ; ACAO LEITURA - Le ponteiro
 cs push word [_screen_screencontrol+2]
 pop es
@@ -9967,9 +10239,9 @@ push di
 push cs
 call _control_add
 add sp, 8
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:527:9 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:610:9 ===---
 ; ACAO CHAMADA - Chama rotina
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:527:24 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:610:24 ===---
 ; ACAO LEITURA - Le ponteiro
 cs push word [_screen_screencontrol+2]
 pop es
@@ -9979,9 +10251,9 @@ push di
 push cs
 call _control_redraw
 add sp, 4
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:528:9 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:611:9 ===---
 ; ACAO CHAMADA - Chama rotina
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:528:23 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:611:23 ===---
 ; ACAO LEITURA - Le ponteiro
 push word [bp+6+2]
 pop es
@@ -9991,21 +10263,21 @@ push di
 push cs
 call _control_focus
 add sp, 4
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:529:9 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:612:9 ===---
 ; ACAO GRAVACAO - Grava em variavel
 cs mov word [_application_running], 1
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:530:9 ===---
-ROTULO819:
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:530:15 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:613:9 ===---
+ROTULO831:
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:613:15 ===---
 ; ACAO LEITURA - Le variavel
 cs mov ax, [_application_running]
 cmp ax, 0
-jne ROTULO820
-jmp ROTULO821
-ROTULO820:
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:531:13 ===---
+jne ROTULO832
+jmp ROTULO833
+ROTULO832:
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:614:13 ===---
 ; ACAO CHAMADA - Chama indiretamente usando Invoke
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:531:35 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:614:35 ===---
 ; ACAO LEITURA - Le ponteiro
 cs push word [_application_currentfocus+2]
 pop es
@@ -10017,9 +10289,9 @@ pop es
 cs mov di, [_application_keyboardupdate]
 cs call far [_application_keyboardupdate]
 add sp, 4
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:532:13 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:615:13 ===---
 ; ACAO CHAMADA - Chama indiretamente usando Invoke
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:532:32 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:615:32 ===---
 ; ACAO LEITURA - Le ponteiro
 cs push word [_application_currentfocus+2]
 pop es
@@ -10031,101 +10303,101 @@ pop es
 cs mov di, [_application_mouseupdate]
 cs call far [_application_mouseupdate]
 add sp, 4
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:533:17 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:616:17 ===---
 sti
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:534:17 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:617:17 ===---
 hlt
-jmp ROTULO819
-ROTULO821:
-ROTULO818:
+jmp ROTULO831
+ROTULO833:
+ROTULO830:
 mov sp, bp
 pop bp
 FIM_application_run:
 retf
 ; MODULO FIM: application
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:435:8 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:518:8 ===---
 ; MODULO: systemcolors
 _systemcolors:
 db 16
 db 83,121,115,116,101,109,46,70,111,114,109,115,46,104,99,98
 db 0
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:436:17 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:519:17 ===---
 _systemcolors_current:
 times 4 db 0
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:438:21 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:521:21 ===---
 _systemcolors_backgroundcolor:
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:439:9 ===---
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:439:16 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:522:9 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:522:16 ===---
 ; ACAO STRUCTURE - Leitura de Ponteiro - (U)Int16 - Desvio 0
 cs push word [_systemcolors_current+2]
 pop es
 cs mov di, [_systemcolors_current]
 es mov ax, [di+0]
-jmp ROTULO822
-ROTULO822:
+jmp ROTULO834
+ROTULO834:
 FIM_systemcolors_backgroundcolor:
 retf
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:442:21 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:525:21 ===---
 _systemcolors_textcolor:
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:443:9 ===---
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:443:16 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:526:9 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:526:16 ===---
 ; ACAO STRUCTURE - Leitura de Ponteiro - (U)Int16 - Desvio 2
 cs push word [_systemcolors_current+2]
 pop es
 cs mov di, [_systemcolors_current]
 es mov ax, [di+2]
-jmp ROTULO823
-ROTULO823:
+jmp ROTULO835
+ROTULO835:
 FIM_systemcolors_textcolor:
 retf
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:446:21 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:529:21 ===---
 _systemcolors_windowbordercolor:
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:447:9 ===---
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:447:16 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:530:9 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:530:16 ===---
 ; ACAO STRUCTURE - Leitura de Ponteiro - (U)Int16 - Desvio 4
 cs push word [_systemcolors_current+2]
 pop es
 cs mov di, [_systemcolors_current]
 es mov ax, [di+4]
-jmp ROTULO824
-ROTULO824:
+jmp ROTULO836
+ROTULO836:
 FIM_systemcolors_windowbordercolor:
 retf
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:450:21 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:533:21 ===---
 _systemcolors_windowcolor:
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:451:9 ===---
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:451:16 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:534:9 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:534:16 ===---
 ; ACAO STRUCTURE - Leitura de Ponteiro - (U)Int16 - Desvio 6
 cs push word [_systemcolors_current+2]
 pop es
 cs mov di, [_systemcolors_current]
 es mov ax, [di+6]
-jmp ROTULO825
-ROTULO825:
+jmp ROTULO837
+ROTULO837:
 FIM_systemcolors_windowcolor:
 retf
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:454:21 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:537:21 ===---
 _systemcolors_windowtitlecolor:
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:455:9 ===---
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:455:16 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:538:9 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:538:16 ===---
 ; ACAO STRUCTURE - Leitura de Ponteiro - (U)Int16 - Desvio 8
 cs push word [_systemcolors_current+2]
 pop es
 cs mov di, [_systemcolors_current]
 es mov ax, [di+8]
-jmp ROTULO826
-ROTULO826:
+jmp ROTULO838
+ROTULO838:
 FIM_systemcolors_windowtitlecolor:
 retf
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:458:16 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:541:16 ===---
 _systemcolors_initialize:
 push bp
 mov bp, sp
 ; ARG: newtheme TAM: 4 POS: BP+6 
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:458:27 ===---
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:459:9 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:541:27 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:542:9 ===---
 ; ACAO GRAVACAO - Gravacao em ponteiro
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:459:19 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:542:19 ===---
 ; ACAO LEITURA - Le ponteiro
 push word [bp+6+2]
 pop es
@@ -10133,7 +10405,7 @@ mov di, [bp+6]
 push es
 cs pop word [_systemcolors_current+2]
 cs mov [_systemcolors_current], di
-ROTULO827:
+ROTULO839:
 mov sp, bp
 pop bp
 FIM_systemcolors_initialize:
@@ -10393,12 +10665,12 @@ es mov [di+74], ax
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:94:21 ===---
 push cs
 pop es
-mov di, ROTULO830
-jmp ROTULO829
-ROTULO830:
+mov di, ROTULO842
+jmp ROTULO841
+ROTULO842:
 db 0
 times 1 db 0
-ROTULO829:
+ROTULO841:
 push es
 push di
 push word [bp+6+2]
@@ -10413,56 +10685,62 @@ es pop word [di+10+2]
 xor ax, ax
 es mov [di+8], ax
 ; ACAO STRUCTURE - Gravacao de Ponteiro - Fim
-ROTULO828:
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:96:9 ===---
+; ACAO STRUCTURE - Gravacao de Ponteiro- Prepara
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:96:28 ===---
+xor ax, ax
+es mov [di+94], ax
+; ACAO STRUCTURE - Gravacao de Ponteiro - Fim
+ROTULO840:
 mov sp, bp
 pop bp
 FIM_control_initialize:
 retf
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:98:9 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:99:9 ===---
 _control_genericcontrolpaint:
 push bp
 mov bp, sp
 ; ARG: ctrl TAM: 4 POS: BP+6 
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:98:29 ===---
-ROTULO831:
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:99:29 ===---
+ROTULO843:
 mov sp, bp
 pop bp
 FIM_control_genericcontrolpaint:
 retf
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:101:9 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:102:9 ===---
 _control_genericcontrolmouseinteraction:
 push bp
 mov bp, sp
 ; ARG: ctrl TAM: 4 POS: BP+6 
 ; ARG: e TAM: 4 POS: BP+10 
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:101:40 ===---
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:101:57 ===---
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:102:9 ===---
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:102:28 ===---
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:102:12 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:102:40 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:102:57 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:103:9 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:103:28 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:103:12 ===---
 ; ACAO STRUCTURE - Leitura de Ponteiro - (U)Int16 - Desvio 4
 push word [bp+10+2]
 pop es
 mov di, [bp+10]
 es mov ax, [di+4]
 push ax
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:102:31 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:103:31 ===---
 ; ACAO STRUCTURE - Leitura de Ponteiro - (U)Int16 - Desvio 6
 es mov ax, [di+6]
 mov bx, ax
 pop ax
 or ax, bx
 cmp ax, 0
-jne ROTULO833
-jmp ROTULO834
-ROTULO833:
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:103:13 ===---
+jne ROTULO845
+jmp ROTULO846
+ROTULO845:
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:104:13 ===---
 ; ACAO CHAMADA - Chama indiretamente usando Invoke
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:103:33 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:104:33 ===---
 ; ACAO LEITURA - Le ponteiro
 push es
 push di
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:103:13 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:104:13 ===---
 ; ACAO LEITURA - Le ponteiro
 push word [bp+6+2]
 pop es
@@ -10471,38 +10749,38 @@ push es
 push di
 es call far [di+39]
 add sp, 8
-ROTULO834:
-ROTULO832:
+ROTULO846:
+ROTULO844:
 mov sp, bp
 pop bp
 FIM_control_genericcontrolmouseinteraction:
 retf
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:107:9 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:108:9 ===---
 _control_genericcontrolkeyboardinteracion:
 push bp
 mov bp, sp
 ; ARG: ctrl TAM: 4 POS: BP+6 
 ; ARG: e TAM: 4 POS: BP+10 
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:107:42 ===---
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:107:59 ===---
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:108:9 ===---
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:108:12 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:108:42 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:108:59 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:109:9 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:109:12 ===---
 ; ACAO STRUCTURE - Leitura de Ponteiro - (U)Int16 - Desvio 5
 push word [bp+10+2]
 pop es
 mov di, [bp+10]
 es mov ax, [di+5]
 cmp ax, 0
-jne ROTULO839
-jmp ROTULO840
-ROTULO839:
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:109:13 ===---
+jne ROTULO851
+jmp ROTULO852
+ROTULO851:
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:110:13 ===---
 ; ACAO CHAMADA - Chama indiretamente usando Invoke
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:109:36 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:110:36 ===---
 ; ACAO LEITURA - Le ponteiro
 push es
 push di
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:109:13 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:110:13 ===---
 ; ACAO LEITURA - Le ponteiro
 push word [bp+6+2]
 pop es
@@ -10511,18 +10789,18 @@ push es
 push di
 es call far [di+43]
 add sp, 8
-jmp ROTULO841
-ROTULO840:
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:111:13 ===---
+jmp ROTULO853
+ROTULO852:
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:112:13 ===---
 ; ACAO CHAMADA - Chama indiretamente usando Invoke
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:111:38 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:112:38 ===---
 ; ACAO LEITURA - Le ponteiro
 push word [bp+10+2]
 pop es
 mov di, [bp+10]
 push es
 push di
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:111:13 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:112:13 ===---
 ; ACAO LEITURA - Le ponteiro
 push word [bp+6+2]
 pop es
@@ -10531,31 +10809,31 @@ push es
 push di
 es call far [di+47]
 add sp, 8
-ROTULO841:
-ROTULO838:
+ROTULO853:
+ROTULO850:
 mov sp, bp
 pop bp
 FIM_control_genericcontrolkeyboardinteracion:
 retf
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:115:9 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:116:9 ===---
 _control_genericcontrolfocuschanged:
 push bp
 mov bp, sp
 ; ARG: ctrl TAM: 4 POS: BP+6 
 ; ARG: focus TAM: 2 POS: BP+10 
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:115:36 ===---
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:115:53 ===---
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:116:9 ===---
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:116:12 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:116:36 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:116:53 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:117:9 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:117:12 ===---
 ; ACAO LEITURA - Le variavel
 mov ax, [bp+10]
 cmp ax, 0
-jne ROTULO843
-jmp ROTULO844
-ROTULO843:
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:117:13 ===---
+jne ROTULO855
+jmp ROTULO856
+ROTULO855:
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:118:13 ===---
 ; ACAO CHAMADA - Chama indiretamente usando Invoke
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:117:13 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:118:13 ===---
 ; ACAO LEITURA - Le ponteiro
 push word [bp+6+2]
 pop es
@@ -10564,11 +10842,11 @@ push es
 push di
 es call far [di+51]
 add sp, 4
-jmp ROTULO845
-ROTULO844:
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:119:13 ===---
+jmp ROTULO857
+ROTULO856:
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:120:13 ===---
 ; ACAO CHAMADA - Chama indiretamente usando Invoke
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:119:13 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:120:13 ===---
 ; ACAO LEITURA - Le ponteiro
 push word [bp+6+2]
 pop es
@@ -10577,93 +10855,93 @@ push es
 push di
 es call far [di+55]
 add sp, 4
-ROTULO845:
-ROTULO842:
+ROTULO857:
+ROTULO854:
 mov sp, bp
 pop bp
 FIM_control_genericcontrolfocuschanged:
 retf
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:123:9 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:124:9 ===---
 _control_genericonclick:
 push bp
 mov bp, sp
 ; ARG: ctrl TAM: 4 POS: BP+6 
 ; ARG: e TAM: 4 POS: BP+10 
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:123:24 ===---
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:123:41 ===---
-ROTULO846:
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:124:24 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:124:41 ===---
+ROTULO858:
 mov sp, bp
 pop bp
 FIM_control_genericonclick:
 retf
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:126:9 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:127:9 ===---
 _control_genericonkeypress:
 push bp
 mov bp, sp
 ; ARG: ctrl TAM: 4 POS: BP+6 
 ; ARG: e TAM: 4 POS: BP+10 
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:126:27 ===---
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:126:44 ===---
-ROTULO847:
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:127:27 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:127:44 ===---
+ROTULO859:
 mov sp, bp
 pop bp
 FIM_control_genericonkeypress:
 retf
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:129:9 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:130:9 ===---
 _control_genericonkeyrelease:
 push bp
 mov bp, sp
 ; ARG: ctrl TAM: 4 POS: BP+6 
 ; ARG: e TAM: 4 POS: BP+10 
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:129:29 ===---
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:129:46 ===---
-ROTULO848:
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:130:29 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:130:46 ===---
+ROTULO860:
 mov sp, bp
 pop bp
 FIM_control_genericonkeyrelease:
 retf
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:132:9 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:133:9 ===---
 _control_genericonfocus:
 push bp
 mov bp, sp
 ; ARG: ctrl TAM: 4 POS: BP+6 
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:132:24 ===---
-ROTULO849:
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:133:24 ===---
+ROTULO861:
 mov sp, bp
 pop bp
 FIM_control_genericonfocus:
 retf
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:135:9 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:136:9 ===---
 _control_genericonlostfocus:
 push bp
 mov bp, sp
 ; ARG: ctrl TAM: 4 POS: BP+6 
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:135:28 ===---
-ROTULO850:
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:136:28 ===---
+ROTULO862:
 mov sp, bp
 pop bp
 FIM_control_genericonlostfocus:
 retf
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:138:16 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:139:16 ===---
 _control_setparent:
 push bp
 mov bp, sp
 ; ARG: ctrl TAM: 4 POS: BP+6 
 ; ARG: parent TAM: 4 POS: BP+10 
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:138:26 ===---
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:138:43 ===---
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:139:9 ===---
-; ACAO STRUCTURE - Gravacao de Ponteiro- Prepara
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:139:26 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:139:43 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:140:9 ===---
+; ACAO STRUCTURE - Gravacao de Ponteiro- Prepara
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:140:26 ===---
 mov ax, 1
 push word [bp+6+2]
 pop es
 mov di, [bp+6]
 es mov [di+59], al
 ; ACAO STRUCTURE - Gravacao de Ponteiro - Fim
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:140:9 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:141:9 ===---
 ; ACAO STRUCTURE - Gravacao de Ponteiro- Prepara
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:140:23 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:141:23 ===---
 ; ACAO LEITURA - Le ponteiro
 push word [bp+10+2]
 pop es
@@ -10676,20 +10954,20 @@ mov di, [bp+6]
 es pop word [di+60]
 es pop word [di+60+2]
 ; ACAO STRUCTURE - Gravacao de Ponteiro - Fim
-ROTULO851:
+ROTULO863:
 mov sp, bp
 pop bp
 FIM_control_setparent:
 retf
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:143:21 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:144:21 ===---
 _control_getparent:
 push bp
 mov bp, sp
 ; ARG: ctrl TAM: 4 POS: BP+6 
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:143:31 ===---
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:144:9 ===---
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:144:27 ===---
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:144:12 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:144:31 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:145:9 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:145:27 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:145:12 ===---
 ; ACAO STRUCTURE - Leitura de Ponteiro - (U)Int8 - Desvio 59
 push word [bp+6+2]
 pop es
@@ -10697,58 +10975,70 @@ mov di, [bp+6]
 xor ax, ax
 es mov al, [di+59]
 push ax
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:144:30 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:145:30 ===---
 xor ax, ax
 mov bx, ax
 pop ax
 cmp ax, bx
-je ROTULO855
-jmp ROTULO856
-ROTULO855:
+je ROTULO867
+jmp ROTULO868
+ROTULO867:
 mov ax, 65535
-jmp ROTULO857
-ROTULO856:
+jmp ROTULO869
+ROTULO868:
 xor ax, ax
-ROTULO857:
+ROTULO869:
 cmp ax, 0
-jne ROTULO853
-jmp ROTULO854
-ROTULO853:
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:144:43 ===---
+jne ROTULO865
+jmp ROTULO866
+ROTULO865:
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:145:43 ===---
 mov ax, _control
 mov [bp+-8], ax
-mov ax, 144
+mov ax, 145
 mov [bp+-10], ax
 mov ax, 5
 cs jmp word [_os_trycode]
-ROTULO854:
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:145:9 ===---
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:145:16 ===---
+ROTULO866:
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:146:9 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:146:16 ===---
 ; ACAO LEITURA - Le ponteiro
 push word [bp+6+2]
 pop es
 mov di, [bp+6]
-jmp ROTULO852
-ROTULO852:
+jmp ROTULO864
+ROTULO864:
 mov sp, bp
 pop bp
 FIM_control_getparent:
 retf
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:148:16 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:149:16 ===---
 _control_add:
 push bp
 mov bp, sp
-sub sp, 4
+sub sp, 8
 push cs
 call _os_stackcheck
 ; ARG: ctrl TAM: 4 POS: BP+6 
 ; ARG: child TAM: 4 POS: BP+10 
 ; ARG: tmp TAM: 4 POS: BP--4 
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:148:20 ===---
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:148:37 ===---
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:149:13 ===---
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:150:9 ===---
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:150:12 ===---
+; ARG: parent TAM: 4 POS: BP--8 
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:149:20 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:149:37 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:150:13 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:151:13 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:152:9 ===---
+; ACAO GRAVACAO - Gravacao em ponteiro
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:152:18 ===---
+; ACAO LEITURA - Le ponteiro
+push word [bp+6+2]
+pop es
+mov di, [bp+6]
+push es
+pop word [bp+-8+2]
+mov [bp+-8], di
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:153:9 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:153:12 ===---
 ; ACAO STRUCTURE - Leitura de Ponteiro - (U)Int8 - Desvio 64
 push word [bp+6+2]
 pop es
@@ -10756,41 +11046,41 @@ mov di, [bp+6]
 xor ax, ax
 es mov al, [di+64]
 cmp ax, 0
-jne ROTULO859
-jmp ROTULO860
-ROTULO859:
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:151:14 ===---
+jne ROTULO871
+jmp ROTULO872
+ROTULO871:
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:154:14 ===---
 ; ACAO GRAVACAO - Grava segmento em variavel
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:151:21 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:154:21 ===---
 ; ACAO STRUCTURE - Leitura de Segmento de Ponteiro
 es mov ax, [di+67]
 mov word [bp+-4+2], ax
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:152:14 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:155:14 ===---
 ; ACAO GRAVACAO - Grava em variavel
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:152:21 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:155:21 ===---
 ; ACAO STRUCTURE - Leitura de Desvio de Ponteiro
 push word [bp+6+2]
 pop es
 mov di, [bp+6]
 es mov ax, [di+65]
 mov [bp+-4], ax
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:153:14 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:156:14 ===---
 ; ACAO STRUCTURE - Define Segmento/desvio de estrutura
 ; ACAO GRAVACAO - Grava em variavel
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:153:22 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:156:22 ===---
 ; ACAO LEITURA - Le variavel
 mov ax, [bp+-4]
 mov [bp+6], ax
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:154:14 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:157:14 ===---
 ; ACAO STRUCTURE - Define Segmento/desvio de estrutura
 ; ACAO GRAVACAO - Grava segmento em variavel
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:154:22 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:157:22 ===---
 ; ACAO LEITURA - Le segmento em variavel
 mov ax, [bp+-4+2]
 mov word [bp+6+2], ax
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:155:13 ===---
-ROTULO861:
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:155:19 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:158:13 ===---
+ROTULO873:
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:158:19 ===---
 ; ACAO STRUCTURE - Leitura de Ponteiro - (U)Int8 - Desvio 69
 push word [bp+6+2]
 pop es
@@ -10798,66 +11088,66 @@ mov di, [bp+6]
 xor ax, ax
 es mov al, [di+69]
 cmp ax, 0
-jne ROTULO862
-jmp ROTULO863
-ROTULO862:
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:156:18 ===---
+jne ROTULO874
+jmp ROTULO875
+ROTULO874:
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:159:18 ===---
 ; ACAO GRAVACAO - Grava segmento em variavel
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:156:25 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:159:25 ===---
 ; ACAO STRUCTURE - Leitura de Segmento de Ponteiro
 es mov ax, [di+72]
 mov word [bp+-4+2], ax
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:157:18 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:160:18 ===---
 ; ACAO GRAVACAO - Grava em variavel
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:157:25 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:160:25 ===---
 ; ACAO STRUCTURE - Leitura de Desvio de Ponteiro
 push word [bp+6+2]
 pop es
 mov di, [bp+6]
 es mov ax, [di+70]
 mov [bp+-4], ax
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:158:18 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:161:18 ===---
 ; ACAO STRUCTURE - Define Segmento/desvio de estrutura
 ; ACAO GRAVACAO - Grava em variavel
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:158:26 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:161:26 ===---
 ; ACAO LEITURA - Le variavel
 mov ax, [bp+-4]
 mov [bp+6], ax
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:159:18 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:162:18 ===---
 ; ACAO STRUCTURE - Define Segmento/desvio de estrutura
 ; ACAO GRAVACAO - Grava segmento em variavel
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:159:26 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:162:26 ===---
 ; ACAO LEITURA - Le segmento em variavel
 mov ax, [bp+-4+2]
 mov word [bp+6+2], ax
-jmp ROTULO861
-ROTULO863:
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:161:13 ===---
+jmp ROTULO873
+ROTULO875:
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:164:13 ===---
 ; ACAO STRUCTURE - Gravacao de Ponteiro- Prepara
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:161:35 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:164:35 ===---
 mov ax, 1
 push word [bp+6+2]
 pop es
 mov di, [bp+6]
 es mov [di+69], al
 ; ACAO STRUCTURE - Gravacao de Ponteiro - Fim
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:162:14 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:165:14 ===---
 ; ACAO GRAVACAO - Grava segmento em variavel
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:162:21 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:165:21 ===---
 ; ACAO STRUCTURE - Define Segmento/desvio de estrutura
 ; ACAO LEITURA - Le segmento em variavel
 mov ax, [bp+10+2]
 mov word [bp+-4+2], ax
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:163:14 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:166:14 ===---
 ; ACAO GRAVACAO - Grava em variavel
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:163:21 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:166:21 ===---
 ; ACAO STRUCTURE - Define Segmento/desvio de estrutura
 ; ACAO LEITURA - Le variavel
 mov ax, [bp+10]
 mov [bp+-4], ax
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:164:13 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:167:13 ===---
 ; ACAO STRUCTURE - Gravacao de Ponteiro- Prepara
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:164:32 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:167:32 ===---
 ; ACAO LEITURA - Le ponteiro
 push word [bp+-4+2]
 pop es
@@ -10870,22 +11160,22 @@ mov di, [bp+6]
 es pop word [di+70]
 es pop word [di+70+2]
 ; ACAO STRUCTURE - Gravacao de Ponteiro - Fim
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:165:13 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:168:13 ===---
 ; ACAO STRUCTURE - Gravacao de Ponteiro- Prepara
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:165:31 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:168:31 ===---
 mov ax, 1
 push word [bp+10+2]
 pop es
 mov di, [bp+10]
 es mov [di+59], al
 ; ACAO STRUCTURE - Gravacao de Ponteiro - Fim
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:166:13 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:169:13 ===---
 ; ACAO STRUCTURE - Gravacao de Ponteiro- Prepara
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:166:28 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:169:28 ===---
 ; ACAO LEITURA - Le ponteiro
-push word [bp+6+2]
+push word [bp+-8+2]
 pop es
-mov di, [bp+6]
+mov di, [bp+-8]
 push es
 push di
 push word [bp+10+2]
@@ -10894,34 +11184,34 @@ mov di, [bp+10]
 es pop word [di+60]
 es pop word [di+60+2]
 ; ACAO STRUCTURE - Gravacao de Ponteiro - Fim
-jmp ROTULO864
-ROTULO860:
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:168:13 ===---
+jmp ROTULO876
+ROTULO872:
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:171:13 ===---
 ; ACAO STRUCTURE - Gravacao de Ponteiro- Prepara
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:168:29 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:171:29 ===---
 mov ax, 1
 push word [bp+6+2]
 pop es
 mov di, [bp+6]
 es mov [di+64], al
 ; ACAO STRUCTURE - Gravacao de Ponteiro - Fim
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:169:14 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:172:14 ===---
 ; ACAO GRAVACAO - Grava segmento em variavel
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:169:21 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:172:21 ===---
 ; ACAO STRUCTURE - Define Segmento/desvio de estrutura
 ; ACAO LEITURA - Le segmento em variavel
 mov ax, [bp+10+2]
 mov word [bp+-4+2], ax
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:170:14 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:173:14 ===---
 ; ACAO GRAVACAO - Grava em variavel
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:170:21 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:173:21 ===---
 ; ACAO STRUCTURE - Define Segmento/desvio de estrutura
 ; ACAO LEITURA - Le variavel
 mov ax, [bp+10]
 mov [bp+-4], ax
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:171:13 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:174:13 ===---
 ; ACAO STRUCTURE - Gravacao de Ponteiro- Prepara
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:171:26 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:174:26 ===---
 ; ACAO LEITURA - Le ponteiro
 push word [bp+-4+2]
 pop es
@@ -10934,22 +11224,22 @@ mov di, [bp+6]
 es pop word [di+65]
 es pop word [di+65+2]
 ; ACAO STRUCTURE - Gravacao de Ponteiro - Fim
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:172:13 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:175:13 ===---
 ; ACAO STRUCTURE - Gravacao de Ponteiro- Prepara
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:172:31 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:175:31 ===---
 mov ax, 1
 push word [bp+10+2]
 pop es
 mov di, [bp+10]
 es mov [di+59], al
 ; ACAO STRUCTURE - Gravacao de Ponteiro - Fim
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:173:13 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:176:13 ===---
 ; ACAO STRUCTURE - Gravacao de Ponteiro- Prepara
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:173:28 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:176:28 ===---
 ; ACAO LEITURA - Le ponteiro
-push word [bp+6+2]
+push word [bp+-8+2]
 pop es
-mov di, [bp+6]
+mov di, [bp+-8]
 push es
 push di
 push word [bp+10+2]
@@ -10958,13 +11248,13 @@ mov di, [bp+10]
 es pop word [di+60]
 es pop word [di+60+2]
 ; ACAO STRUCTURE - Gravacao de Ponteiro - Fim
-ROTULO864:
-ROTULO858:
+ROTULO876:
+ROTULO870:
 mov sp, bp
 pop bp
 FIM_control_add:
 retf
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:177:21 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:180:21 ===---
 _control_count:
 push bp
 mov bp, sp
@@ -10974,14 +11264,14 @@ call _os_stackcheck
 ; ARG: ctrl TAM: 4 POS: BP+6 
 ; ARG: ret TAM: 2 POS: BP--2 
 ; ARG: ptr TAM: 4 POS: BP--6 
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:177:27 ===---
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:178:13 ===---
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:179:13 ===---
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:180:9 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:180:27 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:181:13 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:182:13 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:183:9 ===---
 ; ACAO GRAVACAO - Grava em variavel
 mov word [bp+-2], 0
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:181:9 ===---
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:181:12 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:184:9 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:184:12 ===---
 ; ACAO STRUCTURE - Leitura de Ponteiro - (U)Int8 - Desvio 64
 push word [bp+6+2]
 pop es
@@ -10989,44 +11279,44 @@ mov di, [bp+6]
 xor ax, ax
 es mov al, [di+64]
 cmp ax, 0
-jne ROTULO866
-jmp ROTULO867
-ROTULO866:
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:182:13 ===---
+jne ROTULO878
+jmp ROTULO879
+ROTULO878:
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:185:13 ===---
 ; ACAO INC - Incrementa variavel
 inc word [bp+-2]
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:183:14 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:186:14 ===---
 ; ACAO GRAVACAO - Grava segmento em variavel
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:183:21 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:186:21 ===---
 ; ACAO STRUCTURE - Leitura de Segmento de Ponteiro
 es mov ax, [di+67]
 mov word [bp+-6+2], ax
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:184:14 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:187:14 ===---
 ; ACAO GRAVACAO - Grava em variavel
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:184:21 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:187:21 ===---
 ; ACAO STRUCTURE - Leitura de Desvio de Ponteiro
 push word [bp+6+2]
 pop es
 mov di, [bp+6]
 es mov ax, [di+65]
 mov [bp+-6], ax
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:185:14 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:188:14 ===---
 ; ACAO STRUCTURE - Define Segmento/desvio de estrutura
 ; ACAO GRAVACAO - Grava segmento em variavel
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:185:22 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:188:22 ===---
 ; ACAO LEITURA - Le segmento em variavel
 mov ax, [bp+-6+2]
 mov word [bp+6+2], ax
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:186:14 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:189:14 ===---
 ; ACAO STRUCTURE - Define Segmento/desvio de estrutura
 ; ACAO GRAVACAO - Grava em variavel
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:186:22 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:189:22 ===---
 ; ACAO LEITURA - Le variavel
 mov ax, [bp+-6]
 mov [bp+6], ax
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:187:13 ===---
-ROTULO868:
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:187:19 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:190:13 ===---
+ROTULO880:
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:190:19 ===---
 ; ACAO STRUCTURE - Leitura de Ponteiro - (U)Int8 - Desvio 69
 push word [bp+6+2]
 pop es
@@ -11034,55 +11324,55 @@ mov di, [bp+6]
 xor ax, ax
 es mov al, [di+69]
 cmp ax, 0
-jne ROTULO869
-jmp ROTULO870
-ROTULO869:
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:188:17 ===---
+jne ROTULO881
+jmp ROTULO882
+ROTULO881:
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:191:17 ===---
 ; ACAO INC - Incrementa variavel
 inc word [bp+-2]
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:189:18 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:192:18 ===---
 ; ACAO GRAVACAO - Grava segmento em variavel
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:189:25 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:192:25 ===---
 ; ACAO STRUCTURE - Leitura de Segmento de Ponteiro
 es mov ax, [di+72]
 mov word [bp+-6+2], ax
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:190:18 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:193:18 ===---
 ; ACAO GRAVACAO - Grava em variavel
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:190:25 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:193:25 ===---
 ; ACAO STRUCTURE - Leitura de Desvio de Ponteiro
 push word [bp+6+2]
 pop es
 mov di, [bp+6]
 es mov ax, [di+70]
 mov [bp+-6], ax
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:191:18 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:194:18 ===---
 ; ACAO STRUCTURE - Define Segmento/desvio de estrutura
 ; ACAO GRAVACAO - Grava segmento em variavel
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:191:26 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:194:26 ===---
 ; ACAO LEITURA - Le segmento em variavel
 mov ax, [bp+-6+2]
 mov word [bp+6+2], ax
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:192:18 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:195:18 ===---
 ; ACAO STRUCTURE - Define Segmento/desvio de estrutura
 ; ACAO GRAVACAO - Grava em variavel
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:192:26 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:195:26 ===---
 ; ACAO LEITURA - Le variavel
 mov ax, [bp+-6]
 mov [bp+6], ax
-jmp ROTULO868
-ROTULO870:
-ROTULO867:
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:195:9 ===---
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:195:16 ===---
+jmp ROTULO880
+ROTULO882:
+ROTULO879:
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:198:9 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:198:16 ===---
 ; ACAO LEITURA - Le variavel
 mov ax, [bp+-2]
-jmp ROTULO865
-ROTULO865:
+jmp ROTULO877
+ROTULO877:
 mov sp, bp
 pop bp
 FIM_control_count:
 retf
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:198:21 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:201:21 ===---
 _control_item:
 push bp
 mov bp, sp
@@ -11093,15 +11383,15 @@ call _os_stackcheck
 ; ARG: position TAM: 2 POS: BP+10 
 ; ARG: i TAM: 2 POS: BP--2 
 ; ARG: ptr TAM: 4 POS: BP--6 
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:198:26 ===---
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:198:43 ===---
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:199:13 ===---
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:200:13 ===---
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:201:9 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:201:26 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:201:43 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:202:13 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:203:13 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:204:9 ===---
 ; ACAO GRAVACAO - Grava em variavel
 mov word [bp+-2], 0
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:202:9 ===---
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:202:12 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:205:9 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:205:12 ===---
 ; ACAO STRUCTURE - Leitura de Ponteiro - (U)Int8 - Desvio 64
 push word [bp+6+2]
 pop es
@@ -11109,76 +11399,76 @@ mov di, [bp+6]
 xor ax, ax
 es mov al, [di+64]
 cmp ax, 0
-jne ROTULO872
-jmp ROTULO873
-ROTULO872:
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:203:13 ===---
+jne ROTULO884
+jmp ROTULO885
+ROTULO884:
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:206:13 ===---
 ; ACAO INC - Incrementa variavel
 inc word [bp+-2]
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:204:14 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:207:14 ===---
 ; ACAO GRAVACAO - Grava segmento em variavel
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:204:21 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:207:21 ===---
 ; ACAO STRUCTURE - Leitura de Segmento de Ponteiro
 es mov ax, [di+67]
 mov word [bp+-6+2], ax
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:205:14 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:208:14 ===---
 ; ACAO GRAVACAO - Grava em variavel
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:205:21 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:208:21 ===---
 ; ACAO STRUCTURE - Leitura de Desvio de Ponteiro
 push word [bp+6+2]
 pop es
 mov di, [bp+6]
 es mov ax, [di+65]
 mov [bp+-6], ax
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:206:14 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:209:14 ===---
 ; ACAO STRUCTURE - Define Segmento/desvio de estrutura
 ; ACAO GRAVACAO - Grava segmento em variavel
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:206:22 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:209:22 ===---
 ; ACAO LEITURA - Le segmento em variavel
 mov ax, [bp+-6+2]
 mov word [bp+6+2], ax
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:207:14 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:210:14 ===---
 ; ACAO STRUCTURE - Define Segmento/desvio de estrutura
 ; ACAO GRAVACAO - Grava em variavel
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:207:22 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:210:22 ===---
 ; ACAO LEITURA - Le variavel
 mov ax, [bp+-6]
 mov [bp+6], ax
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:208:13 ===---
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:208:18 ===---
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:208:16 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:211:13 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:211:18 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:211:16 ===---
 ; ACAO LEITURA - Le variavel
 mov ax, [bp+-2]
 push ax
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:208:21 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:211:21 ===---
 ; ACAO LEITURA - Le variavel
 mov ax, [bp+10]
 mov bx, ax
 pop ax
 cmp ax, bx
-je ROTULO876
-jmp ROTULO877
-ROTULO876:
+je ROTULO888
+jmp ROTULO889
+ROTULO888:
 mov ax, 65535
-jmp ROTULO878
-ROTULO877:
+jmp ROTULO890
+ROTULO889:
 xor ax, ax
-ROTULO878:
+ROTULO890:
 cmp ax, 0
-jne ROTULO874
-jmp ROTULO875
-ROTULO874:
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:208:35 ===---
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:208:42 ===---
+jne ROTULO886
+jmp ROTULO887
+ROTULO886:
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:211:35 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:211:42 ===---
 ; ACAO LEITURA - Le ponteiro
 push word [bp+-6+2]
 pop es
 mov di, [bp+-6]
-jmp ROTULO871
-ROTULO875:
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:209:13 ===---
-ROTULO879:
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:209:19 ===---
+jmp ROTULO883
+ROTULO887:
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:212:13 ===---
+ROTULO891:
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:212:19 ===---
 ; ACAO STRUCTURE - Leitura de Ponteiro - (U)Int8 - Desvio 69
 push word [bp+6+2]
 pop es
@@ -11186,97 +11476,97 @@ mov di, [bp+6]
 xor ax, ax
 es mov al, [di+69]
 cmp ax, 0
-jne ROTULO880
-jmp ROTULO881
-ROTULO880:
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:210:17 ===---
+jne ROTULO892
+jmp ROTULO893
+ROTULO892:
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:213:17 ===---
 ; ACAO INC - Incrementa variavel
 inc word [bp+-2]
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:211:18 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:214:18 ===---
 ; ACAO GRAVACAO - Grava segmento em variavel
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:211:25 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:214:25 ===---
 ; ACAO STRUCTURE - Leitura de Segmento de Ponteiro
 es mov ax, [di+72]
 mov word [bp+-6+2], ax
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:212:18 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:215:18 ===---
 ; ACAO GRAVACAO - Grava em variavel
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:212:25 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:215:25 ===---
 ; ACAO STRUCTURE - Leitura de Desvio de Ponteiro
 push word [bp+6+2]
 pop es
 mov di, [bp+6]
 es mov ax, [di+70]
 mov [bp+-6], ax
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:213:18 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:216:18 ===---
 ; ACAO STRUCTURE - Define Segmento/desvio de estrutura
 ; ACAO GRAVACAO - Grava segmento em variavel
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:213:26 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:216:26 ===---
 ; ACAO LEITURA - Le segmento em variavel
 mov ax, [bp+-6+2]
 mov word [bp+6+2], ax
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:214:18 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:217:18 ===---
 ; ACAO STRUCTURE - Define Segmento/desvio de estrutura
 ; ACAO GRAVACAO - Grava em variavel
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:214:26 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:217:26 ===---
 ; ACAO LEITURA - Le variavel
 mov ax, [bp+-6]
 mov [bp+6], ax
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:215:17 ===---
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:215:22 ===---
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:215:20 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:218:17 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:218:22 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:218:20 ===---
 ; ACAO LEITURA - Le variavel
 mov ax, [bp+-2]
 push ax
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:215:25 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:218:25 ===---
 ; ACAO LEITURA - Le variavel
 mov ax, [bp+10]
 mov bx, ax
 pop ax
 cmp ax, bx
-je ROTULO884
-jmp ROTULO885
-ROTULO884:
+je ROTULO896
+jmp ROTULO897
+ROTULO896:
 mov ax, 65535
-jmp ROTULO886
-ROTULO885:
+jmp ROTULO898
+ROTULO897:
 xor ax, ax
-ROTULO886:
+ROTULO898:
 cmp ax, 0
-jne ROTULO882
-jmp ROTULO883
-ROTULO882:
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:215:39 ===---
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:215:46 ===---
+jne ROTULO894
+jmp ROTULO895
+ROTULO894:
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:218:39 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:218:46 ===---
 ; ACAO LEITURA - Le ponteiro
 push word [bp+-6+2]
 pop es
 mov di, [bp+-6]
-jmp ROTULO871
-ROTULO883:
-jmp ROTULO879
-ROTULO881:
-ROTULO873:
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:218:15 ===---
+jmp ROTULO883
+ROTULO895:
+jmp ROTULO891
+ROTULO893:
+ROTULO885:
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:221:15 ===---
 mov ax, _control
 mov [bp+-8], ax
-mov ax, 218
+mov ax, 221
 mov [bp+-10], ax
 mov ax, 5
 cs jmp word [_os_trycode]
-ROTULO871:
+ROTULO883:
 mov sp, bp
 pop bp
 FIM_control_item:
 retf
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:221:16 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:224:16 ===---
 _control_redraw:
 push bp
 mov bp, sp
 ; ARG: ctrl TAM: 4 POS: BP+6 
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:221:23 ===---
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:222:9 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:224:23 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:225:9 ===---
 ; ACAO CHAMADA - Chama indiretamente usando Invoke
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:222:9 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:225:9 ===---
 ; ACAO LEITURA - Le ponteiro
 push word [bp+6+2]
 pop es
@@ -11285,22 +11575,22 @@ push es
 push di
 es call far [di+23]
 add sp, 4
-ROTULO887:
+ROTULO899:
 mov sp, bp
 pop bp
 FIM_control_redraw:
 retf
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:225:16 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:228:16 ===---
 _control_settext:
 push bp
 mov bp, sp
 ; ARG: ctrl TAM: 4 POS: BP+6 
 ; ARG: txt TAM: 4 POS: BP+10 
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:225:24 ===---
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:225:41 ===---
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:226:9 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:228:24 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:228:41 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:229:9 ===---
 ; ACAO STRUCTURE - Gravacao de Ponteiro- Prepara
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:226:21 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:229:21 ===---
 ; ACAO LEITURA - Le ponteiro
 push word [bp+10+2]
 pop es
@@ -11313,19 +11603,19 @@ mov di, [bp+6]
 es pop word [di+10]
 es pop word [di+10+2]
 ; ACAO STRUCTURE - Gravacao de Ponteiro - Fim
-ROTULO888:
+ROTULO900:
 mov sp, bp
 pop bp
 FIM_control_settext:
 retf
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:229:21 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:232:21 ===---
 _control_gettext:
 push bp
 mov bp, sp
 ; ARG: ctrl TAM: 4 POS: BP+6 
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:229:29 ===---
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:230:9 ===---
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:230:16 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:232:29 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:233:9 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:233:16 ===---
 ; ACAO STRUCTURE - Leitura de Ponteiro - Ponteiro Byte - Desvio 10
 push word [bp+6+2]
 pop es
@@ -11334,13 +11624,13 @@ es push word [di+10+2]
 es push word [di+10]
 pop di
 pop es
-jmp ROTULO889
-ROTULO889:
+jmp ROTULO901
+ROTULO901:
 mov sp, bp
 pop bp
 FIM_control_gettext:
 retf
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:233:9 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:236:9 ===---
 _control_drawchildren:
 push bp
 mov bp, sp
@@ -11351,15 +11641,15 @@ call _os_stackcheck
 ; ARG: i TAM: 2 POS: BP--2 
 ; ARG: qtd TAM: 2 POS: BP--4 
 ; ARG: child TAM: 4 POS: BP--8 
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:233:22 ===---
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:234:13 ===---
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:235:13 ===---
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:236:13 ===---
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:237:9 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:236:22 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:237:13 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:238:13 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:239:13 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:240:9 ===---
 ; ACAO GRAVACAO - Grava em variavel
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:237:15 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:240:15 ===---
 ; ACAO CHAMADA - Chama rotina
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:237:21 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:240:21 ===---
 ; ACAO LEITURA - Le ponteiro
 push word [bp+6+2]
 pop es
@@ -11370,51 +11660,51 @@ push cs
 call _control_count
 add sp, 4
 mov [bp+-4], ax
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:238:9 ===---
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:238:12 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:241:9 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:241:12 ===---
 ; ACAO LEITURA - Le variavel
 mov ax, [bp+-4]
 cmp ax, 0
-jne ROTULO891
-jmp ROTULO892
-ROTULO891:
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:239:26 ===---
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:239:26 ===---
+jne ROTULO903
+jmp ROTULO904
+ROTULO903:
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:242:26 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:242:26 ===---
 ; ACAO GRAVACAO - Grava em variavel
 mov word [bp+-2], 1
-ROTULO893:
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:239:26 ===---
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:239:26 ===---
+ROTULO905:
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:242:26 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:242:26 ===---
 ; ACAO LEITURA - Le variavel
 mov ax, [bp+-2]
 push ax
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:239:26 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:242:26 ===---
 ; ACAO LEITURA - Le variavel
 mov ax, [bp+-4]
 mov bx, ax
 pop ax
 cmp ax, bx
-jbe ROTULO896
-jmp ROTULO897
-ROTULO896:
+jbe ROTULO908
+jmp ROTULO909
+ROTULO908:
 mov ax, 65535
-jmp ROTULO898
-ROTULO897:
+jmp ROTULO910
+ROTULO909:
 xor ax, ax
-ROTULO898:
+ROTULO910:
 cmp ax, 0
-jne ROTULO894
-jmp ROTULO895
-ROTULO894:
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:240:17 ===---
+jne ROTULO906
+jmp ROTULO907
+ROTULO906:
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:243:17 ===---
 ; ACAO GRAVACAO - Gravacao em ponteiro
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:240:25 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:243:25 ===---
 ; ACAO CHAMADA - Chama rotina
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:240:46 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:243:46 ===---
 ; ACAO LEITURA - Le variavel
 mov ax, [bp+-2]
 push ax
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:240:38 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:243:38 ===---
 ; ACAO LEITURA - Le ponteiro
 push word [bp+6+2]
 pop es
@@ -11427,22 +11717,22 @@ add sp, 6
 push es
 pop word [bp+-8+2]
 mov [bp+-8], di
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:241:17 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:244:17 ===---
 ; ACAO STRUCTURE - Gravacao de Ponteiro- Prepara
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:241:65 ===---
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:241:67 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:244:65 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:244:67 ===---
 ; ACAO STRUCTURE - Leitura de Ponteiro - (U)Int16 - Desvio 2
 es mov ax, [di+2]
 push ax
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:241:51 ===---
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:241:53 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:244:51 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:244:53 ===---
 ; ACAO STRUCTURE - Leitura de Ponteiro - (U)Int16 - Desvio 2
 push word [bp+6+2]
 pop es
 mov di, [bp+6]
 es mov ax, [di+2]
 push ax
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:241:32 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:244:32 ===---
 ; ACAO STRUCTURE - Leitura de Ponteiro - (U)Int16 - Desvio 78
 es mov ax, [di+78]
 pop bx
@@ -11454,22 +11744,22 @@ pop es
 mov di, [bp+-8]
 es mov [di+82], ax
 ; ACAO STRUCTURE - Gravacao de Ponteiro - Fim
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:242:17 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:245:17 ===---
 ; ACAO STRUCTURE - Gravacao de Ponteiro- Prepara
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:242:63 ===---
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:242:65 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:245:63 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:245:65 ===---
 ; ACAO STRUCTURE - Leitura de Ponteiro - (U)Int16 - Desvio 0
 es mov ax, [di+0]
 push ax
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:242:50 ===---
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:242:52 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:245:50 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:245:52 ===---
 ; ACAO STRUCTURE - Leitura de Ponteiro - (U)Int16 - Desvio 0
 push word [bp+6+2]
 pop es
 mov di, [bp+6]
 es mov ax, [di+0]
 push ax
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:242:32 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:245:32 ===---
 ; ACAO STRUCTURE - Leitura de Ponteiro - (U)Int16 - Desvio 74
 es mov ax, [di+74]
 pop bx
@@ -11481,27 +11771,27 @@ pop es
 mov di, [bp+-8]
 es mov [di+84], ax
 ; ACAO STRUCTURE - Gravacao de Ponteiro - Fim
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:243:17 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:246:17 ===---
 ; ACAO STRUCTURE - Gravacao de Ponteiro- Prepara
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:243:78 ===---
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:243:80 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:246:78 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:246:80 ===---
 ; ACAO STRUCTURE - Leitura de Ponteiro - (U)Int16 - Desvio 6
 es mov ax, [di+6]
 push ax
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:243:65 ===---
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:243:67 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:246:65 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:246:67 ===---
 ; ACAO STRUCTURE - Leitura de Ponteiro - (U)Int16 - Desvio 2
 es mov ax, [di+2]
 push ax
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:243:51 ===---
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:243:53 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:246:51 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:246:53 ===---
 ; ACAO STRUCTURE - Leitura de Ponteiro - (U)Int16 - Desvio 2
 push word [bp+6+2]
 pop es
 mov di, [bp+6]
 es mov ax, [di+2]
 push ax
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:243:32 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:246:32 ===---
 ; ACAO STRUCTURE - Leitura de Ponteiro - (U)Int16 - Desvio 78
 es mov ax, [di+78]
 pop bx
@@ -11515,27 +11805,27 @@ pop es
 mov di, [bp+-8]
 es mov [di+86], ax
 ; ACAO STRUCTURE - Gravacao de Ponteiro - Fim
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:244:17 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:247:17 ===---
 ; ACAO STRUCTURE - Gravacao de Ponteiro- Prepara
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:244:75 ===---
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:244:77 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:247:75 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:247:77 ===---
 ; ACAO STRUCTURE - Leitura de Ponteiro - (U)Int16 - Desvio 4
 es mov ax, [di+4]
 push ax
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:244:63 ===---
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:244:65 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:247:63 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:247:65 ===---
 ; ACAO STRUCTURE - Leitura de Ponteiro - (U)Int16 - Desvio 0
 es mov ax, [di+0]
 push ax
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:244:50 ===---
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:244:52 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:247:50 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:247:52 ===---
 ; ACAO STRUCTURE - Leitura de Ponteiro - (U)Int16 - Desvio 0
 push word [bp+6+2]
 pop es
 mov di, [bp+6]
 es mov ax, [di+0]
 push ax
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:244:32 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:247:32 ===---
 ; ACAO STRUCTURE - Leitura de Ponteiro - (U)Int16 - Desvio 74
 es mov ax, [di+74]
 pop bx
@@ -11549,32 +11839,32 @@ pop es
 mov di, [bp+-8]
 es mov [di+88], ax
 ; ACAO STRUCTURE - Gravacao de Ponteiro - Fim
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:245:17 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:248:17 ===---
 ; ACAO STRUCTURE - Gravacao de Ponteiro- Prepara
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:245:37 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:248:37 ===---
 mov ax, 1
 es mov [di+94], ax
 ; ACAO STRUCTURE - Gravacao de Ponteiro - Fim
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:246:17 ===---
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:246:33 ===---
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:246:20 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:249:17 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:249:33 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:249:20 ===---
 ; ACAO STRUCTURE - Leitura de Ponteiro - (U)Int16 - Desvio 86
 es mov ax, [di+86]
 push ax
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:246:63 ===---
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:246:65 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:249:63 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:249:65 ===---
 ; ACAO STRUCTURE - Leitura de Ponteiro - (U)Int16 - Desvio 80
 push word [bp+6+2]
 pop es
 mov di, [bp+6]
 es mov ax, [di+80]
 push ax
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:246:48 ===---
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:246:50 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:249:48 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:249:50 ===---
 ; ACAO STRUCTURE - Leitura de Ponteiro - (U)Int16 - Desvio 6
 es mov ax, [di+6]
 push ax
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:246:36 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:249:36 ===---
 ; ACAO STRUCTURE - Leitura de Ponteiro - (U)Int16 - Desvio 2
 es mov ax, [di+2]
 pop bx
@@ -11584,31 +11874,31 @@ sub ax, bx
 mov bx, ax
 pop ax
 cmp ax, bx
-ja ROTULO901
-jmp ROTULO902
-ROTULO901:
+ja ROTULO913
+jmp ROTULO914
+ROTULO913:
 mov ax, 65535
-jmp ROTULO903
-ROTULO902:
+jmp ROTULO915
+ROTULO914:
 xor ax, ax
-ROTULO903:
+ROTULO915:
 cmp ax, 0
-jne ROTULO899
-jmp ROTULO900
-ROTULO899:
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:247:21 ===---
+jne ROTULO911
+jmp ROTULO912
+ROTULO911:
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:250:21 ===---
 ; ACAO STRUCTURE - Gravacao de Ponteiro- Prepara
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:247:63 ===---
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:247:65 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:250:63 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:250:65 ===---
 ; ACAO STRUCTURE - Leitura de Ponteiro - (U)Int16 - Desvio 80
 es mov ax, [di+80]
 push ax
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:247:48 ===---
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:247:50 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:250:48 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:250:50 ===---
 ; ACAO STRUCTURE - Leitura de Ponteiro - (U)Int16 - Desvio 6
 es mov ax, [di+6]
 push ax
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:247:36 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:250:36 ===---
 ; ACAO STRUCTURE - Leitura de Ponteiro - (U)Int16 - Desvio 2
 es mov ax, [di+2]
 pop bx
@@ -11620,30 +11910,30 @@ pop es
 mov di, [bp+-8]
 es mov [di+86], ax
 ; ACAO STRUCTURE - Gravacao de Ponteiro - Fim
-ROTULO900:
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:249:17 ===---
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:249:33 ===---
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:249:20 ===---
+ROTULO912:
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:252:17 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:252:33 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:252:20 ===---
 ; ACAO STRUCTURE - Leitura de Ponteiro - (U)Int16 - Desvio 88
 push word [bp+-8+2]
 pop es
 mov di, [bp+-8]
 es mov ax, [di+88]
 push ax
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:249:63 ===---
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:249:65 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:252:63 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:252:65 ===---
 ; ACAO STRUCTURE - Leitura de Ponteiro - (U)Int16 - Desvio 76
 push word [bp+6+2]
 pop es
 mov di, [bp+6]
 es mov ax, [di+76]
 push ax
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:249:47 ===---
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:249:49 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:252:47 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:252:49 ===---
 ; ACAO STRUCTURE - Leitura de Ponteiro - (U)Int16 - Desvio 4
 es mov ax, [di+4]
 push ax
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:249:36 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:252:36 ===---
 ; ACAO STRUCTURE - Leitura de Ponteiro - (U)Int16 - Desvio 0
 es mov ax, [di+0]
 pop bx
@@ -11653,31 +11943,31 @@ sub ax, bx
 mov bx, ax
 pop ax
 cmp ax, bx
-ja ROTULO906
-jmp ROTULO907
-ROTULO906:
+ja ROTULO918
+jmp ROTULO919
+ROTULO918:
 mov ax, 65535
-jmp ROTULO908
-ROTULO907:
+jmp ROTULO920
+ROTULO919:
 xor ax, ax
-ROTULO908:
+ROTULO920:
 cmp ax, 0
-jne ROTULO904
-jmp ROTULO905
-ROTULO904:
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:250:21 ===---
+jne ROTULO916
+jmp ROTULO917
+ROTULO916:
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:253:21 ===---
 ; ACAO STRUCTURE - Gravacao de Ponteiro- Prepara
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:250:63 ===---
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:250:65 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:253:63 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:253:65 ===---
 ; ACAO STRUCTURE - Leitura de Ponteiro - (U)Int16 - Desvio 76
 es mov ax, [di+76]
 push ax
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:250:47 ===---
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:250:49 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:253:47 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:253:49 ===---
 ; ACAO STRUCTURE - Leitura de Ponteiro - (U)Int16 - Desvio 4
 es mov ax, [di+4]
 push ax
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:250:36 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:253:36 ===---
 ; ACAO STRUCTURE - Leitura de Ponteiro - (U)Int16 - Desvio 0
 es mov ax, [di+0]
 pop bx
@@ -11689,30 +11979,30 @@ pop es
 mov di, [bp+-8]
 es mov [di+88], ax
 ; ACAO STRUCTURE - Gravacao de Ponteiro - Fim
-ROTULO905:
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:252:17 ===---
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:252:33 ===---
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:252:20 ===---
+ROTULO917:
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:255:17 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:255:33 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:255:20 ===---
 ; ACAO STRUCTURE - Leitura de Ponteiro - (U)Int16 - Desvio 82
 push word [bp+-8+2]
 pop es
 mov di, [bp+-8]
 es mov ax, [di+82]
 push ax
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:252:63 ===---
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:252:65 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:255:63 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:255:65 ===---
 ; ACAO STRUCTURE - Leitura de Ponteiro - (U)Int16 - Desvio 80
 push word [bp+6+2]
 pop es
 mov di, [bp+6]
 es mov ax, [di+80]
 push ax
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:252:48 ===---
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:252:50 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:255:48 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:255:50 ===---
 ; ACAO STRUCTURE - Leitura de Ponteiro - (U)Int16 - Desvio 6
 es mov ax, [di+6]
 push ax
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:252:36 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:255:36 ===---
 ; ACAO STRUCTURE - Leitura de Ponteiro - (U)Int16 - Desvio 2
 es mov ax, [di+2]
 pop bx
@@ -11722,72 +12012,18 @@ sub ax, bx
 mov bx, ax
 pop ax
 cmp ax, bx
-ja ROTULO911
-jmp ROTULO912
-ROTULO911:
+ja ROTULO923
+jmp ROTULO924
+ROTULO923:
 mov ax, 65535
-jmp ROTULO913
-ROTULO912:
+jmp ROTULO925
+ROTULO924:
 xor ax, ax
-ROTULO913:
+ROTULO925:
 cmp ax, 0
-jne ROTULO909
-jmp ROTULO910
-ROTULO909:
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:253:21 ===---
-; ACAO STRUCTURE - Gravacao de Ponteiro- Prepara
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:253:41 ===---
-xor ax, ax
-push word [bp+-8+2]
-pop es
-mov di, [bp+-8]
-es mov [di+94], ax
-; ACAO STRUCTURE - Gravacao de Ponteiro - Fim
-ROTULO910:
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:255:17 ===---
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:255:33 ===---
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:255:20 ===---
-; ACAO STRUCTURE - Leitura de Ponteiro - (U)Int16 - Desvio 88
-push word [bp+-8+2]
-pop es
-mov di, [bp+-8]
-es mov ax, [di+88]
-push ax
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:255:63 ===---
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:255:65 ===---
-; ACAO STRUCTURE - Leitura de Ponteiro - (U)Int16 - Desvio 76
-push word [bp+6+2]
-pop es
-mov di, [bp+6]
-es mov ax, [di+76]
-push ax
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:255:47 ===---
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:255:49 ===---
-; ACAO STRUCTURE - Leitura de Ponteiro - (U)Int16 - Desvio 4
-es mov ax, [di+4]
-push ax
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:255:36 ===---
-; ACAO STRUCTURE - Leitura de Ponteiro - (U)Int16 - Desvio 0
-es mov ax, [di+0]
-pop bx
-add ax, bx
-pop bx
-sub ax, bx
-mov bx, ax
-pop ax
-cmp ax, bx
-ja ROTULO916
-jmp ROTULO917
-ROTULO916:
-mov ax, 65535
-jmp ROTULO918
-ROTULO917:
-xor ax, ax
-ROTULO918:
-cmp ax, 0
-jne ROTULO914
-jmp ROTULO915
-ROTULO914:
+jne ROTULO921
+jmp ROTULO922
+ROTULO921:
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:256:21 ===---
 ; ACAO STRUCTURE - Gravacao de Ponteiro- Prepara
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:256:41 ===---
@@ -11797,147 +12033,135 @@ pop es
 mov di, [bp+-8]
 es mov [di+94], ax
 ; ACAO STRUCTURE - Gravacao de Ponteiro - Fim
-ROTULO915:
+ROTULO922:
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:258:17 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:258:33 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:258:20 ===---
+; ACAO STRUCTURE - Leitura de Ponteiro - (U)Int16 - Desvio 88
+push word [bp+-8+2]
+pop es
+mov di, [bp+-8]
+es mov ax, [di+88]
+push ax
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:258:63 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:258:65 ===---
+; ACAO STRUCTURE - Leitura de Ponteiro - (U)Int16 - Desvio 76
+push word [bp+6+2]
+pop es
+mov di, [bp+6]
+es mov ax, [di+76]
+push ax
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:258:47 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:258:49 ===---
+; ACAO STRUCTURE - Leitura de Ponteiro - (U)Int16 - Desvio 4
+es mov ax, [di+4]
+push ax
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:258:36 ===---
+; ACAO STRUCTURE - Leitura de Ponteiro - (U)Int16 - Desvio 0
+es mov ax, [di+0]
+pop bx
+add ax, bx
+pop bx
+sub ax, bx
+mov bx, ax
+pop ax
+cmp ax, bx
+ja ROTULO928
+jmp ROTULO929
+ROTULO928:
+mov ax, 65535
+jmp ROTULO930
+ROTULO929:
+xor ax, ax
+ROTULO930:
+cmp ax, 0
+jne ROTULO926
+jmp ROTULO927
+ROTULO926:
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:259:21 ===---
 ; ACAO STRUCTURE - Gravacao de Ponteiro- Prepara
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:258:48 ===---
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:258:50 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:259:41 ===---
+xor ax, ax
+push word [bp+-8+2]
+pop es
+mov di, [bp+-8]
+es mov [di+94], ax
+; ACAO STRUCTURE - Gravacao de Ponteiro - Fim
+ROTULO927:
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:261:17 ===---
+; ACAO STRUCTURE - Gravacao de Ponteiro- Prepara
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:261:48 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:261:50 ===---
 ; ACAO STRUCTURE - Leitura de Ponteiro - (U)Int16 - Desvio 82
 push word [bp+-8+2]
 pop es
 mov di, [bp+-8]
 es mov ax, [di+82]
 push ax
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:258:35 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:261:35 ===---
 ; ACAO STRUCTURE - Leitura de Ponteiro - (U)Int16 - Desvio 86
 es mov ax, [di+86]
 pop bx
 sub ax, bx
 es mov [di+90], ax
 ; ACAO STRUCTURE - Gravacao de Ponteiro - Fim
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:259:17 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:262:17 ===---
 ; ACAO STRUCTURE - Gravacao de Ponteiro- Prepara
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:259:49 ===---
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:259:51 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:262:49 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:262:51 ===---
 ; ACAO STRUCTURE - Leitura de Ponteiro - (U)Int16 - Desvio 84
 es mov ax, [di+84]
 push ax
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:259:36 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:262:36 ===---
 ; ACAO STRUCTURE - Leitura de Ponteiro - (U)Int16 - Desvio 88
 es mov ax, [di+88]
 pop bx
 sub ax, bx
 es mov [di+92], ax
 ; ACAO STRUCTURE - Gravacao de Ponteiro - Fim
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:260:17 ===---
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:260:43 ===---
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:260:38 ===---
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:260:20 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:263:17 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:263:43 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:263:38 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:263:20 ===---
 ; ACAO STRUCTURE - Leitura de Ponteiro - (U)Int16 - Desvio 94
 es mov ax, [di+94]
 push ax
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:260:41 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:263:41 ===---
 xor ax, ax
 mov bx, ax
 pop ax
 cmp ax, bx
-jne ROTULO924
-jmp ROTULO925
-ROTULO924:
+jne ROTULO936
+jmp ROTULO937
+ROTULO936:
 mov ax, 65535
-jmp ROTULO926
-ROTULO925:
+jmp ROTULO938
+ROTULO937:
 xor ax, ax
-ROTULO926:
+ROTULO938:
 cmp ax, 0
-je ROTULO922
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:260:65 ===---
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:260:51 ===---
+je ROTULO934
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:263:65 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:263:51 ===---
 ; ACAO STRUCTURE - Leitura de Ponteiro - (U)Int8 - Desvio 14
 xor ax, ax
 es mov al, [di+14]
 push ax
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:260:68 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:263:68 ===---
 xor ax, ax
 mov bx, ax
 pop ax
 cmp ax, bx
-jne ROTULO927
-jmp ROTULO928
-ROTULO927:
+jne ROTULO939
+jmp ROTULO940
+ROTULO939:
 mov ax, 65535
-jmp ROTULO929
-ROTULO928:
+jmp ROTULO941
+ROTULO940:
 xor ax, ax
-ROTULO929:
+ROTULO941:
 cmp ax, 0
-je ROTULO922
-ROTULO921:
-mov ax, 65535
-jmp ROTULO923
-ROTULO922:
-xor ax, ax
-ROTULO923:
-cmp ax, 0
-jne ROTULO919
-jmp ROTULO920
-ROTULO919:
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:261:21 ===---
-; ACAO CHAMADA - Chama rotina
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:261:28 ===---
-; ACAO LEITURA - Le ponteiro
-push es
-push di
-push cs
-call _control_redraw
-add sp, 4
-ROTULO920:
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:239:26 ===---
-; ACAO INC - Incrementa variavel
-inc word [bp+-2]
-jmp ROTULO893
-ROTULO895:
-ROTULO892:
-ROTULO890:
-mov sp, bp
-pop bp
-FIM_control_drawchildren:
-retf
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:267:16 ===---
-_control_focus:
-push bp
-mov bp, sp
-sub sp, 4
-push cs
-call _os_stackcheck
-; ARG: ctrl TAM: 4 POS: BP+6 
-; ARG: old TAM: 4 POS: BP--4 
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:267:22 ===---
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:268:13 ===---
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:269:9 ===---
-; ACAO GRAVACAO - Gravacao em ponteiro
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:269:15 ===---
-; ACAO LEITURA - Le ponteiro
-cs push word [_application_currentfocus+2]
-pop es
-cs mov di, [_application_currentfocus]
-push es
-pop word [bp+-4+2]
-mov [bp+-4], di
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:270:9 ===---
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:270:17 ===---
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:270:13 ===---
-; ACAO STRUCTURE - Define Segmento/desvio de estrutura
-; ACAO LEITURA - Le segmento em variavel
-mov ax, [bp+-4+2]
-push ax
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:270:20 ===---
-xor ax, ax
-mov bx, ax
-pop ax
-cmp ax, bx
-jne ROTULO933
-jmp ROTULO934
+je ROTULO934
 ROTULO933:
 mov ax, 65535
 jmp ROTULO935
@@ -11948,46 +12172,112 @@ cmp ax, 0
 jne ROTULO931
 jmp ROTULO932
 ROTULO931:
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:271:13 ===---
-; ACAO STRUCTURE - Gravacao de Ponteiro- Prepara
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:271:28 ===---
-xor ax, ax
-es mov [di+18], al
-; ACAO STRUCTURE - Gravacao de Ponteiro - Fim
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:272:13 ===---
-; ACAO CHAMADA - Chama indiretamente usando Invoke
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:272:44 ===---
-xor ax, ax
-push ax
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:272:13 ===---
-; ACAO LEITURA - Le ponteiro
-push es
-push di
-es call far [di+35]
-add sp, 6
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:273:13 ===---
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:273:16 ===---
-; ACAO STRUCTURE - Leitura de Ponteiro - (U)Int8 - Desvio 17
-xor ax, ax
-es mov al, [di+17]
-cmp ax, 0
-jne ROTULO936
-jmp ROTULO937
-ROTULO936:
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:273:46 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:264:21 ===---
 ; ACAO CHAMADA - Chama rotina
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:273:53 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:264:28 ===---
 ; ACAO LEITURA - Le ponteiro
 push es
 push di
 push cs
 call _control_redraw
 add sp, 4
-ROTULO937:
 ROTULO932:
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:275:9 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:242:26 ===---
+; ACAO INC - Incrementa variavel
+inc word [bp+-2]
+jmp ROTULO905
+ROTULO907:
+ROTULO904:
+ROTULO902:
+mov sp, bp
+pop bp
+FIM_control_drawchildren:
+retf
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:270:16 ===---
+_control_focus:
+push bp
+mov bp, sp
+sub sp, 4
+push cs
+call _os_stackcheck
+; ARG: ctrl TAM: 4 POS: BP+6 
+; ARG: old TAM: 4 POS: BP--4 
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:270:22 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:271:13 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:272:9 ===---
 ; ACAO GRAVACAO - Gravacao em ponteiro
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:275:36 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:272:15 ===---
+; ACAO LEITURA - Le ponteiro
+cs push word [_application_currentfocus+2]
+pop es
+cs mov di, [_application_currentfocus]
+push es
+pop word [bp+-4+2]
+mov [bp+-4], di
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:273:9 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:273:17 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:273:13 ===---
+; ACAO STRUCTURE - Define Segmento/desvio de estrutura
+; ACAO LEITURA - Le segmento em variavel
+mov ax, [bp+-4+2]
+push ax
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:273:20 ===---
+xor ax, ax
+mov bx, ax
+pop ax
+cmp ax, bx
+jne ROTULO945
+jmp ROTULO946
+ROTULO945:
+mov ax, 65535
+jmp ROTULO947
+ROTULO946:
+xor ax, ax
+ROTULO947:
+cmp ax, 0
+jne ROTULO943
+jmp ROTULO944
+ROTULO943:
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:274:13 ===---
+; ACAO STRUCTURE - Gravacao de Ponteiro- Prepara
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:274:28 ===---
+xor ax, ax
+es mov [di+18], al
+; ACAO STRUCTURE - Gravacao de Ponteiro - Fim
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:275:13 ===---
+; ACAO CHAMADA - Chama indiretamente usando Invoke
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:275:44 ===---
+xor ax, ax
+push ax
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:275:13 ===---
+; ACAO LEITURA - Le ponteiro
+push es
+push di
+es call far [di+35]
+add sp, 6
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:276:13 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:276:16 ===---
+; ACAO STRUCTURE - Leitura de Ponteiro - (U)Int8 - Desvio 17
+xor ax, ax
+es mov al, [di+17]
+cmp ax, 0
+jne ROTULO948
+jmp ROTULO949
+ROTULO948:
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:276:46 ===---
+; ACAO CHAMADA - Chama rotina
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:276:53 ===---
+; ACAO LEITURA - Le ponteiro
+push es
+push di
+push cs
+call _control_redraw
+add sp, 4
+ROTULO949:
+ROTULO944:
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:278:9 ===---
+; ACAO GRAVACAO - Gravacao em ponteiro
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:278:36 ===---
 ; ACAO LEITURA - Le ponteiro
 push word [bp+6+2]
 pop es
@@ -11995,66 +12285,70 @@ mov di, [bp+6]
 push es
 cs pop word [_application_currentfocus+2]
 cs mov [_application_currentfocus], di
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:276:9 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:279:9 ===---
 ; ACAO STRUCTURE - Gravacao de Ponteiro- Prepara
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:276:25 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:279:25 ===---
 mov ax, 1
 push word [bp+6+2]
 pop es
 mov di, [bp+6]
 es mov [di+18], al
 ; ACAO STRUCTURE - Gravacao de Ponteiro - Fim
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:277:9 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:280:9 ===---
 ; ACAO CHAMADA - Chama indiretamente usando Invoke
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:277:41 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:280:41 ===---
 mov ax, 1
 push ax
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:277:9 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:280:9 ===---
 ; ACAO LEITURA - Le ponteiro
 push es
 push di
 es call far [di+35]
 add sp, 6
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:278:9 ===---
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:278:12 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:281:9 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:281:12 ===---
 ; ACAO STRUCTURE - Leitura de Ponteiro - (U)Int8 - Desvio 17
 xor ax, ax
 es mov al, [di+17]
 cmp ax, 0
-jne ROTULO938
-jmp ROTULO939
-ROTULO938:
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:278:43 ===---
+jne ROTULO950
+jmp ROTULO951
+ROTULO950:
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:281:43 ===---
 ; ACAO CHAMADA - Chama rotina
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:278:50 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:281:50 ===---
 ; ACAO LEITURA - Le ponteiro
 push es
 push di
 push cs
 call _control_redraw
 add sp, 4
-ROTULO939:
-ROTULO930:
+ROTULO951:
+ROTULO942:
 mov sp, bp
 pop bp
 FIM_control_focus:
 retf
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:281:16 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:284:16 ===---
 _control_processkeyboard:
 push bp
 mov bp, sp
-sub sp, 4
+sub sp, 8
 push cs
 call _os_stackcheck
 ; ARG: ctrl TAM: 4 POS: BP+6 
 ; ARG: e TAM: 4 POS: BP+10 
 ; ARG: next TAM: 4 POS: BP--4 
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:281:32 ===---
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:281:49 ===---
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:283:17 ===---
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:282:9 ===---
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:282:24 ===---
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:282:12 ===---
+; ARG: i TAM: 2 POS: BP--6 
+; ARG: max TAM: 2 POS: BP--8 
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:284:32 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:284:49 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:286:17 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:296:21 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:297:21 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:285:9 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:285:24 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:285:12 ===---
 ; ACAO STRUCTURE - Leitura de Ponteiro - (U)Int8 - Desvio 0
 push word [bp+10+2]
 pop es
@@ -12062,26 +12356,26 @@ mov di, [bp+10]
 xor ax, ax
 es mov al, [di+0]
 push ax
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:282:27 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:285:27 ===---
 mov ax, 9
 mov bx, ax
 pop ax
 cmp ax, bx
-je ROTULO943
-jmp ROTULO944
-ROTULO943:
+je ROTULO955
+jmp ROTULO956
+ROTULO955:
 mov ax, 65535
-jmp ROTULO945
-ROTULO944:
+jmp ROTULO957
+ROTULO956:
 xor ax, ax
-ROTULO945:
+ROTULO957:
 cmp ax, 0
-jne ROTULO941
-jmp ROTULO942
-ROTULO941:
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:284:13 ===---
+jne ROTULO953
+jmp ROTULO954
+ROTULO953:
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:287:13 ===---
 ; ACAO GRAVACAO - Gravacao em ponteiro
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:284:20 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:287:20 ===---
 ; ACAO LEITURA - Le ponteiro
 push word [bp+6+2]
 pop es
@@ -12089,9 +12383,9 @@ mov di, [bp+6]
 push es
 pop word [bp+-4+2]
 mov [bp+-4], di
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:285:13 ===---
-ROTULO946:
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:285:19 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:288:13 ===---
+ROTULO958:
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:288:19 ===---
 ; ACAO STRUCTURE - Leitura de Ponteiro - (U)Int8 - Desvio 69
 push word [bp+-4+2]
 pop es
@@ -12099,12 +12393,12 @@ mov di, [bp+-4]
 xor ax, ax
 es mov al, [di+69]
 cmp ax, 0
-jne ROTULO947
-jmp ROTULO948
-ROTULO947:
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:286:17 ===---
+jne ROTULO959
+jmp ROTULO960
+ROTULO959:
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:289:17 ===---
 ; ACAO GRAVACAO - Gravacao em ponteiro
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:286:24 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:289:24 ===---
 ; ACAO STRUCTURE - Leitura de Ponteiro - Ponteiro Byte - Desvio 70
 push word [bp+6+2]
 pop es
@@ -12116,33 +12410,33 @@ pop es
 push es
 pop word [bp+-4+2]
 mov [bp+-4], di
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:287:17 ===---
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:287:20 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:290:17 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:290:20 ===---
 ; ACAO STRUCTURE - Leitura de Ponteiro - (U)Int8 - Desvio 16
 xor ax, ax
 es mov al, [di+16]
 cmp ax, 0
-jne ROTULO949
-jmp ROTULO950
-ROTULO949:
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:288:21 ===---
+jne ROTULO961
+jmp ROTULO962
+ROTULO961:
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:291:21 ===---
 ; ACAO CHAMADA - Chama rotina
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:288:27 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:291:27 ===---
 ; ACAO LEITURA - Le ponteiro
 push es
 push di
 push cs
 call _control_focus
 add sp, 4
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:289:21 ===---
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:289:26 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:292:21 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:292:26 ===---
 xor ax, ax
-jmp ROTULO940
-ROTULO950:
-jmp ROTULO946
-ROTULO948:
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:292:13 ===---
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:292:16 ===---
+jmp ROTULO952
+ROTULO962:
+jmp ROTULO958
+ROTULO960:
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:295:13 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:295:16 ===---
 ; ACAO STRUCTURE - Leitura de Ponteiro - (U)Int8 - Desvio 59
 push word [bp+6+2]
 pop es
@@ -12150,12 +12444,14 @@ mov di, [bp+6]
 xor ax, ax
 es mov al, [di+59]
 cmp ax, 0
-jne ROTULO951
-jmp ROTULO952
-ROTULO951:
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:293:17 ===---
+jne ROTULO963
+jmp ROTULO964
+ROTULO963:
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:298:17 ===---
+; ACAO GRAVACAO - Grava em variavel
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:298:23 ===---
 ; ACAO CHAMADA - Chama rotina
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:293:23 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:298:29 ===---
 ; ACAO STRUCTURE - Leitura de Ponteiro - Ponteiro Byte - Desvio 60
 es push word [di+60+2]
 es push word [di+60]
@@ -12164,21 +12460,103 @@ pop es
 push es
 push di
 push cs
+call _control_count
+add sp, 4
+mov [bp+-8], ax
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:299:30 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:299:30 ===---
+; ACAO GRAVACAO - Grava em variavel
+mov word [bp+-6], 1
+ROTULO965:
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:299:30 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:299:30 ===---
+; ACAO LEITURA - Le variavel
+mov ax, [bp+-6]
+push ax
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:299:30 ===---
+; ACAO LEITURA - Le variavel
+mov ax, [bp+-8]
+mov bx, ax
+pop ax
+cmp ax, bx
+jbe ROTULO968
+jmp ROTULO969
+ROTULO968:
+mov ax, 65535
+jmp ROTULO970
+ROTULO969:
+xor ax, ax
+ROTULO970:
+cmp ax, 0
+jne ROTULO966
+jmp ROTULO967
+ROTULO966:
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:300:21 ===---
+; ACAO GRAVACAO - Gravacao em ponteiro
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:300:28 ===---
+; ACAO CHAMADA - Chama rotina
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:300:46 ===---
+; ACAO LEITURA - Le variavel
+mov ax, [bp+-6]
+push ax
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:300:33 ===---
+; ACAO STRUCTURE - Leitura de Ponteiro - Ponteiro Byte - Desvio 60
+push word [bp+6+2]
+pop es
+mov di, [bp+6]
+es push word [di+60+2]
+es push word [di+60]
+pop di
+pop es
+push es
+push di
+push cs
+call _control_item
+add sp, 6
+push es
+pop word [bp+-4+2]
+mov [bp+-4], di
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:301:21 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:301:24 ===---
+; ACAO STRUCTURE - Leitura de Ponteiro - (U)Int8 - Desvio 16
+xor ax, ax
+es mov al, [di+16]
+cmp ax, 0
+jne ROTULO971
+jmp ROTULO972
+ROTULO971:
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:302:25 ===---
+; ACAO CHAMADA - Chama rotina
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:302:31 ===---
+; ACAO LEITURA - Le ponteiro
+push es
+push di
+push cs
 call _control_focus
 add sp, 4
-ROTULO952:
-jmp ROTULO953
-ROTULO942:
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:296:13 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:303:25 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:303:30 ===---
+xor ax, ax
+jmp ROTULO952
+ROTULO972:
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:299:30 ===---
+; ACAO INC - Incrementa variavel
+inc word [bp+-6]
+jmp ROTULO965
+ROTULO967:
+ROTULO964:
+jmp ROTULO973
+ROTULO954:
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:308:13 ===---
 ; ACAO CHAMADA - Chama indiretamente usando Invoke
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:296:51 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:308:51 ===---
 ; ACAO LEITURA - Le ponteiro
 push word [bp+10+2]
 pop es
 mov di, [bp+10]
 push es
 push di
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:296:13 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:308:13 ===---
 ; ACAO LEITURA - Le ponteiro
 push word [bp+6+2]
 pop es
@@ -12187,27 +12565,214 @@ push es
 push di
 es call far [di+31]
 add sp, 8
-ROTULO953:
-ROTULO940:
+ROTULO973:
+ROTULO952:
 mov sp, bp
 pop bp
 FIM_control_processkeyboard:
 retf
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:312:16 ===---
+_control_show:
+push bp
+mov bp, sp
+sub sp, 4
+push cs
+call _os_stackcheck
+; ARG: ctrl TAM: 4 POS: BP+6 
+; ARG: parent TAM: 4 POS: BP--4 
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:312:21 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:317:13 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:313:9 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:313:27 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:313:12 ===---
+; ACAO STRUCTURE - Leitura de Ponteiro - (U)Int8 - Desvio 59
+push word [bp+6+2]
+pop es
+mov di, [bp+6]
+xor ax, ax
+es mov al, [di+59]
+push ax
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:313:30 ===---
+xor ax, ax
+mov bx, ax
+pop ax
+cmp ax, bx
+je ROTULO977
+jmp ROTULO978
+ROTULO977:
+mov ax, 65535
+jmp ROTULO979
+ROTULO978:
+xor ax, ax
+ROTULO979:
+cmp ax, 0
+jne ROTULO975
+jmp ROTULO976
+ROTULO975:
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:314:13 ===---
+; ACAO CHAMADA - Chama rotina
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:314:39 ===---
+; ACAO LEITURA - Le ponteiro
+push es
+push di
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:314:17 ===---
+; ACAO LEITURA - Le ponteiro
+cs push word [_screen_screencontrol+2]
+pop es
+cs mov di, [_screen_screencontrol]
+push es
+push di
+push cs
+call _control_add
+add sp, 8
+ROTULO976:
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:316:9 ===---
+; ACAO STRUCTURE - Gravacao de Ponteiro- Prepara
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:316:24 ===---
+mov ax, 1
+push word [bp+6+2]
+pop es
+mov di, [bp+6]
+es mov [di+14], al
+; ACAO STRUCTURE - Gravacao de Ponteiro - Fim
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:318:9 ===---
+; ACAO GRAVACAO - Gravacao em ponteiro
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:318:18 ===---
+; ACAO STRUCTURE - Leitura de Ponteiro - Ponteiro Byte - Desvio 60
+es push word [di+60+2]
+es push word [di+60]
+pop di
+pop es
+push es
+pop word [bp+-4+2]
+mov [bp+-4], di
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:319:9 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:319:12 ===---
+; ACAO STRUCTURE - Leitura de Ponteiro - (U)Int16 - Desvio 94
+es mov ax, [di+94]
+cmp ax, 0
+jne ROTULO980
+jmp ROTULO981
+ROTULO980:
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:319:36 ===---
+; ACAO CHAMADA - Chama rotina
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:319:43 ===---
+; ACAO LEITURA - Le ponteiro
+push word [bp+6+2]
+pop es
+mov di, [bp+6]
+push es
+push di
+push cs
+call _control_redraw
+add sp, 4
+ROTULO981:
+ROTULO974:
+mov sp, bp
+pop bp
+FIM_control_show:
+retf
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:322:16 ===---
+_control_hide:
+push bp
+mov bp, sp
+sub sp, 4
+push cs
+call _os_stackcheck
+; ARG: ctrl TAM: 4 POS: BP+6 
+; ARG: parent TAM: 4 POS: BP--4 
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:322:21 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:325:13 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:323:9 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:323:27 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:323:12 ===---
+; ACAO STRUCTURE - Leitura de Ponteiro - (U)Int8 - Desvio 59
+push word [bp+6+2]
+pop es
+mov di, [bp+6]
+xor ax, ax
+es mov al, [di+59]
+push ax
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:323:30 ===---
+xor ax, ax
+mov bx, ax
+pop ax
+cmp ax, bx
+je ROTULO985
+jmp ROTULO986
+ROTULO985:
+mov ax, 65535
+jmp ROTULO987
+ROTULO986:
+xor ax, ax
+ROTULO987:
+cmp ax, 0
+jne ROTULO983
+jmp ROTULO984
+ROTULO983:
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:323:37 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:323:42 ===---
+xor ax, ax
+jmp ROTULO982
+ROTULO984:
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:324:9 ===---
+; ACAO STRUCTURE - Gravacao de Ponteiro- Prepara
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:324:24 ===---
+xor ax, ax
+push word [bp+6+2]
+pop es
+mov di, [bp+6]
+es mov [di+14], al
+; ACAO STRUCTURE - Gravacao de Ponteiro - Fim
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:326:9 ===---
+; ACAO GRAVACAO - Gravacao em ponteiro
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:326:18 ===---
+; ACAO STRUCTURE - Leitura de Ponteiro - Ponteiro Byte - Desvio 60
+es push word [di+60+2]
+es push word [di+60]
+pop di
+pop es
+push es
+pop word [bp+-4+2]
+mov [bp+-4], di
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:327:9 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:327:12 ===---
+; ACAO STRUCTURE - Leitura de Ponteiro - (U)Int16 - Desvio 94
+es mov ax, [di+94]
+cmp ax, 0
+jne ROTULO988
+jmp ROTULO989
+ROTULO988:
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:327:36 ===---
+; ACAO CHAMADA - Chama rotina
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:327:43 ===---
+; ACAO LEITURA - Le ponteiro
+push es
+push di
+push cs
+call _control_redraw
+add sp, 4
+ROTULO989:
+ROTULO982:
+mov sp, bp
+pop bp
+FIM_control_hide:
+retf
 ; MODULO FIM: control
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:302:8 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:332:8 ===---
 ; MODULO: screen
 _screen:
 db 16
 db 83,121,115,116,101,109,46,70,111,114,109,115,46,104,99,98
 db 0
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:303:16 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:333:16 ===---
 _screen_screencontrol:
 times 100 db 0
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:305:16 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:335:16 ===---
 _screen_initialize:
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:306:9 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:336:9 ===---
 ; ACAO CHAMADA - Chama rotina
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:306:28 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:336:28 ===---
 ; ACAO LEITURA - Le ponteiro
 cs push word [_screen_screencontrol+2]
 pop es
@@ -12217,24 +12782,24 @@ push di
 push cs
 call _control_initialize
 add sp, 4
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:307:9 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:337:9 ===---
 ; ACAO STRUCTURE - Gravacao de Ponteiro- Prepara
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:307:29 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:337:29 ===---
 xor ax, ax
 cs push word [_screen_screencontrol+2]
 pop es
 cs mov di, [_screen_screencontrol]
 es mov [di+0], ax
 ; ACAO STRUCTURE - Gravacao de Ponteiro - Fim
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:308:9 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:338:9 ===---
 ; ACAO STRUCTURE - Gravacao de Ponteiro- Prepara
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:308:30 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:338:30 ===---
 xor ax, ax
 es mov [di+2], ax
 ; ACAO STRUCTURE - Gravacao de Ponteiro - Fim
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:309:9 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:339:9 ===---
 ; ACAO STRUCTURE - Gravacao de Ponteiro- Prepara
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:309:31 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:339:31 ===---
 ; ACAO CHAMADA - Chama rotina
 push cs
 call _graphics_getwidth
@@ -12243,9 +12808,9 @@ pop es
 cs mov di, [_screen_screencontrol]
 es mov [di+6], ax
 ; ACAO STRUCTURE - Gravacao de Ponteiro - Fim
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:310:9 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:340:9 ===---
 ; ACAO STRUCTURE - Gravacao de Ponteiro- Prepara
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:310:32 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:340:32 ===---
 ; ACAO CHAMADA - Chama rotina
 push cs
 call _graphics_getheight
@@ -12254,15 +12819,21 @@ pop es
 cs mov di, [_screen_screencontrol]
 es mov [di+4], ax
 ; ACAO STRUCTURE - Gravacao de Ponteiro - Fim
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:311:9 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:341:9 ===---
 ; ACAO STRUCTURE - Gravacao de Ponteiro- Prepara
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:311:33 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:341:33 ===---
 mov ax, 1
 es mov [di+14], al
 ; ACAO STRUCTURE - Gravacao de Ponteiro - Fim
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:312:9 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:342:9 ===---
 ; ACAO STRUCTURE - Gravacao de Ponteiro- Prepara
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:312:38 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:342:37 ===---
+xor ax, ax
+es mov [di+94], ax
+; ACAO STRUCTURE - Gravacao de Ponteiro - Fim
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:343:9 ===---
+; ACAO STRUCTURE - Gravacao de Ponteiro- Prepara
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:343:38 ===---
 push cs
 pop es
 mov di, _screen_controlpaint
@@ -12274,18 +12845,27 @@ cs mov di, [_screen_screencontrol]
 es pop word [di+23]
 es pop word [di+23+2]
 ; ACAO STRUCTURE - Gravacao de Ponteiro - Fim
-ROTULO954:
+ROTULO990:
 FIM_screen_initialize:
 retf
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:315:9 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:346:9 ===---
 _screen_controlpaint:
 push bp
 mov bp, sp
 ; ARG: ctrl TAM: 4 POS: BP+6 
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:315:22 ===---
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:316:9 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:346:22 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:347:9 ===---
+; ACAO STRUCTURE - Gravacao de Ponteiro- Prepara
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:347:37 ===---
+mov ax, 1
+cs push word [_screen_screencontrol+2]
+pop es
+cs mov di, [_screen_screencontrol]
+es mov [di+94], ax
+; ACAO STRUCTURE - Gravacao de Ponteiro - Fim
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:348:9 ===---
 ; ACAO CHAMADA - Chama rotina
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:316:30 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:348:30 ===---
 ; ACAO CHAMADA - Chama rotina
 push cs
 call _systemcolors_backgroundcolor
@@ -12293,9 +12873,9 @@ push ax
 push cs
 call _graphics_clearscreen
 add sp, 2
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:317:9 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:349:9 ===---
 ; ACAO CHAMADA - Chama rotina
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:317:30 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:349:30 ===---
 ; ACAO LEITURA - Le ponteiro
 push word [bp+6+2]
 pop es
@@ -12305,27 +12885,27 @@ push di
 push cs
 call _control_drawchildren
 add sp, 4
-ROTULO955:
+ROTULO991:
 mov sp, bp
 pop bp
 FIM_screen_controlpaint:
 retf
 ; MODULO FIM: screen
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:374:8 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:457:8 ===---
 ; MODULO: form
 _form:
 db 16
 db 83,121,115,116,101,109,46,70,111,114,109,115,46,104,99,98
 db 0
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:375:16 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:458:16 ===---
 _form_initialize:
 push bp
 mov bp, sp
 ; ARG: ctrl TAM: 4 POS: BP+6 
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:375:27 ===---
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:376:9 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:458:27 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:459:9 ===---
 ; ACAO CHAMADA - Chama rotina
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:376:28 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:459:28 ===---
 ; ACAO LEITURA - Le ponteiro
 push word [bp+6+2]
 pop es
@@ -12335,9 +12915,9 @@ push di
 push cs
 call _control_initialize
 add sp, 4
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:377:9 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:460:9 ===---
 ; ACAO STRUCTURE - Gravacao de Ponteiro- Prepara
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:377:29 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:460:29 ===---
 push cs
 pop es
 mov di, _form_controlpaint
@@ -12349,9 +12929,9 @@ mov di, [bp+6]
 es pop word [di+23]
 es pop word [di+23+2]
 ; ACAO STRUCTURE - Gravacao de Ponteiro - Fim
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:378:9 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:461:9 ===---
 ; ACAO STRUCTURE - Gravacao de Ponteiro- Prepara
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:378:24 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:461:24 ===---
 push cs
 pop es
 mov di, _form_onfocus
@@ -12363,30 +12943,30 @@ mov di, [bp+6]
 es pop word [di+51]
 es pop word [di+51+2]
 ; ACAO STRUCTURE - Gravacao de Ponteiro - Fim
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:379:9 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:462:9 ===---
 ; ACAO STRUCTURE - Gravacao de Ponteiro- Prepara
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:379:30 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:462:30 ===---
 mov ax, 2
 es mov [di+76], ax
 ; ACAO STRUCTURE - Gravacao de Ponteiro - Fim
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:380:9 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:463:9 ===---
 ; ACAO STRUCTURE - Gravacao de Ponteiro- Prepara
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:380:28 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:463:28 ===---
 mov ax, 2
 es mov [di+78], ax
 ; ACAO STRUCTURE - Gravacao de Ponteiro - Fim
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:381:9 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:464:9 ===---
 ; ACAO STRUCTURE - Gravacao de Ponteiro- Prepara
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:381:29 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:464:29 ===---
 mov ax, 2
 es mov [di+80], ax
 ; ACAO STRUCTURE - Gravacao de Ponteiro - Fim
-ROTULO956:
+ROTULO992:
 mov sp, bp
 pop bp
 FIM_form_initialize:
 retf
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:384:9 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:467:9 ===---
 _form_onfocus:
 push bp
 mov bp, sp
@@ -12397,13 +12977,13 @@ call _os_stackcheck
 ; ARG: qtd TAM: 2 POS: BP--2 
 ; ARG: i TAM: 2 POS: BP--4 
 ; ARG: child TAM: 4 POS: BP--8 
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:384:17 ===---
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:385:13 ===---
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:386:13 ===---
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:390:17 ===---
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:387:9 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:467:17 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:468:13 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:469:13 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:473:17 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:470:9 ===---
 ; ACAO GRAVACAO - Gravacao em ponteiro
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:387:40 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:470:40 ===---
 ; ACAO LEITURA - Le ponteiro
 push word [bp+6+2]
 pop es
@@ -12411,11 +12991,11 @@ mov di, [bp+6]
 push es
 cs pop word [_application_currentfocusform+2]
 cs mov [_application_currentfocusform], di
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:388:9 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:471:9 ===---
 ; ACAO GRAVACAO - Grava em variavel
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:388:15 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:471:15 ===---
 ; ACAO CHAMADA - Chama rotina
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:388:29 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:471:29 ===---
 ; ACAO LEITURA - Le ponteiro
 push word [bp+6+2]
 pop es
@@ -12426,43 +13006,43 @@ push cs
 call _control_count
 add sp, 4
 mov [bp+-2], ax
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:389:22 ===---
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:389:22 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:472:22 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:472:22 ===---
 ; ACAO GRAVACAO - Grava em variavel
 mov word [bp+-4], 1
-ROTULO958:
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:389:22 ===---
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:389:22 ===---
+ROTULO994:
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:472:22 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:472:22 ===---
 ; ACAO LEITURA - Le variavel
 mov ax, [bp+-4]
 push ax
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:389:22 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:472:22 ===---
 ; ACAO LEITURA - Le variavel
 mov ax, [bp+-2]
 mov bx, ax
 pop ax
 cmp ax, bx
-jbe ROTULO961
-jmp ROTULO962
-ROTULO961:
+jbe ROTULO997
+jmp ROTULO998
+ROTULO997:
 mov ax, 65535
-jmp ROTULO963
-ROTULO962:
+jmp ROTULO999
+ROTULO998:
 xor ax, ax
-ROTULO963:
+ROTULO999:
 cmp ax, 0
-jne ROTULO959
-jmp ROTULO960
-ROTULO959:
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:391:13 ===---
+jne ROTULO995
+jmp ROTULO996
+ROTULO995:
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:474:13 ===---
 ; ACAO GRAVACAO - Gravacao em ponteiro
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:391:21 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:474:21 ===---
 ; ACAO CHAMADA - Chama rotina
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:391:40 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:474:40 ===---
 ; ACAO LEITURA - Le variavel
 mov ax, [bp+-4]
 push ax
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:391:34 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:474:34 ===---
 ; ACAO LEITURA - Le ponteiro
 push word [bp+6+2]
 pop es
@@ -12475,40 +13055,40 @@ add sp, 6
 push es
 pop word [bp+-8+2]
 mov [bp+-8], di
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:392:13 ===---
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:392:16 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:475:13 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:475:16 ===---
 ; ACAO STRUCTURE - Leitura de Ponteiro - (U)Int8 - Desvio 16
 xor ax, ax
 es mov al, [di+16]
 cmp ax, 0
-jne ROTULO964
-jmp ROTULO965
-ROTULO964:
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:393:17 ===---
+jne ROTULO1000
+jmp ROTULO1001
+ROTULO1000:
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:476:17 ===---
 ; ACAO CHAMADA - Chama rotina
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:393:31 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:476:31 ===---
 ; ACAO LEITURA - Le ponteiro
 push es
 push di
 push cs
 call _control_focus
 add sp, 4
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:394:17 ===---
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:394:22 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:477:17 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:477:22 ===---
 xor ax, ax
-jmp ROTULO957
-ROTULO965:
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:389:22 ===---
+jmp ROTULO993
+ROTULO1001:
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:472:22 ===---
 ; ACAO INC - Incrementa variavel
 inc word [bp+-4]
-jmp ROTULO958
-ROTULO960:
-ROTULO957:
+jmp ROTULO994
+ROTULO996:
+ROTULO993:
 mov sp, bp
 pop bp
 FIM_form_onfocus:
 retf
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:399:9 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:482:9 ===---
 _form_controlpaint:
 push bp
 mov bp, sp
@@ -12521,13 +13101,13 @@ call _os_stackcheck
 ; ARG: lefttext TAM: 2 POS: BP--10 
 ; ARG: righttext TAM: 2 POS: BP--12 
 ; ARG: i TAM: 2 POS: BP--14 
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:399:22 ===---
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:400:13 ===---
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:401:13 ===---
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:402:13 ===---
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:403:13 ===---
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:404:13 ===---
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:405:9 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:482:22 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:483:13 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:484:13 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:485:13 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:486:13 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:487:13 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:488:9 ===---
 ; ACAO STRUCTURE - Aloca estrutura na pilha
 sub sp, 4
 push ss
@@ -12536,9 +13116,9 @@ mov di, sp
 push es
 pop word [bp+-8+2]
 mov [bp+-8], di
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:406:9 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:489:9 ===---
 ; ACAO GRAVACAO - Gravacao em ponteiro
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:406:15 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:489:15 ===---
 ; ACAO STRUCTURE - Leitura de Ponteiro - Ponteiro Byte - Desvio 19
 push word [bp+6+2]
 pop es
@@ -12550,1125 +13130,55 @@ pop es
 push es
 pop word [bp+-4+2]
 mov [bp+-4], di
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:407:9 ===---
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:407:28 ===---
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:407:12 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:490:9 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:490:28 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:490:12 ===---
 ; ACAO STRUCTURE - Leitura de Ponteiro - (U)Int16 - Desvio 92
 push word [bp+6+2]
 pop es
 mov di, [bp+6]
 es mov ax, [di+92]
 push ax
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:407:30 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:490:30 ===---
 mov ax, 30
 mov bx, ax
 pop ax
 cmp ax, bx
-jb ROTULO969
-jmp ROTULO970
-ROTULO969:
+jb ROTULO1005
+jmp ROTULO1006
+ROTULO1005:
 mov ax, 65535
-jmp ROTULO971
-ROTULO970:
+jmp ROTULO1007
+ROTULO1006:
 xor ax, ax
-ROTULO971:
+ROTULO1007:
 cmp ax, 0
-jne ROTULO967
-jmp ROTULO968
-ROTULO967:
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:407:44 ===---
-mov ax, _form
-mov [bp+-8], ax
-mov ax, 407
-mov [bp+-10], ax
-mov ax, 4
-cs jmp word [_os_trycode]
-ROTULO968:
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:408:9 ===---
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:408:27 ===---
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:408:12 ===---
-; ACAO STRUCTURE - Leitura de Ponteiro - (U)Int16 - Desvio 90
-push word [bp+6+2]
-pop es
-mov di, [bp+6]
-es mov ax, [di+90]
-push ax
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:408:29 ===---
-mov ax, 50
-mov bx, ax
-pop ax
-cmp ax, bx
-jb ROTULO974
-jmp ROTULO975
-ROTULO974:
-mov ax, 65535
-jmp ROTULO976
-ROTULO975:
-xor ax, ax
-ROTULO976:
-cmp ax, 0
-jne ROTULO972
-jmp ROTULO973
-ROTULO972:
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:408:43 ===---
-mov ax, _form
-mov [bp+-8], ax
-mov ax, 408
-mov [bp+-10], ax
-mov ax, 4
-cs jmp word [_os_trycode]
-ROTULO973:
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:409:9 ===---
-; ACAO CHAMADA - Chama rotina
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:409:118 ===---
-; ACAO CHAMADA - Chama rotina
-push cs
-call _systemcolors_windowcolor
-push ax
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:409:84 ===---
-; ACAO CHAMADA - Chama rotina
-push cs
-call _systemcolors_windowbordercolor
-push ax
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:409:71 ===---
-; ACAO STRUCTURE - Leitura de Ponteiro - (U)Int16 - Desvio 88
-push word [bp+6+2]
-pop es
-mov di, [bp+6]
-es mov ax, [di+88]
-push ax
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:409:58 ===---
-; ACAO STRUCTURE - Leitura de Ponteiro - (U)Int16 - Desvio 86
-es mov ax, [di+86]
-push ax
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:409:45 ===---
-; ACAO STRUCTURE - Leitura de Ponteiro - (U)Int16 - Desvio 84
-es mov ax, [di+84]
-push ax
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:409:32 ===---
-; ACAO STRUCTURE - Leitura de Ponteiro - (U)Int16 - Desvio 82
-es mov ax, [di+82]
-push ax
-push cs
-call _graphics_drawrectangle
-add sp, 12
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:410:9 ===---
-; ACAO CHAMADA - Chama rotina
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:410:105 ===---
-; ACAO CHAMADA - Chama rotina
-push cs
-call _systemcolors_windowbordercolor
-push ax
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:410:92 ===---
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:410:93 ===---
-; ACAO STRUCTURE - Leitura de Ponteiro - (U)Int16 - Desvio 12
-push word [bp+-4+2]
-pop es
-mov di, [bp+-4]
-es mov ax, [di+12]
-push ax
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:410:90 ===---
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:410:91 ===---
-mov ax, 1
-push ax
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:410:79 ===---
-; ACAO STRUCTURE - Leitura de Ponteiro - (U)Int16 - Desvio 84
-push word [bp+6+2]
-pop es
-mov di, [bp+6]
-es mov ax, [di+84]
-pop bx
-add ax, bx
-pop bx
-add ax, bx
-push ax
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:410:66 ===---
-; ACAO STRUCTURE - Leitura de Ponteiro - (U)Int16 - Desvio 86
-es mov ax, [di+86]
-push ax
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:410:53 ===---
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:410:54 ===---
-; ACAO STRUCTURE - Leitura de Ponteiro - (U)Int16 - Desvio 12
-push word [bp+-4+2]
-pop es
-mov di, [bp+-4]
-es mov ax, [di+12]
-push ax
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:410:51 ===---
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:410:52 ===---
-mov ax, 1
-push ax
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:410:40 ===---
-; ACAO STRUCTURE - Leitura de Ponteiro - (U)Int16 - Desvio 84
-push word [bp+6+2]
-pop es
-mov di, [bp+6]
-es mov ax, [di+84]
-pop bx
-add ax, bx
-pop bx
-add ax, bx
-push ax
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:410:27 ===---
-; ACAO STRUCTURE - Leitura de Ponteiro - (U)Int16 - Desvio 82
-es mov ax, [di+82]
-push ax
-push cs
-call _graphics_drawline
-add sp, 10
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:411:9 ===---
-; ACAO CHAMADA - Chama rotina
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:411:74 ===---
-xor ax, ax
-push ax
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:411:68 ===---
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:411:70 ===---
-mov ax, 50
-push ax
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:411:53 ===---
-; ACAO STRUCTURE - Leitura de Ponteiro - (U)Int16 - Desvio 90
-push word [bp+6+2]
-pop es
-mov di, [bp+6]
-es mov ax, [di+90]
-pop bx
-sub ax, bx
-push ax
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:411:47 ===---
-; ACAO LEITURA - Le ponteiro
-push word [bp+-8+2]
-pop es
-mov di, [bp+-8]
-push es
-push di
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:411:36 ===---
-; ACAO STRUCTURE - Leitura de Ponteiro - Ponteiro Byte - Desvio 10
-push word [bp+6+2]
-pop es
-mov di, [bp+6]
-es push word [di+10+2]
-es push word [di+10]
-pop di
-pop es
-push es
-push di
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:411:31 ===---
-; ACAO LEITURA - Le ponteiro
-push word [bp+-4+2]
-pop es
-mov di, [bp+-4]
-push es
-push di
-push cs
-call _graphics_calcfontsize
-add sp, 16
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:412:9 ===---
-; ACAO GRAVACAO - Grava em variavel
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:412:32 ===---
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:412:65 ===---
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:412:51 ===---
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:412:53 ===---
-; ACAO STRUCTURE - Leitura de Ponteiro - (U)Int16 - Desvio 0
-push word [bp+-8+2]
-pop es
-mov di, [bp+-8]
-es mov ax, [di+0]
-push ax
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:412:36 ===---
-; ACAO STRUCTURE - Leitura de Ponteiro - (U)Int16 - Desvio 90
-push word [bp+6+2]
-pop es
-mov di, [bp+6]
-es mov ax, [di+90]
-pop bx
-sub ax, bx
-push ax
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:412:69 ===---
-mov ax, 1
-mov cx, ax
-pop ax
-shr ax, cl
-push ax
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:412:20 ===---
-; ACAO STRUCTURE - Leitura de Ponteiro - (U)Int16 - Desvio 82
-es mov ax, [di+82]
-pop bx
-add ax, bx
-mov [bp+-10], ax
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:413:9 ===---
-; ACAO GRAVACAO - Grava em variavel
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:413:33 ===---
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:413:66 ===---
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:413:52 ===---
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:413:54 ===---
-; ACAO STRUCTURE - Leitura de Ponteiro - (U)Int16 - Desvio 0
-push word [bp+-8+2]
-pop es
-mov di, [bp+-8]
-es mov ax, [di+0]
-push ax
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:413:37 ===---
-; ACAO STRUCTURE - Leitura de Ponteiro - (U)Int16 - Desvio 90
-push word [bp+6+2]
-pop es
-mov di, [bp+6]
-es mov ax, [di+90]
-pop bx
-sub ax, bx
-push ax
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:413:70 ===---
-mov ax, 1
-mov cx, ax
-pop ax
-shr ax, cl
-push ax
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:413:21 ===---
-; ACAO STRUCTURE - Leitura de Ponteiro - (U)Int16 - Desvio 86
-es mov ax, [di+86]
-pop bx
-sub ax, bx
-mov [bp+-12], ax
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:414:9 ===---
-; ACAO CHAMADA - Chama rotina
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:414:138 ===---
-xor ax, ax
-push ax
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:414:105 ===---
-; ACAO CHAMADA - Chama rotina
-push cs
-call _systemcolors_windowtitlecolor
-push ax
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:414:92 ===---
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:414:93 ===---
-; ACAO STRUCTURE - Leitura de Ponteiro - (U)Int16 - Desvio 12
-push word [bp+-4+2]
-pop es
-mov di, [bp+-4]
-es mov ax, [di+12]
-push ax
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:414:90 ===---
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:414:91 ===---
-mov ax, 1
-push ax
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:414:79 ===---
-; ACAO STRUCTURE - Leitura de Ponteiro - (U)Int16 - Desvio 84
-push word [bp+6+2]
-pop es
-mov di, [bp+6]
-es mov ax, [di+84]
-pop bx
-add ax, bx
-pop bx
-add ax, bx
-push ax
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:414:68 ===---
-; ACAO LEITURA - Le variavel
-mov ax, [bp+-12]
-push ax
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:414:64 ===---
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:414:65 ===---
-mov ax, 1
-push ax
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:414:53 ===---
-; ACAO STRUCTURE - Leitura de Ponteiro - (U)Int16 - Desvio 84
-es mov ax, [di+84]
-pop bx
-add ax, bx
-push ax
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:414:43 ===---
-; ACAO LEITURA - Le variavel
-mov ax, [bp+-10]
-push ax
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:414:32 ===---
-; ACAO STRUCTURE - Leitura de Ponteiro - Ponteiro Byte - Desvio 10
-es push word [di+10+2]
-es push word [di+10]
-pop di
-pop es
-push es
-push di
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:414:27 ===---
-; ACAO LEITURA - Le ponteiro
-push word [bp+-4+2]
-pop es
-mov di, [bp+-4]
-push es
-push di
-push cs
-call _graphics_drawtext
-add sp, 20
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:415:63 ===---
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:415:63 ===---
-; ACAO GRAVACAO - Grava em variavel
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:415:29 ===---
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:415:31 ===---
-mov ax, 4
-push ax
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:415:17 ===---
-; ACAO STRUCTURE - Leitura de Ponteiro - (U)Int16 - Desvio 84
-push word [bp+6+2]
-pop es
-mov di, [bp+6]
-es mov ax, [di+84]
-pop bx
-add ax, bx
-mov [bp+-14], ax
-ROTULO977:
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:415:63 ===---
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:415:63 ===---
-; ACAO LEITURA - Le variavel
-mov ax, [bp+-14]
-push ax
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:415:61 ===---
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:415:63 ===---
-mov ax, 3
-push ax
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:415:48 ===---
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:415:50 ===---
-; ACAO STRUCTURE - Leitura de Ponteiro - (U)Int16 - Desvio 12
-push word [bp+-4+2]
-pop es
-mov di, [bp+-4]
-es mov ax, [di+12]
-push ax
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:415:36 ===---
-; ACAO STRUCTURE - Leitura de Ponteiro - (U)Int16 - Desvio 84
-push word [bp+6+2]
-pop es
-mov di, [bp+6]
-es mov ax, [di+84]
-pop bx
-add ax, bx
-pop bx
-sub ax, bx
-mov bx, ax
-pop ax
-cmp ax, bx
-jbe ROTULO980
-jmp ROTULO981
-ROTULO980:
-mov ax, 65535
-jmp ROTULO982
-ROTULO981:
-xor ax, ax
-ROTULO982:
-cmp ax, 0
-jne ROTULO978
-jmp ROTULO979
-ROTULO978:
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:416:13 ===---
-; ACAO CHAMADA - Chama rotina
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:416:71 ===---
-; ACAO CHAMADA - Chama rotina
-push cs
-call _systemcolors_windowbordercolor
-push ax
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:416:68 ===---
-; ACAO LEITURA - Le variavel
-mov ax, [bp+-14]
-push ax
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:416:63 ===---
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:416:65 ===---
-mov ax, 3
-push ax
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:416:51 ===---
-; ACAO STRUCTURE - Leitura de Ponteiro - (U)Int16 - Desvio 82
-push word [bp+6+2]
-pop es
-mov di, [bp+6]
-es mov ax, [di+82]
-pop bx
-add ax, bx
-push ax
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:416:48 ===---
-; ACAO LEITURA - Le variavel
-mov ax, [bp+-14]
-push ax
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:416:43 ===---
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:416:45 ===---
-mov ax, 2
-push ax
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:416:31 ===---
-; ACAO STRUCTURE - Leitura de Ponteiro - (U)Int16 - Desvio 82
-es mov ax, [di+82]
-pop bx
-add ax, bx
-push ax
-push cs
-call _graphics_drawline
-add sp, 10
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:417:13 ===---
-; ACAO CHAMADA - Chama rotina
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:417:69 ===---
-; ACAO CHAMADA - Chama rotina
-push cs
-call _systemcolors_windowbordercolor
-push ax
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:417:66 ===---
-; ACAO LEITURA - Le variavel
-mov ax, [bp+-14]
-push ax
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:417:61 ===---
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:417:63 ===---
-mov ax, 5
-push ax
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:417:52 ===---
-; ACAO LEITURA - Le variavel
-mov ax, [bp+-10]
-pop bx
-sub ax, bx
-push ax
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:417:49 ===---
-; ACAO LEITURA - Le variavel
-mov ax, [bp+-14]
-push ax
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:417:43 ===---
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:417:45 ===---
-mov ax, 13
-push ax
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:417:31 ===---
-; ACAO STRUCTURE - Leitura de Ponteiro - (U)Int16 - Desvio 82
-push word [bp+6+2]
-pop es
-mov di, [bp+6]
-es mov ax, [di+82]
-pop bx
-add ax, bx
-push ax
-push cs
-call _graphics_drawline
-add sp, 10
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:418:13 ===---
-; ACAO CHAMADA - Chama rotina
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:418:69 ===---
-; ACAO CHAMADA - Chama rotina
-push cs
-call _systemcolors_windowbordercolor
-push ax
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:418:66 ===---
-; ACAO LEITURA - Le variavel
-mov ax, [bp+-14]
-push ax
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:418:61 ===---
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:418:63 ===---
-mov ax, 2
-push ax
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:418:49 ===---
-; ACAO STRUCTURE - Leitura de Ponteiro - (U)Int16 - Desvio 86
-push word [bp+6+2]
-pop es
-mov di, [bp+6]
-es mov ax, [di+86]
-pop bx
-sub ax, bx
-push ax
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:418:46 ===---
-; ACAO LEITURA - Le variavel
-mov ax, [bp+-14]
-push ax
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:418:41 ===---
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:418:43 ===---
-mov ax, 4
-push ax
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:418:31 ===---
-; ACAO LEITURA - Le variavel
-mov ax, [bp+-12]
-pop bx
-add ax, bx
-push ax
-push cs
-call _graphics_drawline
-add sp, 10
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:419:13 ===---
-; ACAO INC - Incrementa variavel
-inc word [bp+-14]
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:415:63 ===---
-; ACAO INC - Incrementa variavel
-inc word [bp+-14]
-jmp ROTULO977
-ROTULO979:
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:421:9 ===---
-; ACAO CHAMADA - Chama rotina
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:421:146 ===---
-; ACAO CHAMADA - Chama rotina
-push cs
-call _systemcolors_windowcolor
-push ax
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:421:113 ===---
-; ACAO CHAMADA - Chama rotina
-push cs
-call _systemcolors_windowbordercolor
-push ax
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:421:109 ===---
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:421:110 ===---
-mov ax, 3
-push ax
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:421:96 ===---
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:421:98 ===---
-; ACAO STRUCTURE - Leitura de Ponteiro - (U)Int16 - Desvio 12
-push word [bp+-4+2]
-pop es
-mov di, [bp+-4]
-es mov ax, [di+12]
-push ax
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:421:84 ===---
-; ACAO STRUCTURE - Leitura de Ponteiro - (U)Int16 - Desvio 84
-push word [bp+6+2]
-pop es
-mov di, [bp+6]
-es mov ax, [di+84]
-pop bx
-add ax, bx
-pop bx
-sub ax, bx
-push ax
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:421:78 ===---
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:421:80 ===---
-mov ax, 11
-push ax
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:421:66 ===---
-; ACAO STRUCTURE - Leitura de Ponteiro - (U)Int16 - Desvio 82
-es mov ax, [di+82]
-pop bx
-add ax, bx
-push ax
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:421:61 ===---
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:421:63 ===---
-mov ax, 4
-push ax
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:421:49 ===---
-; ACAO STRUCTURE - Leitura de Ponteiro - (U)Int16 - Desvio 84
-es mov ax, [di+84]
-pop bx
-add ax, bx
-push ax
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:421:44 ===---
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:421:46 ===---
-mov ax, 5
-push ax
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:421:32 ===---
-; ACAO STRUCTURE - Leitura de Ponteiro - (U)Int16 - Desvio 82
-es mov ax, [di+82]
-pop bx
-add ax, bx
-push ax
-push cs
-call _graphics_drawrectangle
-add sp, 12
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:422:9 ===---
-; ACAO STRUCTURE - Gravacao de Ponteiro- Prepara
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:422:29 ===---
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:422:31 ===---
-; ACAO STRUCTURE - Leitura de Ponteiro - (U)Int16 - Desvio 12
-push word [bp+-4+2]
-pop es
-mov di, [bp+-4]
-es mov ax, [di+12]
-push ax
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:422:27 ===---
-mov ax, 2
-pop bx
-add ax, bx
-push word [bp+6+2]
-pop es
-mov di, [bp+6]
-es mov [di+74], ax
-; ACAO STRUCTURE - Gravacao de Ponteiro - Fim
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:423:9 ===---
-; ACAO CHAMADA - Chama rotina
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:423:30 ===---
-; ACAO LEITURA - Le ponteiro
-push es
-push di
-push cs
-call _control_drawchildren
-add sp, 4
-ROTULO966:
-mov sp, bp
-pop bp
-FIM_form_controlpaint:
-retf
-; MODULO FIM: form
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:361:8 ===---
-; MODULO: label
-_label:
-db 16
-db 83,121,115,116,101,109,46,70,111,114,109,115,46,104,99,98
-db 0
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:362:16 ===---
-_label_initialize:
-push bp
-mov bp, sp
-; ARG: ctrl TAM: 4 POS: BP+6 
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:362:27 ===---
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:363:9 ===---
-; ACAO CHAMADA - Chama rotina
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:363:28 ===---
-; ACAO LEITURA - Le ponteiro
-push word [bp+6+2]
-pop es
-mov di, [bp+6]
-push es
-push di
-push cs
-call _control_initialize
-add sp, 4
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:364:9 ===---
-; ACAO STRUCTURE - Gravacao de Ponteiro- Prepara
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:364:29 ===---
-push cs
-pop es
-mov di, _label_controlpaint
-push es
-push di
-push word [bp+6+2]
-pop es
-mov di, [bp+6]
-es pop word [di+23]
-es pop word [di+23+2]
-; ACAO STRUCTURE - Gravacao de Ponteiro - Fim
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:365:9 ===---
-; ACAO STRUCTURE - Gravacao de Ponteiro- Prepara
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:365:26 ===---
-xor ax, ax
-es mov [di+16], al
-; ACAO STRUCTURE - Gravacao de Ponteiro - Fim
-ROTULO983:
-mov sp, bp
-pop bp
-FIM_label_initialize:
-retf
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:368:9 ===---
-_label_controlpaint:
-push bp
-mov bp, sp
-; ARG: ctrl TAM: 4 POS: BP+6 
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:368:22 ===---
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:369:9 ===---
-; ACAO CHAMADA - Chama rotina
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:369:112 ===---
-; ACAO CHAMADA - Chama rotina
-push cs
-call _systemcolors_windowcolor
-push ax
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:369:84 ===---
-; ACAO CHAMADA - Chama rotina
-push cs
-call _systemcolors_windowcolor
-push ax
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:369:71 ===---
-; ACAO STRUCTURE - Leitura de Ponteiro - (U)Int16 - Desvio 88
-push word [bp+6+2]
-pop es
-mov di, [bp+6]
-es mov ax, [di+88]
-push ax
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:369:58 ===---
-; ACAO STRUCTURE - Leitura de Ponteiro - (U)Int16 - Desvio 86
-es mov ax, [di+86]
-push ax
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:369:45 ===---
-; ACAO STRUCTURE - Leitura de Ponteiro - (U)Int16 - Desvio 84
-es mov ax, [di+84]
-push ax
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:369:32 ===---
-; ACAO STRUCTURE - Leitura de Ponteiro - (U)Int16 - Desvio 82
-es mov ax, [di+82]
-push ax
-push cs
-call _graphics_drawrectangle
-add sp, 12
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:370:9 ===---
-; ACAO CHAMADA - Chama rotina
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:370:127 ===---
-mov ax, 1
-push ax
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:370:101 ===---
-; ACAO CHAMADA - Chama rotina
-push cs
-call _systemcolors_textcolor
-push ax
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:370:88 ===---
-; ACAO STRUCTURE - Leitura de Ponteiro - (U)Int16 - Desvio 88
-push word [bp+6+2]
-pop es
-mov di, [bp+6]
-es mov ax, [di+88]
-push ax
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:370:75 ===---
-; ACAO STRUCTURE - Leitura de Ponteiro - (U)Int16 - Desvio 86
-es mov ax, [di+86]
-push ax
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:370:62 ===---
-; ACAO STRUCTURE - Leitura de Ponteiro - (U)Int16 - Desvio 84
-es mov ax, [di+84]
-push ax
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:370:49 ===---
-; ACAO STRUCTURE - Leitura de Ponteiro - (U)Int16 - Desvio 82
-es mov ax, [di+82]
-push ax
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:370:38 ===---
-; ACAO STRUCTURE - Leitura de Ponteiro - Ponteiro Byte - Desvio 10
-es push word [di+10+2]
-es push word [di+10]
-pop di
-pop es
-push es
-push di
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:370:27 ===---
-; ACAO STRUCTURE - Leitura de Ponteiro - Ponteiro Byte - Desvio 19
-push word [bp+6+2]
-pop es
-mov di, [bp+6]
-es push word [di+19+2]
-es push word [di+19]
-pop di
-pop es
-push es
-push di
-push cs
-call _graphics_drawtext
-add sp, 20
-ROTULO984:
-mov sp, bp
-pop bp
-FIM_label_controlpaint:
-retf
-; MODULO FIM: label
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:321:8 ===---
-; MODULO: button
-_button:
-db 16
-db 83,121,115,116,101,109,46,70,111,114,109,115,46,104,99,98
-db 0
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:322:16 ===---
-_button_initialize:
-push bp
-mov bp, sp
-; ARG: ctrl TAM: 4 POS: BP+6 
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:322:27 ===---
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:323:9 ===---
-; ACAO CHAMADA - Chama rotina
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:323:28 ===---
-; ACAO LEITURA - Le ponteiro
-push word [bp+6+2]
-pop es
-mov di, [bp+6]
-push es
-push di
-push cs
-call _control_initialize
-add sp, 4
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:324:9 ===---
-; ACAO STRUCTURE - Gravacao de Ponteiro- Prepara
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:324:29 ===---
-push cs
-pop es
-mov di, _button_controlpaint
-push es
-push di
-push word [bp+6+2]
-pop es
-mov di, [bp+6]
-es pop word [di+23]
-es pop word [di+23+2]
-; ACAO STRUCTURE - Gravacao de Ponteiro - Fim
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:325:9 ===---
-; ACAO STRUCTURE - Gravacao de Ponteiro- Prepara
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:325:42 ===---
-push cs
-pop es
-mov di, _button_controlkeyboardinteracion
-push es
-push di
-push word [bp+6+2]
-pop es
-mov di, [bp+6]
-es pop word [di+31]
-es pop word [di+31+2]
-; ACAO STRUCTURE - Gravacao de Ponteiro - Fim
-ROTULO985:
-mov sp, bp
-pop bp
-FIM_button_initialize:
-retf
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:328:9 ===---
-_button_controlkeyboardinteracion:
-push bp
-mov bp, sp
-sub sp, 4
-push cs
-call _os_stackcheck
-; ARG: ctrl TAM: 4 POS: BP+6 
-; ARG: e TAM: 4 POS: BP+10 
-; ARG: mouse TAM: 4 POS: BP--4 
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:328:35 ===---
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:328:52 ===---
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:332:21 ===---
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:329:9 ===---
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:329:12 ===---
-; ACAO STRUCTURE - Leitura de Ponteiro - (U)Int16 - Desvio 5
-push word [bp+10+2]
-pop es
-mov di, [bp+10]
-es mov ax, [di+5]
-cmp ax, 0
-jne ROTULO987
-jmp ROTULO988
-ROTULO987:
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:330:13 ===---
-; ACAO CHAMADA - Chama indiretamente usando Invoke
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:330:36 ===---
-; ACAO LEITURA - Le ponteiro
-push es
-push di
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:330:13 ===---
-; ACAO LEITURA - Le ponteiro
-push word [bp+6+2]
-pop es
-mov di, [bp+6]
-push es
-push di
-es call far [di+43]
-add sp, 8
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:331:13 ===---
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:331:63 ===---
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:331:36 ===---
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:331:29 ===---
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:331:17 ===---
-; ACAO STRUCTURE - Leitura de Ponteiro - (U)Int8 - Desvio 0
-push word [bp+10+2]
-pop es
-mov di, [bp+10]
-xor ax, ax
-es mov al, [di+0]
-push ax
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:331:32 ===---
-mov ax, 13
-mov bx, ax
-pop ax
-cmp ax, bx
-je ROTULO997
-jmp ROTULO998
-ROTULO997:
-mov ax, 65535
-jmp ROTULO999
-ROTULO998:
-xor ax, ax
-ROTULO999:
-cmp ax, 0
-jne ROTULO994
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:331:56 ===---
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:331:44 ===---
-; ACAO STRUCTURE - Leitura de Ponteiro - (U)Int8 - Desvio 0
-xor ax, ax
-es mov al, [di+0]
-push ax
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:331:59 ===---
-mov ax, 10
-mov bx, ax
-pop ax
-cmp ax, bx
-je ROTULO1000
-jmp ROTULO1001
-ROTULO1000:
-mov ax, 65535
-jmp ROTULO1002
-ROTULO1001:
-xor ax, ax
-ROTULO1002:
-cmp ax, 0
-je ROTULO995
-ROTULO994:
-mov ax, 65535
-jmp ROTULO996
-ROTULO995:
-xor ax, ax
-ROTULO996:
-cmp ax, 0
-jne ROTULO991
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:331:83 ===---
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:331:71 ===---
-; ACAO STRUCTURE - Leitura de Ponteiro - (U)Int8 - Desvio 0
-xor ax, ax
-es mov al, [di+0]
-push ax
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:331:86 ===---
-mov ax, 32
-mov bx, ax
-pop ax
-cmp ax, bx
-je ROTULO1003
+jne ROTULO1003
 jmp ROTULO1004
 ROTULO1003:
-mov ax, 65535
-jmp ROTULO1005
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:490:44 ===---
+mov ax, _form
+mov [bp+-8], ax
+mov ax, 490
+mov [bp+-10], ax
+mov ax, 4
+cs jmp word [_os_trycode]
 ROTULO1004:
-xor ax, ax
-ROTULO1005:
-cmp ax, 0
-je ROTULO992
-ROTULO991:
-mov ax, 65535
-jmp ROTULO993
-ROTULO992:
-xor ax, ax
-ROTULO993:
-cmp ax, 0
-jne ROTULO989
-jmp ROTULO990
-ROTULO989:
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:333:17 ===---
-; ACAO STRUCTURE - Aloca estrutura na pilha
-sub sp, 12
-push ss
-pop es
-mov di, sp
-push es
-pop word [bp+-4+2]
-mov [bp+-4], di
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:334:17 ===---
-; ACAO STRUCTURE - Gravacao de Ponteiro- Prepara
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:334:27 ===---
-; ACAO STRUCTURE - Leitura de Ponteiro - (U)Int16 - Desvio 82
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:491:9 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:491:27 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:491:12 ===---
+; ACAO STRUCTURE - Leitura de Ponteiro - (U)Int16 - Desvio 90
 push word [bp+6+2]
 pop es
 mov di, [bp+6]
-es mov ax, [di+82]
-push word [bp+-4+2]
-pop es
-mov di, [bp+-4]
-es mov [di+0], ax
-; ACAO STRUCTURE - Gravacao de Ponteiro - Fim
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:335:17 ===---
-; ACAO STRUCTURE - Gravacao de Ponteiro- Prepara
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:335:27 ===---
-; ACAO STRUCTURE - Leitura de Ponteiro - (U)Int16 - Desvio 84
-push word [bp+6+2]
-pop es
-mov di, [bp+6]
-es mov ax, [di+84]
-push word [bp+-4+2]
-pop es
-mov di, [bp+-4]
-es mov [di+2], ax
-; ACAO STRUCTURE - Gravacao de Ponteiro - Fim
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:336:17 ===---
-; ACAO STRUCTURE - Gravacao de Ponteiro- Prepara
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:336:39 ===---
-mov ax, 1
-es mov [di+4], ax
-; ACAO STRUCTURE - Gravacao de Ponteiro - Fim
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:337:17 ===---
-; ACAO STRUCTURE - Gravacao de Ponteiro- Prepara
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:337:41 ===---
-xor ax, ax
-es mov [di+6], ax
-; ACAO STRUCTURE - Gravacao de Ponteiro - Fim
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:338:17 ===---
-; ACAO STRUCTURE - Gravacao de Ponteiro- Prepara
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:338:37 ===---
-xor ax, ax
-es mov [di+8], ax
-; ACAO STRUCTURE - Gravacao de Ponteiro - Fim
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:339:17 ===---
-; ACAO CHAMADA - Chama indiretamente usando Invoke
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:339:37 ===---
-; ACAO LEITURA - Le ponteiro
-push es
-push di
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:339:17 ===---
-; ACAO LEITURA - Le ponteiro
-push word [bp+6+2]
-pop es
-mov di, [bp+6]
-push es
-push di
-es call far [di+39]
-add sp, 8
-ROTULO990:
-jmp ROTULO1006
-ROTULO988:
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:342:13 ===---
-; ACAO CHAMADA - Chama indiretamente usando Invoke
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:342:38 ===---
-; ACAO LEITURA - Le ponteiro
-push word [bp+10+2]
-pop es
-mov di, [bp+10]
-push es
-push di
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:342:13 ===---
-; ACAO LEITURA - Le ponteiro
-push word [bp+6+2]
-pop es
-mov di, [bp+6]
-push es
-push di
-es call far [di+47]
-add sp, 8
-ROTULO1006:
-ROTULO986:
-mov sp, bp
-pop bp
-FIM_button_controlkeyboardinteracion:
-retf
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:346:9 ===---
-_button_controlpaint:
-push bp
-mov bp, sp
-; ARG: ctrl TAM: 4 POS: BP+6 
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:346:22 ===---
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:347:9 ===---
-; ACAO CHAMADA - Chama rotina
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:347:112 ===---
-; ACAO CHAMADA - Chama rotina
-push cs
-call _systemcolors_windowcolor
+es mov ax, [di+90]
 push ax
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:347:84 ===---
-; ACAO CHAMADA - Chama rotina
-push cs
-call _systemcolors_windowcolor
-push ax
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:347:71 ===---
-; ACAO STRUCTURE - Leitura de Ponteiro - (U)Int16 - Desvio 88
-push word [bp+6+2]
-pop es
-mov di, [bp+6]
-es mov ax, [di+88]
-push ax
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:347:58 ===---
-; ACAO STRUCTURE - Leitura de Ponteiro - (U)Int16 - Desvio 86
-es mov ax, [di+86]
-push ax
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:347:45 ===---
-; ACAO STRUCTURE - Leitura de Ponteiro - (U)Int16 - Desvio 84
-es mov ax, [di+84]
-push ax
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:347:32 ===---
-; ACAO STRUCTURE - Leitura de Ponteiro - (U)Int16 - Desvio 82
-es mov ax, [di+82]
-push ax
-push cs
-call _graphics_drawrectangle
-add sp, 12
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:348:9 ===---
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:348:26 ===---
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:348:12 ===---
-; ACAO STRUCTURE - Leitura de Ponteiro - (U)Int8 - Desvio 18
-push word [bp+6+2]
-pop es
-mov di, [bp+6]
-xor ax, ax
-es mov al, [di+18]
-push ax
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:348:29 ===---
-xor ax, ax
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:491:29 ===---
+mov ax, 50
 mov bx, ax
 pop ax
 cmp ax, bx
-jne ROTULO1010
+jb ROTULO1010
 jmp ROTULO1011
 ROTULO1010:
 mov ax, 65535
@@ -13680,269 +13190,247 @@ cmp ax, 0
 jne ROTULO1008
 jmp ROTULO1009
 ROTULO1008:
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:348:36 ===---
-; ACAO CHAMADA - Chama rotina
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:348:122 ===---
-; ACAO CHAMADA - Chama rotina
-push cs
-call _systemcolors_windowbordercolor
-push ax
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:348:117 ===---
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:348:119 ===---
-mov ax, 2
-push ax
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:348:105 ===---
-; ACAO STRUCTURE - Leitura de Ponteiro - (U)Int16 - Desvio 88
-push word [bp+6+2]
-pop es
-mov di, [bp+6]
-es mov ax, [di+88]
-pop bx
-sub ax, bx
-push ax
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:348:100 ===---
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:348:102 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:491:43 ===---
+mov ax, _form
+mov [bp+-8], ax
+mov ax, 491
+mov [bp+-10], ax
 mov ax, 4
-push ax
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:348:88 ===---
-; ACAO STRUCTURE - Leitura de Ponteiro - (U)Int16 - Desvio 86
-es mov ax, [di+86]
-pop bx
-sub ax, bx
-push ax
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:348:83 ===---
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:348:85 ===---
-mov ax, 2
-push ax
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:348:71 ===---
-; ACAO STRUCTURE - Leitura de Ponteiro - (U)Int16 - Desvio 88
-es mov ax, [di+88]
-pop bx
-sub ax, bx
-push ax
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:348:66 ===---
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:348:68 ===---
-mov ax, 4
-push ax
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:348:54 ===---
-; ACAO STRUCTURE - Leitura de Ponteiro - (U)Int16 - Desvio 82
-es mov ax, [di+82]
-pop bx
-add ax, bx
-push ax
-push cs
-call _graphics_drawline
-add sp, 10
+cs jmp word [_os_trycode]
 ROTULO1009:
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:349:9 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:492:9 ===---
 ; ACAO CHAMADA - Chama rotina
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:349:87 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:492:118 ===---
+; ACAO CHAMADA - Chama rotina
+push cs
+call _systemcolors_windowcolor
+push ax
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:492:84 ===---
 ; ACAO CHAMADA - Chama rotina
 push cs
 call _systemcolors_windowbordercolor
 push ax
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:349:74 ===---
-; ACAO STRUCTURE - Leitura de Ponteiro - (U)Int16 - Desvio 84
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:492:71 ===---
+; ACAO STRUCTURE - Leitura de Ponteiro - (U)Int16 - Desvio 88
 push word [bp+6+2]
 pop es
 mov di, [bp+6]
-es mov ax, [di+84]
+es mov ax, [di+88]
 push ax
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:349:69 ===---
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:349:71 ===---
-mov ax, 2
-push ax
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:349:57 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:492:58 ===---
 ; ACAO STRUCTURE - Leitura de Ponteiro - (U)Int16 - Desvio 86
 es mov ax, [di+86]
-pop bx
-sub ax, bx
 push ax
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:349:44 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:492:45 ===---
 ; ACAO STRUCTURE - Leitura de Ponteiro - (U)Int16 - Desvio 84
 es mov ax, [di+84]
 push ax
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:349:39 ===---
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:349:41 ===---
-mov ax, 2
-push ax
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:349:27 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:492:32 ===---
 ; ACAO STRUCTURE - Leitura de Ponteiro - (U)Int16 - Desvio 82
 es mov ax, [di+82]
-pop bx
-add ax, bx
 push ax
 push cs
-call _graphics_drawline
-add sp, 10
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:350:9 ===---
+call _graphics_drawrectangle
+add sp, 12
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:493:9 ===---
 ; ACAO CHAMADA - Chama rotina
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:350:87 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:493:105 ===---
 ; ACAO CHAMADA - Chama rotina
 push cs
 call _systemcolors_windowbordercolor
 push ax
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:350:74 ===---
-; ACAO STRUCTURE - Leitura de Ponteiro - (U)Int16 - Desvio 88
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:493:92 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:493:93 ===---
+; ACAO STRUCTURE - Leitura de Ponteiro - (U)Int16 - Desvio 12
+push word [bp+-4+2]
+pop es
+mov di, [bp+-4]
+es mov ax, [di+12]
+push ax
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:493:90 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:493:91 ===---
+mov ax, 1
+push ax
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:493:79 ===---
+; ACAO STRUCTURE - Leitura de Ponteiro - (U)Int16 - Desvio 84
 push word [bp+6+2]
 pop es
 mov di, [bp+6]
-es mov ax, [di+88]
+es mov ax, [di+84]
+pop bx
+add ax, bx
+pop bx
+add ax, bx
 push ax
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:350:69 ===---
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:350:71 ===---
-mov ax, 2
-push ax
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:350:57 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:493:66 ===---
 ; ACAO STRUCTURE - Leitura de Ponteiro - (U)Int16 - Desvio 86
 es mov ax, [di+86]
-pop bx
-sub ax, bx
 push ax
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:350:44 ===---
-; ACAO STRUCTURE - Leitura de Ponteiro - (U)Int16 - Desvio 88
-es mov ax, [di+88]
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:493:53 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:493:54 ===---
+; ACAO STRUCTURE - Leitura de Ponteiro - (U)Int16 - Desvio 12
+push word [bp+-4+2]
+pop es
+mov di, [bp+-4]
+es mov ax, [di+12]
 push ax
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:350:39 ===---
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:350:41 ===---
-mov ax, 2
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:493:51 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:493:52 ===---
+mov ax, 1
 push ax
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:350:27 ===---
-; ACAO STRUCTURE - Leitura de Ponteiro - (U)Int16 - Desvio 82
-es mov ax, [di+82]
-pop bx
-add ax, bx
-push ax
-push cs
-call _graphics_drawline
-add sp, 10
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:351:9 ===---
-; ACAO CHAMADA - Chama rotina
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:351:87 ===---
-; ACAO CHAMADA - Chama rotina
-push cs
-call _systemcolors_windowbordercolor
-push ax
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:351:82 ===---
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:351:84 ===---
-mov ax, 2
-push ax
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:351:70 ===---
-; ACAO STRUCTURE - Leitura de Ponteiro - (U)Int16 - Desvio 88
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:493:40 ===---
+; ACAO STRUCTURE - Leitura de Ponteiro - (U)Int16 - Desvio 84
 push word [bp+6+2]
 pop es
 mov di, [bp+6]
-es mov ax, [di+88]
-pop bx
-sub ax, bx
-push ax
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:351:57 ===---
-; ACAO STRUCTURE - Leitura de Ponteiro - (U)Int16 - Desvio 82
-es mov ax, [di+82]
-push ax
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:351:52 ===---
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:351:54 ===---
-mov ax, 2
-push ax
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:351:40 ===---
-; ACAO STRUCTURE - Leitura de Ponteiro - (U)Int16 - Desvio 84
 es mov ax, [di+84]
 pop bx
 add ax, bx
+pop bx
+add ax, bx
 push ax
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:351:27 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:493:27 ===---
 ; ACAO STRUCTURE - Leitura de Ponteiro - (U)Int16 - Desvio 82
 es mov ax, [di+82]
 push ax
 push cs
 call _graphics_drawline
 add sp, 10
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:352:9 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:494:9 ===---
 ; ACAO CHAMADA - Chama rotina
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:352:87 ===---
-; ACAO CHAMADA - Chama rotina
-push cs
-call _systemcolors_windowbordercolor
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:494:74 ===---
+xor ax, ax
 push ax
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:352:82 ===---
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:352:84 ===---
-mov ax, 2
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:494:68 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:494:70 ===---
+mov ax, 50
 push ax
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:352:70 ===---
-; ACAO STRUCTURE - Leitura de Ponteiro - (U)Int16 - Desvio 88
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:494:53 ===---
+; ACAO STRUCTURE - Leitura de Ponteiro - (U)Int16 - Desvio 90
 push word [bp+6+2]
 pop es
 mov di, [bp+6]
-es mov ax, [di+88]
+es mov ax, [di+90]
 pop bx
 sub ax, bx
 push ax
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:352:57 ===---
-; ACAO STRUCTURE - Leitura de Ponteiro - (U)Int16 - Desvio 86
-es mov ax, [di+86]
-push ax
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:352:52 ===---
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:352:54 ===---
-mov ax, 2
-push ax
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:352:40 ===---
-; ACAO STRUCTURE - Leitura de Ponteiro - (U)Int16 - Desvio 84
-es mov ax, [di+84]
-pop bx
-add ax, bx
-push ax
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:352:27 ===---
-; ACAO STRUCTURE - Leitura de Ponteiro - (U)Int16 - Desvio 86
-es mov ax, [di+86]
-push ax
-push cs
-call _graphics_drawline
-add sp, 10
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:353:9 ===---
-; ACAO CHAMADA - Chama rotina
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:353:62 ===---
-; ACAO CHAMADA - Chama rotina
-push cs
-call _systemcolors_windowbordercolor
-push ax
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:353:57 ===---
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:353:59 ===---
-mov ax, 1
-push ax
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:353:45 ===---
-; ACAO STRUCTURE - Leitura de Ponteiro - (U)Int16 - Desvio 84
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:494:47 ===---
+; ACAO LEITURA - Le ponteiro
+push word [bp+-8+2]
+pop es
+mov di, [bp+-8]
+push es
+push di
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:494:36 ===---
+; ACAO STRUCTURE - Leitura de Ponteiro - Ponteiro Byte - Desvio 10
 push word [bp+6+2]
 pop es
 mov di, [bp+6]
-es mov ax, [di+84]
+es push word [di+10+2]
+es push word [di+10]
+pop di
+pop es
+push es
+push di
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:494:31 ===---
+; ACAO LEITURA - Le ponteiro
+push word [bp+-4+2]
+pop es
+mov di, [bp+-4]
+push es
+push di
+push cs
+call _graphics_calcfontsize
+add sp, 16
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:495:9 ===---
+; ACAO GRAVACAO - Grava em variavel
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:495:32 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:495:65 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:495:51 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:495:53 ===---
+; ACAO STRUCTURE - Leitura de Ponteiro - (U)Int16 - Desvio 0
+push word [bp+-8+2]
+pop es
+mov di, [bp+-8]
+es mov ax, [di+0]
+push ax
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:495:36 ===---
+; ACAO STRUCTURE - Leitura de Ponteiro - (U)Int16 - Desvio 90
+push word [bp+6+2]
+pop es
+mov di, [bp+6]
+es mov ax, [di+90]
 pop bx
-add ax, bx
+sub ax, bx
 push ax
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:353:40 ===---
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:353:42 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:495:69 ===---
 mov ax, 1
+mov cx, ax
+pop ax
+shr ax, cl
 push ax
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:353:28 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:495:20 ===---
 ; ACAO STRUCTURE - Leitura de Ponteiro - (U)Int16 - Desvio 82
 es mov ax, [di+82]
 pop bx
 add ax, bx
+mov [bp+-10], ax
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:496:9 ===---
+; ACAO GRAVACAO - Grava em variavel
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:496:33 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:496:66 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:496:52 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:496:54 ===---
+; ACAO STRUCTURE - Leitura de Ponteiro - (U)Int16 - Desvio 0
+push word [bp+-8+2]
+pop es
+mov di, [bp+-8]
+es mov ax, [di+0]
 push ax
-push cs
-call _graphics_drawpixel
-add sp, 6
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:354:9 ===---
-; ACAO CHAMADA - Chama rotina
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:354:62 ===---
-; ACAO CHAMADA - Chama rotina
-push cs
-call _systemcolors_windowbordercolor
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:496:37 ===---
+; ACAO STRUCTURE - Leitura de Ponteiro - (U)Int16 - Desvio 90
+push word [bp+6+2]
+pop es
+mov di, [bp+6]
+es mov ax, [di+90]
+pop bx
+sub ax, bx
 push ax
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:354:57 ===---
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:354:59 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:496:70 ===---
+mov ax, 1
+mov cx, ax
+pop ax
+shr ax, cl
+push ax
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:496:21 ===---
+; ACAO STRUCTURE - Leitura de Ponteiro - (U)Int16 - Desvio 86
+es mov ax, [di+86]
+pop bx
+sub ax, bx
+mov [bp+-12], ax
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:497:9 ===---
+; ACAO CHAMADA - Chama rotina
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:497:138 ===---
+xor ax, ax
+push ax
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:497:105 ===---
+; ACAO CHAMADA - Chama rotina
+push cs
+call _systemcolors_windowtitlecolor
+push ax
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:497:92 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:497:93 ===---
+; ACAO STRUCTURE - Leitura de Ponteiro - (U)Int16 - Desvio 12
+push word [bp+-4+2]
+pop es
+mov di, [bp+-4]
+es mov ax, [di+12]
+push ax
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:497:90 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:497:91 ===---
 mov ax, 1
 push ax
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:354:45 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:497:79 ===---
 ; ACAO STRUCTURE - Leitura de Ponteiro - (U)Int16 - Desvio 84
 push word [bp+6+2]
 pop es
@@ -13950,140 +13438,28 @@ mov di, [bp+6]
 es mov ax, [di+84]
 pop bx
 add ax, bx
-push ax
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:354:40 ===---
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:354:42 ===---
-mov ax, 1
-push ax
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:354:28 ===---
-; ACAO STRUCTURE - Leitura de Ponteiro - (U)Int16 - Desvio 86
-es mov ax, [di+86]
-pop bx
-sub ax, bx
-push ax
-push cs
-call _graphics_drawpixel
-add sp, 6
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:355:9 ===---
-; ACAO CHAMADA - Chama rotina
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:355:62 ===---
-; ACAO CHAMADA - Chama rotina
-push cs
-call _systemcolors_windowbordercolor
-push ax
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:355:57 ===---
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:355:59 ===---
-mov ax, 1
-push ax
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:355:45 ===---
-; ACAO STRUCTURE - Leitura de Ponteiro - (U)Int16 - Desvio 88
-push word [bp+6+2]
-pop es
-mov di, [bp+6]
-es mov ax, [di+88]
-pop bx
-sub ax, bx
-push ax
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:355:40 ===---
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:355:42 ===---
-mov ax, 1
-push ax
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:355:28 ===---
-; ACAO STRUCTURE - Leitura de Ponteiro - (U)Int16 - Desvio 82
-es mov ax, [di+82]
 pop bx
 add ax, bx
 push ax
-push cs
-call _graphics_drawpixel
-add sp, 6
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:356:9 ===---
-; ACAO CHAMADA - Chama rotina
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:356:62 ===---
-; ACAO CHAMADA - Chama rotina
-push cs
-call _systemcolors_windowbordercolor
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:497:68 ===---
+; ACAO LEITURA - Le variavel
+mov ax, [bp+-12]
 push ax
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:356:57 ===---
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:356:59 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:497:64 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:497:65 ===---
 mov ax, 1
 push ax
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:356:45 ===---
-; ACAO STRUCTURE - Leitura de Ponteiro - (U)Int16 - Desvio 88
-push word [bp+6+2]
-pop es
-mov di, [bp+6]
-es mov ax, [di+88]
-pop bx
-sub ax, bx
-push ax
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:356:40 ===---
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:356:42 ===---
-mov ax, 1
-push ax
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:356:28 ===---
-; ACAO STRUCTURE - Leitura de Ponteiro - (U)Int16 - Desvio 86
-es mov ax, [di+86]
-pop bx
-sub ax, bx
-push ax
-push cs
-call _graphics_drawpixel
-add sp, 6
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:357:9 ===---
-; ACAO CHAMADA - Chama rotina
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:357:143 ===---
-mov ax, 1
-push ax
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:357:117 ===---
-; ACAO CHAMADA - Chama rotina
-push cs
-call _systemcolors_textcolor
-push ax
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:357:112 ===---
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:357:114 ===---
-mov ax, 4
-push ax
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:357:100 ===---
-; ACAO STRUCTURE - Leitura de Ponteiro - (U)Int16 - Desvio 88
-push word [bp+6+2]
-pop es
-mov di, [bp+6]
-es mov ax, [di+88]
-pop bx
-sub ax, bx
-push ax
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:357:95 ===---
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:357:97 ===---
-mov ax, 4
-push ax
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:357:83 ===---
-; ACAO STRUCTURE - Leitura de Ponteiro - (U)Int16 - Desvio 86
-es mov ax, [di+86]
-pop bx
-sub ax, bx
-push ax
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:357:78 ===---
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:357:80 ===---
-mov ax, 4
-push ax
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:357:66 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:497:53 ===---
 ; ACAO STRUCTURE - Leitura de Ponteiro - (U)Int16 - Desvio 84
 es mov ax, [di+84]
 pop bx
 add ax, bx
 push ax
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:357:61 ===---
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:357:63 ===---
-mov ax, 4
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:497:43 ===---
+; ACAO LEITURA - Le variavel
+mov ax, [bp+-10]
 push ax
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:357:49 ===---
-; ACAO STRUCTURE - Leitura de Ponteiro - (U)Int16 - Desvio 82
-es mov ax, [di+82]
-pop bx
-add ax, bx
-push ax
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:357:38 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:497:32 ===---
 ; ACAO STRUCTURE - Leitura de Ponteiro - Ponteiro Byte - Desvio 10
 es push word [di+10+2]
 es push word [di+10]
@@ -14091,7 +13467,435 @@ pop di
 pop es
 push es
 push di
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:357:27 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:497:27 ===---
+; ACAO LEITURA - Le ponteiro
+push word [bp+-4+2]
+pop es
+mov di, [bp+-4]
+push es
+push di
+push cs
+call _graphics_drawtext
+add sp, 20
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:498:63 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:498:63 ===---
+; ACAO GRAVACAO - Grava em variavel
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:498:29 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:498:31 ===---
+mov ax, 4
+push ax
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:498:17 ===---
+; ACAO STRUCTURE - Leitura de Ponteiro - (U)Int16 - Desvio 84
+push word [bp+6+2]
+pop es
+mov di, [bp+6]
+es mov ax, [di+84]
+pop bx
+add ax, bx
+mov [bp+-14], ax
+ROTULO1013:
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:498:63 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:498:63 ===---
+; ACAO LEITURA - Le variavel
+mov ax, [bp+-14]
+push ax
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:498:61 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:498:63 ===---
+mov ax, 3
+push ax
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:498:48 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:498:50 ===---
+; ACAO STRUCTURE - Leitura de Ponteiro - (U)Int16 - Desvio 12
+push word [bp+-4+2]
+pop es
+mov di, [bp+-4]
+es mov ax, [di+12]
+push ax
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:498:36 ===---
+; ACAO STRUCTURE - Leitura de Ponteiro - (U)Int16 - Desvio 84
+push word [bp+6+2]
+pop es
+mov di, [bp+6]
+es mov ax, [di+84]
+pop bx
+add ax, bx
+pop bx
+sub ax, bx
+mov bx, ax
+pop ax
+cmp ax, bx
+jbe ROTULO1016
+jmp ROTULO1017
+ROTULO1016:
+mov ax, 65535
+jmp ROTULO1018
+ROTULO1017:
+xor ax, ax
+ROTULO1018:
+cmp ax, 0
+jne ROTULO1014
+jmp ROTULO1015
+ROTULO1014:
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:499:13 ===---
+; ACAO CHAMADA - Chama rotina
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:499:71 ===---
+; ACAO CHAMADA - Chama rotina
+push cs
+call _systemcolors_windowbordercolor
+push ax
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:499:68 ===---
+; ACAO LEITURA - Le variavel
+mov ax, [bp+-14]
+push ax
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:499:63 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:499:65 ===---
+mov ax, 3
+push ax
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:499:51 ===---
+; ACAO STRUCTURE - Leitura de Ponteiro - (U)Int16 - Desvio 82
+push word [bp+6+2]
+pop es
+mov di, [bp+6]
+es mov ax, [di+82]
+pop bx
+add ax, bx
+push ax
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:499:48 ===---
+; ACAO LEITURA - Le variavel
+mov ax, [bp+-14]
+push ax
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:499:43 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:499:45 ===---
+mov ax, 2
+push ax
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:499:31 ===---
+; ACAO STRUCTURE - Leitura de Ponteiro - (U)Int16 - Desvio 82
+es mov ax, [di+82]
+pop bx
+add ax, bx
+push ax
+push cs
+call _graphics_drawline
+add sp, 10
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:500:13 ===---
+; ACAO CHAMADA - Chama rotina
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:500:69 ===---
+; ACAO CHAMADA - Chama rotina
+push cs
+call _systemcolors_windowbordercolor
+push ax
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:500:66 ===---
+; ACAO LEITURA - Le variavel
+mov ax, [bp+-14]
+push ax
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:500:61 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:500:63 ===---
+mov ax, 5
+push ax
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:500:52 ===---
+; ACAO LEITURA - Le variavel
+mov ax, [bp+-10]
+pop bx
+sub ax, bx
+push ax
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:500:49 ===---
+; ACAO LEITURA - Le variavel
+mov ax, [bp+-14]
+push ax
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:500:43 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:500:45 ===---
+mov ax, 13
+push ax
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:500:31 ===---
+; ACAO STRUCTURE - Leitura de Ponteiro - (U)Int16 - Desvio 82
+push word [bp+6+2]
+pop es
+mov di, [bp+6]
+es mov ax, [di+82]
+pop bx
+add ax, bx
+push ax
+push cs
+call _graphics_drawline
+add sp, 10
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:501:13 ===---
+; ACAO CHAMADA - Chama rotina
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:501:69 ===---
+; ACAO CHAMADA - Chama rotina
+push cs
+call _systemcolors_windowbordercolor
+push ax
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:501:66 ===---
+; ACAO LEITURA - Le variavel
+mov ax, [bp+-14]
+push ax
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:501:61 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:501:63 ===---
+mov ax, 2
+push ax
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:501:49 ===---
+; ACAO STRUCTURE - Leitura de Ponteiro - (U)Int16 - Desvio 86
+push word [bp+6+2]
+pop es
+mov di, [bp+6]
+es mov ax, [di+86]
+pop bx
+sub ax, bx
+push ax
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:501:46 ===---
+; ACAO LEITURA - Le variavel
+mov ax, [bp+-14]
+push ax
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:501:41 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:501:43 ===---
+mov ax, 4
+push ax
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:501:31 ===---
+; ACAO LEITURA - Le variavel
+mov ax, [bp+-12]
+pop bx
+add ax, bx
+push ax
+push cs
+call _graphics_drawline
+add sp, 10
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:502:13 ===---
+; ACAO INC - Incrementa variavel
+inc word [bp+-14]
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:498:63 ===---
+; ACAO INC - Incrementa variavel
+inc word [bp+-14]
+jmp ROTULO1013
+ROTULO1015:
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:504:9 ===---
+; ACAO CHAMADA - Chama rotina
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:504:146 ===---
+; ACAO CHAMADA - Chama rotina
+push cs
+call _systemcolors_windowcolor
+push ax
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:504:113 ===---
+; ACAO CHAMADA - Chama rotina
+push cs
+call _systemcolors_windowbordercolor
+push ax
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:504:109 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:504:110 ===---
+mov ax, 3
+push ax
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:504:96 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:504:98 ===---
+; ACAO STRUCTURE - Leitura de Ponteiro - (U)Int16 - Desvio 12
+push word [bp+-4+2]
+pop es
+mov di, [bp+-4]
+es mov ax, [di+12]
+push ax
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:504:84 ===---
+; ACAO STRUCTURE - Leitura de Ponteiro - (U)Int16 - Desvio 84
+push word [bp+6+2]
+pop es
+mov di, [bp+6]
+es mov ax, [di+84]
+pop bx
+add ax, bx
+pop bx
+sub ax, bx
+push ax
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:504:78 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:504:80 ===---
+mov ax, 11
+push ax
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:504:66 ===---
+; ACAO STRUCTURE - Leitura de Ponteiro - (U)Int16 - Desvio 82
+es mov ax, [di+82]
+pop bx
+add ax, bx
+push ax
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:504:61 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:504:63 ===---
+mov ax, 4
+push ax
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:504:49 ===---
+; ACAO STRUCTURE - Leitura de Ponteiro - (U)Int16 - Desvio 84
+es mov ax, [di+84]
+pop bx
+add ax, bx
+push ax
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:504:44 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:504:46 ===---
+mov ax, 5
+push ax
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:504:32 ===---
+; ACAO STRUCTURE - Leitura de Ponteiro - (U)Int16 - Desvio 82
+es mov ax, [di+82]
+pop bx
+add ax, bx
+push ax
+push cs
+call _graphics_drawrectangle
+add sp, 12
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:505:9 ===---
+; ACAO STRUCTURE - Gravacao de Ponteiro- Prepara
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:505:29 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:505:31 ===---
+; ACAO STRUCTURE - Leitura de Ponteiro - (U)Int16 - Desvio 12
+push word [bp+-4+2]
+pop es
+mov di, [bp+-4]
+es mov ax, [di+12]
+push ax
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:505:27 ===---
+mov ax, 2
+pop bx
+add ax, bx
+push word [bp+6+2]
+pop es
+mov di, [bp+6]
+es mov [di+74], ax
+; ACAO STRUCTURE - Gravacao de Ponteiro - Fim
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:506:9 ===---
+; ACAO CHAMADA - Chama rotina
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:506:30 ===---
+; ACAO LEITURA - Le ponteiro
+push es
+push di
+push cs
+call _control_drawchildren
+add sp, 4
+ROTULO1002:
+mov sp, bp
+pop bp
+FIM_form_controlpaint:
+retf
+; MODULO FIM: form
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:444:8 ===---
+; MODULO: label
+_label:
+db 16
+db 83,121,115,116,101,109,46,70,111,114,109,115,46,104,99,98
+db 0
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:445:16 ===---
+_label_initialize:
+push bp
+mov bp, sp
+; ARG: ctrl TAM: 4 POS: BP+6 
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:445:27 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:446:9 ===---
+; ACAO CHAMADA - Chama rotina
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:446:28 ===---
+; ACAO LEITURA - Le ponteiro
+push word [bp+6+2]
+pop es
+mov di, [bp+6]
+push es
+push di
+push cs
+call _control_initialize
+add sp, 4
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:447:9 ===---
+; ACAO STRUCTURE - Gravacao de Ponteiro- Prepara
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:447:29 ===---
+push cs
+pop es
+mov di, _label_controlpaint
+push es
+push di
+push word [bp+6+2]
+pop es
+mov di, [bp+6]
+es pop word [di+23]
+es pop word [di+23+2]
+; ACAO STRUCTURE - Gravacao de Ponteiro - Fim
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:448:9 ===---
+; ACAO STRUCTURE - Gravacao de Ponteiro- Prepara
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:448:26 ===---
+xor ax, ax
+es mov [di+16], al
+; ACAO STRUCTURE - Gravacao de Ponteiro - Fim
+ROTULO1019:
+mov sp, bp
+pop bp
+FIM_label_initialize:
+retf
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:451:9 ===---
+_label_controlpaint:
+push bp
+mov bp, sp
+; ARG: ctrl TAM: 4 POS: BP+6 
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:451:22 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:452:9 ===---
+; ACAO CHAMADA - Chama rotina
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:452:112 ===---
+; ACAO CHAMADA - Chama rotina
+push cs
+call _systemcolors_windowcolor
+push ax
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:452:84 ===---
+; ACAO CHAMADA - Chama rotina
+push cs
+call _systemcolors_windowcolor
+push ax
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:452:71 ===---
+; ACAO STRUCTURE - Leitura de Ponteiro - (U)Int16 - Desvio 88
+push word [bp+6+2]
+pop es
+mov di, [bp+6]
+es mov ax, [di+88]
+push ax
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:452:58 ===---
+; ACAO STRUCTURE - Leitura de Ponteiro - (U)Int16 - Desvio 86
+es mov ax, [di+86]
+push ax
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:452:45 ===---
+; ACAO STRUCTURE - Leitura de Ponteiro - (U)Int16 - Desvio 84
+es mov ax, [di+84]
+push ax
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:452:32 ===---
+; ACAO STRUCTURE - Leitura de Ponteiro - (U)Int16 - Desvio 82
+es mov ax, [di+82]
+push ax
+push cs
+call _graphics_drawrectangle
+add sp, 12
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:453:9 ===---
+; ACAO CHAMADA - Chama rotina
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:453:127 ===---
+mov ax, 1
+push ax
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:453:101 ===---
+; ACAO CHAMADA - Chama rotina
+push cs
+call _systemcolors_textcolor
+push ax
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:453:88 ===---
+; ACAO STRUCTURE - Leitura de Ponteiro - (U)Int16 - Desvio 88
+push word [bp+6+2]
+pop es
+mov di, [bp+6]
+es mov ax, [di+88]
+push ax
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:453:75 ===---
+; ACAO STRUCTURE - Leitura de Ponteiro - (U)Int16 - Desvio 86
+es mov ax, [di+86]
+push ax
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:453:62 ===---
+; ACAO STRUCTURE - Leitura de Ponteiro - (U)Int16 - Desvio 84
+es mov ax, [di+84]
+push ax
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:453:49 ===---
+; ACAO STRUCTURE - Leitura de Ponteiro - (U)Int16 - Desvio 82
+es mov ax, [di+82]
+push ax
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:453:38 ===---
+; ACAO STRUCTURE - Leitura de Ponteiro - Ponteiro Byte - Desvio 10
+es push word [di+10+2]
+es push word [di+10]
+pop di
+pop es
+push es
+push di
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:453:27 ===---
 ; ACAO STRUCTURE - Leitura de Ponteiro - Ponteiro Byte - Desvio 19
 push word [bp+6+2]
 pop es
@@ -14105,12 +13909,1811 @@ push di
 push cs
 call _graphics_drawtext
 add sp, 20
-ROTULO1007:
+ROTULO1020:
+mov sp, bp
+pop bp
+FIM_label_controlpaint:
+retf
+; MODULO FIM: label
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:404:8 ===---
+; MODULO: button
+_button:
+db 16
+db 83,121,115,116,101,109,46,70,111,114,109,115,46,104,99,98
+db 0
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:405:16 ===---
+_button_initialize:
+push bp
+mov bp, sp
+; ARG: ctrl TAM: 4 POS: BP+6 
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:405:27 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:406:9 ===---
+; ACAO CHAMADA - Chama rotina
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:406:28 ===---
+; ACAO LEITURA - Le ponteiro
+push word [bp+6+2]
+pop es
+mov di, [bp+6]
+push es
+push di
+push cs
+call _control_initialize
+add sp, 4
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:407:9 ===---
+; ACAO STRUCTURE - Gravacao de Ponteiro- Prepara
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:407:29 ===---
+push cs
+pop es
+mov di, _button_controlpaint
+push es
+push di
+push word [bp+6+2]
+pop es
+mov di, [bp+6]
+es pop word [di+23]
+es pop word [di+23+2]
+; ACAO STRUCTURE - Gravacao de Ponteiro - Fim
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:408:9 ===---
+; ACAO STRUCTURE - Gravacao de Ponteiro- Prepara
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:408:42 ===---
+push cs
+pop es
+mov di, _button_controlkeyboardinteracion
+push es
+push di
+push word [bp+6+2]
+pop es
+mov di, [bp+6]
+es pop word [di+31]
+es pop word [di+31+2]
+; ACAO STRUCTURE - Gravacao de Ponteiro - Fim
+ROTULO1021:
+mov sp, bp
+pop bp
+FIM_button_initialize:
+retf
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:411:9 ===---
+_button_controlkeyboardinteracion:
+push bp
+mov bp, sp
+sub sp, 4
+push cs
+call _os_stackcheck
+; ARG: ctrl TAM: 4 POS: BP+6 
+; ARG: e TAM: 4 POS: BP+10 
+; ARG: mouse TAM: 4 POS: BP--4 
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:411:35 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:411:52 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:415:21 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:412:9 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:412:12 ===---
+; ACAO STRUCTURE - Leitura de Ponteiro - (U)Int16 - Desvio 5
+push word [bp+10+2]
+pop es
+mov di, [bp+10]
+es mov ax, [di+5]
+cmp ax, 0
+jne ROTULO1023
+jmp ROTULO1024
+ROTULO1023:
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:413:13 ===---
+; ACAO CHAMADA - Chama indiretamente usando Invoke
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:413:36 ===---
+; ACAO LEITURA - Le ponteiro
+push es
+push di
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:413:13 ===---
+; ACAO LEITURA - Le ponteiro
+push word [bp+6+2]
+pop es
+mov di, [bp+6]
+push es
+push di
+es call far [di+43]
+add sp, 8
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:414:13 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:414:63 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:414:36 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:414:29 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:414:17 ===---
+; ACAO STRUCTURE - Leitura de Ponteiro - (U)Int8 - Desvio 0
+push word [bp+10+2]
+pop es
+mov di, [bp+10]
+xor ax, ax
+es mov al, [di+0]
+push ax
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:414:32 ===---
+mov ax, 13
+mov bx, ax
+pop ax
+cmp ax, bx
+je ROTULO1033
+jmp ROTULO1034
+ROTULO1033:
+mov ax, 65535
+jmp ROTULO1035
+ROTULO1034:
+xor ax, ax
+ROTULO1035:
+cmp ax, 0
+jne ROTULO1030
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:414:56 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:414:44 ===---
+; ACAO STRUCTURE - Leitura de Ponteiro - (U)Int8 - Desvio 0
+xor ax, ax
+es mov al, [di+0]
+push ax
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:414:59 ===---
+mov ax, 10
+mov bx, ax
+pop ax
+cmp ax, bx
+je ROTULO1036
+jmp ROTULO1037
+ROTULO1036:
+mov ax, 65535
+jmp ROTULO1038
+ROTULO1037:
+xor ax, ax
+ROTULO1038:
+cmp ax, 0
+je ROTULO1031
+ROTULO1030:
+mov ax, 65535
+jmp ROTULO1032
+ROTULO1031:
+xor ax, ax
+ROTULO1032:
+cmp ax, 0
+jne ROTULO1027
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:414:83 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:414:71 ===---
+; ACAO STRUCTURE - Leitura de Ponteiro - (U)Int8 - Desvio 0
+xor ax, ax
+es mov al, [di+0]
+push ax
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:414:86 ===---
+mov ax, 32
+mov bx, ax
+pop ax
+cmp ax, bx
+je ROTULO1039
+jmp ROTULO1040
+ROTULO1039:
+mov ax, 65535
+jmp ROTULO1041
+ROTULO1040:
+xor ax, ax
+ROTULO1041:
+cmp ax, 0
+je ROTULO1028
+ROTULO1027:
+mov ax, 65535
+jmp ROTULO1029
+ROTULO1028:
+xor ax, ax
+ROTULO1029:
+cmp ax, 0
+jne ROTULO1025
+jmp ROTULO1026
+ROTULO1025:
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:416:17 ===---
+; ACAO STRUCTURE - Aloca estrutura na pilha
+sub sp, 12
+push ss
+pop es
+mov di, sp
+push es
+pop word [bp+-4+2]
+mov [bp+-4], di
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:417:17 ===---
+; ACAO STRUCTURE - Gravacao de Ponteiro- Prepara
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:417:27 ===---
+; ACAO STRUCTURE - Leitura de Ponteiro - (U)Int16 - Desvio 82
+push word [bp+6+2]
+pop es
+mov di, [bp+6]
+es mov ax, [di+82]
+push word [bp+-4+2]
+pop es
+mov di, [bp+-4]
+es mov [di+0], ax
+; ACAO STRUCTURE - Gravacao de Ponteiro - Fim
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:418:17 ===---
+; ACAO STRUCTURE - Gravacao de Ponteiro- Prepara
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:418:27 ===---
+; ACAO STRUCTURE - Leitura de Ponteiro - (U)Int16 - Desvio 84
+push word [bp+6+2]
+pop es
+mov di, [bp+6]
+es mov ax, [di+84]
+push word [bp+-4+2]
+pop es
+mov di, [bp+-4]
+es mov [di+2], ax
+; ACAO STRUCTURE - Gravacao de Ponteiro - Fim
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:419:17 ===---
+; ACAO STRUCTURE - Gravacao de Ponteiro- Prepara
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:419:39 ===---
+mov ax, 1
+es mov [di+4], ax
+; ACAO STRUCTURE - Gravacao de Ponteiro - Fim
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:420:17 ===---
+; ACAO STRUCTURE - Gravacao de Ponteiro- Prepara
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:420:41 ===---
+xor ax, ax
+es mov [di+6], ax
+; ACAO STRUCTURE - Gravacao de Ponteiro - Fim
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:421:17 ===---
+; ACAO STRUCTURE - Gravacao de Ponteiro- Prepara
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:421:37 ===---
+xor ax, ax
+es mov [di+8], ax
+; ACAO STRUCTURE - Gravacao de Ponteiro - Fim
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:422:17 ===---
+; ACAO CHAMADA - Chama indiretamente usando Invoke
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:422:37 ===---
+; ACAO LEITURA - Le ponteiro
+push es
+push di
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:422:17 ===---
+; ACAO LEITURA - Le ponteiro
+push word [bp+6+2]
+pop es
+mov di, [bp+6]
+push es
+push di
+es call far [di+39]
+add sp, 8
+ROTULO1026:
+jmp ROTULO1042
+ROTULO1024:
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:425:13 ===---
+; ACAO CHAMADA - Chama indiretamente usando Invoke
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:425:38 ===---
+; ACAO LEITURA - Le ponteiro
+push word [bp+10+2]
+pop es
+mov di, [bp+10]
+push es
+push di
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:425:13 ===---
+; ACAO LEITURA - Le ponteiro
+push word [bp+6+2]
+pop es
+mov di, [bp+6]
+push es
+push di
+es call far [di+47]
+add sp, 8
+ROTULO1042:
+ROTULO1022:
+mov sp, bp
+pop bp
+FIM_button_controlkeyboardinteracion:
+retf
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:429:9 ===---
+_button_controlpaint:
+push bp
+mov bp, sp
+; ARG: ctrl TAM: 4 POS: BP+6 
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:429:22 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:430:9 ===---
+; ACAO CHAMADA - Chama rotina
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:430:112 ===---
+; ACAO CHAMADA - Chama rotina
+push cs
+call _systemcolors_windowcolor
+push ax
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:430:84 ===---
+; ACAO CHAMADA - Chama rotina
+push cs
+call _systemcolors_windowcolor
+push ax
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:430:71 ===---
+; ACAO STRUCTURE - Leitura de Ponteiro - (U)Int16 - Desvio 88
+push word [bp+6+2]
+pop es
+mov di, [bp+6]
+es mov ax, [di+88]
+push ax
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:430:58 ===---
+; ACAO STRUCTURE - Leitura de Ponteiro - (U)Int16 - Desvio 86
+es mov ax, [di+86]
+push ax
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:430:45 ===---
+; ACAO STRUCTURE - Leitura de Ponteiro - (U)Int16 - Desvio 84
+es mov ax, [di+84]
+push ax
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:430:32 ===---
+; ACAO STRUCTURE - Leitura de Ponteiro - (U)Int16 - Desvio 82
+es mov ax, [di+82]
+push ax
+push cs
+call _graphics_drawrectangle
+add sp, 12
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:431:9 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:431:26 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:431:12 ===---
+; ACAO STRUCTURE - Leitura de Ponteiro - (U)Int8 - Desvio 18
+push word [bp+6+2]
+pop es
+mov di, [bp+6]
+xor ax, ax
+es mov al, [di+18]
+push ax
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:431:29 ===---
+xor ax, ax
+mov bx, ax
+pop ax
+cmp ax, bx
+jne ROTULO1046
+jmp ROTULO1047
+ROTULO1046:
+mov ax, 65535
+jmp ROTULO1048
+ROTULO1047:
+xor ax, ax
+ROTULO1048:
+cmp ax, 0
+jne ROTULO1044
+jmp ROTULO1045
+ROTULO1044:
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:431:36 ===---
+; ACAO CHAMADA - Chama rotina
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:431:122 ===---
+; ACAO CHAMADA - Chama rotina
+push cs
+call _systemcolors_windowbordercolor
+push ax
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:431:117 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:431:119 ===---
+mov ax, 2
+push ax
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:431:105 ===---
+; ACAO STRUCTURE - Leitura de Ponteiro - (U)Int16 - Desvio 88
+push word [bp+6+2]
+pop es
+mov di, [bp+6]
+es mov ax, [di+88]
+pop bx
+sub ax, bx
+push ax
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:431:100 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:431:102 ===---
+mov ax, 4
+push ax
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:431:88 ===---
+; ACAO STRUCTURE - Leitura de Ponteiro - (U)Int16 - Desvio 86
+es mov ax, [di+86]
+pop bx
+sub ax, bx
+push ax
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:431:83 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:431:85 ===---
+mov ax, 2
+push ax
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:431:71 ===---
+; ACAO STRUCTURE - Leitura de Ponteiro - (U)Int16 - Desvio 88
+es mov ax, [di+88]
+pop bx
+sub ax, bx
+push ax
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:431:66 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:431:68 ===---
+mov ax, 4
+push ax
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:431:54 ===---
+; ACAO STRUCTURE - Leitura de Ponteiro - (U)Int16 - Desvio 82
+es mov ax, [di+82]
+pop bx
+add ax, bx
+push ax
+push cs
+call _graphics_drawline
+add sp, 10
+ROTULO1045:
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:432:9 ===---
+; ACAO CHAMADA - Chama rotina
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:432:87 ===---
+; ACAO CHAMADA - Chama rotina
+push cs
+call _systemcolors_windowbordercolor
+push ax
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:432:74 ===---
+; ACAO STRUCTURE - Leitura de Ponteiro - (U)Int16 - Desvio 84
+push word [bp+6+2]
+pop es
+mov di, [bp+6]
+es mov ax, [di+84]
+push ax
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:432:69 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:432:71 ===---
+mov ax, 2
+push ax
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:432:57 ===---
+; ACAO STRUCTURE - Leitura de Ponteiro - (U)Int16 - Desvio 86
+es mov ax, [di+86]
+pop bx
+sub ax, bx
+push ax
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:432:44 ===---
+; ACAO STRUCTURE - Leitura de Ponteiro - (U)Int16 - Desvio 84
+es mov ax, [di+84]
+push ax
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:432:39 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:432:41 ===---
+mov ax, 2
+push ax
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:432:27 ===---
+; ACAO STRUCTURE - Leitura de Ponteiro - (U)Int16 - Desvio 82
+es mov ax, [di+82]
+pop bx
+add ax, bx
+push ax
+push cs
+call _graphics_drawline
+add sp, 10
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:433:9 ===---
+; ACAO CHAMADA - Chama rotina
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:433:87 ===---
+; ACAO CHAMADA - Chama rotina
+push cs
+call _systemcolors_windowbordercolor
+push ax
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:433:74 ===---
+; ACAO STRUCTURE - Leitura de Ponteiro - (U)Int16 - Desvio 88
+push word [bp+6+2]
+pop es
+mov di, [bp+6]
+es mov ax, [di+88]
+push ax
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:433:69 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:433:71 ===---
+mov ax, 2
+push ax
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:433:57 ===---
+; ACAO STRUCTURE - Leitura de Ponteiro - (U)Int16 - Desvio 86
+es mov ax, [di+86]
+pop bx
+sub ax, bx
+push ax
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:433:44 ===---
+; ACAO STRUCTURE - Leitura de Ponteiro - (U)Int16 - Desvio 88
+es mov ax, [di+88]
+push ax
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:433:39 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:433:41 ===---
+mov ax, 2
+push ax
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:433:27 ===---
+; ACAO STRUCTURE - Leitura de Ponteiro - (U)Int16 - Desvio 82
+es mov ax, [di+82]
+pop bx
+add ax, bx
+push ax
+push cs
+call _graphics_drawline
+add sp, 10
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:434:9 ===---
+; ACAO CHAMADA - Chama rotina
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:434:87 ===---
+; ACAO CHAMADA - Chama rotina
+push cs
+call _systemcolors_windowbordercolor
+push ax
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:434:82 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:434:84 ===---
+mov ax, 2
+push ax
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:434:70 ===---
+; ACAO STRUCTURE - Leitura de Ponteiro - (U)Int16 - Desvio 88
+push word [bp+6+2]
+pop es
+mov di, [bp+6]
+es mov ax, [di+88]
+pop bx
+sub ax, bx
+push ax
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:434:57 ===---
+; ACAO STRUCTURE - Leitura de Ponteiro - (U)Int16 - Desvio 82
+es mov ax, [di+82]
+push ax
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:434:52 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:434:54 ===---
+mov ax, 2
+push ax
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:434:40 ===---
+; ACAO STRUCTURE - Leitura de Ponteiro - (U)Int16 - Desvio 84
+es mov ax, [di+84]
+pop bx
+add ax, bx
+push ax
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:434:27 ===---
+; ACAO STRUCTURE - Leitura de Ponteiro - (U)Int16 - Desvio 82
+es mov ax, [di+82]
+push ax
+push cs
+call _graphics_drawline
+add sp, 10
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:435:9 ===---
+; ACAO CHAMADA - Chama rotina
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:435:87 ===---
+; ACAO CHAMADA - Chama rotina
+push cs
+call _systemcolors_windowbordercolor
+push ax
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:435:82 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:435:84 ===---
+mov ax, 2
+push ax
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:435:70 ===---
+; ACAO STRUCTURE - Leitura de Ponteiro - (U)Int16 - Desvio 88
+push word [bp+6+2]
+pop es
+mov di, [bp+6]
+es mov ax, [di+88]
+pop bx
+sub ax, bx
+push ax
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:435:57 ===---
+; ACAO STRUCTURE - Leitura de Ponteiro - (U)Int16 - Desvio 86
+es mov ax, [di+86]
+push ax
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:435:52 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:435:54 ===---
+mov ax, 2
+push ax
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:435:40 ===---
+; ACAO STRUCTURE - Leitura de Ponteiro - (U)Int16 - Desvio 84
+es mov ax, [di+84]
+pop bx
+add ax, bx
+push ax
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:435:27 ===---
+; ACAO STRUCTURE - Leitura de Ponteiro - (U)Int16 - Desvio 86
+es mov ax, [di+86]
+push ax
+push cs
+call _graphics_drawline
+add sp, 10
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:436:9 ===---
+; ACAO CHAMADA - Chama rotina
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:436:62 ===---
+; ACAO CHAMADA - Chama rotina
+push cs
+call _systemcolors_windowbordercolor
+push ax
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:436:57 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:436:59 ===---
+mov ax, 1
+push ax
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:436:45 ===---
+; ACAO STRUCTURE - Leitura de Ponteiro - (U)Int16 - Desvio 84
+push word [bp+6+2]
+pop es
+mov di, [bp+6]
+es mov ax, [di+84]
+pop bx
+add ax, bx
+push ax
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:436:40 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:436:42 ===---
+mov ax, 1
+push ax
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:436:28 ===---
+; ACAO STRUCTURE - Leitura de Ponteiro - (U)Int16 - Desvio 82
+es mov ax, [di+82]
+pop bx
+add ax, bx
+push ax
+push cs
+call _graphics_drawpixel
+add sp, 6
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:437:9 ===---
+; ACAO CHAMADA - Chama rotina
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:437:62 ===---
+; ACAO CHAMADA - Chama rotina
+push cs
+call _systemcolors_windowbordercolor
+push ax
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:437:57 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:437:59 ===---
+mov ax, 1
+push ax
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:437:45 ===---
+; ACAO STRUCTURE - Leitura de Ponteiro - (U)Int16 - Desvio 84
+push word [bp+6+2]
+pop es
+mov di, [bp+6]
+es mov ax, [di+84]
+pop bx
+add ax, bx
+push ax
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:437:40 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:437:42 ===---
+mov ax, 1
+push ax
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:437:28 ===---
+; ACAO STRUCTURE - Leitura de Ponteiro - (U)Int16 - Desvio 86
+es mov ax, [di+86]
+pop bx
+sub ax, bx
+push ax
+push cs
+call _graphics_drawpixel
+add sp, 6
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:438:9 ===---
+; ACAO CHAMADA - Chama rotina
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:438:62 ===---
+; ACAO CHAMADA - Chama rotina
+push cs
+call _systemcolors_windowbordercolor
+push ax
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:438:57 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:438:59 ===---
+mov ax, 1
+push ax
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:438:45 ===---
+; ACAO STRUCTURE - Leitura de Ponteiro - (U)Int16 - Desvio 88
+push word [bp+6+2]
+pop es
+mov di, [bp+6]
+es mov ax, [di+88]
+pop bx
+sub ax, bx
+push ax
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:438:40 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:438:42 ===---
+mov ax, 1
+push ax
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:438:28 ===---
+; ACAO STRUCTURE - Leitura de Ponteiro - (U)Int16 - Desvio 82
+es mov ax, [di+82]
+pop bx
+add ax, bx
+push ax
+push cs
+call _graphics_drawpixel
+add sp, 6
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:439:9 ===---
+; ACAO CHAMADA - Chama rotina
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:439:62 ===---
+; ACAO CHAMADA - Chama rotina
+push cs
+call _systemcolors_windowbordercolor
+push ax
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:439:57 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:439:59 ===---
+mov ax, 1
+push ax
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:439:45 ===---
+; ACAO STRUCTURE - Leitura de Ponteiro - (U)Int16 - Desvio 88
+push word [bp+6+2]
+pop es
+mov di, [bp+6]
+es mov ax, [di+88]
+pop bx
+sub ax, bx
+push ax
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:439:40 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:439:42 ===---
+mov ax, 1
+push ax
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:439:28 ===---
+; ACAO STRUCTURE - Leitura de Ponteiro - (U)Int16 - Desvio 86
+es mov ax, [di+86]
+pop bx
+sub ax, bx
+push ax
+push cs
+call _graphics_drawpixel
+add sp, 6
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:440:9 ===---
+; ACAO CHAMADA - Chama rotina
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:440:143 ===---
+mov ax, 1
+push ax
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:440:117 ===---
+; ACAO CHAMADA - Chama rotina
+push cs
+call _systemcolors_textcolor
+push ax
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:440:112 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:440:114 ===---
+mov ax, 4
+push ax
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:440:100 ===---
+; ACAO STRUCTURE - Leitura de Ponteiro - (U)Int16 - Desvio 88
+push word [bp+6+2]
+pop es
+mov di, [bp+6]
+es mov ax, [di+88]
+pop bx
+sub ax, bx
+push ax
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:440:95 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:440:97 ===---
+mov ax, 4
+push ax
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:440:83 ===---
+; ACAO STRUCTURE - Leitura de Ponteiro - (U)Int16 - Desvio 86
+es mov ax, [di+86]
+pop bx
+sub ax, bx
+push ax
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:440:78 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:440:80 ===---
+mov ax, 4
+push ax
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:440:66 ===---
+; ACAO STRUCTURE - Leitura de Ponteiro - (U)Int16 - Desvio 84
+es mov ax, [di+84]
+pop bx
+add ax, bx
+push ax
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:440:61 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:440:63 ===---
+mov ax, 4
+push ax
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:440:49 ===---
+; ACAO STRUCTURE - Leitura de Ponteiro - (U)Int16 - Desvio 82
+es mov ax, [di+82]
+pop bx
+add ax, bx
+push ax
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:440:38 ===---
+; ACAO STRUCTURE - Leitura de Ponteiro - Ponteiro Byte - Desvio 10
+es push word [di+10+2]
+es push word [di+10]
+pop di
+pop es
+push es
+push di
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:440:27 ===---
+; ACAO STRUCTURE - Leitura de Ponteiro - Ponteiro Byte - Desvio 19
+push word [bp+6+2]
+pop es
+mov di, [bp+6]
+es push word [di+19+2]
+es push word [di+19]
+pop di
+pop es
+push es
+push di
+push cs
+call _graphics_drawtext
+add sp, 20
+ROTULO1043:
 mov sp, bp
 pop bp
 FIM_button_controlpaint:
 retf
 ; MODULO FIM: button
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:353:8 ===---
+; MODULO: textbox
+_textbox:
+db 16
+db 83,121,115,116,101,109,46,70,111,114,109,115,46,104,99,98
+db 0
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:354:16 ===---
+_textbox_initialize:
+push bp
+mov bp, sp
+; ARG: ctrl TAM: 4 POS: BP+6 
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:354:27 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:355:9 ===---
+; ACAO CHAMADA - Chama rotina
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:355:28 ===---
+; ACAO LEITURA - Le ponteiro
+push word [bp+6+2]
+pop es
+mov di, [bp+6]
+push es
+push di
+push cs
+call _control_initialize
+add sp, 4
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:356:9 ===---
+; ACAO STRUCTURE - Gravacao de Ponteiro- Prepara
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:356:29 ===---
+push cs
+pop es
+mov di, _textbox_controlpaint
+push es
+push di
+push word [bp+6+2]
+pop es
+mov di, [bp+6]
+es pop word [di+23]
+es pop word [di+23+2]
+; ACAO STRUCTURE - Gravacao de Ponteiro - Fim
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:357:9 ===---
+; ACAO STRUCTURE - Gravacao de Ponteiro- Prepara
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:357:42 ===---
+push cs
+pop es
+mov di, _textbox_controlkeyboardinteracion
+push es
+push di
+push word [bp+6+2]
+pop es
+mov di, [bp+6]
+es pop word [di+31]
+es pop word [di+31+2]
+; ACAO STRUCTURE - Gravacao de Ponteiro - Fim
+ROTULO1049:
+mov sp, bp
+pop bp
+FIM_textbox_initialize:
+retf
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:360:9 ===---
+_textbox_controlkeyboardinteracion:
+push bp
+mov bp, sp
+sub sp, 10
+push cs
+call _os_stackcheck
+; ARG: ctrl TAM: 4 POS: BP+6 
+; ARG: e TAM: 4 POS: BP+10 
+; ARG: ptr TAM: 4 POS: BP--4 
+; ARG: len TAM: 2 POS: BP--6 
+; ARG: txt TAM: 4 POS: BP--10 
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:360:35 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:360:52 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:362:17 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:363:17 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:378:25 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:361:9 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:361:12 ===---
+; ACAO STRUCTURE - Leitura de Ponteiro - (U)Int16 - Desvio 5
+push word [bp+10+2]
+pop es
+mov di, [bp+10]
+es mov ax, [di+5]
+cmp ax, 0
+jne ROTULO1051
+jmp ROTULO1052
+ROTULO1051:
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:364:13 ===---
+; ACAO STRUCTURE - Gravacao de Ponteiro- Prepara
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:364:24 ===---
+xor ax, ax
+es mov [di+7], ax
+; ACAO STRUCTURE - Gravacao de Ponteiro - Fim
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:365:13 ===---
+; ACAO CHAMADA - Chama indiretamente usando Invoke
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:365:36 ===---
+; ACAO LEITURA - Le ponteiro
+push es
+push di
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:365:13 ===---
+; ACAO LEITURA - Le ponteiro
+push word [bp+6+2]
+pop es
+mov di, [bp+6]
+push es
+push di
+es call far [di+43]
+add sp, 8
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:366:13 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:366:25 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:366:16 ===---
+; ACAO STRUCTURE - Leitura de Ponteiro - (U)Int16 - Desvio 7
+push word [bp+10+2]
+pop es
+mov di, [bp+10]
+es mov ax, [di+7]
+push ax
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:366:28 ===---
+xor ax, ax
+mov bx, ax
+pop ax
+cmp ax, bx
+je ROTULO1055
+jmp ROTULO1056
+ROTULO1055:
+mov ax, 65535
+jmp ROTULO1057
+ROTULO1056:
+xor ax, ax
+ROTULO1057:
+cmp ax, 0
+jne ROTULO1053
+jmp ROTULO1054
+ROTULO1053:
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:367:17 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:367:32 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:367:20 ===---
+; ACAO STRUCTURE - Leitura de Ponteiro - (U)Int8 - Desvio 0
+xor ax, ax
+es mov al, [di+0]
+push ax
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:367:35 ===---
+mov ax, 8
+mov bx, ax
+pop ax
+cmp ax, bx
+je ROTULO1060
+jmp ROTULO1061
+ROTULO1060:
+mov ax, 65535
+jmp ROTULO1062
+ROTULO1061:
+xor ax, ax
+ROTULO1062:
+cmp ax, 0
+jne ROTULO1058
+jmp ROTULO1059
+ROTULO1058:
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:368:21 ===---
+; ACAO GRAVACAO - Gravacao em ponteiro
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:368:27 ===---
+; ACAO STRUCTURE - Leitura de Ponteiro - Ponteiro Byte - Desvio 10
+push word [bp+6+2]
+pop es
+mov di, [bp+6]
+es push word [di+10+2]
+es push word [di+10]
+pop di
+pop es
+push es
+pop word [bp+-4+2]
+mov [bp+-4], di
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:369:21 ===---
+; ACAO GRAVACAO - Grava em variavel
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:369:27 ===---
+; ACAO CHAMADA - Chama rotina
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:369:41 ===---
+; ACAO STRUCTURE - Leitura de Ponteiro - Ponteiro Byte - Desvio 10
+push word [bp+6+2]
+pop es
+mov di, [bp+6]
+es push word [di+10+2]
+es push word [di+10]
+pop di
+pop es
+push es
+push di
+push cs
+call _string_length
+add sp, 4
+mov [bp+-6], ax
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:370:21 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:370:28 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:370:24 ===---
+; ACAO LEITURA - Le variavel
+mov ax, [bp+-6]
+push ax
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:370:30 ===---
+xor ax, ax
+mov bx, ax
+pop ax
+cmp ax, bx
+ja ROTULO1065
+jmp ROTULO1066
+ROTULO1065:
+mov ax, 65535
+jmp ROTULO1067
+ROTULO1066:
+xor ax, ax
+ROTULO1067:
+cmp ax, 0
+jne ROTULO1063
+jmp ROTULO1064
+ROTULO1063:
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:371:26 ===---
+; ACAO GRAVACAO - Grava em variavel
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:371:37 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:371:39 ===---
+; ACAO LEITURA - Le variavel
+mov ax, [bp+-6]
+push ax
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:371:33 ===---
+; ACAO LEITURA - Le variavel
+mov ax, [bp+-4]
+pop bx
+add ax, bx
+mov [bp+-4], ax
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:372:25 ===---
+; ACAO GRAVACAO - Gravacao de numero em ponteiro
+push word [bp+-4+2]
+pop es
+mov di, [bp+-4]
+es mov byte [di+0], 0
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:373:25 ===---
+; ACAO CHAMADA - Chama rotina
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:373:40 ===---
+; ACAO LEITURA - Le ponteiro
+push word [bp+6+2]
+pop es
+mov di, [bp+6]
+push es
+push di
+push cs
+call _control_redraw
+add sp, 4
+ROTULO1064:
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:375:21 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:375:26 ===---
+xor ax, ax
+jmp ROTULO1050
+ROTULO1059:
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:377:17 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:377:40 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:377:33 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:377:21 ===---
+; ACAO STRUCTURE - Leitura de Ponteiro - (U)Int8 - Desvio 0
+push word [bp+10+2]
+pop es
+mov di, [bp+10]
+xor ax, ax
+es mov al, [di+0]
+push ax
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:377:36 ===---
+mov ax, 13
+mov bx, ax
+pop ax
+cmp ax, bx
+jne ROTULO1073
+jmp ROTULO1074
+ROTULO1073:
+mov ax, 65535
+jmp ROTULO1075
+ROTULO1074:
+xor ax, ax
+ROTULO1075:
+cmp ax, 0
+je ROTULO1071
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:377:61 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:377:49 ===---
+; ACAO STRUCTURE - Leitura de Ponteiro - (U)Int8 - Desvio 0
+xor ax, ax
+es mov al, [di+0]
+push ax
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:377:64 ===---
+mov ax, 10
+mov bx, ax
+pop ax
+cmp ax, bx
+jne ROTULO1076
+jmp ROTULO1077
+ROTULO1076:
+mov ax, 65535
+jmp ROTULO1078
+ROTULO1077:
+xor ax, ax
+ROTULO1078:
+cmp ax, 0
+je ROTULO1071
+ROTULO1070:
+mov ax, 65535
+jmp ROTULO1072
+ROTULO1071:
+xor ax, ax
+ROTULO1072:
+cmp ax, 0
+jne ROTULO1068
+jmp ROTULO1069
+ROTULO1068:
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:379:21 ===---
+; ACAO GRAVACAO - Grava em variavel
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:379:27 ===---
+; ACAO CHAMADA - Chama rotina
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:379:41 ===---
+; ACAO STRUCTURE - Leitura de Ponteiro - Ponteiro Byte - Desvio 10
+push word [bp+6+2]
+pop es
+mov di, [bp+6]
+es push word [di+10+2]
+es push word [di+10]
+pop di
+pop es
+push es
+push di
+push cs
+call _string_length
+add sp, 4
+mov [bp+-6], ax
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:380:21 ===---
+; ACAO GRAVACAO - Gravacao em ponteiro
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:380:27 ===---
+; ACAO STRUCTURE - Leitura de Ponteiro - Ponteiro Byte - Desvio 10
+push word [bp+6+2]
+pop es
+mov di, [bp+6]
+es push word [di+10+2]
+es push word [di+10]
+pop di
+pop es
+push es
+pop word [bp+-4+2]
+mov [bp+-4], di
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:381:21 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:381:28 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:381:24 ===---
+; ACAO LEITURA - Le ponteiro
+xor ax, ax
+es mov al, [di+0]
+push ax
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:381:35 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:381:37 ===---
+mov ax, 2
+push ax
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:381:31 ===---
+; ACAO LEITURA - Le variavel
+mov ax, [bp+-6]
+pop bx
+add ax, bx
+mov bx, ax
+pop ax
+cmp ax, bx
+jb ROTULO1081
+jmp ROTULO1082
+ROTULO1081:
+mov ax, 65535
+jmp ROTULO1083
+ROTULO1082:
+xor ax, ax
+ROTULO1083:
+cmp ax, 0
+jne ROTULO1079
+jmp ROTULO1080
+ROTULO1079:
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:381:45 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:381:50 ===---
+xor ax, ax
+jmp ROTULO1050
+ROTULO1080:
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:382:21 ===---
+; ACAO STRUCTURE - Aloca estrutura na pilha
+sub sp, 129
+push ss
+pop es
+mov di, sp
+push es
+pop word [bp+-10+2]
+mov [bp+-10], di
+es mov byte [di+0], 128
+es mov byte [di+1], 0
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:383:21 ===---
+; ACAO GRAVACAO - Gravacao em ponteiro
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:383:27 ===---
+; ACAO LEITURA - Le ponteiro
+push es
+pop word [bp+-4+2]
+mov [bp+-4], di
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:384:22 ===---
+; ACAO INC - Incrementa variavel
+inc word [bp+-4]
+inc di
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:385:21 ===---
+; ACAO GRAVACAO - Gravacao em ponteiro
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:385:27 ===---
+; ACAO STRUCTURE - Leitura de Ponteiro - (U)Int8 - Desvio 0
+push word [bp+10+2]
+pop es
+mov di, [bp+10]
+xor ax, ax
+es mov al, [di+0]
+push word [bp+-4+2]
+pop es
+mov di, [bp+-4]
+es mov [di+0], al
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:386:22 ===---
+; ACAO INC - Incrementa variavel
+inc word [bp+-4]
+inc di
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:387:21 ===---
+; ACAO GRAVACAO - Gravacao de numero em ponteiro
+push word [bp+-4+2]
+pop es
+mov di, [bp+-4]
+es mov byte [di+0], 0
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:388:21 ===---
+; ACAO CHAMADA - Chama rotina
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:388:46 ===---
+; ACAO LEITURA - Le ponteiro
+push word [bp+-10+2]
+pop es
+mov di, [bp+-10]
+push es
+push di
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:388:35 ===---
+; ACAO STRUCTURE - Leitura de Ponteiro - Ponteiro Byte - Desvio 10
+push word [bp+6+2]
+pop es
+mov di, [bp+6]
+es push word [di+10+2]
+es push word [di+10]
+pop di
+pop es
+push es
+push di
+push cs
+call _string_concat
+add sp, 8
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:389:21 ===---
+; ACAO CHAMADA - Chama rotina
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:389:36 ===---
+; ACAO LEITURA - Le ponteiro
+push word [bp+6+2]
+pop es
+mov di, [bp+6]
+push es
+push di
+push cs
+call _control_redraw
+add sp, 4
+ROTULO1069:
+ROTULO1054:
+jmp ROTULO1084
+ROTULO1052:
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:393:13 ===---
+; ACAO CHAMADA - Chama indiretamente usando Invoke
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:393:38 ===---
+; ACAO LEITURA - Le ponteiro
+push word [bp+10+2]
+pop es
+mov di, [bp+10]
+push es
+push di
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:393:13 ===---
+; ACAO LEITURA - Le ponteiro
+push word [bp+6+2]
+pop es
+mov di, [bp+6]
+push es
+push di
+es call far [di+47]
+add sp, 8
+ROTULO1084:
+ROTULO1050:
+mov sp, bp
+pop bp
+FIM_textbox_controlkeyboardinteracion:
+retf
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:397:9 ===---
+_textbox_controlpaint:
+push bp
+mov bp, sp
+; ARG: ctrl TAM: 4 POS: BP+6 
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:397:22 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:398:9 ===---
+; ACAO CHAMADA - Chama rotina
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:398:118 ===---
+; ACAO CHAMADA - Chama rotina
+push cs
+call _systemcolors_windowcolor
+push ax
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:398:84 ===---
+; ACAO CHAMADA - Chama rotina
+push cs
+call _systemcolors_windowbordercolor
+push ax
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:398:71 ===---
+; ACAO STRUCTURE - Leitura de Ponteiro - (U)Int16 - Desvio 88
+push word [bp+6+2]
+pop es
+mov di, [bp+6]
+es mov ax, [di+88]
+push ax
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:398:58 ===---
+; ACAO STRUCTURE - Leitura de Ponteiro - (U)Int16 - Desvio 86
+es mov ax, [di+86]
+push ax
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:398:45 ===---
+; ACAO STRUCTURE - Leitura de Ponteiro - (U)Int16 - Desvio 84
+es mov ax, [di+84]
+push ax
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:398:32 ===---
+; ACAO STRUCTURE - Leitura de Ponteiro - (U)Int16 - Desvio 82
+es mov ax, [di+82]
+push ax
+push cs
+call _graphics_drawrectangle
+add sp, 12
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:399:9 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:399:26 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:399:12 ===---
+; ACAO STRUCTURE - Leitura de Ponteiro - (U)Int8 - Desvio 18
+push word [bp+6+2]
+pop es
+mov di, [bp+6]
+xor ax, ax
+es mov al, [di+18]
+push ax
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:399:29 ===---
+xor ax, ax
+mov bx, ax
+pop ax
+cmp ax, bx
+jne ROTULO1088
+jmp ROTULO1089
+ROTULO1088:
+mov ax, 65535
+jmp ROTULO1090
+ROTULO1089:
+xor ax, ax
+ROTULO1090:
+cmp ax, 0
+jne ROTULO1086
+jmp ROTULO1087
+ROTULO1086:
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:399:36 ===---
+; ACAO CHAMADA - Chama rotina
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:399:122 ===---
+; ACAO CHAMADA - Chama rotina
+push cs
+call _systemcolors_windowbordercolor
+push ax
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:399:117 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:399:119 ===---
+mov ax, 2
+push ax
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:399:105 ===---
+; ACAO STRUCTURE - Leitura de Ponteiro - (U)Int16 - Desvio 88
+push word [bp+6+2]
+pop es
+mov di, [bp+6]
+es mov ax, [di+88]
+pop bx
+sub ax, bx
+push ax
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:399:100 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:399:102 ===---
+mov ax, 4
+push ax
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:399:88 ===---
+; ACAO STRUCTURE - Leitura de Ponteiro - (U)Int16 - Desvio 86
+es mov ax, [di+86]
+pop bx
+sub ax, bx
+push ax
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:399:83 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:399:85 ===---
+mov ax, 2
+push ax
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:399:71 ===---
+; ACAO STRUCTURE - Leitura de Ponteiro - (U)Int16 - Desvio 88
+es mov ax, [di+88]
+pop bx
+sub ax, bx
+push ax
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:399:66 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:399:68 ===---
+mov ax, 4
+push ax
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:399:54 ===---
+; ACAO STRUCTURE - Leitura de Ponteiro - (U)Int16 - Desvio 82
+es mov ax, [di+82]
+pop bx
+add ax, bx
+push ax
+push cs
+call _graphics_drawline
+add sp, 10
+ROTULO1087:
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:400:9 ===---
+; ACAO CHAMADA - Chama rotina
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:400:143 ===---
+mov ax, 1
+push ax
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:400:117 ===---
+; ACAO CHAMADA - Chama rotina
+push cs
+call _systemcolors_textcolor
+push ax
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:400:112 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:400:114 ===---
+mov ax, 4
+push ax
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:400:100 ===---
+; ACAO STRUCTURE - Leitura de Ponteiro - (U)Int16 - Desvio 88
+push word [bp+6+2]
+pop es
+mov di, [bp+6]
+es mov ax, [di+88]
+pop bx
+sub ax, bx
+push ax
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:400:95 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:400:97 ===---
+mov ax, 4
+push ax
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:400:83 ===---
+; ACAO STRUCTURE - Leitura de Ponteiro - (U)Int16 - Desvio 86
+es mov ax, [di+86]
+pop bx
+sub ax, bx
+push ax
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:400:78 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:400:80 ===---
+mov ax, 4
+push ax
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:400:66 ===---
+; ACAO STRUCTURE - Leitura de Ponteiro - (U)Int16 - Desvio 84
+es mov ax, [di+84]
+pop bx
+add ax, bx
+push ax
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:400:61 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:400:63 ===---
+mov ax, 4
+push ax
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:400:49 ===---
+; ACAO STRUCTURE - Leitura de Ponteiro - (U)Int16 - Desvio 82
+es mov ax, [di+82]
+pop bx
+add ax, bx
+push ax
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:400:38 ===---
+; ACAO STRUCTURE - Leitura de Ponteiro - Ponteiro Byte - Desvio 10
+es push word [di+10+2]
+es push word [di+10]
+pop di
+pop es
+push es
+push di
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.Forms.hcb:400:27 ===---
+; ACAO STRUCTURE - Leitura de Ponteiro - Ponteiro Byte - Desvio 19
+push word [bp+6+2]
+pop es
+mov di, [bp+6]
+es push word [di+19+2]
+es push word [di+19]
+pop di
+pop es
+push es
+push di
+push cs
+call _graphics_drawtext
+add sp, 20
+ROTULO1085:
+mov sp, bp
+pop bp
+FIM_textbox_controlpaint:
+retf
+; MODULO FIM: textbox
+;     ---=== teste.hcb:7:8 ===---
+; MODULO: info
+_info:
+db 9
+db 116,101,115,116,101,46,104,99,98
+db 0
+;     ---=== teste.hcb:8:9 ===---
+_info_infoform:
+times 100 db 0
+;     ---=== teste.hcb:9:9 ===---
+_info_info1label:
+times 100 db 0
+;     ---=== teste.hcb:10:9 ===---
+_info_info2label:
+times 100 db 0
+;     ---=== teste.hcb:11:9 ===---
+_info_info3label:
+times 100 db 0
+;     ---=== teste.hcb:13:16 ===---
+_info_exibe:
+;     ---=== teste.hcb:14:9 ===---
+; ACAO CHAMADA - Chama rotina
+;     ---=== teste.hcb:14:25 ===---
+; ACAO LEITURA - Le ponteiro
+cs push word [_info_infoform+2]
+pop es
+cs mov di, [_info_infoform]
+push es
+push di
+push cs
+call _form_initialize
+add sp, 4
+;     ---=== teste.hcb:15:9 ===---
+; ACAO STRUCTURE - Gravacao de Ponteiro- Prepara
+;     ---=== teste.hcb:15:25 ===---
+mov ax, 300
+cs push word [_info_infoform+2]
+pop es
+cs mov di, [_info_infoform]
+es mov [di+2], ax
+; ACAO STRUCTURE - Gravacao de Ponteiro - Fim
+;     ---=== teste.hcb:16:9 ===---
+; ACAO STRUCTURE - Gravacao de Ponteiro- Prepara
+;     ---=== teste.hcb:16:24 ===---
+mov ax, 30
+es mov [di+0], ax
+; ACAO STRUCTURE - Gravacao de Ponteiro - Fim
+;     ---=== teste.hcb:17:9 ===---
+; ACAO STRUCTURE - Gravacao de Ponteiro- Prepara
+;     ---=== teste.hcb:17:26 ===---
+mov ax, 300
+es mov [di+6], ax
+; ACAO STRUCTURE - Gravacao de Ponteiro - Fim
+;     ---=== teste.hcb:18:9 ===---
+; ACAO STRUCTURE - Gravacao de Ponteiro- Prepara
+;     ---=== teste.hcb:18:27 ===---
+mov ax, 110
+es mov [di+4], ax
+; ACAO STRUCTURE - Gravacao de Ponteiro - Fim
+;     ---=== teste.hcb:19:9 ===---
+; ACAO STRUCTURE - Gravacao de Ponteiro- Prepara
+;     ---=== teste.hcb:19:25 ===---
+push cs
+pop es
+mov di, ROTULO1093
+jmp ROTULO1092
+ROTULO1093:
+db 11
+db 73,110,102,111,114,109,97,99,111,101,115
+times 1 db 0
+ROTULO1092:
+push es
+push di
+cs push word [_info_infoform+2]
+pop es
+cs mov di, [_info_infoform]
+es pop word [di+10]
+es pop word [di+10+2]
+; ACAO STRUCTURE - Gravacao de Ponteiro - Fim
+;     ---=== teste.hcb:21:9 ===---
+; ACAO CHAMADA - Chama rotina
+;     ---=== teste.hcb:21:26 ===---
+; ACAO LEITURA - Le ponteiro
+cs push word [_info_info1label+2]
+pop es
+cs mov di, [_info_info1label]
+push es
+push di
+push cs
+call _label_initialize
+add sp, 4
+;     ---=== teste.hcb:22:9 ===---
+; ACAO STRUCTURE - Gravacao de Ponteiro- Prepara
+;     ---=== teste.hcb:22:26 ===---
+mov ax, 5
+cs push word [_info_info1label+2]
+pop es
+cs mov di, [_info_info1label]
+es mov [di+0], ax
+; ACAO STRUCTURE - Gravacao de Ponteiro - Fim
+;     ---=== teste.hcb:23:9 ===---
+; ACAO STRUCTURE - Gravacao de Ponteiro- Prepara
+;     ---=== teste.hcb:23:27 ===---
+mov ax, 5
+es mov [di+2], ax
+; ACAO STRUCTURE - Gravacao de Ponteiro - Fim
+;     ---=== teste.hcb:24:9 ===---
+; ACAO STRUCTURE - Gravacao de Ponteiro- Prepara
+;     ---=== teste.hcb:24:28 ===---
+mov ax, 290
+es mov [di+6], ax
+; ACAO STRUCTURE - Gravacao de Ponteiro - Fim
+;     ---=== teste.hcb:25:9 ===---
+; ACAO STRUCTURE - Gravacao de Ponteiro- Prepara
+;     ---=== teste.hcb:25:29 ===---
+mov ax, 15
+es mov [di+4], ax
+; ACAO STRUCTURE - Gravacao de Ponteiro - Fim
+;     ---=== teste.hcb:26:9 ===---
+; ACAO STRUCTURE - Gravacao de Ponteiro- Prepara
+;     ---=== teste.hcb:26:27 ===---
+push cs
+pop es
+mov di, ROTULO1095
+jmp ROTULO1094
+ROTULO1095:
+db 33
+db 45,32,65,112,101,110,97,115,32,115,117,112,111,114,116,97,32,108,101,116,114,97,115,32,101,32,110,117,109,101,114,111,115
+times 1 db 0
+ROTULO1094:
+push es
+push di
+cs push word [_info_info1label+2]
+pop es
+cs mov di, [_info_info1label]
+es pop word [di+10]
+es pop word [di+10+2]
+; ACAO STRUCTURE - Gravacao de Ponteiro - Fim
+;     ---=== teste.hcb:27:9 ===---
+; ACAO STRUCTURE - Gravacao de Ponteiro- Prepara
+;     ---=== teste.hcb:27:30 ===---
+mov ax, 1
+es mov [di+14], al
+; ACAO STRUCTURE - Gravacao de Ponteiro - Fim
+;     ---=== teste.hcb:28:9 ===---
+; ACAO CHAMADA - Chama rotina
+;     ---=== teste.hcb:28:31 ===---
+; ACAO LEITURA - Le ponteiro
+push es
+push di
+;     ---=== teste.hcb:28:21 ===---
+; ACAO LEITURA - Le ponteiro
+cs push word [_info_infoform+2]
+pop es
+cs mov di, [_info_infoform]
+push es
+push di
+push cs
+call _control_add
+add sp, 8
+;     ---=== teste.hcb:30:9 ===---
+; ACAO CHAMADA - Chama rotina
+;     ---=== teste.hcb:30:26 ===---
+; ACAO LEITURA - Le ponteiro
+cs push word [_info_info2label+2]
+pop es
+cs mov di, [_info_info2label]
+push es
+push di
+push cs
+call _label_initialize
+add sp, 4
+;     ---=== teste.hcb:31:9 ===---
+; ACAO STRUCTURE - Gravacao de Ponteiro- Prepara
+;     ---=== teste.hcb:31:26 ===---
+mov ax, 25
+cs push word [_info_info2label+2]
+pop es
+cs mov di, [_info_info2label]
+es mov [di+0], ax
+; ACAO STRUCTURE - Gravacao de Ponteiro - Fim
+;     ---=== teste.hcb:32:9 ===---
+; ACAO STRUCTURE - Gravacao de Ponteiro- Prepara
+;     ---=== teste.hcb:32:27 ===---
+mov ax, 5
+es mov [di+2], ax
+; ACAO STRUCTURE - Gravacao de Ponteiro - Fim
+;     ---=== teste.hcb:33:9 ===---
+; ACAO STRUCTURE - Gravacao de Ponteiro- Prepara
+;     ---=== teste.hcb:33:28 ===---
+mov ax, 290
+es mov [di+6], ax
+; ACAO STRUCTURE - Gravacao de Ponteiro - Fim
+;     ---=== teste.hcb:34:9 ===---
+; ACAO STRUCTURE - Gravacao de Ponteiro- Prepara
+;     ---=== teste.hcb:34:29 ===---
+mov ax, 15
+es mov [di+4], ax
+; ACAO STRUCTURE - Gravacao de Ponteiro - Fim
+;     ---=== teste.hcb:35:9 ===---
+; ACAO STRUCTURE - Gravacao de Ponteiro- Prepara
+;     ---=== teste.hcb:35:27 ===---
+push cs
+pop es
+mov di, ROTULO1097
+jmp ROTULO1096
+ROTULO1097:
+db 24
+db 45,32,67,97,109,112,111,32,100,101,32,116,101,120,116,111,32,115,105,109,112,108,101,115
+times 1 db 0
+ROTULO1096:
+push es
+push di
+cs push word [_info_info2label+2]
+pop es
+cs mov di, [_info_info2label]
+es pop word [di+10]
+es pop word [di+10+2]
+; ACAO STRUCTURE - Gravacao de Ponteiro - Fim
+;     ---=== teste.hcb:36:9 ===---
+; ACAO STRUCTURE - Gravacao de Ponteiro- Prepara
+;     ---=== teste.hcb:36:30 ===---
+mov ax, 1
+es mov [di+14], al
+; ACAO STRUCTURE - Gravacao de Ponteiro - Fim
+;     ---=== teste.hcb:37:9 ===---
+; ACAO CHAMADA - Chama rotina
+;     ---=== teste.hcb:37:31 ===---
+; ACAO LEITURA - Le ponteiro
+push es
+push di
+;     ---=== teste.hcb:37:21 ===---
+; ACAO LEITURA - Le ponteiro
+cs push word [_info_infoform+2]
+pop es
+cs mov di, [_info_infoform]
+push es
+push di
+push cs
+call _control_add
+add sp, 8
+;     ---=== teste.hcb:39:9 ===---
+; ACAO CHAMADA - Chama rotina
+;     ---=== teste.hcb:39:26 ===---
+; ACAO LEITURA - Le ponteiro
+cs push word [_info_info3label+2]
+pop es
+cs mov di, [_info_info3label]
+push es
+push di
+push cs
+call _label_initialize
+add sp, 4
+;     ---=== teste.hcb:40:9 ===---
+; ACAO STRUCTURE - Gravacao de Ponteiro- Prepara
+;     ---=== teste.hcb:40:26 ===---
+mov ax, 45
+cs push word [_info_info3label+2]
+pop es
+cs mov di, [_info_info3label]
+es mov [di+0], ax
+; ACAO STRUCTURE - Gravacao de Ponteiro - Fim
+;     ---=== teste.hcb:41:9 ===---
+; ACAO STRUCTURE - Gravacao de Ponteiro- Prepara
+;     ---=== teste.hcb:41:27 ===---
+mov ax, 5
+es mov [di+2], ax
+; ACAO STRUCTURE - Gravacao de Ponteiro - Fim
+;     ---=== teste.hcb:42:9 ===---
+; ACAO STRUCTURE - Gravacao de Ponteiro- Prepara
+;     ---=== teste.hcb:42:28 ===---
+mov ax, 290
+es mov [di+6], ax
+; ACAO STRUCTURE - Gravacao de Ponteiro - Fim
+;     ---=== teste.hcb:43:9 ===---
+; ACAO STRUCTURE - Gravacao de Ponteiro- Prepara
+;     ---=== teste.hcb:43:29 ===---
+mov ax, 15
+es mov [di+4], ax
+; ACAO STRUCTURE - Gravacao de Ponteiro - Fim
+;     ---=== teste.hcb:44:9 ===---
+; ACAO STRUCTURE - Gravacao de Ponteiro- Prepara
+;     ---=== teste.hcb:44:27 ===---
+push cs
+pop es
+mov di, ROTULO1099
+jmp ROTULO1098
+ROTULO1099:
+db 35
+db 45,32,78,97,118,101,103,97,99,97,111,32,97,112,101,110,97,115,32,117,115,97,110,100,111,32,116,101,99,108,97,32,84,65,66
+times 1 db 0
+ROTULO1098:
+push es
+push di
+cs push word [_info_info3label+2]
+pop es
+cs mov di, [_info_info3label]
+es pop word [di+10]
+es pop word [di+10+2]
+; ACAO STRUCTURE - Gravacao de Ponteiro - Fim
+;     ---=== teste.hcb:45:9 ===---
+; ACAO STRUCTURE - Gravacao de Ponteiro- Prepara
+;     ---=== teste.hcb:45:30 ===---
+mov ax, 1
+es mov [di+14], al
+; ACAO STRUCTURE - Gravacao de Ponteiro - Fim
+;     ---=== teste.hcb:46:9 ===---
+; ACAO CHAMADA - Chama rotina
+;     ---=== teste.hcb:46:31 ===---
+; ACAO LEITURA - Le ponteiro
+push es
+push di
+;     ---=== teste.hcb:46:21 ===---
+; ACAO LEITURA - Le ponteiro
+cs push word [_info_infoform+2]
+pop es
+cs mov di, [_info_infoform]
+push es
+push di
+push cs
+call _control_add
+add sp, 8
+;     ---=== teste.hcb:48:9 ===---
+; ACAO CHAMADA - Chama rotina
+;     ---=== teste.hcb:48:22 ===---
+; ACAO LEITURA - Le ponteiro
+cs push word [_info_infoform+2]
+pop es
+cs mov di, [_info_infoform]
+push es
+push di
+push cs
+call _control_show
+add sp, 4
+ROTULO1091:
+FIM_info_exibe:
+retf
+; MODULO FIM: info
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.hcb:310:8 ===---
 ; MODULO: console
 _console:
@@ -14124,8 +15727,8 @@ _console_avail:
 ; ACAO CHAMADA - Chama rotina
 push cs
 call _os_consoleavail
-jmp ROTULO1013
-ROTULO1013:
+jmp ROTULO1100
+ROTULO1100:
 FIM_console_avail:
 retf
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.hcb:315:21 ===---
@@ -14135,8 +15738,8 @@ _console_readchar:
 ; ACAO CHAMADA - Chama rotina
 push cs
 call _os_consolereadchar
-jmp ROTULO1014
-ROTULO1014:
+jmp ROTULO1101
+ROTULO1101:
 FIM_console_readchar:
 retf
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.hcb:319:16 ===---
@@ -14208,7 +15811,7 @@ call _file_readraw
 add sp, 10
 mov [bp+-2], ax
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.hcb:327:9 ===---
-ROTULO1016:
+ROTULO1103:
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.hcb:327:37 ===---
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.hcb:327:23 ===---
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.hcb:327:19 ===---
@@ -14225,14 +15828,14 @@ xor ax, ax
 mov bx, ax
 pop ax
 cmp ax, bx
-ja ROTULO1025
-jmp ROTULO1026
-ROTULO1025:
+ja ROTULO1112
+jmp ROTULO1113
+ROTULO1112:
 mov ax, 65535
-jmp ROTULO1027
-ROTULO1026:
+jmp ROTULO1114
+ROTULO1113:
 xor ax, ax
-ROTULO1027:
+ROTULO1114:
 push ax
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.hcb:327:31 ===---
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.hcb:327:27 ===---
@@ -14245,14 +15848,14 @@ mov ax, 13
 mov bx, ax
 pop ax
 cmp ax, bx
-jne ROTULO1028
-jmp ROTULO1029
-ROTULO1028:
+jne ROTULO1115
+jmp ROTULO1116
+ROTULO1115:
 mov ax, 65535
-jmp ROTULO1030
-ROTULO1029:
+jmp ROTULO1117
+ROTULO1116:
 xor ax, ax
-ROTULO1030:
+ROTULO1117:
 mov bx, ax
 pop ax
 and ax, bx
@@ -14268,34 +15871,34 @@ mov ax, 10
 mov bx, ax
 pop ax
 cmp ax, bx
-jne ROTULO1031
-jmp ROTULO1032
-ROTULO1031:
+jne ROTULO1118
+jmp ROTULO1119
+ROTULO1118:
 mov ax, 65535
-jmp ROTULO1033
-ROTULO1032:
+jmp ROTULO1120
+ROTULO1119:
 xor ax, ax
-ROTULO1033:
+ROTULO1120:
 mov bx, ax
 pop ax
 and ax, bx
 cmp ax, 0
-jne ROTULO1017
-jmp ROTULO1018
-ROTULO1017:
+jne ROTULO1104
+jmp ROTULO1105
+ROTULO1104:
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.hcb:328:14 ===---
 ; ACAO INC - Incrementa variavel
 inc word [bp+6]
 inc di
-jmp ROTULO1016
-ROTULO1018:
+jmp ROTULO1103
+ROTULO1105:
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.hcb:330:9 ===---
 ; ACAO GRAVACAO - Gravacao de numero em ponteiro
 push word [bp+6+2]
 pop es
 mov di, [bp+6]
 es mov byte [di+0], 0
-ROTULO1015:
+ROTULO1102:
 mov sp, bp
 pop bp
 FIM_console_readline:
@@ -14316,7 +15919,7 @@ push ax
 push cs
 call _os_consolewritechar
 add sp, 2
-ROTULO1034:
+ROTULO1121:
 mov sp, bp
 pop bp
 FIM_console_writechar:
@@ -14331,7 +15934,7 @@ mov bp, sp
 ; ACAO INC - Incrementa variavel
 inc word [bp+6]
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.hcb:340:9 ===---
-ROTULO1036:
+ROTULO1123:
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.hcb:340:19 ===---
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.hcb:340:15 ===---
 ; ACAO LEITURA - Le ponteiro
@@ -14346,18 +15949,18 @@ xor ax, ax
 mov bx, ax
 pop ax
 cmp ax, bx
-ja ROTULO1039
-jmp ROTULO1040
-ROTULO1039:
+ja ROTULO1126
+jmp ROTULO1127
+ROTULO1126:
 mov ax, 65535
-jmp ROTULO1041
-ROTULO1040:
+jmp ROTULO1128
+ROTULO1127:
 xor ax, ax
-ROTULO1041:
+ROTULO1128:
 cmp ax, 0
-jne ROTULO1037
-jmp ROTULO1038
-ROTULO1037:
+jne ROTULO1124
+jmp ROTULO1125
+ROTULO1124:
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.hcb:341:13 ===---
 ; ACAO CHAMADA - Chama rotina
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.hcb:341:23 ===---
@@ -14372,9 +15975,9 @@ add sp, 2
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.hcb:342:14 ===---
 ; ACAO INC - Incrementa variavel
 inc word [bp+6]
-jmp ROTULO1036
-ROTULO1038:
-ROTULO1035:
+jmp ROTULO1123
+ROTULO1125:
+ROTULO1122:
 mov sp, bp
 pop bp
 FIM_console_write:
@@ -14415,7 +16018,7 @@ push ax
 push cs
 call _console_writechar
 add sp, 2
-ROTULO1042:
+ROTULO1129:
 mov sp, bp
 pop bp
 FIM_console_writeline:
@@ -14443,7 +16046,7 @@ push ax
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.hcb:355:27 ===---
 mov ax, 10
 cmp ax, 0
-jne ROTULO1044
+jne ROTULO1131
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.hcb:355:27 ===---
 mov ax, _console
 mov [bp+-8], ax
@@ -14451,7 +16054,7 @@ mov ax, 355
 mov [bp+-10], ax
 mov ax, 1
 cs jmp word [_os_trycode]
-ROTULO1044:
+ROTULO1131:
 mov bx, ax
 pop ax
 xor dx, dx
@@ -14468,7 +16071,7 @@ push ax
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.hcb:356:26 ===---
 mov ax, 10
 cmp ax, 0
-jne ROTULO1045
+jne ROTULO1132
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.hcb:356:26 ===---
 mov ax, _console
 mov [bp+-8], ax
@@ -14476,7 +16079,7 @@ mov ax, 356
 mov [bp+-10], ax
 mov ax, 1
 cs jmp word [_os_trycode]
-ROTULO1045:
+ROTULO1132:
 mov bx, ax
 pop ax
 xor dx, dx
@@ -14493,18 +16096,18 @@ xor ax, ax
 mov bx, ax
 pop ax
 cmp ax, bx
-ja ROTULO1048
-jmp ROTULO1049
-ROTULO1048:
+ja ROTULO1135
+jmp ROTULO1136
+ROTULO1135:
 mov ax, 65535
-jmp ROTULO1050
-ROTULO1049:
+jmp ROTULO1137
+ROTULO1136:
 xor ax, ax
-ROTULO1050:
+ROTULO1137:
 cmp ax, 0
-jne ROTULO1046
-jmp ROTULO1047
-ROTULO1046:
+jne ROTULO1133
+jmp ROTULO1134
+ROTULO1133:
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.hcb:357:26 ===---
 ; ACAO CHAMADA - Chama rotina
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.hcb:357:38 ===---
@@ -14514,7 +16117,7 @@ push ax
 push cs
 call _console_writeuint16
 add sp, 2
-ROTULO1047:
+ROTULO1134:
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.hcb:358:9 ===---
 ; ACAO CHAMADA - Chama rotina
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.hcb:358:22 ===---
@@ -14531,7 +16134,7 @@ push ax
 push cs
 call _console_writechar
 add sp, 2
-ROTULO1043:
+ROTULO1130:
 mov sp, bp
 pop bp
 FIM_console_writeuint16:
@@ -14553,18 +16156,18 @@ xor ax, ax
 mov bx, ax
 pop ax
 cmp ax, bx
-jl ROTULO1054
-jmp ROTULO1055
-ROTULO1054:
+jl ROTULO1141
+jmp ROTULO1142
+ROTULO1141:
 mov ax, 65535
-jmp ROTULO1056
-ROTULO1055:
+jmp ROTULO1143
+ROTULO1142:
 xor ax, ax
-ROTULO1056:
+ROTULO1143:
 cmp ax, 0
-jne ROTULO1052
-jmp ROTULO1053
-ROTULO1052:
+jne ROTULO1139
+jmp ROTULO1140
+ROTULO1139:
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.hcb:363:17 ===---
 ; ACAO GRAVACAO - Grava em variavel
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.hcb:363:23 ===---
@@ -14577,7 +16180,7 @@ xor ax, ax
 pop bx
 sub ax, bx
 mov [bp+6], ax
-ROTULO1053:
+ROTULO1140:
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.hcb:365:9 ===---
 ; ACAO CHAMADA - Chama rotina
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.hcb:365:21 ===---
@@ -14587,7 +16190,7 @@ push ax
 push cs
 call _console_writeuint16
 add sp, 2
-ROTULO1051:
+ROTULO1138:
 mov sp, bp
 pop bp
 FIM_console_writeint16:
@@ -14607,7 +16210,7 @@ push ax
 push cs
 call _console_writeuint16
 add sp, 2
-ROTULO1057:
+ROTULO1144:
 mov sp, bp
 pop bp
 FIM_console_writeuint8:
@@ -14627,19 +16230,19 @@ push ax
 push cs
 call _console_writeint16
 add sp, 2
-ROTULO1058:
+ROTULO1145:
 mov sp, bp
 pop bp
 FIM_console_writeint8:
 retf
 ; MODULO FIM: console
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:166:8 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:168:8 ===---
 ; MODULO: file
 _file:
 db 13
 db 83,121,115,116,101,109,46,79,83,46,104,99,98
 db 0
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:167:21 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:169:21 ===---
 _file_open:
 push bp
 mov bp, sp
@@ -14649,48 +16252,48 @@ call _os_stackcheck
 ; ARG: stream TAM: 4 POS: BP+6 
 ; ARG: filename TAM: 4 POS: BP+10 
 ; ARG: id TAM: 2 POS: BP--2 
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:167:26 ===---
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:167:44 ===---
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:168:13 ===---
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:169:9 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:169:26 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:169:44 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:170:13 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:171:9 ===---
 ; ACAO GRAVACAO - Grava em variavel
 mov word [bp+-2], 0
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:170:13 ===---
-mov ax, 0x3d02
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:171:13 ===---
-push ds
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:172:13 ===---
-push word [bp+12]
+mov ax, 0x3d02
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:173:13 ===---
-pop ds
+push ds
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:174:13 ===---
-mov dx, [bp+10]
+push word [bp+12]
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:175:13 ===---
-inc dx
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:176:13 ===---
-int 0x21
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:177:13 ===---
-pushf
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:178:13 ===---
-mov [bp-2], ax
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:179:13 ===---
-popf
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:180:13 ===---
 pop ds
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:176:13 ===---
+mov dx, [bp+10]
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:177:13 ===---
+inc dx
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:178:13 ===---
+int 0x21
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:179:13 ===---
+pushf
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:180:13 ===---
+mov [bp-2], ax
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:181:13 ===---
+popf
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:182:13 ===---
+pop ds
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:183:13 ===---
 jnc .fim
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:182:15 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:184:15 ===---
 mov ax, _file
 mov [bp+-8], ax
-mov ax, 182
+mov ax, 184
 mov [bp+-10], ax
 mov ax, 5
 cs jmp word [_os_trycode]
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:183:13 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:185:13 ===---
 .fim:
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:184:9 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:186:9 ===---
 ; ACAO STRUCTURE - Gravacao de Ponteiro- Prepara
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:184:21 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:186:21 ===---
 ; ACAO LEITURA - Le variavel
 mov ax, [bp+-2]
 push word [bp+6+2]
@@ -14698,9 +16301,9 @@ pop es
 mov di, [bp+6]
 es mov [di+0], ax
 ; ACAO STRUCTURE - Gravacao de Ponteiro - Fim
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:185:9 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:187:9 ===---
 ; ACAO STRUCTURE - Gravacao de Ponteiro- Prepara
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:185:23 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:187:23 ===---
 push cs
 pop es
 mov di, _file_read
@@ -14712,9 +16315,9 @@ mov di, [bp+6]
 es pop word [di+6]
 es pop word [di+6+2]
 ; ACAO STRUCTURE - Gravacao de Ponteiro - Fim
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:186:9 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:188:9 ===---
 ; ACAO STRUCTURE - Gravacao de Ponteiro- Prepara
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:186:26 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:188:26 ===---
 push cs
 pop es
 mov di, _file_readraw
@@ -14726,9 +16329,9 @@ mov di, [bp+6]
 es pop word [di+2]
 es pop word [di+2+2]
 ; ACAO STRUCTURE - Gravacao de Ponteiro - Fim
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:187:9 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:189:9 ===---
 ; ACAO STRUCTURE - Gravacao de Ponteiro- Prepara
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:187:24 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:189:24 ===---
 push cs
 pop es
 mov di, _file_write
@@ -14740,9 +16343,9 @@ mov di, [bp+6]
 es pop word [di+14]
 es pop word [di+14+2]
 ; ACAO STRUCTURE - Gravacao de Ponteiro - Fim
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:188:9 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:190:9 ===---
 ; ACAO STRUCTURE - Gravacao de Ponteiro- Prepara
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:188:27 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:190:27 ===---
 push cs
 pop es
 mov di, _file_writeraw
@@ -14754,9 +16357,9 @@ mov di, [bp+6]
 es pop word [di+10]
 es pop word [di+10+2]
 ; ACAO STRUCTURE - Gravacao de Ponteiro - Fim
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:189:9 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:191:9 ===---
 ; ACAO STRUCTURE - Gravacao de Ponteiro- Prepara
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:189:24 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:191:24 ===---
 push cs
 pop es
 mov di, _file_close
@@ -14768,9 +16371,9 @@ mov di, [bp+6]
 es pop word [di+18]
 es pop word [di+18+2]
 ; ACAO STRUCTURE - Gravacao de Ponteiro - Fim
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:190:9 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:192:9 ===---
 ; ACAO STRUCTURE - Gravacao de Ponteiro- Prepara
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:190:30 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:192:30 ===---
 push cs
 pop es
 mov di, _file_seekcurrent
@@ -14782,9 +16385,9 @@ mov di, [bp+6]
 es pop word [di+22]
 es pop word [di+22+2]
 ; ACAO STRUCTURE - Gravacao de Ponteiro - Fim
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:191:9 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:193:9 ===---
 ; ACAO STRUCTURE - Gravacao de Ponteiro- Prepara
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:191:26 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:193:26 ===---
 push cs
 pop es
 mov di, _file_seekend
@@ -14796,9 +16399,9 @@ mov di, [bp+6]
 es pop word [di+30]
 es pop word [di+30+2]
 ; ACAO STRUCTURE - Gravacao de Ponteiro - Fim
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:192:9 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:194:9 ===---
 ; ACAO STRUCTURE - Gravacao de Ponteiro- Prepara
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:192:28 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:194:28 ===---
 push cs
 pop es
 mov di, _file_seekstart
@@ -14810,16 +16413,16 @@ mov di, [bp+6]
 es pop word [di+26]
 es pop word [di+26+2]
 ; ACAO STRUCTURE - Gravacao de Ponteiro - Fim
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:193:9 ===---
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:193:16 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:195:9 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:195:16 ===---
 mov ax, 1
-jmp ROTULO1059
-ROTULO1059:
+jmp ROTULO1146
+ROTULO1146:
 mov sp, bp
 pop bp
 FIM_file_open:
 retf
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:196:21 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:198:21 ===---
 _file_create:
 push bp
 mov bp, sp
@@ -14829,50 +16432,50 @@ call _os_stackcheck
 ; ARG: stream TAM: 4 POS: BP+6 
 ; ARG: filename TAM: 4 POS: BP+10 
 ; ARG: id TAM: 2 POS: BP--2 
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:196:28 ===---
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:196:46 ===---
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:197:13 ===---
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:198:9 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:198:28 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:198:46 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:199:13 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:200:9 ===---
 ; ACAO GRAVACAO - Grava em variavel
 mov word [bp+-2], 0
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:199:13 ===---
-mov ax, 0x3c00
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:200:13 ===---
-push ds
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:201:13 ===---
-push word [bp+12]
+mov ax, 0x3c00
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:202:13 ===---
-pop ds
+push ds
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:203:13 ===---
-xor cx, cx
+push word [bp+12]
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:204:13 ===---
-mov dx, [bp+10]
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:205:13 ===---
-inc dx
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:206:13 ===---
-int 0x21
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:207:13 ===---
-pushf
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:208:13 ===---
-mov [bp-2], ax
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:209:13 ===---
-popf
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:210:13 ===---
 pop ds
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:205:13 ===---
+xor cx, cx
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:206:13 ===---
+mov dx, [bp+10]
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:207:13 ===---
+inc dx
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:208:13 ===---
+int 0x21
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:209:13 ===---
+pushf
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:210:13 ===---
+mov [bp-2], ax
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:211:13 ===---
+popf
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:212:13 ===---
+pop ds
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:213:13 ===---
 jnc .fim
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:212:15 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:214:15 ===---
 mov ax, _file
 mov [bp+-8], ax
-mov ax, 212
+mov ax, 214
 mov [bp+-10], ax
 mov ax, 13
 cs jmp word [_os_trycode]
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:213:13 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:215:13 ===---
 .fim:
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:214:9 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:216:9 ===---
 ; ACAO STRUCTURE - Gravacao de Ponteiro- Prepara
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:214:21 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:216:21 ===---
 ; ACAO LEITURA - Le variavel
 mov ax, [bp+-2]
 push word [bp+6+2]
@@ -14880,9 +16483,9 @@ pop es
 mov di, [bp+6]
 es mov [di+0], ax
 ; ACAO STRUCTURE - Gravacao de Ponteiro - Fim
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:215:9 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:217:9 ===---
 ; ACAO STRUCTURE - Gravacao de Ponteiro- Prepara
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:215:23 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:217:23 ===---
 push cs
 pop es
 mov di, _file_read
@@ -14894,9 +16497,9 @@ mov di, [bp+6]
 es pop word [di+6]
 es pop word [di+6+2]
 ; ACAO STRUCTURE - Gravacao de Ponteiro - Fim
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:216:9 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:218:9 ===---
 ; ACAO STRUCTURE - Gravacao de Ponteiro- Prepara
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:216:26 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:218:26 ===---
 push cs
 pop es
 mov di, _file_readraw
@@ -14908,9 +16511,9 @@ mov di, [bp+6]
 es pop word [di+2]
 es pop word [di+2+2]
 ; ACAO STRUCTURE - Gravacao de Ponteiro - Fim
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:217:9 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:219:9 ===---
 ; ACAO STRUCTURE - Gravacao de Ponteiro- Prepara
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:217:24 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:219:24 ===---
 push cs
 pop es
 mov di, _file_write
@@ -14922,9 +16525,9 @@ mov di, [bp+6]
 es pop word [di+14]
 es pop word [di+14+2]
 ; ACAO STRUCTURE - Gravacao de Ponteiro - Fim
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:218:9 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:220:9 ===---
 ; ACAO STRUCTURE - Gravacao de Ponteiro- Prepara
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:218:27 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:220:27 ===---
 push cs
 pop es
 mov di, _file_writeraw
@@ -14936,9 +16539,9 @@ mov di, [bp+6]
 es pop word [di+10]
 es pop word [di+10+2]
 ; ACAO STRUCTURE - Gravacao de Ponteiro - Fim
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:219:9 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:221:9 ===---
 ; ACAO STRUCTURE - Gravacao de Ponteiro- Prepara
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:219:24 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:221:24 ===---
 push cs
 pop es
 mov di, _file_close
@@ -14950,16 +16553,16 @@ mov di, [bp+6]
 es pop word [di+18]
 es pop word [di+18+2]
 ; ACAO STRUCTURE - Gravacao de Ponteiro - Fim
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:220:9 ===---
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:220:16 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:222:9 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:222:16 ===---
 mov ax, 1
-jmp ROTULO1060
-ROTULO1060:
+jmp ROTULO1147
+ROTULO1147:
 mov sp, bp
 pop bp
 FIM_file_create:
 retf
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:223:21 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:225:21 ===---
 _file_read:
 push bp
 mov bp, sp
@@ -14969,12 +16572,12 @@ call _os_stackcheck
 ; ARG: stream TAM: 4 POS: BP+6 
 ; ARG: text TAM: 4 POS: BP+10 
 ; ARG: len TAM: 2 POS: BP--2 
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:223:26 ===---
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:223:44 ===---
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:224:13 ===---
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:225:9 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:225:26 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:225:44 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:226:13 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:227:9 ===---
 ; ACAO GRAVACAO - Grava em variavel
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:225:15 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:227:15 ===---
 ; ACAO LEITURA - Le ponteiro
 push word [bp+10+2]
 pop es
@@ -14982,26 +16585,26 @@ mov di, [bp+10]
 xor ax, ax
 es mov al, [di+0]
 mov [bp+-2], ax
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:226:10 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:228:10 ===---
 ; ACAO INC - Incrementa variavel
 inc word [bp+10]
 inc di
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:227:9 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:229:9 ===---
 ; ACAO GRAVACAO - Grava em variavel
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:227:15 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:229:15 ===---
 ; ACAO CHAMADA - Chama rotina
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:227:37 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:229:37 ===---
 ; ACAO LEITURA - Le variavel
 mov ax, [bp+-2]
 push ax
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:227:31 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:229:31 ===---
 ; ACAO LEITURA - Le ponteiro
 push word [bp+10+2]
 pop es
 mov di, [bp+10]
 push es
 push di
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:227:23 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:229:23 ===---
 ; ACAO LEITURA - Le ponteiro
 push word [bp+6+2]
 pop es
@@ -15012,17 +16615,17 @@ push cs
 call _file_readraw
 add sp, 10
 mov [bp+-2], ax
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:228:9 ===---
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:228:16 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:230:9 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:230:16 ===---
 ; ACAO LEITURA - Le variavel
 mov ax, [bp+-2]
-jmp ROTULO1061
-ROTULO1061:
+jmp ROTULO1148
+ROTULO1148:
 mov sp, bp
 pop bp
 FIM_file_read:
 retf
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:231:21 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:233:21 ===---
 _file_readraw:
 push bp
 mov bp, sp
@@ -15033,65 +16636,65 @@ call _os_stackcheck
 ; ARG: data TAM: 4 POS: BP+10 
 ; ARG: len TAM: 2 POS: BP+14 
 ; ARG: id TAM: 2 POS: BP--2 
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:231:29 ===---
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:231:47 ===---
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:231:69 ===---
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:232:13 ===---
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:233:9 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:233:29 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:233:47 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:233:69 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:234:13 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:235:9 ===---
 ; ACAO GRAVACAO - Grava em variavel
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:233:14 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:235:14 ===---
 ; ACAO STRUCTURE - Leitura de Ponteiro - (U)Int16 - Desvio 0
 push word [bp+6+2]
 pop es
 mov di, [bp+6]
 es mov ax, [di+0]
 mov [bp+-2], ax
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:234:13 ===---
-mov ax, 0x3f00
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:235:13 ===---
-push ds
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:236:13 ===---
-push word [bp+12]
+mov ax, 0x3f00
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:237:13 ===---
-pop ds
+push ds
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:238:13 ===---
-mov dx, [bp+10]
+push word [bp+12]
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:239:13 ===---
-mov cx, [bp+14]
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:240:13 ===---
-mov bx, [bp-2]
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:241:13 ===---
-int 0x21
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:242:13 ===---
-pushf
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:243:13 ===---
-mov [bp-2], ax
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:244:13 ===---
-popf
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:245:13 ===---
 pop ds
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:240:13 ===---
+mov dx, [bp+10]
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:241:13 ===---
+mov cx, [bp+14]
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:242:13 ===---
+mov bx, [bp-2]
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:243:13 ===---
+int 0x21
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:244:13 ===---
+pushf
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:245:13 ===---
+mov [bp-2], ax
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:246:13 ===---
+popf
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:247:13 ===---
+pop ds
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:248:13 ===---
 jnc .fim
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:247:15 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:249:15 ===---
 mov ax, _file
 mov [bp+-8], ax
-mov ax, 247
+mov ax, 249
 mov [bp+-10], ax
 mov ax, 13
 cs jmp word [_os_trycode]
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:248:13 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:250:13 ===---
 .fim:
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:249:9 ===---
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:249:16 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:251:9 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:251:16 ===---
 ; ACAO LEITURA - Le variavel
 mov ax, [bp+-2]
-jmp ROTULO1062
-ROTULO1062:
+jmp ROTULO1149
+ROTULO1149:
 mov sp, bp
 pop bp
 FIM_file_readraw:
 retf
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:252:21 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:254:21 ===---
 _file_write:
 push bp
 mov bp, sp
@@ -15101,14 +16704,14 @@ call _os_stackcheck
 ; ARG: stream TAM: 4 POS: BP+6 
 ; ARG: text TAM: 4 POS: BP+10 
 ; ARG: len TAM: 2 POS: BP--2 
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:252:27 ===---
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:252:45 ===---
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:253:13 ===---
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:254:9 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:254:27 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:254:45 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:255:13 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:256:9 ===---
 ; ACAO GRAVACAO - Grava em variavel
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:254:15 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:256:15 ===---
 ; ACAO CHAMADA - Chama rotina
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:254:29 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:256:29 ===---
 ; ACAO LEITURA - Le ponteiro
 push word [bp+10+2]
 pop es
@@ -15119,24 +16722,24 @@ push cs
 call _string_length
 add sp, 4
 mov [bp+-2], ax
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:255:10 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:257:10 ===---
 ; ACAO INC - Incrementa variavel
 inc word [bp+10]
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:256:9 ===---
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:256:16 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:258:9 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:258:16 ===---
 ; ACAO CHAMADA - Chama rotina
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:256:39 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:258:39 ===---
 ; ACAO LEITURA - Le variavel
 mov ax, [bp+-2]
 push ax
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:256:33 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:258:33 ===---
 ; ACAO LEITURA - Le ponteiro
 push word [bp+10+2]
 pop es
 mov di, [bp+10]
 push es
 push di
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:256:25 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:258:25 ===---
 ; ACAO LEITURA - Le ponteiro
 push word [bp+6+2]
 pop es
@@ -15146,13 +16749,13 @@ push di
 push cs
 call _file_writeraw
 add sp, 10
-jmp ROTULO1063
-ROTULO1063:
+jmp ROTULO1150
+ROTULO1150:
 mov sp, bp
 pop bp
 FIM_file_write:
 retf
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:259:21 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:261:21 ===---
 _file_writeraw:
 push bp
 mov bp, sp
@@ -15163,65 +16766,65 @@ call _os_stackcheck
 ; ARG: data TAM: 4 POS: BP+10 
 ; ARG: len TAM: 2 POS: BP+14 
 ; ARG: id TAM: 2 POS: BP--2 
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:259:30 ===---
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:259:48 ===---
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:259:70 ===---
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:260:13 ===---
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:261:9 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:261:30 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:261:48 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:261:70 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:262:13 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:263:9 ===---
 ; ACAO GRAVACAO - Grava em variavel
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:261:14 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:263:14 ===---
 ; ACAO STRUCTURE - Leitura de Ponteiro - (U)Int16 - Desvio 0
 push word [bp+6+2]
 pop es
 mov di, [bp+6]
 es mov ax, [di+0]
 mov [bp+-2], ax
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:262:13 ===---
-mov ax, 0x4000
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:263:13 ===---
-push ds
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:264:13 ===---
-push word [bp+12]
+mov ax, 0x4000
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:265:13 ===---
-pop ds
+push ds
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:266:13 ===---
-mov dx, [bp+10]
+push word [bp+12]
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:267:13 ===---
-mov cx, [bp+14]
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:268:13 ===---
-mov bx, [bp-2]
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:269:13 ===---
-int 0x21
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:270:13 ===---
-pushf
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:271:13 ===---
-mov [bp-2], ax
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:272:13 ===---
-popf
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:273:13 ===---
 pop ds
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:268:13 ===---
+mov dx, [bp+10]
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:269:13 ===---
+mov cx, [bp+14]
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:270:13 ===---
+mov bx, [bp-2]
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:271:13 ===---
+int 0x21
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:272:13 ===---
+pushf
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:273:13 ===---
+mov [bp-2], ax
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:274:13 ===---
+popf
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:275:13 ===---
+pop ds
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:276:13 ===---
 jnc .fim
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:275:15 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:277:15 ===---
 mov ax, _file
 mov [bp+-8], ax
-mov ax, 275
+mov ax, 277
 mov [bp+-10], ax
 mov ax, 13
 cs jmp word [_os_trycode]
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:276:13 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:278:13 ===---
 .fim:
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:277:9 ===---
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:277:16 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:279:9 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:279:16 ===---
 ; ACAO LEITURA - Le variavel
 mov ax, [bp+-2]
-jmp ROTULO1064
-ROTULO1064:
+jmp ROTULO1151
+ROTULO1151:
 mov sp, bp
 pop bp
 FIM_file_writeraw:
 retf
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:280:21 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:282:21 ===---
 _file_close:
 push bp
 mov bp, sp
@@ -15230,44 +16833,44 @@ push cs
 call _os_stackcheck
 ; ARG: stream TAM: 4 POS: BP+6 
 ; ARG: id TAM: 2 POS: BP--2 
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:280:27 ===---
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:281:13 ===---
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:282:9 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:282:27 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:283:13 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:284:9 ===---
 ; ACAO GRAVACAO - Grava em variavel
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:282:14 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:284:14 ===---
 ; ACAO STRUCTURE - Leitura de Ponteiro - (U)Int16 - Desvio 0
 push word [bp+6+2]
 pop es
 mov di, [bp+6]
 es mov ax, [di+0]
 mov [bp+-2], ax
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:283:13 ===---
-mov ax, 0x3e00
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:284:13 ===---
-mov bx, [bp-2]
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:285:13 ===---
-int 0x21
+mov ax, 0x3e00
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:286:13 ===---
+mov bx, [bp-2]
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:287:13 ===---
+int 0x21
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:288:13 ===---
 jnc .fim
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:287:15 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:289:15 ===---
 mov ax, _file
 mov [bp+-8], ax
-mov ax, 287
+mov ax, 289
 mov [bp+-10], ax
 mov ax, 8
 cs jmp word [_os_trycode]
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:288:13 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:290:13 ===---
 .fim:
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:289:9 ===---
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:289:16 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:291:9 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:291:16 ===---
 mov ax, 1
-jmp ROTULO1065
-ROTULO1065:
+jmp ROTULO1152
+ROTULO1152:
 mov sp, bp
 pop bp
 FIM_file_close:
 retf
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:292:21 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:294:21 ===---
 _file_seekstart:
 push bp
 mov bp, sp
@@ -15277,49 +16880,49 @@ call _os_stackcheck
 ; ARG: stream TAM: 4 POS: BP+6 
 ; ARG: position TAM: 2 POS: BP+10 
 ; ARG: id TAM: 2 POS: BP--2 
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:292:31 ===---
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:292:49 ===---
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:293:13 ===---
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:294:9 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:294:31 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:294:49 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:295:13 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:296:9 ===---
 ; ACAO GRAVACAO - Grava em variavel
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:294:14 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:296:14 ===---
 ; ACAO STRUCTURE - Leitura de Ponteiro - (U)Int16 - Desvio 0
 push word [bp+6+2]
 pop es
 mov di, [bp+6]
 es mov ax, [di+0]
 mov [bp+-2], ax
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:295:13 ===---
-mov ax, 0x4200
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:296:13 ===---
-mov bx, [bp-2]
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:297:13 ===---
-xor cx, cx
+mov ax, 0x4200
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:298:13 ===---
-mov dx, [bp+10]
+mov bx, [bp-2]
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:299:13 ===---
-int 0x21
+xor cx, cx
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:300:13 ===---
+mov dx, [bp+10]
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:301:13 ===---
+int 0x21
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:302:13 ===---
 jnc .fim
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:301:15 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:303:15 ===---
 mov ax, _file
 mov [bp+-8], ax
-mov ax, 301
+mov ax, 303
 mov [bp+-10], ax
 mov ax, 13
 cs jmp word [_os_trycode]
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:302:13 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:304:13 ===---
 .fim:
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:303:9 ===---
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:303:16 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:305:9 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:305:16 ===---
 mov ax, 1
-jmp ROTULO1066
-ROTULO1066:
+jmp ROTULO1153
+ROTULO1153:
 mov sp, bp
 pop bp
 FIM_file_seekstart:
 retf
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:306:21 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:308:21 ===---
 _file_seekcurrent:
 push bp
 mov bp, sp
@@ -15329,49 +16932,49 @@ call _os_stackcheck
 ; ARG: stream TAM: 4 POS: BP+6 
 ; ARG: position TAM: 2 POS: BP+10 
 ; ARG: id TAM: 2 POS: BP--2 
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:306:33 ===---
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:306:51 ===---
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:307:13 ===---
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:308:9 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:308:33 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:308:51 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:309:13 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:310:9 ===---
 ; ACAO GRAVACAO - Grava em variavel
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:308:14 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:310:14 ===---
 ; ACAO STRUCTURE - Leitura de Ponteiro - (U)Int16 - Desvio 0
 push word [bp+6+2]
 pop es
 mov di, [bp+6]
 es mov ax, [di+0]
 mov [bp+-2], ax
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:309:13 ===---
-mov ax, 0x4201
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:310:13 ===---
-mov bx, [bp-2]
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:311:13 ===---
-xor cx, cx
+mov ax, 0x4201
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:312:13 ===---
-mov dx, [bp+10]
+mov bx, [bp-2]
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:313:13 ===---
-int 0x21
+xor cx, cx
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:314:13 ===---
+mov dx, [bp+10]
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:315:13 ===---
+int 0x21
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:316:13 ===---
 jnc .fim
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:315:15 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:317:15 ===---
 mov ax, _file
 mov [bp+-8], ax
-mov ax, 315
+mov ax, 317
 mov [bp+-10], ax
 mov ax, 13
 cs jmp word [_os_trycode]
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:316:13 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:318:13 ===---
 .fim:
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:317:9 ===---
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:317:16 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:319:9 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:319:16 ===---
 mov ax, 1
-jmp ROTULO1067
-ROTULO1067:
+jmp ROTULO1154
+ROTULO1154:
 mov sp, bp
 pop bp
 FIM_file_seekcurrent:
 retf
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:320:21 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:322:21 ===---
 _file_seekend:
 push bp
 mov bp, sp
@@ -15381,44 +16984,44 @@ call _os_stackcheck
 ; ARG: stream TAM: 4 POS: BP+6 
 ; ARG: position TAM: 2 POS: BP+10 
 ; ARG: id TAM: 2 POS: BP--2 
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:320:29 ===---
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:320:47 ===---
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:321:13 ===---
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:322:9 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:322:29 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:322:47 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:323:13 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:324:9 ===---
 ; ACAO GRAVACAO - Grava em variavel
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:322:14 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:324:14 ===---
 ; ACAO STRUCTURE - Leitura de Ponteiro - (U)Int16 - Desvio 0
 push word [bp+6+2]
 pop es
 mov di, [bp+6]
 es mov ax, [di+0]
 mov [bp+-2], ax
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:323:13 ===---
-mov ax, 0x4202
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:324:13 ===---
-mov bx, [bp-2]
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:325:13 ===---
-xor cx, cx
+mov ax, 0x4202
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:326:13 ===---
-mov dx, [bp+10]
+mov bx, [bp-2]
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:327:13 ===---
-int 0x21
+xor cx, cx
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:328:13 ===---
+mov dx, [bp+10]
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:329:13 ===---
+int 0x21
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:330:13 ===---
 jnc .fim
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:329:15 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:331:15 ===---
 mov ax, _file
 mov [bp+-8], ax
-mov ax, 329
+mov ax, 331
 mov [bp+-10], ax
 mov ax, 13
 cs jmp word [_os_trycode]
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:330:13 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:332:13 ===---
 .fim:
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:331:9 ===---
-;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:331:16 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:333:9 ===---
+;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086-DOS/System.OS.hcb:333:16 ===---
 mov ax, 1
-jmp ROTULO1068
-ROTULO1068:
+jmp ROTULO1155
+ROTULO1155:
 mov sp, bp
 pop bp
 FIM_file_seekend:
@@ -15454,18 +17057,18 @@ xor ax, ax
 mov bx, ax
 pop ax
 cmp ax, bx
-je ROTULO1072
-jmp ROTULO1073
-ROTULO1072:
+je ROTULO1159
+jmp ROTULO1160
+ROTULO1159:
 mov ax, 65535
-jmp ROTULO1074
-ROTULO1073:
+jmp ROTULO1161
+ROTULO1160:
 xor ax, ax
-ROTULO1074:
+ROTULO1161:
 cmp ax, 0
-jne ROTULO1070
-jmp ROTULO1071
-ROTULO1070:
+jne ROTULO1157
+jmp ROTULO1158
+ROTULO1157:
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.hcb:266:39 ===---
 mov ax, _stream
 mov [bp+-8], ax
@@ -15473,7 +17076,7 @@ mov ax, 266
 mov [bp+-10], ax
 mov ax, 7
 cs jmp word [_os_trycode]
-ROTULO1071:
+ROTULO1158:
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.hcb:267:9 ===---
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.hcb:267:16 ===---
 ; ACAO CHAMADA - Chama indiretamente usando Invoke
@@ -15497,8 +17100,8 @@ push es
 push di
 es call far [di+2]
 add sp, 10
-jmp ROTULO1069
-ROTULO1069:
+jmp ROTULO1156
+ROTULO1156:
 mov sp, bp
 pop bp
 FIM_stream_readraw:
@@ -15525,18 +17128,18 @@ xor ax, ax
 mov bx, ax
 pop ax
 cmp ax, bx
-je ROTULO1078
-jmp ROTULO1079
-ROTULO1078:
+je ROTULO1165
+jmp ROTULO1166
+ROTULO1165:
 mov ax, 65535
-jmp ROTULO1080
-ROTULO1079:
+jmp ROTULO1167
+ROTULO1166:
 xor ax, ax
-ROTULO1080:
+ROTULO1167:
 cmp ax, 0
-jne ROTULO1076
-jmp ROTULO1077
-ROTULO1076:
+jne ROTULO1163
+jmp ROTULO1164
+ROTULO1163:
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.hcb:271:36 ===---
 mov ax, _stream
 mov [bp+-8], ax
@@ -15544,7 +17147,7 @@ mov ax, 271
 mov [bp+-10], ax
 mov ax, 7
 cs jmp word [_os_trycode]
-ROTULO1077:
+ROTULO1164:
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.hcb:272:9 ===---
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.hcb:272:16 ===---
 ; ACAO CHAMADA - Chama indiretamente usando Invoke
@@ -15564,8 +17167,8 @@ push es
 push di
 es call far [di+6]
 add sp, 8
-jmp ROTULO1075
-ROTULO1075:
+jmp ROTULO1162
+ROTULO1162:
 mov sp, bp
 pop bp
 FIM_stream_read:
@@ -15594,18 +17197,18 @@ xor ax, ax
 mov bx, ax
 pop ax
 cmp ax, bx
-je ROTULO1084
-jmp ROTULO1085
-ROTULO1084:
+je ROTULO1171
+jmp ROTULO1172
+ROTULO1171:
 mov ax, 65535
-jmp ROTULO1086
-ROTULO1085:
+jmp ROTULO1173
+ROTULO1172:
 xor ax, ax
-ROTULO1086:
+ROTULO1173:
 cmp ax, 0
-jne ROTULO1082
-jmp ROTULO1083
-ROTULO1082:
+jne ROTULO1169
+jmp ROTULO1170
+ROTULO1169:
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.hcb:276:40 ===---
 mov ax, _stream
 mov [bp+-8], ax
@@ -15613,7 +17216,7 @@ mov ax, 276
 mov [bp+-10], ax
 mov ax, 7
 cs jmp word [_os_trycode]
-ROTULO1083:
+ROTULO1170:
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.hcb:277:9 ===---
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.hcb:277:16 ===---
 ; ACAO CHAMADA - Chama indiretamente usando Invoke
@@ -15637,8 +17240,8 @@ push es
 push di
 es call far [di+10]
 add sp, 10
-jmp ROTULO1081
-ROTULO1081:
+jmp ROTULO1168
+ROTULO1168:
 mov sp, bp
 pop bp
 FIM_stream_writeraw:
@@ -15665,18 +17268,18 @@ xor ax, ax
 mov bx, ax
 pop ax
 cmp ax, bx
-je ROTULO1090
-jmp ROTULO1091
-ROTULO1090:
+je ROTULO1177
+jmp ROTULO1178
+ROTULO1177:
 mov ax, 65535
-jmp ROTULO1092
-ROTULO1091:
+jmp ROTULO1179
+ROTULO1178:
 xor ax, ax
-ROTULO1092:
+ROTULO1179:
 cmp ax, 0
-jne ROTULO1088
-jmp ROTULO1089
-ROTULO1088:
+jne ROTULO1175
+jmp ROTULO1176
+ROTULO1175:
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.hcb:281:37 ===---
 mov ax, _stream
 mov [bp+-8], ax
@@ -15684,7 +17287,7 @@ mov ax, 281
 mov [bp+-10], ax
 mov ax, 7
 cs jmp word [_os_trycode]
-ROTULO1089:
+ROTULO1176:
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.hcb:282:9 ===---
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.hcb:282:16 ===---
 ; ACAO CHAMADA - Chama indiretamente usando Invoke
@@ -15704,8 +17307,8 @@ push es
 push di
 es call far [di+14]
 add sp, 8
-jmp ROTULO1087
-ROTULO1087:
+jmp ROTULO1174
+ROTULO1174:
 mov sp, bp
 pop bp
 FIM_stream_write:
@@ -15730,18 +17333,18 @@ xor ax, ax
 mov bx, ax
 pop ax
 cmp ax, bx
-je ROTULO1096
-jmp ROTULO1097
-ROTULO1096:
+je ROTULO1183
+jmp ROTULO1184
+ROTULO1183:
 mov ax, 65535
-jmp ROTULO1098
-ROTULO1097:
+jmp ROTULO1185
+ROTULO1184:
 xor ax, ax
-ROTULO1098:
+ROTULO1185:
 cmp ax, 0
-jne ROTULO1094
-jmp ROTULO1095
-ROTULO1094:
+jne ROTULO1181
+jmp ROTULO1182
+ROTULO1181:
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.hcb:286:37 ===---
 mov ax, _stream
 mov [bp+-8], ax
@@ -15749,7 +17352,7 @@ mov ax, 286
 mov [bp+-10], ax
 mov ax, 7
 cs jmp word [_os_trycode]
-ROTULO1095:
+ROTULO1182:
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.hcb:287:9 ===---
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.hcb:287:16 ===---
 ; ACAO CHAMADA - Chama indiretamente usando Invoke
@@ -15762,8 +17365,8 @@ push es
 push di
 es call far [di+18]
 add sp, 4
-jmp ROTULO1093
-ROTULO1093:
+jmp ROTULO1180
+ROTULO1180:
 mov sp, bp
 pop bp
 FIM_stream_close:
@@ -15790,18 +17393,18 @@ xor ax, ax
 mov bx, ax
 pop ax
 cmp ax, bx
-je ROTULO1102
-jmp ROTULO1103
-ROTULO1102:
+je ROTULO1189
+jmp ROTULO1190
+ROTULO1189:
 mov ax, 65535
-jmp ROTULO1104
-ROTULO1103:
+jmp ROTULO1191
+ROTULO1190:
 xor ax, ax
-ROTULO1104:
+ROTULO1191:
 cmp ax, 0
-jne ROTULO1100
-jmp ROTULO1101
-ROTULO1100:
+jne ROTULO1187
+jmp ROTULO1188
+ROTULO1187:
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.hcb:291:43 ===---
 mov ax, _stream
 mov [bp+-8], ax
@@ -15809,7 +17412,7 @@ mov ax, 291
 mov [bp+-10], ax
 mov ax, 7
 cs jmp word [_os_trycode]
-ROTULO1101:
+ROTULO1188:
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.hcb:292:9 ===---
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.hcb:292:16 ===---
 ; ACAO CHAMADA - Chama indiretamente usando Invoke
@@ -15826,8 +17429,8 @@ push es
 push di
 es call far [di+22]
 add sp, 6
-jmp ROTULO1099
-ROTULO1099:
+jmp ROTULO1186
+ROTULO1186:
 mov sp, bp
 pop bp
 FIM_stream_seekcurrent:
@@ -15854,18 +17457,18 @@ xor ax, ax
 mov bx, ax
 pop ax
 cmp ax, bx
-je ROTULO1108
-jmp ROTULO1109
-ROTULO1108:
+je ROTULO1195
+jmp ROTULO1196
+ROTULO1195:
 mov ax, 65535
-jmp ROTULO1110
-ROTULO1109:
+jmp ROTULO1197
+ROTULO1196:
 xor ax, ax
-ROTULO1110:
+ROTULO1197:
 cmp ax, 0
-jne ROTULO1106
-jmp ROTULO1107
-ROTULO1106:
+jne ROTULO1193
+jmp ROTULO1194
+ROTULO1193:
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.hcb:296:39 ===---
 mov ax, _stream
 mov [bp+-8], ax
@@ -15873,7 +17476,7 @@ mov ax, 296
 mov [bp+-10], ax
 mov ax, 7
 cs jmp word [_os_trycode]
-ROTULO1107:
+ROTULO1194:
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.hcb:297:9 ===---
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.hcb:297:16 ===---
 ; ACAO CHAMADA - Chama indiretamente usando Invoke
@@ -15890,8 +17493,8 @@ push es
 push di
 es call far [di+30]
 add sp, 6
-jmp ROTULO1105
-ROTULO1105:
+jmp ROTULO1192
+ROTULO1192:
 mov sp, bp
 pop bp
 FIM_stream_seekend:
@@ -15918,18 +17521,18 @@ xor ax, ax
 mov bx, ax
 pop ax
 cmp ax, bx
-je ROTULO1114
-jmp ROTULO1115
-ROTULO1114:
+je ROTULO1201
+jmp ROTULO1202
+ROTULO1201:
 mov ax, 65535
-jmp ROTULO1116
-ROTULO1115:
+jmp ROTULO1203
+ROTULO1202:
 xor ax, ax
-ROTULO1116:
+ROTULO1203:
 cmp ax, 0
-jne ROTULO1112
-jmp ROTULO1113
-ROTULO1112:
+jne ROTULO1199
+jmp ROTULO1200
+ROTULO1199:
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.hcb:301:41 ===---
 mov ax, _stream
 mov [bp+-8], ax
@@ -15937,7 +17540,7 @@ mov ax, 301
 mov [bp+-10], ax
 mov ax, 7
 cs jmp word [_os_trycode]
-ROTULO1113:
+ROTULO1200:
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.hcb:302:9 ===---
 ;     ---=== /home/humberto/Nextcloud/hcbasic/Plataformas/8086/System.hcb:302:16 ===---
 ; ACAO CHAMADA - Chama indiretamente usando Invoke
@@ -15954,8 +17557,8 @@ push es
 push di
 es call far [di+26]
 add sp, 6
-jmp ROTULO1111
-ROTULO1111:
+jmp ROTULO1198
+ROTULO1198:
 mov sp, bp
 pop bp
 FIM_stream_seekstart:
@@ -15979,7 +17582,15 @@ dw _program_okbutton
 dw 4
 dw 0
 dw 3
-dw _program_nadabutton
+dw _program_temptextbox
+dw 4
+dw 0
+dw 3
+dw _program_temptext
+dw 4
+dw 0
+dw 3
+dw _program_copiabutton
 dw 4
 dw 0
 dw 3
@@ -16016,6 +17627,22 @@ dw 4
 dw 0
 dw 3
 dw _screen_screencontrol
+dw 4
+dw 0
+dw 3
+dw _info_infoform
+dw 4
+dw 0
+dw 3
+dw _info_info1label
+dw 4
+dw 0
+dw 3
+dw _info_info2label
+dw 4
+dw 0
+dw 3
+dw _info_info3label
 dw 4
 dw 0
 dw 0

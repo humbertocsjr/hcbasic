@@ -1,18 +1,65 @@
 ' Arquivo de teste
-imports System
-imports System.Drawing
-imports System.Forms
-imports VGA
+Imports System
+Imports System.Drawing
+Imports System.Forms
+Imports VGA
 
-module Program
+Module Info
+    Dim InfoForm as Control
+    Dim Info1Label as Control
+    Dim Info2Label as Control
+    Dim Info3Label as Control
+
+    Public Sub Exibe
+        Form.Initialize InfoForm
+        InfoForm.Left = 300
+        InfoForm.Top = 30
+        InfoForm.Width = 300
+        InfoForm.Height = 110
+        InfoForm.Text = "Informacoes"
+
+        Label.Initialize Info1Label
+        Info1Label.Top = 5
+        Info1Label.Left = 5
+        Info1Label.Width = 290
+        Info1Label.Height = 15
+        Info1Label.Text = "- Apenas suporta letras e numeros"
+        Info1Label.Visible = 1
+        Control.Add InfoForm, Info1Label
+
+        Label.Initialize Info2Label
+        Info2Label.Top = 25
+        Info2Label.Left = 5
+        Info2Label.Width = 290
+        Info2Label.Height = 15
+        Info2Label.Text = "- Campo de texto simples"
+        Info2Label.Visible = 1
+        Control.Add InfoForm, Info2Label
+
+        Label.Initialize Info3Label
+        Info3Label.Top = 45
+        Info3Label.Left = 5
+        Info3Label.Width = 290
+        Info3Label.Height = 15
+        Info3Label.Text = "- Navegacao apenas usando tecla TAB"
+        Info3Label.Visible = 1
+        Control.Add InfoForm, Info3Label
+
+        Control.Show InfoForm
+    End
+End
+
+Module Program
 
     Dim MainForm as Control
     Dim HelloWorldLabel as Control
     Dim OkButton as Control
-    Dim NadaButton as Control
+    Dim TempTextBox as Control
+    Dim TempText as String
+    Dim CopiaButton as Control
     Dim HelloWorldText as String
 
-    public sub Main(args as ptrbytearray)
+    Public Sub Main(args as String)
 
         VGA.Mode640x480x2
         Application.Initialize
@@ -21,39 +68,52 @@ module Program
         MainForm.Top = 30
         MainForm.Left = 10
         MainForm.Width = 200
-        MainForm.Height = 100
-        MainForm.Text = "0123456789 ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+        MainForm.Height = 110
+        MainForm.Text = "Navegue usando TAB"
 
         Label.Initialize HelloWorldLabel
         String.Copy HelloWorldText, "HELLO WORLD"
         HelloWorldLabel.Text =  HelloWorldText
         HelloWorldLabel.Top = 8
         HelloWorldLabel.Left = 4
-        HelloWorldLabel.Width = 170
+        HelloWorldLabel.Width = 200
         HelloWorldLabel.Height = 10
         HelloWorldLabel.Visible = 1
         Control.Add MainForm, HelloWorldLabel
 
         Button.Initialize OkButton
-        OkButton.Text = "Enter para SAIR"
+        OkButton.Text = "Enter aqui para SAIR"
         OkButton.Top = 21
         OkButton.Left = 4
-        OkButton.Width = 150
+        OkButton.Width = 190
         OkButton.Height = 20
         OkButton.Visible = 1
         OkButton.OnKeyPress = AddressOf(OkButton_OnKeyPress)
         OkButton.OnClick = AddressOf(OkButton_OnClick)
         Control.Add MainForm, OkButton
 
-        Button.Initialize NadaButton
-        NadaButton.Text = "Faz Nada"
-        NadaButton.Top = 43
-        NadaButton.Left = 4
-        NadaButton.Width = 150
-        NadaButton.Height = 20
-        NadaButton.Visible = 1
-        Control.Add MainForm, NadaButton
+        TextBox.Initialize TempTextBox
+        String.Copy TempText, "Digite seu nome aqui"
+        TempTextBox.Text = TempText
+        TempTextBox.Top = 43
+        TempTextBox.Left = 4
+        TempTextBox.Width = 190
+        TempTextBox.Height = 20
+        TempTextBox.Visible = 1
+        TempTextBox.OnKeyPress = AddressOf(TempTextBox_OnKeyPress)
+        Control.Add MainForm, TempTextBox
 
+        Button.Initialize CopiaButton
+        CopiaButton.Text = "Aplicar Texto"
+        CopiaButton.Top = 66
+        CopiaButton.Left = 4
+        CopiaButton.Width = 190
+        CopiaButton.Height = 20
+        CopiaButton.Visible = 1
+        CopiaButton.OnClick = AddressOf(CopiaButton_OnClick)
+        Control.Add MainForm, CopiaButton
+
+        Info.Exibe
 
         Application.Run MainForm
 
@@ -72,6 +132,23 @@ module Program
 
     Sub OkButton_OnClick(ctrl as Control, e as MouseEventArgs)
         Application.Exit 0
+    End
+
+    Sub DizHello
+        String.Copy HelloWorldText, "Hello "
+        String.Concat HelloWorldText, TempText
+        Control.Redraw HelloWorldLabel
+    End
+
+    Sub TempTextBox_OnKeyPress(ctrl as Control, e as KeyboardEventArgs)
+        If e.AsciiChar == 13 Then
+            DizHello
+            e.Cancel = 1
+        End
+    End
+
+    Sub CopiaButton_OnClick(ctrl as Control, e as MouseEventArgs)
+        DizHello
     End
 
 end

@@ -93,6 +93,7 @@ Module Control
         ctrl.PaddingTop = 0
         ctrl.Text = ""
         ctrl.Value = 0
+        ctrl.CalcVisible = 0
     End
 
     Sub GenericControlPaint(ctrl as Control)
@@ -147,6 +148,8 @@ Module Control
 
     Public Sub Add(ctrl as Control, child as Control)
         Dim tmp as PtrByteArray
+        Dim parent as Control
+        parent = ctrl
         If ctrl.HasChild Then
             #tmp = #ctrl.Child
             @tmp = @ctrl.Child
@@ -163,14 +166,14 @@ Module Control
             @tmp = @child
             ctrl.NextControl = tmp
             child.HasParent = 1
-            child.Parent = ctrl
+            child.Parent = parent
         Else
             ctrl.HasChild = 1
             #tmp = #child
             @tmp = @child
             ctrl.Child = tmp
             child.HasParent = 1
-            child.Parent = ctrl
+            child.Parent = parent
         End
     End
 
@@ -290,11 +293,38 @@ Module Control
                 End 
             End
             If ctrl.HasParent Then
-                Focus ctrl.Parent
+                Dim i as UInt16
+                Dim max as UInt16
+                max = Count(ctrl.Parent)
+                For i = 1 to max
+                    next = Item(ctrl.Parent, i)
+                    If next.Focusable Then
+                        Focus next
+                        Return
+                    End
+                End
             End
         Else
             ctrl.ControlKeyboardInteracion.Invoke e
         End
+    End
+
+    Public Sub Show(ctrl as Control)
+        If ctrl.HasParent == 0 Then
+            Add Screen.ScreenControl, ctrl
+        End
+        ctrl.Visible = 1
+        Dim parent as Control
+        parent = ctrl.Parent
+        If parent.CalcVisible Then Redraw ctrl
+    End
+
+    Public Sub Hide(ctrl as Control)
+        If ctrl.HasParent == 0 Then Return
+        ctrl.Visible = 0
+        Dim parent as Control
+        parent = ctrl.Parent
+        If parent.CalcVisible Then Redraw parent
     End
 
 End
@@ -309,12 +339,65 @@ Module Screen
         ScreenControl.Width = Graphics.GetWidth()
         ScreenControl.Height = Graphics.GetHeight()
         ScreenControl.Visible = 1
+        ScreenControl.CalcVisible = 0
         ScreenControl.ControlPaint = AddressOf(ControlPaint)
     End
 
     Sub ControlPaint(ctrl as Control)
+        ScreenControl.CalcVisible = 1
         Graphics.ClearScreen SystemColors.BackgroundColor()
         Control.DrawChildren ctrl
+    End
+End
+
+Module TextBox
+    Public Sub Initialize(ctrl as Control)
+        Control.Initialize ctrl
+        ctrl.ControlPaint = AddressOf(ControlPaint)
+        ctrl.ControlKeyboardInteracion = AddressOf(ControlKeyboardInteracion)
+    End
+
+    Sub ControlKeyboardInteracion(ctrl as Control, e as KeyboardEventArgs)
+        If e.Pressed Then
+            Dim ptr as PtrByteArray
+            Dim len as UInt16
+            e.Cancel = 0
+            ctrl.OnKeyPress.Invoke e
+            If e.Cancel == 0 Then
+                If e.AsciiChar == 8 Then
+                    ptr = ctrl.Text
+                    len = String.Length(ctrl.Text)
+                    If len > 0 Then
+                        @ptr = @ptr + len
+                        ptr = 0
+                        Control.Redraw ctrl
+                    End
+                    Return
+                End
+                If (e.AsciiChar <> 13) AndAlso (e.AsciiChar <> 10) Then
+                    Dim txt as String
+                    len = String.Length(ctrl.Text)
+                    ptr = ctrl.Text
+                    If ptr < (len + 2) Then Return
+                    txt = New
+                    ptr = txt
+                    @ptr++
+                    ptr = e.AsciiChar
+                    @ptr++
+                    ptr = 0
+                    String.Concat ctrl.Text, txt
+                    Control.Redraw ctrl
+                End
+            End
+        Else
+            ctrl.OnKeyRelease.Invoke e
+        End
+    End
+
+    Sub ControlPaint(ctrl as Control)
+        Graphics.DrawRectangle ctrl.CalcX1, ctrl.CalcY1, ctrl.CalcX2, ctrl.CalcY2, SystemColors.WindowBorderColor(), SystemColors.WindowColor()
+        If ctrl.HasFocus <> 0 Then Graphics.DrawLine ctrl.CalcX1 + 4, ctrl.CalcY2 - 2, ctrl.CalcX2 - 4, Ctrl.CalcY2 - 2, SystemColors.WindowBorderColor()
+        Graphics.DrawText ctrl.Font, ctrl.Text, ctrl.CalcX1 + 4, ctrl.CalcY1 + 4, ctrl.CalcX2 - 4, ctrl.CalcY2 - 4, SystemColors.TextColor(), 1
     End
 End
 
