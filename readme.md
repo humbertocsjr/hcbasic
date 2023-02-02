@@ -8,6 +8,11 @@ Este compilador foi criado 100% em linguagem C#, evitando ferramentas de geraç�
 
 Acompanhe também o projeto irmão deste, um sistema operacional para IBM PC, feito com esta linguagem de programação, e de onde virá a base de todas as bibliotecas dessa linguagem. [HUSIX](https://github.com/humbertocsjr/husix)
 
+
+**Exemplo 'gui.hcb' incluso a partir do [v1.0.2-beta-1](https://github.com/humbertocsjr/hcbasic/releases/tag/v1.0.2-beta-1)**
+
+![Arquivo gui.hcb](Imagens/v1.0.1-beta-1.png)
+
 ## Novidades
 
 - Agora UInt8 e Int8 podem usar os comandos ROL, ROR, SHL, SHR
