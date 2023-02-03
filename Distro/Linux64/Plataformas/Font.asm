@@ -43,7 +43,45 @@ dw wmai
 dw xmai
 dw ymai
 dw zmai ' 37
-
+dw amai ' 38
+dw bmai
+dw cmai
+dw dmai
+dw emai
+dw fmai
+dw gmai
+dw hmai
+dw imai
+dw jmai
+dw kmai
+dw lmai
+dw mmai
+dw nmai
+dw omai
+dw pmai
+dw qmai
+dw rmai
+dw smai
+dw tmai
+dw umai
+dw vmai
+dw wmai
+dw xmai
+dw ymai
+dw zmai ' 63
+dw agudo ' 64
+dw grave ' 65
+dw agudo_duplo ' 66
+dw grave_duplo ' 67
+dw til ' 68
+dw circunflexo ' 69
+dw macron ' 70
+dw braquia ' 71
+dw braquia_invertida ' 72
+dw caron ' 73
+dw anel ' 74
+dw cedilha ' 75
+dw gancho_polaco ' 76
 
 nome:
     db .fim - $ 
@@ -434,3 +472,88 @@ db 0b00010000
 db 0b00100000
 db 0b01000000
 db 0b11111110
+
+
+agudo:
+db 2, 0
+db 0b01000000
+db 0b10000000
+db 0b00000000
+
+grave:
+db 2, 0
+db 0b10000000
+db 0b01000000
+db 0b00000000
+
+agudo_duplo:
+db 5, 0
+db 0b01001000
+db 0b10010000
+db 0b00000000
+
+grave_duplo:
+db 5, 0
+db 0b10010000
+db 0b01001000
+db 0b00000000
+
+til:
+db 5, 0
+db 0b01001000
+db 0b10110000
+db 0b00000000
+
+circunflexo:
+db 3, 0
+db 0b01000000
+db 0b10100000
+db 0b00000000
+
+macron:
+db 3, 0
+db 0b00000000
+db 0b11100000
+db 0b00000000
+
+braquia:
+db 4, 0
+db 0b10010000
+db 0b01100000
+db 0b00000000
+
+braquia_invertida:
+db 4, 0
+db 0b01100000
+db 0b10010000
+db 0b00000000
+
+caron:
+db 3, 0
+db 0b10100000
+db 0b01000000
+db 0b00000000
+
+trema:
+db 3, 0
+db 0b00000000
+db 0b10100000
+db 0b00000000
+
+anel:
+db 4, 0
+db 0b01100000
+db 0b10010000
+db 0b01100000
+
+cedilha:
+db 3, 0
+db 0b00100000
+db 0b10010000
+db 0b01100000
+
+gancho_polaco:
+db 3, 0
+db 0b01000000
+db 0b10010000
+db 0b01100000

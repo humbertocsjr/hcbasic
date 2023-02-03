@@ -9,6 +9,7 @@ Structure VideoMode
     Dim DrawEllipse as Action(Of VideoMode, UInt16, UInt16, UInt16, UInt16, UInt16, UInt16)
     Dim DrawLine as Action(Of VideoMode, UInt16, UInt16, UInt16, UInt16, UInt16)
     Dim ClearScreen as Action(Of VideoMode, UInt16)
+    Dim Refresh as Action(Of VideoMode, UInt16)
 End
 
 Structure Size
@@ -27,6 +28,17 @@ Structure Font
     Dim Spacing as UInt16
     Dim DrawText as Action(Of Font, PtrByteArray, UInt16, UInt16, UInt16, UInt16, UInt16, UInt16)
     Dim CalcSize as Action(Of Font, PtrByteArray, Size, UInt16, UInt16)
+End
+
+Structure FontChar
+    Dim Char as PtrByteArray
+    Dim CharX as PtrByteArray
+    Dim Above as PtrByteArray
+    Dim AboveX as PtrByteArray
+    Dim Below as PtrByteArray
+    Dim BelowX as PtrByteArray
+    Dim HasAbove as UInt8
+    Dim HasBellow as UInt8
 End
 
 Module Graphics
@@ -116,6 +128,11 @@ Module Graphics
         #Video = #newMode
         @Video = @newMode
         Font.Initialize
+    End
+
+    Public Sub Refresh()
+        If Active == 0 Then Throw AccessDeniedError
+        Video.Refresh.Invoke
     End
 
 End
@@ -317,10 +334,62 @@ Module Font
         Return ptrChar
     End
 
+    Function ConvertCharToFont(font as Font, char as FontChar, text as PtrByteArray, pos as UInt16) as UInt16
+        Dim index as UInt16
+        Dim aboveIndex as UInt16
+        Dim belowIndex as UInt16
+
+        index = 0
+        aboveIndex = 0
+        belowIndex = 0
+        @text = @text + pos
+
+        If (text >= 0x30) AndAlso (text <= 0x39) Then 
+            index = text - 0x30 + 2
+            Goto charfontend
+        End
+        If (text >= 0x41) AndAlso (text <= 0x5a) Then 
+            index = text - 0x41 + 12
+            Goto charfontend
+        End
+        If (text >= 0x61) AndAlso (text <= 0x7a) Then 
+            index = text - 0x61 + 38
+            Goto charfontend
+        End
+        If text == 0x20 Then 
+            index = 1
+            Goto charfontend
+        End
+        If text == 0xc3 Then
+            @text++
+            pos++
+            If text == 0xb3 Then 
+                index = 26
+                aboveIndex = 74
+                Goto charfontend
+            End
+        End
+        charfontend:
+        If aboveIndex <> 0 Then
+            char.HasAbove = 1
+            char.Above = FindChar(font, aboveIndex)
+        Else
+            char.HasAbove = 0
+        End
+        If belowIndex <> 0 Then
+            char.HasBellow = 1
+            char.Below = FindChar(font, belowIndex)
+        Else
+            char.HasBellow = 0
+        End
+        char.Char = FindChar(font, index)
+        pos++
+        Return pos
+    End
+
     Sub DrawText(font as Font, text as PtrByteArray, x1 as UInt16, y1 as UInt16, x2 as UInt16, y2 as UInt16, color as UInt16, multiline as UInt16)
         Dim ptrChar as PtrByteArray
         Dim len as UInt16
-        Dim index as UInt16
         Dim width as UInt16
         Dim maxBytes as UInt16
         Dim subWidth as UInt16
@@ -333,22 +402,16 @@ Module Font
         Dim yCalc as UInt16
         Dim xCalc as UInt16
         Dim tmp as UInt16
-        Dim useAbove as UInt16
-        Dim useBelow as UInt16
         Dim totalWidth as UInt16
+        Dim fontChar as FontChar
+        fontChar = New
         totalWidth = x2 - x1
         len = String.Length(text)
-        @text++
         x = 0
-        For pos = 1 to len
-            useAbove = 0
-            useBelow = 0
-            index = 0
-            If (text >= 0x30) andalso (text <= 0x39) Then index = text - 0x30 + 2
-            If (text >= 0x41) andalso (text <= 0x5a) Then index = text - 0x41 + 12
-            If (text >= 0x61) andalso (text <= 0x7a) Then index = text - 0x61 + 12
-            If text == 0x20 Then index = 1
-            ptrChar = FindChar(font, index)
+        pos = 1
+        While pos <= len
+            pos = ConvertCharToFont(font, fontChar, text, pos)
+            ptrChar = fontChar.Char
             width = ptrChar
             @ptrChar++
             extraOffset = ptrChar
@@ -386,14 +449,12 @@ Module Font
                 End
             End
             x = x + width + font.Spacing
-            @text++
         End
     End
 
     Sub CalcSize(font as Font, text as PtrByteArray, output as Size, totalWidth as UInt16, multiline as UInt16)
         Dim ptrChar as PtrByteArray
         Dim len as UInt16
-        Dim index as UInt16
         Dim width as UInt16
         Dim maxBytes as UInt16
         Dim subWidth as UInt16
@@ -409,18 +470,16 @@ Module Font
         Dim useAbove as UInt16
         Dim useBelow as UInt16
         Dim newLine as UInt16
+        Dim fontChar as FontChar
+        fontChar = New
         newLine = 0
         len = String.Length(text)
-        @text++
         x = 0
         output.Height = font.Height
-        For pos = 1 to len
-            index = 0
-            If (text >= 0x30) andalso (text <= 0x39) Then index = text - 0x30 + 2
-            If (text >= 0x41) andalso (text <= 0x5a) Then index = text - 0x41 + 12
-            If (text >= 0x61) andalso (text <= 0x7a) Then index = text - 0x61 + 12
-            If text == 0x20 Then index = 1
-            ptrChar = FindChar(font, index)
+        pos = 1
+        While pos <= len
+            pos = ConvertCharToFont(font, fontChar, text, pos)
+            ptrChar = fontChar.Char
             width = ptrChar
             If (x + width) > totalWidth Then
                 If multiline Then
@@ -434,7 +493,6 @@ Module Font
             End
             x = x + width + font.Spacing
             If newLine == 0 Then output.Width = x
-            @text++
         End
     End
 End

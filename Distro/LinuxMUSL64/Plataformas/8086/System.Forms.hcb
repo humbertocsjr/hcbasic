@@ -270,14 +270,14 @@ Module Control
     Public Sub Focus(ctrl as Control)
         Dim old as Control
         old = Application.CurrentFocus
+        Application.CurrentFocus = ctrl
+        ctrl.HasFocus = 1
+        ctrl.ControlFocusChanged.Invoke 1
         If #old <> 0 Then 
             old.HasFocus = 0
             old.ControlFocusChanged.Invoke 0
             If old.RedrawOnFocusChanged Then Redraw old
         End
-        Application.CurrentFocus = ctrl
-        ctrl.HasFocus = 1
-        ctrl.ControlFocusChanged.Invoke 1
         If ctrl.RedrawOnFocusChanged Then Redraw ctrl
     End
 
@@ -312,6 +312,8 @@ Module Control
     Public Sub Show(ctrl as Control)
         If ctrl.HasParent == 0 Then
             Add Screen.ScreenControl, ctrl
+            Application.CurrentFocus = ctrl
+            Application.CurrentFocusForm = ctrl
         End
         ctrl.Visible = 1
         Dim parent as Control
@@ -495,11 +497,13 @@ Module Form
         leftText = ctrl.CalcX1 + ((ctrl.CalcWidth - size.Width) SHR 1)
         rightText = ctrl.CalcX2 - ((ctrl.CalcWidth - size.Width) SHR 1)
         Graphics.DrawText fnt, ctrl.Text, leftText, ctrl.CalcY1+1, rightText, ctrl.CalcY1+1+fnt.Height, SystemColors.WindowTitleColor(), 0
-        For i = ctrl.CalcY1 + 4 to ctrl.CalcY1 + fnt.Height - 3
-            Graphics.DrawLine ctrl.CalcX1 + 2, i, ctrl.CalcX1 + 3, i, SystemColors.WindowBorderColor()
-            Graphics.DrawLine ctrl.CalcX1 + 13, i, leftText - 5, i, SystemColors.WindowBorderColor()
-            Graphics.DrawLine rightText + 4, i, ctrl.CalcX2 - 2, i, SystemColors.WindowBorderColor()
-            i++
+        If (#ctrl == #Application.CurrentFocusForm) And (@ctrl == @Application.CurrentFocusForm) Then
+            For i = ctrl.CalcY1 + 4 to ctrl.CalcY1 + fnt.Height - 3
+                Graphics.DrawLine ctrl.CalcX1 + 2, i, ctrl.CalcX1 + 3, i, SystemColors.WindowBorderColor()
+                Graphics.DrawLine ctrl.CalcX1 + 13, i, leftText - 5, i, SystemColors.WindowBorderColor()
+                Graphics.DrawLine rightText + 4, i, ctrl.CalcX2 - 2, i, SystemColors.WindowBorderColor()
+                i++
+            End
         End
         Graphics.DrawRectangle ctrl.CalcX1 + 5, ctrl.CalcY1 + 4, ctrl.CalcX1 + 11, ctrl.CalcY1 + fnt.Height -3, SystemColors.WindowBorderColor(),SystemColors.WindowColor()
         ctrl.PaddingTop = 2 + fnt.Height
