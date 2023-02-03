@@ -8,66 +8,66 @@ dw autor
 dw desconhecido
 dw espaco
 dw n0 ' 2
-dw n1
-dw n2
-dw n3
-dw n4
-dw n5
-dw n6
-dw n7
-dw n8
-dw n9
+dw n1 ' 3
+dw n2 ' 4
+dw n3 ' 5
+dw n4 ' 6
+dw n5 ' 7
+dw n6 ' 8
+dw n7 ' 9
+dw n8 ' 10
+dw n9 ' 11
 dw amai ' 12
-dw bmai
-dw cmai
-dw dmai
-dw emai
-dw fmai
-dw gmai
-dw hmai
-dw imai
-dw jmai
-dw kmai
-dw lmai
-dw mmai
-dw nmai
-dw omai
-dw pmai
-dw qmai
-dw rmai
-dw smai
-dw tmai
-dw umai
-dw vmai
-dw wmai
-dw xmai
-dw ymai
+dw bmai ' 13
+dw cmai ' 14
+dw dmai ' 15
+dw emai ' 16
+dw fmai ' 17
+dw gmai ' 18
+dw hmai ' 19
+dw imai ' 20
+dw jmai ' 21
+dw kmai ' 22
+dw lmai ' 23
+dw mmai ' 24
+dw nmai ' 25
+dw omai ' 26
+dw pmai ' 27
+dw qmai ' 28
+dw rmai ' 29
+dw smai ' 30
+dw tmai ' 31
+dw umai ' 32
+dw vmai ' 33
+dw wmai ' 34
+dw xmai ' 35
+dw ymai ' 36
 dw zmai ' 37
 dw amai ' 38
-dw bmai
-dw cmai
-dw dmai
-dw emai
-dw fmai
-dw gmai
-dw hmai
-dw imai
-dw jmai
-dw kmai
-dw lmai
-dw mmai
-dw nmai
-dw omai
-dw pmai
-dw qmai
-dw rmai
-dw smai
-dw tmai
-dw umai
-dw vmai
-dw wmai
-dw xmai
-dw ymai
+dw bmai ' 39
+dw cmai ' 40
+dw dmai ' 41
+dw emai ' 42
+dw fmai ' 43
+dw gmai ' 44
+dw hmai ' 45
+dw imai ' 46
+dw jmai ' 47
+dw kmai ' 48
+dw lmai ' 49
+dw mmai ' 50
+dw nmai ' 51
+dw omai ' 52
+dw pmai ' 53
+dw qmai ' 54
+dw rmai ' 55
+dw smai ' 56
+dw tmai ' 57
+dw umai ' 58
+dw vmai ' 59
+dw wmai ' 60
+dw xmai ' 61
+dw ymai ' 62
 dw zmai ' 63
 dw agudo ' 64
 dw grave ' 65
@@ -79,9 +79,10 @@ dw macron ' 70
 dw braquia ' 71
 dw braquia_invertida ' 72
 dw caron ' 73
-dw anel ' 74
-dw cedilha ' 75
-dw gancho_polaco ' 76
+dw trema ' 74
+dw anel ' 75
+dw cedilha ' 76
+dw gancho_polaco ' 77
 
 nome:
     db .fim - $ 

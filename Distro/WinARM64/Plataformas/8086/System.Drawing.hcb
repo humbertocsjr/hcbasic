@@ -280,8 +280,35 @@ Module GenericVideo
         End
     End
 
-    Sub DrawEllipse(mode as VideoMode, x1 as UInt16, y1 as UInt16, x2 as UInt16, y2 as UInt16, borderColor as UInt16, backgroundColor as UInt16)
-        Throw NotImplementedError
+    Sub DrawCircle(mode as VideoMode, xm as UInt16, ym as UInt16, r as UInt16, borderColor as UInt16, backgroundColor as UInt16)
+        Dim x as UInt16
+        Dim y as UInt16
+        Dim err as UInt16
+        x = -r
+        y = 0
+        err = 2-(r shl 1)
+        Goto drawCircleStart
+        While (x < 0)
+            drawCircleStart:
+            If backgroundColor <> 0xffff Then
+                DrawLine xm-x, xm+y, xm+x, xm+y, backgroundColor
+                DrawLine xm-x, xm-y, xm+x, xm-y, backgroundColor
+            End
+            DrawPixel xm-x, ym+y, borderColor
+            DrawPixel xm-x, ym-y, borderColor
+            DrawPixel xm+x, ym+y, borderColor
+            DrawPixel xm+x, ym-y, borderColor
+            r = err
+            If r <= y Then 
+                y++
+                err = err + (y shl 1) + 1
+            End
+            If (r > x) OrElse (err > y) Then
+                x++
+                err = err + (x shl 1) + 1
+            End
+        End
+
     End
 End
 
