@@ -118,6 +118,17 @@ Module Program
         Application.Run MainForm
 
         Graphics.Mode80x25x16
+        Dim a as UInt16
+        a = 4
+        If a == 1 Then
+            Console.Write "if 1"
+        ElseIf a == 2 Then
+            Console.Write "if 2"
+        ElseIf a == 3 Then
+            Console.Write "if 3"
+        Else
+            Console.Write "else"
+        End
     End
 
 

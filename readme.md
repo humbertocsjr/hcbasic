@@ -8,6 +8,7 @@ Este compilador foi criado 100% em linguagem C#, evitando ferramentas de geraç�
 
 Acompanhe também o projeto irmão deste, um sistema operacional para IBM PC, feito com esta linguagem de programação, e de onde virá a base de todas as bibliotecas dessa linguagem. [HUSIX](https://github.com/humbertocsjr/husix)
 
+**Implementado ElseIf a partida da [v1.0 - Fix Pack 2 - BETA 2](https://github.com/humbertocsjr/hcbasic/releases/tag/v1.0.2-beta-2)**
 
 **Exemplo 'gui.hcb' incluso a partir do [v1.0 - Fix Pack 2 - BETA 1](https://github.com/humbertocsjr/hcbasic/releases/tag/v1.0.2-beta-1)**
 
@@ -15,6 +16,7 @@ Acompanhe também o projeto irmão deste, um sistema operacional para IBM PC, fe
 
 ## Novidades
 
+- Implementado ElseIf
 - Agora UInt8 e Int8 podem usar os comandos ROL, ROR, SHL, SHR
 - O Compilador verfica se uma variável local esta sendo lida antes da sua inicialização
 - Forma de implementar um Interrupt Handler usando comando Sub NOME() Handles Interrupt

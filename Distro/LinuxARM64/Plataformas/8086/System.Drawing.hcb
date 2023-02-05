@@ -6,10 +6,10 @@ Structure VideoMode
     Dim Colors as UInt16
     Dim DrawPixel as Action(Of VideoMode, UInt16, UInt16, UInt16)
     Dim DrawRectangle as Action(Of VideoMode, UInt16, UInt16, UInt16, UInt16, UInt16, UInt16)
-    Dim DrawEllipse as Action(Of VideoMode, UInt16, UInt16, UInt16, UInt16, UInt16, UInt16)
+    Dim DrawCircle as Action(Of VideoMode, UInt16, UInt16, UInt16, UInt16, UInt16)
     Dim DrawLine as Action(Of VideoMode, UInt16, UInt16, UInt16, UInt16, UInt16)
     Dim ClearScreen as Action(Of VideoMode, UInt16)
-    Dim Refresh as Action(Of VideoMode, UInt16)
+    Dim Refresh as Action(Of VideoMode)
 End
 
 Structure Size
@@ -70,13 +70,11 @@ Module Graphics
         Video.DrawRectangle.Invoke x1, y1, x2, y2, borderColor, backgroundColor
     End
 
-    Public Sub DrawEllipse(x1 as UInt16, y1 as UInt16, x2 as UInt16, y2 as UInt16, borderColor as UInt16, backgroundColor as UInt16)
+    Public Sub DrawCircle(xm as UInt16, ym as UInt16, r as UInt16, borderColor as UInt16, backgroundColor as UInt16)
         If Active == 0 Then Throw AccessDeniedError
-        If x1 >= Video.Width Then Return
-        If y1 >= Video.Height Then Return
-        If x2 >= Video.Width Then x2 = Video.Width - 1
-        If y2 >= Video.Height Then y2 = Video.Height - 1
-        Video.DrawEllipse.Invoke x1, y1, x2, y2, borderColor, backgroundColor
+        If (xm + r) >= Video.Width Then Return
+        If (ym + r) >= Video.Height Then Return
+        Video.DrawCircle.Invoke xm, ym, r, borderColor, backgroundColor
     End
 
     Public Sub DrawText(font as Font, text as String, x1 as UInt16, y1 as UInt16, x2 as UInt16, y2 as UInt16, color as UInt16, multiline as UInt16)
@@ -188,8 +186,8 @@ Module GenericVideo
         mode.DrawLine = AddressOf(DrawLine)
     End
 
-    Public Sub RegisterDrawEllipse(mode as VideoMode)
-        mode.DrawEllipse = AddressOf(DrawEllipse)
+    Public Sub RegisterDrawCircle(mode as VideoMode)
+        mode.DrawCircle = AddressOf(DrawCircle)
     End
 
     Sub DrawLine(mode as VideoMode, x1 as UInt16, y1 as UInt16, x2 as UInt16, y2 as UInt16, color as UInt16)
@@ -291,13 +289,13 @@ Module GenericVideo
         While (x < 0)
             drawCircleStart:
             If backgroundColor <> 0xffff Then
-                DrawLine xm-x, xm+y, xm+x, xm+y, backgroundColor
-                DrawLine xm-x, xm-y, xm+x, xm-y, backgroundColor
+                Graphics.DrawLine xm-x, xm+y, xm+x, xm+y, backgroundColor
+                Graphics.DrawLine xm-x, xm-y, xm+x, xm-y, backgroundColor
             End
-            DrawPixel xm-x, ym+y, borderColor
-            DrawPixel xm-x, ym-y, borderColor
-            DrawPixel xm+x, ym+y, borderColor
-            DrawPixel xm+x, ym-y, borderColor
+            Graphics.DrawPixel xm-x, ym+y, borderColor
+            Graphics.DrawPixel xm-x, ym-y, borderColor
+            Graphics.DrawPixel xm+x, ym+y, borderColor
+            Graphics.DrawPixel xm+x, ym-y, borderColor
             r = err
             If r <= y Then 
                 y++

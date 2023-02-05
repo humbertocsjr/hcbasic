@@ -10,11 +10,15 @@ Module CGA
         Video.Colors = 2
         Video.DrawPixel = AddressOf(DrawPixel)
         GenericVideo.RegisterDrawLine Video
-        GenericVideo.RegisterDrawEllipse Video
+        GenericVideo.RegisterDrawCircle Video
         Video.DrawRectangle = AddressOf(DrawRectangle)
         Video.ClearScreen = AddressOf(ClearScreen)
+        Video.Refresh = AddressOf(Refresh)
         Graphics.ModeManual Video
         GenericVideo.Register2ColorsPalette
+    End
+
+    Sub Refresh(mode as VideoMode)
     End
 
     Sub DrawPixel(mode as VideoMode, x as UInt16, y as UInt16, color as UInt16)

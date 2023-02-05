@@ -359,9 +359,11 @@ class Analise
     // if a > 0 then return else let a ++
     private Se processaSe(Modulo mod, Rotina rot, ref Trechos trechos)
     {
+        Se subSe;
         bool ignoraElse = false;
         trechos.ExigeProximo("Esperado a comparação depois do 'if'");
         Se ret = new Se(trechos.Anterior, processaExpressao(mod, rot, ref trechos));
+        subSe = ret;
         trechos.ExigeId("then", "Esperado 'then' após a comparação");
         trechos.Proximo();
         if(trechos.FimDaLinha)
@@ -377,19 +379,52 @@ class Analise
         else
         {
             nivelRotina(mod, rot, ret.SeSim, true, ref trechos);
+            if (trechos.FimDaLinha) 
+                ignoraElse = true;
         }
-        if(trechos.EhIdentificador("else") & !ignoraElse)
+        if(!ignoraElse)
         {
-            if(trechos.Proximo())
+            while(!trechos.EhIdentificador("else"))
             {
-                nivelRotina(mod, rot, ret.SeNao, true, ref trechos);
+                if(trechos.EhIdentificador("elseif"))
+                {
+                    trechos.ExigeProximo("Esperado a comparação depois do 'elseif'");
+                    Se ant = subSe;
+                    subSe = new Se(trechos.Anterior, processaExpressao(mod, rot, ref trechos));
+                    ant.SeNao = new List<No>(new No[] {subSe});
+                    trechos.ExigeId("then", "Esperado 'then' após a comparação");
+                    if(trechos.Proximo())
+                    {
+                        nivelRotina(mod, rot, subSe.SeSim, true, ref trechos);
+                    }
+                    else
+                    {
+                        trechos.ProximaLinha();
+                        nivelRotina(mod, rot, subSe.SeSim, false, ref trechos);
+                        if(!trechos.EhIdentificador("elseif") & !trechos.EhIdentificador("else")) 
+                        {
+                            trechos.ExigeId("end", "Esperado 'end' ou 'elseif' ao final do 'elseif'");
+                            trechos.Proximo();
+                        }
+                    }
+                }
+                else 
+                    trechos.Erro("Esperado um else/elseif/end após os comandos dentro de um if/elseif");
+
             }
-            else
+            if(trechos.EhIdentificador("else"))
             {
-                trechos.ProximaLinha();
-                nivelRotina(mod, rot, ret.SeNao, false, ref trechos);
-                trechos.ExigeId("end", "Esperado 'end' ao final do 'else'");
-                trechos.Proximo();
+                if(trechos.Proximo())
+                {
+                    nivelRotina(mod, rot, subSe.SeNao, true, ref trechos);
+                }
+                else
+                {
+                    trechos.ProximaLinha();
+                    nivelRotina(mod, rot, subSe.SeNao, false, ref trechos);
+                    trechos.ExigeId("end", "Esperado 'end' ao final do 'else'");
+                    trechos.Proximo();
+                }
             }
         }
         return ret;
@@ -458,7 +493,7 @@ class Analise
         do 
         {
             reverifica:
-            if(trechos.EhIdentificador("end") | trechos.EhIdentificador("else") | trechos.EhIdentificador("catch")) break;
+            if(trechos.EhIdentificador("end") | trechos.EhIdentificador("else") | trechos.EhIdentificador("elseif") | trechos.EhIdentificador("catch")) break;
             
 
             if(trechos.EhIdentificador("dim"))
