@@ -1,6 +1,6 @@
 # Compilador HCBasic para 8086
 
-**Para saber o estado atual veja as notas de versão da [v1.0 - Fix Pack 2 - BETA 2](https://github.com/humbertocsjr/hcbasic/releases/tag/v1.0.2-beta-2)**
+**Para saber o estado atual veja as notas de versão da [v1.0 - Fix Pack 2](https://github.com/humbertocsjr/hcbasic/releases/tag/v1.0.2-fix-pack)**
 
 Esta linguagem de programação tem como objetivo criar uma derivação de baixo nível da linguagem BASIC moderna direcionada para maquinas 16 Bits, inspirada no VisualBasic.NET, QuickBASIC. Inicialmente está sendo implementado apenas o gerador de código para 8086, mas o compilador é flexível podendo facilmente adicionar novos processadores.
 
@@ -10,9 +10,9 @@ Este compilador foi criado 100% em linguagem C#, evitando ferramentas de geraç�
 
 Acompanhe também o projeto irmão deste, um sistema operacional para IBM PC, feito com esta linguagem de programação, e de onde virá a base de todas as bibliotecas dessa linguagem. [HUSIX](https://github.com/humbertocsjr/husix)
 
-**Implementado ElseIf a partida da [v1.0 - Fix Pack 2 - BETA 2](https://github.com/humbertocsjr/hcbasic/releases/tag/v1.0.2-beta-2)**
+**Implementado ElseIf a partida da [v1.0 - Fix Pack ](https://github.com/humbertocsjr/hcbasic/releases/tag/v1.0.2-fix-pack)**
 
-**Exemplo 'gui.hcb' incluso a partir do [v1.0 - Fix Pack 2 - BETA 1](https://github.com/humbertocsjr/hcbasic/releases/tag/v1.0.2-beta-1)**
+**Exemplo 'gui.hcb' incluso a partir do [v1.0 - Fix Pack 2](https://github.com/humbertocsjr/hcbasic/releases/tag/v1.0.2-fix-pack)**
 
 ![Arquivo gui.hcb](Imagens/v1.0.2-beta-1.png)
 
