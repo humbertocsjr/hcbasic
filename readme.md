@@ -1,5 +1,7 @@
 # Compilador HCBasic para 8086
 
+**Para saber o estado atual veja as notas de versão da [v1.0 - Fix Pack 2 - BETA 2](https://github.com/humbertocsjr/hcbasic/releases/tag/v1.0.2-beta-2)**
+
 Esta linguagem de programação tem como objetivo criar uma derivação de baixo nível da linguagem BASIC moderna direcionada para maquinas 16 Bits, inspirada no VisualBasic.NET, QuickBASIC. Inicialmente está sendo implementado apenas o gerador de código para 8086, mas o compilador é flexível podendo facilmente adicionar novos processadores.
 
 Esta linguagem não tem como objetivo ser orientada a objetos, sendo próximo de uma versão 16Bits procedural do VisualBasic.NET, onde os comandos são agrupados em módulos, com uma dinâmica de nomes próxima as bibliotecas do .NET Framework.
