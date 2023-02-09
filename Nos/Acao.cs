@@ -960,7 +960,7 @@ class Acao : No
                         amb.Tipo = tipoAnterior;
                     }
                     else
-                    {                    
+                    {           
                         amb.Saida.EmiteComentario($"ACAO CHAMADA - Chama rotina");
                         Rotina? rot = amb.Modulo.PesquisaRotina(referencia.Peek());
                         if(rot == null)
@@ -976,6 +976,12 @@ class Acao : No
                         referencia.Dequeue();
                         if(referencia.Any()) throw Erro("Caminho indisponível para rotina");
                         if(rot.ManipuladorDeInterrupcao) throw Erro("Não é possível chamar manipuladores de interrupção diretamente");
+                        if(rot.Modulo.Externo)
+                        {
+                            amb.Saida.EmiteComentario("ACAO CHAMADA - ROTINA EXTERNA");
+                            rot.ContadorReferencias++;
+                        }
+                        if(rot.Modulo != amb.Modulo && rot.Publicidade == NivelPublicidade.Privado) throw Erro("Rotina inacessível. Verifique se ela está marcada como Public");
                         var tipoAnterior = amb.Tipo;
                         var variavelAnterior = amb.VariavelDestino;
                         List<No> args = new List<No>();
@@ -1012,7 +1018,14 @@ class Acao : No
                             amb.VariavelDestino = null;
                             amb.Tipo = null;
                         }
-                        amb.Saida.EmiteChamaRotina(rot.Modulo.Nome, rot.Nome);
+                        if(rot.Modulo.Externo)
+                        {
+                            amb.Saida.EmiteChamaRotinaEmVariavelGlobal($"_{rot.Modulo.Nome}_{rot.Nome}");
+                        }
+                        else
+                        {
+                            amb.Saida.EmiteChamaRotina(rot.Modulo.Nome, rot.Nome);
+                        }
                         TipoCompilado = rot.TipoRetorno;
                         if(rot.PosicaoArg != 6)
                             amb.Saida.EmiteAdicionaNoPtrPilha(rot.PosicaoArg - 6);

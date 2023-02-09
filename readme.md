@@ -16,6 +16,10 @@ Acompanhe também o projeto irmão deste, um sistema operacional para IBM PC, fe
 
 ## Novidades
 
+- Acelerado algoritmo do System.Forms para focus e lostfocus, aumento de desempenho calculado em 200% durante ControlPaint
+- Implementado forma de exportar um módulo usando marcador Public antes do Module
+- Implementado forma de importar um módulo usando formato Module NOME From "arquivo" (Não implementado para DOS ainda)
+- Implementado 
 - Implementado ElseIf
 - Agora UInt8 e Int8 podem usar os comandos ROL, ROR, SHL, SHR
 - O Compilador verfica se uma variável local esta sendo lida antes da sua inicialização

@@ -24,6 +24,10 @@ class Saida8086 : Saida
     {
         Modulo = nome;
         EmiteComentario($"MODULO: {nome}");
+        EmiteL($"NAME_{nome}:");
+        EmiteL($"db {System.Text.Encoding.UTF8.GetByteCount(nome)}");
+        EmiteBinario(System.Text.Encoding.UTF8.GetBytes(nome));
+        EmiteL("db 0");
         EmiteL($"_{nome}:");
         EmiteL($"db {System.Text.Encoding.UTF8.GetByteCount(Path.GetFileName(arquivo))}");
         EmiteBinario(System.Text.Encoding.UTF8.GetBytes(Path.GetFileName(arquivo)));
@@ -109,7 +113,7 @@ class Saida8086 : Saida
 
     public override void EmitePulaPara(string rotulo)
     {
-        EmiteL($"jmp {rotulo}");
+        EmiteL($"jmp near {rotulo}");
     }
 
     public override void EmiteRotulo(string rotulo)
@@ -963,5 +967,28 @@ class Saida8086 : Saida
     public override void EmiteMarcaInvalidaOtimizacoes()
     {
         PonteiroDefinido = false;
+    }
+
+    public override void EmiteItemExportaModulo(Modulo mod)
+    {
+        EmiteL($"db 1");
+        EmiteL($"dw _{mod.Nome}");
+        EmiteL($"db 2");
+        EmiteL($"dw NAME_{mod.Nome}");
+    }
+    public override void EmiteItemExportaRotina(Rotina rot)
+    {
+        EmiteL($"db 3");
+        EmiteL($"dw NAME_{rot.Modulo.Nome}_{rot.Nome}");
+    }
+    public override void EmiteItemImportaModulo(Modulo mod)
+    {
+        EmiteL($"db 2");
+        EmiteL($"dw NAME_{mod.Nome}");
+    }
+    public override void EmiteItemImportaRotina(Rotina rot)
+    {
+        EmiteL($"db 3");
+        EmiteL($"dw _{rot.Modulo.Nome}_{rot.Nome}");
     }
 }

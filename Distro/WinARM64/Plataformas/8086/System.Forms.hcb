@@ -35,7 +35,7 @@ Structure Control
     Dim RedrawOnFocusChanged as UInt8
     Dim HasFocus as UInt8
     Dim Font as PtrByteArray
-    Dim ControlPaint as Action(Of Control)
+    Dim ControlPaint as Action(Of Control, UInt16)
     Dim ControlMouseInteraction as Action(Of Control, MouseEventArgs)
     Dim ControlKeyboardInteracion as Action(Of Control, KeyboardEventArgs)
     Dim ControlFocusChanged as Action(Of Control, UInt16)
@@ -96,7 +96,7 @@ Module Control
         ctrl.CalcVisible = 0
     End
 
-    Sub GenericControlPaint(ctrl as Control)
+    Sub GenericControlPaint(ctrl as Control, focusChangeOnly as UInt16)
     End
 
     Sub GenericControlMouseInteraction(ctrl as Control, e as MouseEventArgs)
@@ -222,7 +222,11 @@ Module Control
     End
 
     Public Sub Redraw(ctrl as Control)
-        ctrl.ControlPaint.Invoke
+        ctrl.ControlPaint.Invoke 0
+    End
+
+    Public Sub RedrawOnlyFocus(ctrl as Control)
+        ctrl.ControlPaint.Invoke 1
     End
 
     Public Sub SetText(ctrl as Control, txt as PtrByteArray)
@@ -233,7 +237,7 @@ Module Control
         Return ctrl.Text
     End
 
-    Sub DrawChildren(parent as Control)
+    Public Sub DrawChildren(parent as Control)
         Dim i as UInt16
         Dim qtd as UInt16
         Dim child as Control
@@ -276,9 +280,9 @@ Module Control
         If #old <> 0 Then 
             old.HasFocus = 0
             old.ControlFocusChanged.Invoke 0
-            If old.RedrawOnFocusChanged Then Redraw old
+            If old.RedrawOnFocusChanged Then RedrawOnlyFocus old
         End
-        If ctrl.RedrawOnFocusChanged Then Redraw ctrl
+        If ctrl.RedrawOnFocusChanged Then RedrawOnlyFocus ctrl
     End
 
     Public Sub ProcessKeyboard(ctrl as Control, e as KeyboardEventArgs)
@@ -345,7 +349,7 @@ Module Screen
         ScreenControl.ControlPaint = AddressOf(ControlPaint)
     End
 
-    Sub ControlPaint(ctrl as Control)
+    Sub ControlPaint(ctrl as Control, focusChangeOnly as UInt16)
         ScreenControl.CalcVisible = 1
         Graphics.ClearScreen SystemColors.BackgroundColor()
         Control.DrawChildren ctrl
@@ -396,10 +400,16 @@ Module TextBox
         End
     End
 
-    Sub ControlPaint(ctrl as Control)
-        Graphics.DrawRectangle ctrl.CalcX1, ctrl.CalcY1, ctrl.CalcX2, ctrl.CalcY2, SystemColors.WindowBorderColor(), SystemColors.WindowColor()
-        If ctrl.HasFocus <> 0 Then Graphics.DrawLine ctrl.CalcX1 + 4, ctrl.CalcY2 - 2, ctrl.CalcX2 - 4, Ctrl.CalcY2 - 2, SystemColors.WindowBorderColor()
-        Graphics.DrawText ctrl.Font, ctrl.Text, ctrl.CalcX1 + 4, ctrl.CalcY1 + 4, ctrl.CalcX2 - 4, ctrl.CalcY2 - 4, SystemColors.TextColor(), 1
+    Sub ControlPaint(ctrl as Control, focusChangeOnly as UInt16)
+        If focusChangeOnly == 0 Then
+            Graphics.DrawRectangle ctrl.CalcX1, ctrl.CalcY1, ctrl.CalcX2, ctrl.CalcY2, SystemColors.WindowBorderColor(), SystemColors.WindowColor()
+            Graphics.DrawText ctrl.Font, ctrl.Text, ctrl.CalcX1 + 4, ctrl.CalcY1 + 4, ctrl.CalcX2 - 4, ctrl.CalcY2 - 4, SystemColors.TextColor(), 1
+        End
+        If ctrl.HasFocus <> 0 Then 
+            Graphics.DrawLine ctrl.CalcX1 + 4, ctrl.CalcY2 - 2, ctrl.CalcX2 - 4, Ctrl.CalcY2 - 2, SystemColors.WindowBorderColor()
+        Else
+            Graphics.DrawLine ctrl.CalcX1 + 4, ctrl.CalcY2 - 2, ctrl.CalcX2 - 4, Ctrl.CalcY2 - 2, SystemColors.WindowColor()
+        End
     End
 End
 
@@ -428,18 +438,24 @@ Module Button
         End
     End
 
-    Sub ControlPaint(ctrl as Control)
-        Graphics.DrawRectangle ctrl.CalcX1, ctrl.CalcY1, ctrl.CalcX2, ctrl.CalcY2, SystemColors.WindowColor(), SystemColors.WindowColor()
-        If ctrl.HasFocus <> 0 Then Graphics.DrawLine ctrl.CalcX1 + 4, ctrl.CalcY2 - 2, ctrl.CalcX2 - 4, Ctrl.CalcY2 - 2, SystemColors.WindowBorderColor()
-        Graphics.DrawLine ctrl.CalcX1 + 2, ctrl.CalcY1, ctrl.CalcX2 - 2, Ctrl.CalcY1, SystemColors.WindowBorderColor()
-        Graphics.DrawLine ctrl.CalcX1 + 2, ctrl.CalcY2, ctrl.CalcX2 - 2, Ctrl.CalcY2, SystemColors.WindowBorderColor()
-        Graphics.DrawLine ctrl.CalcX1, ctrl.CalcY1 + 2, ctrl.CalcX1, Ctrl.CalcY2 - 2, SystemColors.WindowBorderColor()
-        Graphics.DrawLine ctrl.CalcX2, ctrl.CalcY1 + 2, ctrl.CalcX2, Ctrl.CalcY2 - 2, SystemColors.WindowBorderColor()
-        Graphics.DrawPixel ctrl.CalcX1 + 1, ctrl.CalcY1 + 1, SystemColors.WindowBorderColor()
-        Graphics.DrawPixel ctrl.CalcX2 - 1, ctrl.CalcY1 + 1, SystemColors.WindowBorderColor()
-        Graphics.DrawPixel ctrl.CalcX1 + 1, ctrl.CalcY2 - 1, SystemColors.WindowBorderColor()
-        Graphics.DrawPixel ctrl.CalcX2 - 1, ctrl.CalcY2 - 1, SystemColors.WindowBorderColor()
-        Graphics.DrawText ctrl.Font, ctrl.Text, ctrl.CalcX1 + 4, ctrl.CalcY1 + 4, ctrl.CalcX2 - 4, ctrl.CalcY2 - 4, SystemColors.TextColor(), 1
+    Sub ControlPaint(ctrl as Control, focusChangeOnly as UInt16)
+        If focusChangeOnly == 0 Then
+            Graphics.DrawRectangle ctrl.CalcX1, ctrl.CalcY1, ctrl.CalcX2, ctrl.CalcY2, SystemColors.WindowColor(), SystemColors.WindowColor()
+            Graphics.DrawLine ctrl.CalcX1 + 2, ctrl.CalcY1, ctrl.CalcX2 - 2, Ctrl.CalcY1, SystemColors.WindowBorderColor()
+            Graphics.DrawLine ctrl.CalcX1 + 2, ctrl.CalcY2, ctrl.CalcX2 - 2, Ctrl.CalcY2, SystemColors.WindowBorderColor()
+            Graphics.DrawLine ctrl.CalcX1, ctrl.CalcY1 + 2, ctrl.CalcX1, Ctrl.CalcY2 - 2, SystemColors.WindowBorderColor()
+            Graphics.DrawLine ctrl.CalcX2, ctrl.CalcY1 + 2, ctrl.CalcX2, Ctrl.CalcY2 - 2, SystemColors.WindowBorderColor()
+            Graphics.DrawPixel ctrl.CalcX1 + 1, ctrl.CalcY1 + 1, SystemColors.WindowBorderColor()
+            Graphics.DrawPixel ctrl.CalcX2 - 1, ctrl.CalcY1 + 1, SystemColors.WindowBorderColor()
+            Graphics.DrawPixel ctrl.CalcX1 + 1, ctrl.CalcY2 - 1, SystemColors.WindowBorderColor()
+            Graphics.DrawPixel ctrl.CalcX2 - 1, ctrl.CalcY2 - 1, SystemColors.WindowBorderColor()
+            Graphics.DrawText ctrl.Font, ctrl.Text, ctrl.CalcX1 + 4, ctrl.CalcY1 + 4, ctrl.CalcX2 - 4, ctrl.CalcY2 - 4, SystemColors.TextColor(), 1
+        End
+        If ctrl.HasFocus <> 0 Then 
+            Graphics.DrawLine ctrl.CalcX1 + 4, ctrl.CalcY2 - 2, ctrl.CalcX2 - 4, Ctrl.CalcY2 - 2, SystemColors.WindowBorderColor()
+        Else
+            Graphics.DrawLine ctrl.CalcX1 + 4, ctrl.CalcY2 - 2, ctrl.CalcX2 - 4, Ctrl.CalcY2 - 2, SystemColors.WindowColor()
+        End
     End
 End
 
@@ -450,9 +466,11 @@ Module Label
         ctrl.Focusable = 0
     End
 
-    Sub ControlPaint(ctrl as Control)
-        Graphics.DrawRectangle ctrl.CalcX1, ctrl.CalcY1, ctrl.CalcX2, ctrl.CalcY2, SystemColors.WindowColor(), SystemColors.WindowColor()
-        Graphics.DrawText ctrl.Font, ctrl.Text, ctrl.CalcX1, ctrl.CalcY1, ctrl.CalcX2, ctrl.CalcY2, SystemColors.TextColor(), 1
+    Sub ControlPaint(ctrl as Control, focusChangeOnly as UInt16)
+        If focusChangeOnly == 0 Then
+            Graphics.DrawRectangle ctrl.CalcX1, ctrl.CalcY1, ctrl.CalcX2, ctrl.CalcY2, SystemColors.WindowColor(), SystemColors.WindowColor()
+            Graphics.DrawText ctrl.Font, ctrl.Text, ctrl.CalcX1, ctrl.CalcY1, ctrl.CalcX2, ctrl.CalcY2, SystemColors.TextColor(), 1
+        End
     End
 End
 
@@ -481,7 +499,7 @@ Module Form
         End
     End
 
-    Sub ControlPaint(ctrl as Control)
+    Sub ControlPaint(ctrl as Control, focusChangeOnly as UInt16)
         Dim fnt as Font
         Dim size as Size
         Dim leftText as UInt16
@@ -491,12 +509,17 @@ Module Form
         fnt = ctrl.Font
         If ctrl.CalcHeight < 30 Then Throw OutOfBoundsError
         If ctrl.CalcWidth < 50 Then Throw OutOfBoundsError
-        Graphics.DrawRectangle ctrl.CalcX1, ctrl.CalcY1, ctrl.CalcX2, ctrl.CalcY2, SystemColors.WindowBorderColor(), SystemColors.WindowColor()
-        Graphics.DrawLine ctrl.CalcX1, ctrl.CalcY1+1+fnt.Height, ctrl.CalcX2, ctrl.CalcY1+1+fnt.Height, SystemColors.WindowBorderColor()
         Graphics.CalcFontSize fnt, ctrl.Text, size, ctrl.CalcWidth - 50, 0
         leftText = ctrl.CalcX1 + ((ctrl.CalcWidth - size.Width) SHR 1)
-        rightText = ctrl.CalcX2 - ((ctrl.CalcWidth - size.Width) SHR 1)
-        Graphics.DrawText fnt, ctrl.Text, leftText, ctrl.CalcY1+1, rightText, ctrl.CalcY1+1+fnt.Height, SystemColors.WindowTitleColor(), 0
+        rightText = ctrl.CalcX2 - ((ctrl.CalcWidth - size.Width) SHR 1)    
+        If focusChangeOnly == 0 Then
+            Graphics.DrawRectangle ctrl.CalcX1, ctrl.CalcY1, ctrl.CalcX2, ctrl.CalcY2, SystemColors.WindowBorderColor(), SystemColors.WindowColor()
+            Graphics.DrawLine ctrl.CalcX1, ctrl.CalcY1+1+fnt.Height, ctrl.CalcX2, ctrl.CalcY1+1+fnt.Height, SystemColors.WindowBorderColor()
+            Graphics.DrawText fnt, ctrl.Text, leftText, ctrl.CalcY1+1, rightText, ctrl.CalcY1+1+fnt.Height, SystemColors.WindowTitleColor(), 0
+            Graphics.DrawRectangle ctrl.CalcX1 + 5, ctrl.CalcY1 + 4, ctrl.CalcX1 + 11, ctrl.CalcY1 + fnt.Height -3, SystemColors.WindowBorderColor(),SystemColors.WindowColor()
+            ctrl.PaddingTop = 2 + fnt.Height
+            Control.DrawChildren ctrl
+        End
         If (#ctrl == #Application.CurrentFocusForm) And (@ctrl == @Application.CurrentFocusForm) Then
             For i = ctrl.CalcY1 + 4 to ctrl.CalcY1 + fnt.Height - 3
                 Graphics.DrawLine ctrl.CalcX1 + 2, i, ctrl.CalcX1 + 3, i, SystemColors.WindowBorderColor()
@@ -504,10 +527,14 @@ Module Form
                 Graphics.DrawLine rightText + 4, i, ctrl.CalcX2 - 2, i, SystemColors.WindowBorderColor()
                 i++
             End
+        Else
+            For i = ctrl.CalcY1 + 4 to ctrl.CalcY1 + fnt.Height - 3
+                Graphics.DrawLine ctrl.CalcX1 + 2, i, ctrl.CalcX1 + 3, i, SystemColors.WindowColor()
+                Graphics.DrawLine ctrl.CalcX1 + 13, i, leftText - 5, i, SystemColors.WindowColor()
+                Graphics.DrawLine rightText + 4, i, ctrl.CalcX2 - 2, i, SystemColors.WindowColor()
+                i++
+            End
         End
-        Graphics.DrawRectangle ctrl.CalcX1 + 5, ctrl.CalcY1 + 4, ctrl.CalcX1 + 11, ctrl.CalcY1 + fnt.Height -3, SystemColors.WindowBorderColor(),SystemColors.WindowColor()
-        ctrl.PaddingTop = 2 + fnt.Height
-        Control.DrawChildren ctrl
     End
 End
 

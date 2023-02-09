@@ -1,5 +1,8 @@
 class Modulo : Estrutura
 {
+    public bool Externo { get; set; } = false;
+    public string ExternoArquivo { get; set; } = "";
+    public bool Publico { get; set; } = false;
     public List<Rotina> Rotinas { get; set; } = new List<Rotina>();
     public List<Modulo> Referencias { get; set; } = new List<Modulo>();
     public Modulo(Trecho trecho) : base(trecho)
@@ -29,16 +32,28 @@ class Modulo : Estrutura
     protected override void CompilaInterno(Ambiente amb)
     {
         amb.Modulo = this;
-        amb.Saida.EmiteModulo(Nome, Trecho.Fonte.NomeCompleto);
-        foreach (var campo in Campos)
+        if(Externo)
         {
-            campo.Compila(amb);
+            amb.Saida.EmiteModulo(Nome, ExternoArquivo);
+            foreach (var rot in Rotinas)
+            {
+                rot.Compila(amb);
+            }
+            amb.Saida.EmiteModuloFim(Nome);
         }
-        foreach (var rot in Rotinas)
+        else
         {
-            rot.Compila(amb);
+            amb.Saida.EmiteModulo(Nome, Trecho.Fonte.NomeCompleto);
+            foreach (var campo in Campos)
+            {
+                campo.Compila(amb);
+            }
+            foreach (var rot in Rotinas)
+            {
+                rot.Compila(amb);
+            }
+            amb.Saida.EmiteModuloFim(Nome);
         }
-        amb.Saida.EmiteModuloFim(Nome);
         amb.Modulo = null;
     }
 

@@ -1,5 +1,6 @@
 class Rotina : No
 {
+    public int ContadorReferencias { get; set; } = 0;
     public bool ManipuladorDeInterrupcao { get; set; } = false;
     public bool TemTryCatch { get; set; } = false;
     public Modulo Modulo { get; set; }
@@ -34,6 +35,26 @@ class Rotina : No
 
     protected override void CompilaInterno(Ambiente amb)
     {
+        if(Modulo.Externo)
+        {
+            if(ContadorReferencias > 0)
+            {
+                amb.Saida.EmiteRotulo($"_{Modulo.Nome}_{Nome}");
+                amb.Saida.EmiteGerarEspaco(amb.Saida.TamanhoPonteiro);
+                amb.Saida.EmiteBinario(new byte[]{(byte)System.Text.Encoding.UTF8.GetByteCount(Nome)});
+                amb.Saida.EmiteBinario(System.Text.Encoding.UTF8.GetBytes(Nome));
+                amb.Saida.EmiteGerarEspaco(1);
+            }
+            return;
+        }
+        if(Publicidade == NivelPublicidade.Publico & Modulo.Publico)
+        {
+            amb.Saida.EmiteRotulo($"NAME_{Modulo.Nome}_{Nome}");
+            amb.Saida.EmitePulaPara($"_{Modulo.Nome}_{Nome}");
+            amb.Saida.EmiteBinario(new byte[]{(byte)System.Text.Encoding.UTF8.GetByteCount(Nome)});
+            amb.Saida.EmiteBinario(System.Text.Encoding.UTF8.GetBytes(Nome));
+            amb.Saida.EmiteGerarEspaco(1);
+        }
         amb.DentroDeUmTryCatch = false;
         amb.Rotina = this;
         if(ManipuladorDeInterrupcao & RetornaValor)

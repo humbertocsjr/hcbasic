@@ -163,5 +163,9 @@ abstract class Saida
     public abstract void EmiteInterrupcao(string nome);
     public abstract void EmiteInterrupcaoFim(string nome);
     public abstract void EmiteMarcaInvalidaOtimizacoes();
+    public abstract void EmiteItemImportaModulo(Modulo mod);
+    public abstract void EmiteItemImportaRotina(Rotina rot);
+    public abstract void EmiteItemExportaModulo(Modulo mod);
+    public abstract void EmiteItemExportaRotina(Rotina rot);
 
 }

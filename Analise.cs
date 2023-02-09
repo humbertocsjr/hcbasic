@@ -708,6 +708,7 @@ class Analise
         }
         if(trechos.EhIdentificador("handles"))
         {
+            if(mod.Externo) trechos.Erro("Manipuladores de interrupção não podem ser declarados em Módulos Externos");
             trechos.Proximo();
             if(trechos.EhIdentificador("interrupt"))
             {
@@ -717,10 +718,13 @@ class Analise
             else trechos.Erro("Tipo de evento não suportado");
         }
         trechos.ExigeFimDaLinha("Esperado fim da linha depois da declaração da rotina.");
-        trechos.ExigeProximaLinha(subTrecho, "Encontrado fim do arquivo com um 'sub'/'function' aberta");
-        nivelRotina(mod, rot, rot.Comandos, false, ref trechos);
-        trechos.ExigeId("end");
-        trechos.ExigeProximoFimDaLinha("Esperado apenas o 'end', sem nenhum complemento posterior");
+        if(!mod.Externo)
+        {
+            trechos.ExigeProximaLinha(subTrecho, "Encontrado fim do arquivo com um 'sub'/'function' aberta");
+            nivelRotina(mod, rot, rot.Comandos, false, ref trechos);
+            trechos.ExigeId("end");
+            trechos.ExigeProximoFimDaLinha("Esperado apenas o 'end', sem nenhum complemento posterior");
+        }
         return rot;
     }
 
@@ -747,6 +751,11 @@ class Analise
                 publi = NivelPublicidade.Privado;
                 trechos.Proximo();
             }
+            else if(trechos.EhIdentificador("friend"))
+            {
+                publi = NivelPublicidade.Amigo;
+                trechos.Proximo();
+            }
             if(trechos.EhIdentificador("pointer"))
             {
                 apenasPonteiro = true;
@@ -755,6 +764,7 @@ class Analise
 
             if(trechos.EhIdentificador("dim"))
             {
+                if(mod.Externo) trechos.Erro("Este comando não é suportado em módulos externos");
                 mod.Campos.Add(processaDim(publi, mod, true, apenasPonteiro, ref trechos));
             }
             else if(trechos.EhIdentificador("sub"))
@@ -810,13 +820,31 @@ class Analise
         {
             if(!trechos.FimDaLinha)
             {
+                bool publico = false;
+                if(trechos.EhIdentificador("public"))
+                {
+                    publico = true;
+                    trechos.Proximo();
+                }
                 if(trechos.EhIdentificador("module"))
                 {
                     trechos.ExigeProximo("Esperado o nome após o 'module'");
                     trechos.ExigeId("Esperado o nome do módulo");
-                    Modulo mod = new Modulo(trechos.Atual);
+                    Modulo mod = new Modulo(trechos.Atual)
+                    {
+                        Publico = publico
+                    };
                     Modulos.Add(mod);
-                    trechos.ExigeProximoFimDaLinha("Esperado fim da linha depois da declaração do módulo.");
+                    trechos.Proximo();
+                    if(trechos.EhIdentificador("from"))
+                    {
+                        trechos.Proximo();
+                        mod.Externo = true;
+                        mod.ExternoArquivo = trechos.Atual.Conteudo;
+                        trechos.ExigeTipo(TipoTrecho.Texto, "Esperado o nome do arquivo externo");
+                        trechos.Proximo();
+                    }
+                    trechos.ExigeFimDaLinha("Esperado fim da linha depois da declaração do módulo.");
                     trechos.ExigeProximaLinha(mod.Trecho, "Encontrado fim do arquivo com um 'module' aberto");
                     nivelModulo(mod, ref trechos);
                     trechos.ExigeId("end");
@@ -824,6 +852,7 @@ class Analise
                 }
                 else if(trechos.EhIdentificador("structure"))
                 {
+                    if(publico) trechos.Erro("Estruturas não podem ser marcadas como públicas");
                     trechos.Proximo();
                     trechos.ExigeId("Esperado o nome da estrutura após o 'structure'");
                     Estrutura estrutura = new Estrutura(trechos.Atual);
@@ -837,6 +866,7 @@ class Analise
                 }
                 else if (trechos.EhIdentificador("error"))
                 {
+                    if(publico) trechos.Erro("Erros não podem ser marcadas como públicas");
                     trechos.Proximo();
                     trechos.ExigeId("Esperado o nome do erro");
                     var erroTrecho = trechos.Atual;
@@ -850,6 +880,7 @@ class Analise
                 }
                 else if(trechos.EhIdentificador("imports"))
                 {
+                    if(publico) trechos.Erro("Importações não podem ser marcadas como públicas");
                     trechos.Proximo();
                     trechos.ExigeId("Esperado o nome do módulo a ser importado");
                     string nomeImport = "";
@@ -892,6 +923,7 @@ class Analise
                 }
                 else if(!trechos.FimDaLinha)
                 {
+                    if(publico) trechos.Erro("Esperado o módulo após o 'public'");
                     trechos.ExigeFimDaLinha($"Comando {trechos.Atual.Conteudo}({trechos.Atual.Tipo}) não suportado neste nível.");
                 }
             }
@@ -964,6 +996,35 @@ class Analise
             amb.Saida.EmiteItemRealocacao(realoc);
         }
         amb.Saida.EmiteItemRealocacao(new Realocacao(TipoDeRealocacao.FimLista, 0, "0", 0));
+        
+        amb.Saida.EmiteRotulo("EXPORT_TABLE");
+        foreach (var mod in amb.Modulos.Where(m => m.Publico))
+        {
+            if(!mod.Compilado)
+            {
+                Console.WriteLine($"AVISO: Módulo '{mod.Nome}' não usado no executável porém adicionado ao binário por estar marcado como público.");
+                mod.Compila(amb);
+                CompilaReferencias(mod, amb);
+            }
+            amb.Saida.EmiteItemExportaModulo(mod);
+            foreach(var rot in mod.Rotinas.Where(r => r.Publicidade == NivelPublicidade.Publico))
+            {
+                amb.Saida.EmiteItemExportaRotina(rot);
+            }
+        }
+        amb.Saida.EmiteGerarEspaco(2);
+
+        amb.Saida.EmiteRotulo("IMPORT_TABLE");
+        foreach (var mod in amb.Modulos.Where(m => m.Externo & m.Compilado & m.Rotinas.Sum(r => r.ContadorReferencias) > 0))
+        {
+            amb.Saida.EmiteItemImportaModulo(mod);
+            foreach(var rot in mod.Rotinas.Where(r => r.ContadorReferencias > 0))
+            {
+                amb.Saida.EmiteComentario($"QTD REFS: {rot.ContadorReferencias}");
+                amb.Saida.EmiteItemImportaRotina(rot);
+            }
+        }
+        amb.Saida.EmiteGerarEspaco(2);
         amb.Saida.EmiteRotulo("END");
     }
 }
