@@ -978,9 +978,10 @@ class Acao : No
                         if(rot.ManipuladorDeInterrupcao) throw Erro("Não é possível chamar manipuladores de interrupção diretamente");
                         if(rot.Modulo.Externo)
                         {
-                            amb.Saida.EmiteComentario("ACAO CHAMADA - ROTINA EXTERNA");
-                            rot.ContadorReferencias++;
+                            amb.Saida.EmiteComentario($"ACAO CHAMADA - ROTINA EXTERNA '{rot.Modulo.Nome}'");
                         }
+                        amb.CadastraReferencia(rot.Modulo);
+                        rot.ContadorReferencias++;
                         if(rot.Modulo != amb.Modulo && rot.Publicidade == NivelPublicidade.Privado) throw Erro("Rotina inacessível. Verifique se ela está marcada como Public");
                         var tipoAnterior = amb.Tipo;
                         var variavelAnterior = amb.VariavelDestino;

@@ -944,7 +944,7 @@ class Analise
     {
         foreach (var modref in mod.Referencias)
         {
-            if(!modref.Compilado)
+            if(!modref.Compilado & !modref.Externo)
             {
                 modref.Compila(amb);
                 CompilaReferencias(modref, amb);
@@ -990,14 +990,6 @@ class Analise
             CompilaReferencias(mod, amb);
         }
 
-        amb.Saida.EmiteRotulo("REALOC_TABLE");
-        foreach (var realoc in amb.Realocacoes)
-        {
-            amb.Saida.EmiteItemRealocacao(realoc);
-        }
-        amb.Saida.EmiteItemRealocacao(new Realocacao(TipoDeRealocacao.FimLista, 0, "0", 0));
-        
-        amb.Saida.EmiteRotulo("EXPORT_TABLE");
         foreach (var mod in amb.Modulos.Where(m => m.Publico))
         {
             if(!mod.Compilado)
@@ -1006,6 +998,16 @@ class Analise
                 mod.Compila(amb);
                 CompilaReferencias(mod, amb);
             }
+        }
+
+        foreach (var mod in amb.Modulos.Where(m => m.Externo & !m.Compilado & m.Rotinas.Sum(r => r.ContadorReferencias) > 0))
+        {
+            mod.Compila(amb);
+        }
+        
+        amb.Saida.EmiteRotulo("EXPORT_TABLE");
+        foreach (var mod in amb.Modulos.Where(m => m.Publico))
+        {
             amb.Saida.EmiteItemExportaModulo(mod);
             foreach(var rot in mod.Rotinas.Where(r => r.Publicidade == NivelPublicidade.Publico))
             {
@@ -1025,6 +1027,14 @@ class Analise
             }
         }
         amb.Saida.EmiteGerarEspaco(2);
+
+        amb.Saida.EmiteRotulo("REALOC_TABLE");
+        foreach (var realoc in amb.Realocacoes)
+        {
+            amb.Saida.EmiteItemRealocacao(realoc);
+        }
+        amb.Saida.EmiteItemRealocacao(new Realocacao(TipoDeRealocacao.FimLista, 0, "0", 0));
+        
         amb.Saida.EmiteRotulo("END");
     }
 }

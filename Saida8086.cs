@@ -811,12 +811,12 @@ class Saida8086 : Saida
 
     public override void EmiteChamaRotinaEmVariavelGlobal(string rotulo)
     {
-        EmiteCopiaWordArrayDaVariavelGlobalParaPonteiroRemoto(rotulo);
+        //EmiteCopiaWordArrayDaVariavelGlobalParaPonteiroRemoto(rotulo);
         EmiteL($"cs call far [{rotulo}]");
     }
     public override void EmiteChamaRotinaEmVariavelLocal(int posicao)
     {
-        EmiteCopiaWordArrayDaVariavelLocalParaPonteiroRemoto(posicao);
+        //EmiteCopiaWordArrayDaVariavelLocalParaPonteiroRemoto(posicao);
         EmiteL($"call far [bp+{posicao}]");
     }
 
@@ -971,8 +971,6 @@ class Saida8086 : Saida
 
     public override void EmiteItemExportaModulo(Modulo mod)
     {
-        EmiteL($"db 1");
-        EmiteL($"dw _{mod.Nome}");
         EmiteL($"db 2");
         EmiteL($"dw NAME_{mod.Nome}");
     }
@@ -983,6 +981,8 @@ class Saida8086 : Saida
     }
     public override void EmiteItemImportaModulo(Modulo mod)
     {
+        EmiteL($"db 1");
+        EmiteL($"dw _{mod.Nome}");
         EmiteL($"db 2");
         EmiteL($"dw NAME_{mod.Nome}");
     }
