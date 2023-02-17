@@ -10,32 +10,30 @@ class Tenta : No
     {
         if(amb.DentroDeUmTryCatch) throw Erro("Não há suporte para um Try Catch dentro de outro");
         amb.DentroDeUmTryCatch = true;
-        amb.Saida.EmiteCopiaVariavelGlobalParaAcumulador("_os_trycode");
+        amb.Saida.EmiteComentario("Armazena Dados do Try Catch");
+        amb.Saida.EmiteCopiaPilhaDiretoUsandoVariavelGlobalParaAcumulador("_os_minstackptr", (int)PonteiroErro.TratadorDesvio);
         amb.Saida.EmiteCopiaAcumuladorParaVariavelLocal(-2);
-        amb.Saida.EmiteCopiaVariavelGlobalParaAcumulador("_os_trystack");
+        amb.Saida.EmiteCopiaPilhaDiretoUsandoVariavelGlobalParaAcumulador("_os_minstackptr", (int)PonteiroErro.TratadorSegmento);
         amb.Saida.EmiteCopiaAcumuladorParaVariavelLocal(-4);
-        amb.Saida.EmiteCopiaVariavelGlobalParaAcumulador("_os_trybase");
+        amb.Saida.EmiteCopiaPilhaDiretoUsandoVariavelGlobalParaAcumulador("_os_minstackptr", (int)PonteiroErro.PonteiroPilha);
         amb.Saida.EmiteCopiaAcumuladorParaVariavelLocal(-6);
+        amb.Saida.EmiteCopiaPilhaDiretoUsandoVariavelGlobalParaAcumulador("_os_minstackptr", (int)PonteiroErro.PonteiroBase);
+        amb.Saida.EmiteCopiaAcumuladorParaVariavelLocal(-8);
 
         string pegaErro = amb.Saida.GeraRotulo();
         string fim = amb.Saida.GeraRotulo();
         amb.Saida.EmiteCopiaPonteiroBaseParaAcumulador();
-        amb.Saida.EmiteCopiaAcumuladorParaVariavelGlobal("_os_trybase");
+        amb.Saida.EmiteCopiaAcumuladorParaPilhaDiretoUsandoVariavelGlobal("_os_minstackptr", (int)PonteiroErro.PonteiroBase);
         amb.Saida.EmiteCopiaPonteiroPilhaParaAcumulador();
-        amb.Saida.EmiteCopiaAcumuladorParaVariavelGlobal("_os_trystack");
-        amb.Saida.EmiteGravaRotuloEmAcumulador(pegaErro);
-        amb.Saida.EmiteCopiaAcumuladorParaVariavelGlobal("_os_trycode");
+        amb.Saida.EmiteCopiaAcumuladorParaPilhaDiretoUsandoVariavelGlobal("_os_minstackptr", (int)PonteiroErro.PonteiroPilha);
+        amb.Saida.EmiteGravaRotuloPtrParaPilhaDiretoUsandoVariavelGlobal("_os_minstackptr", (int)PonteiroErro.TratadorDesvio, pegaErro);
 
         CompilaLista(TentaComandos, amb);
         amb.Saida.EmitePulaPara(fim);
         amb.Saida.EmiteRotulo(pegaErro);
         amb.Saida.EmiteCopiaAcumuladorParaAuxiliar();
-        amb.Saida.EmiteCopiaVariavelLocalParaAcumulador(-10);
-        amb.Saida.EmiteCopiaByteArrayDaVariavelLocalParaPonteiroRemoto(-8);
-        amb.Saida.EmiteCopiaVariavelGlobalParaPonteiroBase("_os_trybase");
-        amb.Saida.EmiteCopiaVariavelGlobalParaPonteiroPilha("_os_trystack");
-        amb.Saida.EmiteCopiaPonteiroRemotoParaVariavelLocal(-8);
-        amb.Saida.EmiteCopiaAcumuladorParaVariavelLocal(-10);
+        amb.Saida.EmiteCopiaPilhaDiretoUsandoVariavelGlobalParaPonteiroBase("_os_minstackptr", (int)PonteiroErro.PonteiroBase);
+        amb.Saida.EmiteCopiaPilhaDiretoUsandoVariavelGlobalParaPonteiroPilha("_os_minstackptr", (int)PonteiroErro.PonteiroPilha);
         amb.Saida.EmiteCopiaAuxiliarParaAcumulador();
         if(!PegaErros.Any()) throw Erro("Esperado ao menos um 'Catch' dentro de um Try");
         foreach (var erro in PegaErros)
@@ -57,15 +55,19 @@ class Tenta : No
             amb.Saida.EmitePulaPara(fim);
             amb.Saida.EmiteRotulo(rotuloProxErro);
         }
-        amb.Saida.EmitePulaParaLocalEmVariavelGlobal("_os_tryfatal");
+        amb.Saida.EmiteChamaRotina("os", "fatalerror");
         amb.Saida.EmiteRotulo(fim);
 
-        amb.Saida.EmiteCopiaVariavelLocalParaAcumulador(-6);
-        amb.Saida.EmiteCopiaAcumuladorParaVariavelGlobal("_os_trybase");
-        amb.Saida.EmiteCopiaVariavelLocalParaAcumulador(-4);
-        amb.Saida.EmiteCopiaAcumuladorParaVariavelGlobal("_os_trystack");
+
         amb.Saida.EmiteCopiaVariavelLocalParaAcumulador(-2);
-        amb.Saida.EmiteCopiaAcumuladorParaVariavelGlobal("_os_trycode");
+        amb.Saida.EmiteCopiaAcumuladorParaPilhaDiretoUsandoVariavelGlobal("_os_minstackptr", (int)PonteiroErro.TratadorDesvio);
+        amb.Saida.EmiteCopiaVariavelLocalParaAcumulador(-4);
+        amb.Saida.EmiteCopiaAcumuladorParaPilhaDiretoUsandoVariavelGlobal("_os_minstackptr", (int)PonteiroErro.TratadorSegmento);
+        amb.Saida.EmiteCopiaVariavelLocalParaAcumulador(-6);
+        amb.Saida.EmiteCopiaAcumuladorParaPilhaDiretoUsandoVariavelGlobal("_os_minstackptr", (int)PonteiroErro.PonteiroPilha);
+        amb.Saida.EmiteCopiaVariavelLocalParaAcumulador(-8);
+        amb.Saida.EmiteCopiaAcumuladorParaPilhaDiretoUsandoVariavelGlobal("_os_minstackptr", (int)PonteiroErro.PonteiroBase);
+
         amb.DentroDeUmTryCatch = false;
     }
 

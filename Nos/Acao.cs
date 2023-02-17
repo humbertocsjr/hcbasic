@@ -713,13 +713,19 @@ class Acao : No
                     {
                         amb.Saida.EmiteComentario($"ACAO CHAMADA - Le nome do arquivo com erro");
                         TipoCompilado = TipoVariavel.PtrByteArray;
-                        amb.Saida.EmiteCopiaPonteiroLocalEmVariavelLocalParaPonteiroRemoto(-8);
+                        amb.Saida.EmiteCopiaPilhaDiretoUsandoVariavelGlobalParaPonteiroRemoto("_os_minstackptr", (int)PonteiroErro.ArquivoDesvio);
+                    }
+                    else if(referencia.Count() == 1 & referencia.First() == "errormsg")
+                    {
+                        amb.Saida.EmiteComentario($"ACAO CHAMADA - Le mensagem de erro");
+                        TipoCompilado = TipoVariavel.PtrByteArray;
+                        amb.Saida.EmiteCopiaPilhaDiretoUsandoVariavelGlobalParaPonteiroRemoto("_os_minstackptr", (int)PonteiroErro.MensagemDesvio);
                     }
                     else if(referencia.Count() == 1 & referencia.First() == "errorline")
                     {
                         amb.Saida.EmiteComentario($"ACAO CHAMADA - Le linha com erro");
                         TipoCompilado = TipoVariavel.UInt16;
-                        amb.Saida.EmiteCopiaVariavelLocalParaAcumulador(-10);
+                        amb.Saida.EmiteCopiaPilhaDiretoUsandoVariavelGlobalParaAcumulador("_os_minstackptr", (int)PonteiroErro.ArquivoLinha);
                     }
                     else if(referencia.Count() == 1 & referencia.First() == "sizeof")
                     {
@@ -958,6 +964,7 @@ class Acao : No
                             amb.Saida.EmiteAdicionaNoPtrPilha(tamArgumentos);
                         amb.VariavelDestino = variavelAnterior;
                         amb.Tipo = tipoAnterior;
+                        amb.Saida.EmiteMarcaInvalidaOtimizacoes();
                     }
                     else
                     {           
@@ -1027,6 +1034,7 @@ class Acao : No
                         {
                             amb.Saida.EmiteChamaRotina(rot.Modulo.Nome, rot.Nome);
                         }
+                        amb.Saida.EmiteMarcaInvalidaOtimizacoes();
                         TipoCompilado = rot.TipoRetorno;
                         if(rot.PosicaoArg != 6)
                             amb.Saida.EmiteAdicionaNoPtrPilha(rot.PosicaoArg - 6);

@@ -66,6 +66,10 @@ class Rotina : No
             else
                 amb.Saida.EmiteRotina(Nome);
         }
+        else
+        {
+            amb.Saida.EmiteRotulo($"_{Modulo.Nome}_{Nome}");
+        }
         if(Argumentos.Any() | Variaveis.Any())
         {
             amb.Saida.EmiteEntraNaRotina();
@@ -74,7 +78,14 @@ class Rotina : No
                 amb.Saida.EmiteSubtraiDoPtrPilha(PosicaoVar);
                 if(!ManipuladorDeInterrupcao)
                 {
-                    amb.Saida.EmiteChamaRotina("os", "stackcheck");
+                    if(Modulo.Nome == "os" && Nome == "stackcheck")
+                    {
+                        amb.Saida.EmiteComentario("Chamada ao OS.StackCheck ignorada.");
+                    }
+                    else
+                    {
+                        amb.Saida.EmiteChamaRotina("os", "stackcheck");
+                    }
                 }
             }
             foreach (var variavel in Argumentos)
@@ -102,6 +113,8 @@ class Rotina : No
             else
                 amb.Saida.EmiteRotinaFim(Nome);
         }
+        else if(ManipuladorDeInterrupcao)
+            amb.Saida.EmiteInterrupcaoFim(Nome, true);
         amb.Rotina = null;
     }
 

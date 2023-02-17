@@ -715,6 +715,12 @@ class Analise
                 trechos.Proximo();
                 rot.ManipuladorDeInterrupcao = true;
             }
+            else if(trechos.EhIdentificador("rawinterrupt"))
+            {
+                trechos.Proximo();
+                rot.ManipuladorDeInterrupcao = true;
+                rot.IgnorarCabecalhoRodape = true;
+            }
             else trechos.Erro("Tipo de evento não suportado");
         }
         trechos.ExigeFimDaLinha("Esperado fim da linha depois da declaração da rotina.");

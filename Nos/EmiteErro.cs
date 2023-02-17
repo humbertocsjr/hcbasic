@@ -22,12 +22,12 @@ class EmiteErro : No
         if(!consErro.Any()) throw Erro("Tipo de Erro desconhecido");
         var numErro = consErro.First().Codigo;
         if(amb.Modulo == null) throw Erro("Modulo não definido");
-        amb.Saida.EmiteGravaRotuloEmAcumulador($"_{amb.Modulo.Nome}");
-        amb.Saida.EmiteCopiaAcumuladorParaVariavelLocal(-8);
+        amb.Saida.EmiteGravaRotuloPtrParaPilhaDiretoUsandoVariavelGlobal("_os_minstackptr", (int)PonteiroErro.ArquivoDesvio, $"_{amb.Modulo.Nome}");
         amb.Saida.EmiteGravaNumeroEmAcumulador(Trecho.Linha);
-        amb.Saida.EmiteCopiaAcumuladorParaVariavelLocal(-10);
+        amb.Saida.EmiteCopiaAcumuladorParaPilhaDiretoUsandoVariavelGlobal("_os_minstackptr", (int)PonteiroErro.ArquivoLinha);
         amb.Saida.EmiteGravaNumeroEmAcumulador(numErro);
-        amb.Saida.EmitePulaParaLocalEmVariavelGlobal("_os_trycode");
+        amb.Saida.EmiteCopiaAcumuladorParaPilhaDiretoUsandoVariavelGlobal("_os_minstackptr", (int)PonteiroErro.CodigoErro);
+        amb.Saida.EmitePulaParaPtrNaPilhaDiretoUsandoVariavelGlobal("_os_minstackptr", (int)PonteiroErro.TratadorDesvio);
     }
 
     protected override void InicializaInterno(Ambiente amb)

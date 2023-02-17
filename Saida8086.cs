@@ -8,6 +8,7 @@ class Saida8086 : Saida
     public bool PonteiroLocal {get;set;} = false;
     public int PonteiroLocalPosicao{get;set;} = 0;
     public string PonteiroGlobalNome{get;set;} = "";
+    public bool PonteiroErroDefinido { get; set; } = false;
 
 
 
@@ -44,11 +45,13 @@ class Saida8086 : Saida
     {
         EmiteL($"_{Modulo}_{nome}:");
         PonteiroDefinido = false;
+        PonteiroErroDefinido = false;
     }
 
     public override void EmiteRotinaFim(string nome)
     {
         PonteiroDefinido = false;
+        PonteiroErroDefinido = false;
         EmiteL($"FIM_{Modulo}_{nome}:");
         EmiteL("retf");
     }
@@ -74,22 +77,25 @@ class Saida8086 : Saida
         EmiteL("pop ds");
     }
 
-    public override void EmiteInterrupcaoFim(string nome)
+    public override void EmiteInterrupcaoFim(string nome, bool simples = false)
     {
         PonteiroDefinido = false;
-        EmiteL("pop ax");
-        EmiteL("pop bx");
-        EmiteL("mov ss, ax");
-        EmiteL("mov sp, bx");
-        EmiteL("pop bp");
-        EmiteL("pop ax");
-        EmiteL("pop bx");
-        EmiteL("pop cx");
-        EmiteL("pop dx");
-        EmiteL("pop ds");
-        EmiteL("pop si");
-        EmiteL("pop es");
-        EmiteL("pop di");
+        if(!simples)
+        {
+            EmiteL("pop ax");
+            EmiteL("pop bx");
+            EmiteL("mov ss, ax");
+            EmiteL("mov sp, bx");
+            EmiteL("pop bp");
+            EmiteL("pop ax");
+            EmiteL("pop bx");
+            EmiteL("pop cx");
+            EmiteL("pop dx");
+            EmiteL("pop ds");
+            EmiteL("pop si");
+            EmiteL("pop es");
+            EmiteL("pop di");
+        }
         EmiteL($"FIM_{Modulo}_{nome}:");
         EmiteL("iret");
     }
@@ -186,6 +192,7 @@ class Saida8086 : Saida
     public override void EmiteChamaRotina(string modulo, string rotina)
     {
         PonteiroDefinido = false;
+        PonteiroErroDefinido = false;
         EmiteL($"push cs");
         EmiteL($"call _{modulo}_{rotina}");
     }
@@ -812,11 +819,15 @@ class Saida8086 : Saida
     public override void EmiteChamaRotinaEmVariavelGlobal(string rotulo)
     {
         //EmiteCopiaWordArrayDaVariavelGlobalParaPonteiroRemoto(rotulo);
+        PonteiroDefinido = false;
+        PonteiroErroDefinido = false;
         EmiteL($"cs call far [{rotulo}]");
     }
     public override void EmiteChamaRotinaEmVariavelLocal(int posicao)
     {
         //EmiteCopiaWordArrayDaVariavelLocalParaPonteiroRemoto(posicao);
+        PonteiroDefinido = false;
+        PonteiroErroDefinido = false;
         EmiteL($"call far [bp+{posicao}]");
     }
 
@@ -856,11 +867,15 @@ class Saida8086 : Saida
     {
         EmiteCopiaWordArrayDaVariavelGlobalParaPonteiroRemoto(rotulo);
         EmiteL($"es call far [di+{desvio}]");
+        PonteiroDefinido = false;
+        PonteiroErroDefinido = false;
     }
     public override void EmiteChamaRotinaEmPonteiroNaVariavelLocal(int posicao, int desvio)
     {
         EmiteCopiaWordArrayDaVariavelLocalParaPonteiroRemoto(posicao);
         EmiteL($"es call far [di+{desvio}]");
+        PonteiroDefinido = false;
+        PonteiroErroDefinido = false;
     }
     public override void EmiteItemRealocacao(Realocacao realoc)
     {
@@ -967,6 +982,7 @@ class Saida8086 : Saida
     public override void EmiteMarcaInvalidaOtimizacoes()
     {
         PonteiroDefinido = false;
+        PonteiroErroDefinido = false;
     }
 
     public override void EmiteItemExportaModulo(Modulo mod)
@@ -990,5 +1006,66 @@ class Saida8086 : Saida
     {
         EmiteL($"db 3");
         EmiteL($"dw _{rot.Modulo.Nome}_{rot.Nome}");
+    }
+
+    public override void EmiteCopiaAcumuladorParaPilhaDiretoUsandoVariavelGlobal(string nome, int desvio)
+    {
+        if(!PonteiroErroDefinido) EmiteL($"cs mov si, [{nome}]");
+        PonteiroErroDefinido = true;
+        EmiteL($"ss mov [si+{desvio}], ax");
+    }
+
+    public override void EmiteCopiaPilhaDiretoUsandoVariavelGlobalParaAcumulador(string nome, int desvio)
+    {
+        if(!PonteiroErroDefinido) EmiteL($"cs mov si, [{nome}]");
+        PonteiroErroDefinido = true;
+        EmiteL($"ss mov ax, [si+{desvio}]");
+    }
+
+    public override void EmiteCopiaPilhaDiretoUsandoVariavelGlobalParaPonteiroRemoto(string nome, int desvio)
+    {
+        if(!PonteiroErroDefinido) EmiteL($"cs mov si, [{nome}]");
+        PonteiroErroDefinido = true;
+        EmiteL($"ss mov di, [si+{desvio}]");
+        EmiteL($"ss push word [si+{desvio}+2]");
+        EmiteL($"pop es");
+    }
+
+    public override void EmiteCopiaPonteiroRemotoParaPilhaDiretoUsandoVariavelGlobal(string nome, int desvio)
+    {
+        if(!PonteiroErroDefinido) EmiteL($"cs mov si, [{nome}]");
+        PonteiroErroDefinido = true;
+        EmiteL($"ss mov [si+{desvio}], di");
+        EmiteL($"push es");
+        EmiteL($"ss pop word [si+{desvio}+2]");
+    }
+
+    public override void EmitePulaParaPtrNaPilhaDiretoUsandoVariavelGlobal(string nome, int desvio)
+    {
+        if(!PonteiroErroDefinido) EmiteL($"cs mov si, [{nome}]");
+        PonteiroErroDefinido = true;
+        EmiteL($"ss call far [si+{desvio}]");
+    }
+
+    public override void EmiteGravaRotuloPtrParaPilhaDiretoUsandoVariavelGlobal(string nome, int desvio, string rotulo)
+    {
+        if(!PonteiroErroDefinido) EmiteL($"cs mov si, [{nome}]");
+        PonteiroErroDefinido = true;
+        EmiteL($"ss mov word [si+{desvio}], {rotulo}");
+        EmiteL($"push cs");
+        EmiteL($"ss pop word [si+{desvio}+2]");
+    }
+
+    public override void EmiteCopiaPilhaDiretoUsandoVariavelGlobalParaPonteiroBase(string nome, int desvio)
+    {
+        if(!PonteiroErroDefinido) EmiteL($"cs mov si, [{nome}]");
+        PonteiroErroDefinido = true;
+        EmiteL($"ss mov bp, [si+{desvio}]");
+    }
+    public override void EmiteCopiaPilhaDiretoUsandoVariavelGlobalParaPonteiroPilha(string nome, int desvio)
+    {
+        if(!PonteiroErroDefinido) EmiteL($"cs mov si, [{nome}]");
+        PonteiroErroDefinido = true;
+        EmiteL($"ss mov sp, [si+{desvio}]");
     }
 }

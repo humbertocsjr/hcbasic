@@ -161,11 +161,19 @@ abstract class Saida
     public abstract void EmiteCopiaVariavelGlobalParaPonteiroPilha(string rotulo);
     public abstract void EmiteInverteAcumulador();
     public abstract void EmiteInterrupcao(string nome);
-    public abstract void EmiteInterrupcaoFim(string nome);
+    public abstract void EmiteInterrupcaoFim(string nome, bool simples = false);
     public abstract void EmiteMarcaInvalidaOtimizacoes();
     public abstract void EmiteItemImportaModulo(Modulo mod);
     public abstract void EmiteItemImportaRotina(Rotina rot);
     public abstract void EmiteItemExportaModulo(Modulo mod);
     public abstract void EmiteItemExportaRotina(Rotina rot);
+    public abstract void EmiteCopiaAcumuladorParaPilhaDiretoUsandoVariavelGlobal(string nome, int desvio);
+    public abstract void EmiteCopiaPilhaDiretoUsandoVariavelGlobalParaAcumulador(string nome, int desvio);
+    public abstract void EmitePulaParaPtrNaPilhaDiretoUsandoVariavelGlobal(string nome, int desvio);
+    public abstract void EmiteCopiaPonteiroRemotoParaPilhaDiretoUsandoVariavelGlobal(string nome, int desvio);
+    public abstract void EmiteCopiaPilhaDiretoUsandoVariavelGlobalParaPonteiroRemoto(string nome, int desvio);
+    public abstract void EmiteGravaRotuloPtrParaPilhaDiretoUsandoVariavelGlobal(string nome, int desvio, string rotulo);
+    public abstract void EmiteCopiaPilhaDiretoUsandoVariavelGlobalParaPonteiroBase(string nome, int desvio);
+    public abstract void EmiteCopiaPilhaDiretoUsandoVariavelGlobalParaPonteiroPilha(string nome, int desvio);
 
 }
