@@ -1,0 +1,514 @@
+Imports System.OS
+
+error Error = 0
+error DivByZeroError = 1
+error StackOverflowError = 2
+error OutOfMemoryError = 3
+error OutOfBoundsError = 4
+error NotFoundError = 5
+error AlreadyExistsError = 6
+error NotImplementedError = 7
+error UnknownError = 8
+error CapacityOverflowError = 9
+error NoAnswerError = 10
+error TimeoutError = 11
+error InvalidValueError = 12
+error AccessDeniedError = 13
+error InvalidFormatError = 14
+
+Structure ColorPalette
+    Dim Black as UInt16
+    Dim Blue as UInt16
+    Dim Green as UInt16
+    Dim Cyan as UInt16
+    Dim Red as UInt16
+    Dim Magenta as UInt16
+    Dim Brown as UInt16
+    Dim LightGray as UInt16
+    Dim Gray as UInt16
+    Dim LightBlue as UInt16
+    Dim LightGreen as UInt16
+    Dim LightCyan as UInt16
+    Dim LightRed as UInt16
+    Dim LightMagenta as UInt16
+    Dim Yellow as UInt16
+    Dim White as UInt16
+    Dim Transparent as UInt16
+    Dim ConversionTextMode as UInt16
+    Dim ConversionRedShl as UInt8
+    Dim ConversionRedShr as UInt8
+    Dim ConversionGreenShl as UInt8
+    Dim ConversionGreenShr as UInt8
+    Dim ConversionBlueShl as UInt8
+    Dim ConversionBlueShr as UInt8
+End
+
+Module Colors
+    Dim Palette as ColorPalette
+
+    Public Sub Initialize
+        Palette.Black = 0
+        Palette.Blue = 1
+        Palette.Green = 2
+        Palette.Cyan = 3
+        Palette.Red = 4
+        Palette.Magenta = 5
+        Palette.Brown = 6
+        Palette.LightGray = 7
+        Palette.Gray = 8
+        Palette.LightBlue = 9
+        Palette.LightGreen = 10
+        Palette.LightCyan = 11
+        Palette.LightRed = 12
+        Palette.LightMagenta = 13
+        Palette.Yellow = 14
+        Palette.White = 15
+        Palette.Transparent = 0xffff
+        Palette.ConversionTextMode = 1
+    End
+
+    Public Sub Register(newpal as ColorPalette)
+        #Palette = #newpal
+        @Palette = @newpal
+    End
+
+    Public Function Black() as UInt16
+        Return Palette.Black
+    End
+
+    Public Function Blue() as UInt16
+        Return Palette.Blue
+    End
+
+    Public Function Green() as UInt16
+        Return Palette.Green
+    End
+
+    Public Function Cyan() as UInt16
+        Return Palette.Cyan
+    End
+
+    Public Function Red() as UInt16
+        Return Palette.Red
+    End
+
+    Public Function Magenta() as UInt16
+        Return Palette.Magenta
+    End
+
+    Public Function Brown() as UInt16
+        Return Palette.Brown
+    End
+
+    Public Function LightGray() as UInt16
+        Return Palette.LightGray
+    End
+
+    Public Function Gray() as UInt16
+        Return Palette.Gray
+    End
+
+    Public Function LightBlue() as UInt16
+        Return Palette.LightBlue
+    End
+
+    Public Function LightGreen() as UInt16
+        Return Palette.LightGreen
+    End
+
+    Public Function LightCyan() as UInt16
+        Return Palette.LightCyan
+    End
+
+    Public Function LightRed() as UInt16
+        Return Palette.LightRed
+    End
+
+    Public Function LightMagenta() as UInt16
+        Return Palette.LightMagenta
+    End
+
+    Public Function Yellow() as UInt16
+        Return Palette.Yellow
+    End
+
+    Public Function White() as UInt16
+        Return Palette.White
+    End
+
+    Public Function Transparent() as UInt16
+        Return Palette.Transparent
+    End
+
+    Public Function FromRGB(r as UInt8, g as UInt8, b as UInt8) as UInt16
+        Dim tmpR as UInt16
+        Dim tmpG as UInt16
+        Dim tmpB as UInt16
+        Dim tmpI as UInt16
+        If Palette.ConversionTextMode Then
+            tmpR = (r shr 6) and 1
+            tmpG = (g shr 6) and 1
+            tmpB = (b shr 6) and 1
+            tmpI = (r shr 7) + (g shr 7) + (b shr 7)
+            Return (tmpI shl 3) + (tmpR shl 2) + (tmpG shl 1) + tmpB
+        Else
+            tmpR = (r shl Palette.ConversionRedShl) shr Palette.ConversionRedShr
+            tmpG = (r shl Palette.ConversionGreenShl) shr Palette.ConversionGreenShr
+            tmpB = (r shl Palette.ConversionBlueShl) shr Palette.ConversionBlueShr
+            Return tmpR + tmpG + tmpB
+        End
+    End
+End
+
+module String
+    public function Length(text as ptrbytearray) as uint16
+        dim i as uint16
+        let i = 0
+        ' Ignora o byte inicial com a capacidade da variavel
+        let @text++
+        while text > 0
+            let i ++
+            let @text++
+        end
+        return i
+    end
+
+    public sub Substring(dest as PtrByteArray, orig as PtrByteArray, pos as uint16, size as uint16)
+        dim dest_len as UInt16
+        dim orig_len as UInt16
+        dim i as uint16
+        dim value as uint8
+        dest_len = dest
+        orig_len = String.Length(orig)
+        if pos > orig_len then throw OutOfBoundsError
+        if (size + 1) > dest_len then throw CapacityOverflowError
+        @dest++
+        @orig = @orig + 1 + pos
+        for i = 1 to size
+            value = orig
+            dest = value
+            @dest++
+            @orig++
+        end
+        dest = 0
+    end
+
+    public function Equals(txt1 as ptrbytearray, txt2 as ptrbytearray) as uint16
+        @txt1++
+        @txt2++
+        while txt1 == txt2
+            if txt1 == 0 then return 1
+            @txt1++
+            @txt2++
+        end
+        return 0
+    end
+
+    public function Concat(dest as ptrbytearray, orig as ptrbytearray) as uint16
+        dim dest_len as uint16
+        dim dest_capacity as uint16
+        dim len as uint16
+        dim i as uint16
+        dim tmp as uint8
+        dest_len = String.Length(dest)
+        dest_capacity = dest
+        len = String.Length(orig) + 1
+        if (len +  dest_len + 1) >  dest_capacity then throw CapacityOverflowError
+        @dest = @dest + 1 + dest_len
+        @orig++
+        for i = 1 to len
+            tmp = orig
+            dest = tmp
+            @dest++
+            @orig++
+        end
+        dest = 0
+        return 1
+    end
+
+    public function Copy(dest as ptrbytearray, orig as ptrbytearray) as uint16
+        dim dest_capacity as uint16
+        dim orig_len as uint16
+        dim i as uint16
+        dim tmp as uint8
+        dest_capacity = dest
+        orig_len = String.Length(orig) + 1
+        @dest++
+        @orig++
+        dest = 0
+        if dest_capacity < (orig_len + 1) then throw CapacityOverflowError
+        for i = 1 to orig_len
+            tmp = orig
+            dest = tmp
+            @orig++
+            @dest++
+        end
+        dest = 0
+        return 1
+    end
+end
+
+structure Stream
+    Dim Id as uint16
+    Dim ReadRaw as func(of stream, ptrbytearray, uint16, uint16)
+    Dim Read as func(of stream, ptrbytearray, uint16)
+    Dim WriteRaw as func(of stream, ptrbytearray, uint16, uint16)
+    Dim Write as func(of stream, ptrbytearray, uint16)
+    Dim Close as func(of stream, uint16)
+    Dim SeekCurrent as func(of stream, uint16, uint16)
+    Dim SeekStart as func(of stream, uint16, uint16)
+    Dim SeekEnd as func(of stream, uint16, uint16)
+end
+
+module Stream
+    ' Return size
+    Public Function ReadRaw(s as Stream, data as PtrByteArray, len as UInt16) as UInt16
+        If #s.ReadRaw == 0 Then Throw NotImplementedError
+        Return s.ReadRaw.Invoke(data, len)
+    End
+    ' Return size
+    Public Function Read(s as Stream, data as PtrByteArray) as UInt16
+        If #s.Read == 0 Then Throw NotImplementedError
+        Return s.Read.Invoke(data)
+    End
+    ' Return size
+    Public Function WriteRaw(s as Stream, data as PtrByteArray, len as UInt16) as UInt16
+        If #s.WriteRaw == 0 Then Throw NotImplementedError
+        Return s.WriteRaw.Invoke(data, len)
+    End
+    ' Return size
+    Public Function Write(s as Stream, data as PtrByteArray) as UInt16
+        If #s.Write == 0 Then Throw NotImplementedError
+        Return s.Write.Invoke(data)
+    End
+    
+    Public Function Close(s as Stream) as UInt16
+        If #s.Close == 0 Then Throw NotImplementedError
+        Return s.Close.Invoke()
+    End
+    
+    Public Function SeekCurrent(s as Stream, position as UInt16) as UInt16
+        If #s.SeekCurrent == 0 Then Throw NotImplementedError
+        Return s.SeekCurrent.Invoke(position)
+    End
+    
+    Public Function SeekEnd(s as Stream, pos as UInt16) as UInt16
+        If #s.SeekEnd == 0 Then Throw NotImplementedError
+        Return s.SeekEnd.Invoke(pos)
+    End
+    
+    Public Function SeekStart(s as Stream, pos as UInt16) as UInt16
+        If #s.SeekStart == 0 Then Throw NotImplementedError
+        Return s.SeekStart.Invoke(pos)
+    End
+end
+
+structure String
+    Dim Capacity as UInt8
+end
+
+module Console
+    public function Avail() as uint8
+        return OS.ConsoleAvail()
+    end
+
+    public function ReadChar() as uint8
+        return OS.ConsoleReadChar()
+    end
+
+    public sub ReadLine(txt as ptrbytearray)
+        dim len as uint16
+        dim stdin as Stream
+        len = txt
+        @txt++
+        stdin = new
+        stdin.Id = 0
+        len = File.ReadRaw(stdin, txt, len)
+        while txt > 0 and txt <> 13 and txt <> 10
+            @txt++
+        end
+        txt = 0
+    end
+
+    public sub WriteChar(c as uint8)
+        OS.ConsoleWriteChar c
+    end
+
+    public sub Write(txt as ptrbytearray)
+        ' Ignora o byte inicial com a capacidade da variavel
+        @txt ++
+        while txt > 0
+            WriteChar txt
+            @txt ++
+        end
+    end
+
+    public sub WriteLine(txt as ptrbytearray)
+        Write txt
+        WriteChar 13
+        WriteChar 10
+    end
+
+    public sub WriteUInt16(nro as uint16)
+        dim tmp as uint16
+        dim prox as uint16
+        let tmp = nro mod 10
+        let prox = nro / 10
+        if prox > 0 then WriteUInt16 prox
+        WriteChar 48 + tmp
+    end
+
+    public sub WriteInt16(nro as int16)
+        if nro < 0 then
+            let nro = -nro
+        end
+        WriteUInt16 nro
+    end
+
+    public sub WriteUInt8(nro as uint8)
+        WriteUInt16 nro
+    end
+
+    public sub WriteInt8(nro as int8)
+        WriteInt16 nro
+    end
+end
+
+module UInt32
+' IGNORAR ESTE TRECHO ESTA COM UM CODIGO DE UMA VERSAO PRE PROTOTIPO, DEVE SER ALTERADA PARA PRODUCAO
+    public sub Add(ptrDest as uint16, ptrOrig as uint16)
+        asm "push bp"
+        asm "mov bp, sp"
+        asm "mov di, [bp+4]"
+        asm "mov si, [bp+6]"
+        asm "mov ax, [si]"
+        asm "mov bx, [si+2]"
+        asm "add [di], ax"
+        asm "adc [di+2], bx"
+        asm "pop bp"
+    end
+
+    public sub Subtract(ptrDest as uint16, ptrOrig as uint16)
+        asm "push bp"
+        asm "mov bp, sp"
+        asm "mov di, [bp+4]"
+        asm "mov si, [bp+6]"
+        asm "mov ax, [si]"
+        asm "mov bx, [si+2]"
+        asm "sub [di], ax"
+        asm "sbb [di+2], bx"
+        asm "pop bp"
+    end
+
+    public sub Multiply(ptrDest as uint16, ptrOrig as uint16)
+        dim temp1 as uint16
+        dim temp2 as uint16
+        asm "mov byte [bp-2], 32\n"
+        asm "mov si, [bp+4]\n"
+        asm "mov ax, [si]\n"
+        asm "mov bx, [si+2]\n"
+        asm "mov si, [bp+6]\n"
+        asm "mov di, [si]\n"
+        asm "mov si, [si+2]\n"
+        asm "mov [bp-4], ax\n"
+        asm "mov [bp-6], bx\n"
+        asm "xor ax, ax\n"
+        asm "xor bx, bx\n"
+        asm "xor cx, cx\n"
+        asm "xor dx, dx\n"
+        asm ".calcula:\n"
+        asm "test di, 1\n"
+        asm "jz .ignora\n"
+        asm "add cx, [bp-4]\n"
+        asm "adc dx, [bp-6]\n"
+        asm ".ignora:\n"
+        asm "rcr dx, 1\n"
+        asm "rcr cx, 1\n"
+        asm "rcr bx, 1\n"
+        asm "rcr ax, 1\n"
+        asm "rcr si, 1\n"
+        asm "rcr di, 1\n"
+        asm "dec byte [bp-2]\n"
+        asm "jnz .calcula\n"
+        asm "mov si, [bp+4]\n"
+        asm "mov [si], ax\n"
+        asm "mov [si+2], bx\n"
+    end
+
+    public sub Divide(ptrModule as uint16, ptrDest as uint16, ptrOrig as uint16)
+        dim temp1 as uint16
+        dim temp2 as uint16
+        dim temp3 as uint16
+        asm "mov di, [bp+6]"
+        asm "mov word [di], 0"
+        asm "mov word [di+2], 0"
+        asm "; bx:ax Resto"
+        asm "; dx:cx Divisor"
+        asm "; di:si Resultado"
+        asm "mov byte [bp-2], 32\n"
+        asm "mov si, [bp+8]\n"
+        asm "mov ax, [si]\n"
+        asm "mov bx, [si+2]\n"
+        asm "mov si, [bp+10]\n"
+        asm "mov di, [si]\n"
+        asm "mov si, [si+2]\n"
+        asm "mov [bp-4], ax\n"
+        asm "mov [bp-6], bx\n"
+        asm "xor ax, ax\n"
+        asm "xor bx, bx\n"
+        asm "xor cx, cx\n"
+        asm "xor dx, dx\n"
+        asm ".calcula:\n"
+        asm "test di, 1\n"
+        asm "jz .ignora\n"
+        asm "add cx, [bp-4]\n"
+        asm "adc dx, [bp-6]\n"
+        asm ".ignora:\n"
+        asm "rcr dx, 1\n"
+        asm "rcr cx, 1\n"
+        asm "rcr bx, 1\n"
+        asm "rcr ax, 1\n"
+        asm "rcr si, 1\n"
+        asm "rcr di, 1\n"
+        asm "dec byte [bp-2]\n"
+        asm "jnz .calcula\n"
+        asm "mov si, [bp+6]\n"
+        asm "mov [si], ax\n"
+        asm "mov [si+2], bx\n"
+    end
+end
+
+Module IO
+    Public Sub OutputByte(port as UInt16, value as UInt8)
+        asm "mov dx, [bp+6]"
+        asm "mov ax, [bp+8]"
+        asm "out dx, al"
+    End
+
+    Public Sub OutputWord(port as UInt16, value as UInt16)
+        asm "mov dx, [bp+6]"
+        asm "mov ax, [bp+8]"
+        asm "out dx, ax"
+    End
+
+    Public Function InputByte(port as UInt16) as UInt8
+        asm "mov dx, [bp+6]"
+        asm "xor ax, ax"
+        asm "in al, dx"
+    End
+
+    Public Function InputWord(port as UInt16) as UInt16
+        asm "mov dx, [bp+6]"
+        asm "in ax, dx"
+    End
+
+    Public Sub RegisterHandler(interrupt as UInt8, handler as PtrByteArray)
+        Dim ptr as PtrWordArray
+        #ptr = 0
+        @ptr = interrupt * 4
+        ptr = @handler
+        @ptr ++
+        @ptr ++
+        ptr = #handler
+    End
+End

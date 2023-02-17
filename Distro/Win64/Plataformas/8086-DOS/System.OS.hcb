@@ -1,0 +1,338 @@
+module OS
+
+    public sub Start
+        ' Inicializa o compilador
+        asm "cpu 8086"
+        asm "bits 16"
+        asm "org 0x100"
+        asm "jmp _os_start_pula"
+        asm "times 20-($-$$) db 0"
+        asm "_os_minstackptr: dw END"
+        asm "_os_start_pula:"
+        Start2
+    end
+
+    Sub StackCheck
+        asm "cmp sp, END"
+        asm "ja .end"
+        Throw StackOverflowError
+        asm ".end:"
+    End
+
+    sub Start2
+        ' Declara ponteiro para os argumentos
+        dim args as ptrbytearray
+        ' Realoca executavel
+        Dim realoc as PtrWordArray
+        Dim ptr as PtrWordArray
+        Dim tipoRealoc as UInt16
+        Dim desvio as UInt16
+        Dim soma as UInt16
+        #realoc = CodeSegment()
+        #ptr = CodeSegment()
+        @realoc = RealocTable()
+        while realoc <> 0
+            tipoRealoc = realoc
+            @realoc ++
+            @realoc ++
+            @ptr = realoc
+            @realoc ++
+            @realoc ++
+            desvio = realoc
+            @realoc ++
+            @realoc ++
+            soma = realoc
+            @realoc ++
+            @realoc ++
+            if tipoRealoc == 3 then
+                desvio = desvio + @ptr
+                ptr = desvio
+                @ptr ++
+                @ptr ++
+                ptr = CodeSegment() + soma
+            end
+            if tipoRealoc == 2 then
+                @ptr = @ptr + desvio
+                ptr = StackSegment() + soma
+            end
+            if tipoRealoc == 1 then
+                @ptr = @ptr + desvio
+                ptr = CodeSegment() + soma
+            end
+        end
+        ' Define ponteiro
+        @args = 0x80
+        #args = CodeSegment()
+        ' Adiciona um zero ao final da variavel para ser ASCIZ
+        asm "mov al, [0x80]"
+        asm "xor ah, ah"
+        asm "mov si, ax"
+        asm "add si, 0x80"
+        asm "mov byte [si+1], 0"
+        ' Chama o Main
+        Try
+            Colors.Initialize
+            Program.Main args
+        Catch DivByZeroError
+            Console.WriteLine "Erro: Divisão por zero"
+            GoTo EscreveErro
+        Catch StackOverflowError
+            Console.WriteLine "Erro: Estouro de pilha"
+            GoTo EscreveErro
+        Catch OutOfMemoryError
+            Console.WriteLine "Erro: Sem memória"
+            GoTo EscreveErro
+        Catch OutOfBoundsError
+            Console.WriteLine "Erro: Valor fora dos limites"
+            GoTo EscreveErro
+        Catch NotFoundError
+            Console.WriteLine "Erro: Não encontrado"
+            GoTo EscreveErro
+        Catch AlreadyExistsError
+            Console.WriteLine "Erro: Item já existe"
+            GoTo EscreveErro
+        Catch NotImplementedError
+            Console.WriteLine "Erro: Não implementado"
+            GoTo EscreveErro
+        Catch UnknownError
+            Console.WriteLine "Erro: Falha desconhecida"
+            GoTo EscreveErro
+        Catch CapacityOverflowError
+            Console.WriteLine "Erro: Estouro da Capacidade"
+            GoTo EscreveErro
+        Catch NoAnswerError
+            Console.WriteLine "Erro: Sem resposta"
+            GoTo EscreveErro
+        Catch TimeoutError
+            Console.WriteLine "Erro: Estouro do tempo limite"
+            GoTo EscreveErro
+        Catch InvalidValueError
+            Console.WriteLine "Erro: Valor inválido"
+            GoTo EscreveErro
+        Catch AccessDeniedError
+            Console.WriteLine "Erro: Acesso negado"
+            GoTo EscreveErro
+        Catch InvalidFormatError
+            Console.WriteLine "Erro: Formato inválido"
+            GoTo EscreveErro
+        Catch Error
+            Console.WriteLine "Ocorreu um erro não tratado"
+            EscreveErro:
+            asm "mov ax, 0x3"
+            asm "int 0x10"
+            Console.Write ErrorFile()
+            Console.Write ": "
+            Console.WriteUInt16 ErrorLine()
+        End
+        ' Encerra programa quando retornar do main
+        asm "errofatal:"
+        asm "int 0x20"
+    end
+
+    Public Sub FatalError()
+        asm "int 0x20"
+    End
+
+    public function CodeSegment() as uint16
+        asm "mov ax, cs"
+    end
+
+    public function StackSegment() as uint16
+        asm "mov ax, ss"
+    end
+
+    public function RealocTable() as uint16
+        asm "mov ax, REALOC_TABLE"
+    end
+
+    public function ConsoleAvail() as uint8
+        asm "mov ah, 1"
+        asm "int 0x16"
+        asm "jnz .sim"
+        Return 0
+        asm ".sim:"
+        Return 1
+    end
+
+    public function ConsoleReadChar() as uint8
+        asm "mov ah, 0"
+        asm "int 0x16"
+        asm "xor ah, ah"
+    end
+
+    public sub ConsoleWriteChar(c as uint8)
+        asm "mov dl, [bp+6]"
+        asm "mov ah, 2"
+        asm "int 0x21"
+    end
+end
+
+
+module File
+    public function Open(stream as Stream, filename as ptrbytearray) as uint16
+        dim id as uint16
+        id = 0
+        asm "mov ax, 0x3d02"
+        asm "push ds"
+        asm "push word [bp+12]"
+        asm "pop ds"
+        asm "mov dx, [bp+10]"
+        asm "inc dx"
+        asm "int 0x21"
+        asm "pushf"
+        asm "mov [bp-2], ax"
+        asm "popf"
+        asm "pop ds"
+        asm "jnc .fim"
+        throw NotFoundError
+        asm ".fim:"
+        stream.Id = id
+        stream.Read = AddressOf(Read)
+        stream.ReadRaw = AddressOf(ReadRaw)
+        stream.Write = AddressOf(Write)
+        stream.WriteRaw = AddressOf(WriteRaw)
+        stream.Close = AddressOf(Close)
+        stream.SeekCurrent = AddressOf(SeekCurrent)
+        stream.SeekEnd = AddressOf(SeekEnd)
+        stream.SeekStart = AddressOf(SeekStart)
+        return 1
+    end
+
+    public function Create(stream as Stream, filename as ptrbytearray) as uint16
+        dim id as uint16
+        id = 0
+        asm "mov ax, 0x3c00"
+        asm "push ds"
+        asm "push word [bp+12]"
+        asm "pop ds"
+        asm "xor cx, cx"
+        asm "mov dx, [bp+10]"
+        asm "inc dx"
+        asm "int 0x21"
+        asm "pushf"
+        asm "mov [bp-2], ax"
+        asm "popf"
+        asm "pop ds"
+        asm "jnc .fim"
+        throw AccessDeniedError
+        asm ".fim:"
+        stream.Id = id
+        stream.Read = AddressOf(Read)
+        stream.ReadRaw = AddressOf(ReadRaw)
+        stream.Write = AddressOf(Write)
+        stream.WriteRaw = AddressOf(WriteRaw)
+        stream.Close = AddressOf(Close)
+        return 1
+    end
+
+    public function Read(stream as Stream, text as ptrbytearray) as uint16
+        dim len as uint16
+        len = text
+        @text++
+        len = ReadRaw(stream, text, len)
+        return len
+    end
+
+    public function ReadRaw(stream as Stream, data as ptrbytearray, len as uint16) as uint16
+        dim id as uint16
+        id = stream.Id
+        asm "mov ax, 0x3f00"
+        asm "push ds"
+        asm "push word [bp+12]"
+        asm "pop ds"
+        asm "mov dx, [bp+10]"
+        asm "mov cx, [bp+14]"
+        asm "mov bx, [bp-2]"
+        asm "int 0x21"
+        asm "pushf"
+        asm "mov [bp-2], ax"
+        asm "popf"
+        asm "pop ds"
+        asm "jnc .fim"
+        throw AccessDeniedError
+        asm ".fim:"
+        return id
+    end
+
+    public function Write(stream as Stream, text as ptrbytearray) as uint16
+        dim len as uint16
+        len = String.Length(text)
+        @text++
+        return WriteRaw(stream, text, len)
+    end
+
+    public function WriteRaw(stream as Stream, data as ptrbytearray, len as uint16) as uint16
+        dim id as uint16
+        id = stream.Id
+        asm "mov ax, 0x4000"
+        asm "push ds"
+        asm "push word [bp+12]"
+        asm "pop ds"
+        asm "mov dx, [bp+10]"
+        asm "mov cx, [bp+14]"
+        asm "mov bx, [bp-2]"
+        asm "int 0x21"
+        asm "pushf"
+        asm "mov [bp-2], ax"
+        asm "popf"
+        asm "pop ds"
+        asm "jnc .fim"
+        throw AccessDeniedError
+        asm ".fim:"
+        return id
+    end
+
+    public function Close(stream as Stream) as uint16
+        dim id as uint16
+        id = stream.Id
+        asm "mov ax, 0x3e00"
+        asm "mov bx, [bp-2]"
+        asm "int 0x21"
+        asm "jnc .fim"
+        throw UnknownError
+        asm ".fim:"
+        return 1
+    end
+
+    public function SeekStart(stream as Stream, position as uint16) as uint16
+        dim id as uint16
+        id = stream.Id
+        asm "mov ax, 0x4200"
+        asm "mov bx, [bp-2]"
+        asm "xor cx, cx"
+        asm "mov dx, [bp+10]"
+        asm "int 0x21"
+        asm "jnc .fim"
+        throw AccessDeniedError
+        asm ".fim:"
+        return 1
+    end
+
+    public function SeekCurrent(stream as Stream, position as uint16) as uint16
+        dim id as uint16
+        id = stream.Id
+        asm "mov ax, 0x4201"
+        asm "mov bx, [bp-2]"
+        asm "xor cx, cx"
+        asm "mov dx, [bp+10]"
+        asm "int 0x21"
+        asm "jnc .fim"
+        throw AccessDeniedError
+        asm ".fim:"
+        return 1
+    end
+
+    public function SeekEnd(stream as Stream, position as uint16) as uint16
+        dim id as uint16
+        id = stream.Id
+        asm "mov ax, 0x4202"
+        asm "mov bx, [bp-2]"
+        asm "xor cx, cx"
+        asm "mov dx, [bp+10]"
+        asm "int 0x21"
+        asm "jnc .fim"
+        throw AccessDeniedError
+        asm ".fim:"
+        return 1
+    end
+end
